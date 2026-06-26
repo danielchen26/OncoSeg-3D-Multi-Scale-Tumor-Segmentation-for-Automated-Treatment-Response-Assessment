@@ -151,7 +151,7 @@ footer{padding:42px 0 60px;color:var(--ink-soft);font-size:13px;border-top:1px s
       </div>
       <label class="play-toggle"><input type="checkbox" id="playLoop" checked> loop</label>
     </div>
-    <div class="autonote">Play drives each widget's own controls automatically. Click any chip to jump — or hit the <b>▶ Play</b> in any panel's title bar to loop just that one demo.</div>
+    <div class="autonote"><b>loop ON</b> → tours through every concept in turn. <b>loop OFF</b> → keeps replaying just the current concept (same as that panel's own <b>▶ Play</b>). Click any chip to jump.</div>
 
     <div class="lab-layout">
       <nav class="lab-rail" id="labrail">
@@ -1225,13 +1225,17 @@ const Play={
     const p=Math.min(1,this.t/this.perDemo);
     try{ SCRIPT[key] && SCRIPT[key](p); }catch(e){}
     document.getElementById('playbar').style.setProperty('--prog',(p*100).toFixed(0)+'%');
-    document.getElementById('playNow').textContent=`▶ ${this.idx+1}/${ORDER.length}  ${labelFor(key)}`;
+    const loopAll=document.getElementById('playLoop').checked;
+    document.getElementById('playNow').textContent= loopAll
+      ? `▶ ${this.idx+1}/${ORDER.length}  ${labelFor(key)}`
+      : `↻ looping  ${labelFor(key)}`;
     if(this.t>=this.perDemo){
-      this.t=0;this.idx++;
-      if(this.idx>=ORDER.length){
-        if(document.getElementById('playLoop').checked){ this.idx=0; }
-        else { this.stop(); return; }
+      this.t=0;
+      if(loopAll){
+        // loop ON: advance through every concept, wrapping at the end
+        this.idx++; if(this.idx>=ORDER.length) this.idx=0;
       }
+      // loop OFF: stay on the current concept and keep replaying it (like its own ▶ Play)
     }
     this.raf=requestAnimationFrame(this.loop.bind(this));
   }
