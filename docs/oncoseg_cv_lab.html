@@ -140,7 +140,7 @@ footer{padding:42px 0 60px;color:var(--ink-soft);font-size:13px;border-top:1px s
     <section>
       <span class="kicker">Live CV Lab · interactive</span>
       <h1 class="disp">Touch the architecture.</h1>
-      <p class="lead">Every concept OncoSeg relies on — convolution, attention, the segmentation losses, the clinical scoring — plus the wider <b>frontier of visual AI</b> it sits within: foundation &amp; self-supervised models, digital pathology, the modern transformer/SSM architectures, world models, VLMs and VLA policies. <b>41 widgets</b> run the <i>real</i> math in your browser on toy tensors — each a computer-vision / ML idea you can <b>feel</b>. Drag a slider, or hit <b>Play</b> to watch the whole stack animate itself end-to-end.</p>
+      <p class="lead">Every concept OncoSeg relies on — convolution, attention, the segmentation losses, the clinical scoring — plus the wider <b>frontier of visual AI</b> it sits within: foundation &amp; self-supervised models, digital pathology, modern transformer/SSM architectures, world models, VLMs &amp; VLA policies, physical AI &amp; 3D, and the efficiency/edge tricks that get models into a hospital. <b>58 widgets</b> run the <i>real</i> math in your browser on toy tensors — each a computer-vision / ML idea you can <b>feel</b>. Pick a category on the left, drag a slider, or hit <b>Play</b> to watch the whole stack animate itself.</p>
     </section>
 
     <div class="playbar" id="playbar" style="--prog:0%">
@@ -166,9 +166,12 @@ footer{padding:42px 0 60px;color:var(--ink-soft);font-size:13px;border-top:1px s
         <button class="rail-item" data-cat="foundssl"><span>Foundation / self-sup</span><span class="cnt">4</span></button>
         <button class="rail-item" data-cat="path"><span>Digital pathology</span><span class="cnt">5</span></button>
         <button class="rail-item" data-cat="arch"><span>Modern architectures</span><span class="cnt">5</span></button>
-        <button class="rail-item" data-cat="world"><span>World models</span><span class="cnt">2</span></button>
+        <button class="rail-item" data-cat="world"><span>World models</span><span class="cnt">4</span></button>
         <button class="rail-item" data-cat="vlmcat"><span>Visual reasoning / VLM</span><span class="cnt">2</span></button>
         <button class="rail-item" data-cat="vlacat"><span>Vision-Language-Action</span><span class="cnt">1</span></button>
+        <button class="rail-item" data-cat="phys"><span>Physical AI & 3D</span><span class="cnt">7</span></button>
+        <button class="rail-item" data-cat="edge"><span>Efficiency & edge</span><span class="cnt">6</span></button>
+        <button class="rail-item" data-cat="pathx"><span>Pathology · advanced</span><span class="cnt">2</span></button>
       </nav>
       <div class="lab-main">
         <div class="cat-head" id="catHead">Foundations · CV</div>
@@ -211,9 +214,26 @@ footer{padding:42px 0 60px;color:var(--ink-soft);font-size:13px;border-top:1px s
         <button data-m="flash" data-cat="arch"><span class="num">36</span> FlashAttention</button>
         <button data-m="jepa" data-cat="world"><span class="num">37</span> JEPA latent prediction</button>
         <button data-m="worldroll" data-cat="world"><span class="num">38</span> World-Model Rollout</button>
+        <button data-m="dreamer" data-cat="world"><span class="num">42</span> Dreamer · latent imagination</button>
+        <button data-m="genie" data-cat="world"><span class="num">43</span> Genie latent actions</button>
         <button data-m="vlm" data-cat="vlmcat"><span class="num">39</span> VLM joint attention</button>
         <button data-m="vcot" data-cat="vlmcat"><span class="num">40</span> Visual CoT + grounding</button>
         <button data-m="vla" data-cat="vlacat"><span class="num">41</span> VLA policy</button>
+        <button data-m="nerf" data-cat="phys"><span class="num">44</span> NeRF volume rendering</button>
+        <button data-m="gsplat" data-cat="phys"><span class="num">45</span> 3D Gaussian Splatting</button>
+        <button data-m="occupancy" data-cat="phys"><span class="num">46</span> Occupancy Grid</button>
+        <button data-m="pointcloud" data-cat="phys"><span class="num">47</span> PointNet invariance</button>
+        <button data-m="simreal" data-cat="phys"><span class="num">48</span> Sim-to-real randomization</button>
+        <button data-m="diffpolicy" data-cat="phys"><span class="num">49</span> Diffusion Policy</button>
+        <button data-m="pinn" data-cat="phys"><span class="num">50</span> PINN</button>
+        <button data-m="quant" data-cat="edge"><span class="num">51</span> Quantization</button>
+        <button data-m="prune" data-cat="edge"><span class="num">52</span> Pruning</button>
+        <button data-m="distill" data-cat="edge"><span class="num">53</span> Knowledge Distillation</button>
+        <button data-m="lora" data-cat="edge"><span class="num">54</span> LoRA adaptation</button>
+        <button data-m="federated" data-cat="edge"><span class="num">55</span> Federated learning</button>
+        <button data-m="amp" data-cat="edge"><span class="num">56</span> AMP &amp; loss scaling</button>
+        <button data-m="cellgraph" data-cat="pathx"><span class="num">57</span> Cell-graph GNN</button>
+        <button data-m="stainnorm" data-cat="pathx"><span class="num">58</span> Stain norm</button>
       </div>
 
     <!-- 01. CONVOLUTION -->
@@ -1096,7 +1116,290 @@ footer{padding:42px 0 60px;color:var(--ink-soft);font-size:13px;border-top:1px s
 
 
       </div><!-- /lab-main -->
-    </div><!-- /lab-layout -->
+    
+<section class="demo" data-demo="dreamer">
+      <div class="console">
+        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">dreamer.py — RSSM latent imagination & actor-critic on imagined returns</span></div>
+        <div class="bd lab-grid">
+          <div class="canvas-wrap">
+            <canvas id="dreamerCanvas" width="520" height="340"></canvas>
+            <div class="canvas-cap">Left: teal field = reward landscape; coral squares o1–o4 = real frames encoded to latent; teal path = a dream rolled forward in latent space. Right: per-step discounted reward (bars) and accumulating return (coral).</div>
+            <div class="readout" id="dreamerReadout"></div>
+          </div>
+          <div class="explain">
+            <h3>Dreamer: learn to act by imagining in a compact latent</h3>
+            <p>A <b>recurrent state-space model (RSSM)</b> keeps a latent state <code>h_t</code> that evolves recurrently. From a handful of <i>real</i> observations it <b>encodes</b> a posterior latent — the coral squares <code>o1…o4</code> landing on the data manifold. From the last real latent <code>z₀</code> it then <b>imagines</b> a rollout entirely in latent space: the prior transition <code>h_{t+1}=f(h_t,a_t)</code> predicts the next latent and an <b>actor</b> picks each action, all <b>without decoding a single pixel</b>. A reward/value model scores every imagined latent, and the actor-critic is trained on the <b>imagined discounted return</b> <code>G = Σ γᵗ r(zₜ)</code> — never querying the real environment again.</p>
+            <div class="why">Imagination is cheap precisely because it happens in a <b>small latent</b>, not in raw observations — rolling forward a 30-D state is orders of magnitude cheaper than rendering frames. That "compress to a latent, then reason there" move is exactly what OncoSeg's Swin encoder does: it squeezes a 128³ CT/MR volume into a compact feature state, and every downstream decision (segmentation, RECIST response, a forecast of how a lesion evolves between scans) is computed in that latent rather than in voxel space. Slide the horizon <code>H</code>: the dream sweeps toward the high-reward region and the return accumulates, but later steps are discounted by <code>γᵗ</code> so the curve flattens — distant imagined rewards count for less, which is what keeps long-horizon planning stable.</div>
+            <div class="ctrl"><label>Imagination horizon H</label><input type="range" id="dreamerH" min="1" max="24" step="1" value="12"><span class="val" id="dreamerHV">12</span></div>
+            <div class="pill-row"><span class="minipill">encode → posterior latent</span><span class="minipill">imagine in latent (no decode)</span><span class="minipill">actor-critic on G</span><span class="minipill">discount γᵗ</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<section class="demo" data-demo="genie">
+  <div class="console">
+    <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">genie.py &mdash; latent action model + dynamics</span></div>
+    <div class="bd lab-grid">
+      <div class="canvas-wrap">
+        <canvas id="genieCanvas" width="520" height="340"></canvas>
+        <div class="canvas-cap">Left: infer which latent action <i>z</i> happened between two frames. Right: pick an action, generate the next frame.</div>
+        <div class="readout" id="genieReadout"></div>
+      </div>
+      <div class="explain">
+        <h3>Genie: controllable worlds from unlabeled video</h3>
+        <p><b>Genie</b> learns to turn raw video into a <i>playable</i> simulator &mdash; with <b>no action labels at all</b>. It has two halves. A <b>latent action model (LAM)</b> looks at two consecutive frames and infers <i>which</i> of N discrete actions must have occurred between them, compressing the change into one of a tiny set of codes (a <b>VQ codebook</b>, here 4 entries). Then a <b>dynamics model</b> takes the current frame plus a <i>chosen</i> latent action and generates the next frame &mdash; so you can drive the world even though nobody ever told it what a "button press" means.</p>
+        <p>Below, the LAM watches a token slide one tile right and quantizes that change to the nearest codebook vector <code>z</code>. Pick any of the 4 latent actions on the right and the dynamics model deterministically rolls the sprite to the predicted next cell (with toroidal wrap).</p>
+        <div class="why">The same recipe matters for medical imaging: longitudinal scans are essentially unlabeled "video" of a patient. A Genie-style model could learn the latent <i>moves</i> a tumor makes between scans (grow, shrink, shift) without hand annotation, then let a clinician <i>counterfactually</i> roll a lesion forward under a hypothetical action &mdash; a controllable simulator distilled from observation alone, exactly the kind of world model OncoSeg's response-assessment story points toward.</div>
+        <div class="ctrl"><label>Chosen latent action</label><input type="range" id="genieAct" min="0" max="3" step="1" value="3"><span class="val" id="genieActV">&rarr; right</span></div>
+        <div class="pill-row"><span class="minipill">unsupervised actions</span><span class="minipill">VQ codebook</span><span class="minipill">latent action model</span><span class="minipill">learned dynamics</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="demo" data-demo="nerf">
+  <div class="console">
+    <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">nerf.py — render one pixel by ray marching the volume integral</span></div>
+    <div class="bd lab-grid">
+      <div class="canvas-wrap">
+        <canvas id="nerfCanvas" width="520" height="340"></canvas>
+        <div class="canvas-cap">Top: the density field σ(x) with the marching ray (dashed) and its sample weights (coral dots) → the rendered pixel swatch. Bottom: per-sample σ·δ (teal bars), transmittance Tᵢ (coral, decaying) and the running accumulated opacity (dashed, rising).</div>
+        <div class="readout" id="nerfReadout"></div>
+      </div>
+      <div class="explain">
+        <h3>NeRF: turning a 3D field into one pixel by marching a ray</h3>
+        <p>A Neural Radiance Field stores a scene as a function that, for any 3D point, returns a <b>density</b> σ and a view-dependent <b>color</b> c. To render a single pixel you shoot a ray from the eye and take N samples along it. Each slab of length <code>δ</code> absorbs light with opacity <code>αᵢ = 1 − e<sup>−σᵢδ</sup></code>. How much of that slab's color actually reaches the eye is gated by the <b>transmittance</b> <code>Tᵢ = e<sup>−Σ<sub>j<i</sub> σⱼδ</sup> = Π<sub>j<i</sub>(1−αⱼ)</code> — the fraction of light that survived everything in front of it.</p>
+        <p>The final pixel is the <b>transmittance-weighted integral</b> <code>C = Σ Tᵢ·αᵢ·cᵢ</code>, and the <b>accumulated opacity</b> <code>Σ Tᵢ·αᵢ = 1 − T<sub>N</sub></code>. Drag the slider to sweep the ray across the scene: a ray through empty space stays transparent (T barely decays, opacity ≈ 0); a ray through the dense teal core saturates early (T collapses, weights pile up at the first surface it hits, color locks onto that blob); a ray grazing the deeper coral satellite blends warm. The weights peak exactly at the first opaque surface — that is why NeRF reconstructs sharp geometry rather than a foggy average.</p>
+        <div class="why">This is the same <b>accumulate-along-a-ray</b> operator that defines CT: a CT projection integrates attenuation <code>Σ σᵢδ</code> through tissue, and reconstruction inverts many such rays into a 3D volume. NeRF generalizes it — learning a continuous σ/c field from 2D views and rendering it differentiably — which is precisely the machinery behind <b>learned 3D reconstruction of an organ or lesion from sparse 2D slices/projections</b>, and behind novel-view synthesis for surgical and interventional planning. The transmittance term is also what makes the render <i>occlusion-aware</i>: a deep structure can't contribute color the moment something solid sits in front of it.</div>
+        <div class="ctrl"><label>Ray offset (which pixel)</label><input type="range" id="nerfT" min="0" max="1" step="0.01" value="0.42"><span class="val" id="nerfTV">0.42</span></div>
+        <div class="pill-row"><span class="minipill">σ density</span><span class="minipill">α=1−e^(−σδ)</span><span class="minipill">T=Π(1−α)</span><span class="minipill">C=Σ T·α·c</span><span class="minipill">same as CT</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="demo" data-demo="gsplat">
+  <div class="console">
+    <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">rasterizer.cu — project 3D gaussians → 2D, sort by depth, α-composite</span></div>
+    <div class="bd lab-grid">
+      <div class="canvas-wrap">
+        <canvas id="gsplatCanvas" width="520" height="340"></canvas>
+        <div class="canvas-cap">Left = composited novel view (rasterized). Right = the depth-sorted splat stack; front splats (small depth) are blended first and occlude those behind.</div>
+        <div class="readout" id="gsplatReadout"></div>
+      </div>
+      <div class="explain">
+        <h3>3D Gaussian Splatting — render a scene by stamping fuzzy blobs</h3>
+        <p>Instead of an implicit MLP, the scene is an explicit cloud of <b>3D gaussians</b>, each with a position, an anisotropic covariance (its 3D shape), a color and an <b>opacity</b>. To synthesize a new view you <b>project</b> every gaussian to a 2D elliptical footprint, sort them <b>front-to-back by depth</b>, and <b>alpha-composite</b> them onto the image — exactly the "over" operator: <code>C = Σᵢ cᵢ·αᵢ·Tᵢ</code> with transmittance <code>Tᵢ = Πⱼ₌₁ⁱ⁻¹(1−αⱼ)</code>. Each pixel's splat weight is <code>αᵢ = opacityᵢ · exp(−½·dᵀΣ⁻¹d)</code> — the projected gaussian evaluated at that pixel.</p>
+        <p>Drag <b>splats rendered</b>: the renderer adds gaussians in depth order. Early (front) splats lay down color and <i>spend transmittance</i>; once <code>T</code> drops near zero the surface is opaque and farther splats are culled — the same early-termination a real tile rasterizer uses.</p>
+        <div class="why">The contrast with NeRF (demo on diffusion/JEPA-style implicit models) is the whole point: NeRF answers each pixel by marching a ray and evaluating a <b>per-ray MLP</b> at dozens of sample points — accurate but slow. Gaussian splatting is a single <b>rasterize</b> pass (sort + blend), no network in the loop, so it renders novel views at <b>100+ FPS</b>. For medical/clinical use that means a 3D capture of a patient's anatomy or a surgical field can be re-viewed interactively in real time, and the explicit gaussians are directly editable (delete, recolor, deform a structure) in a way an opaque MLP volume is not.</div>
+        <div class="ctrl"><label>Splats rendered</label><input type="range" id="gsplatN" min="1" max="14" step="1" value="14"><span class="val" id="gsplatNV">14</span></div>
+        <div class="pill-row"><span class="minipill">explicit gaussians</span><span class="minipill">sort by depth</span><span class="minipill">α-composite (over)</span><span class="minipill">rasterize → real-time</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class='demo' data-demo='occupancy'>
+  <div class='console'>
+    <div class='bar'><span class='dotr'></span><span class='dotr g'></span><span class='dotr b'></span><span class='name'>occupancy_grid.py — ray-cast BEV: free · occupied · unknown</span></div>
+    <div class='bd lab-grid'>
+      <div class='canvas-wrap'>
+        <canvas id='occupancyCanvas' width='520' height='340'></canvas>
+        <div class='canvas-cap'>Top-down grid. Sensor (teal dot) casts rays: cells before the first hit = free (teal), the hit cell = occupied (coral), everything behind/unseen = unknown (gray).</div>
+        <div class='readout' id='occupancyReadout'></div>
+      </div>
+      <div class='explain'>
+        <h3>Occupancy grid — dense 3D labeling in another domain</h3>
+        <p>An autonomous-driving perception stack turns raw sensor returns into a <b>bird's-eye-view (BEV) grid</b> where every voxel is tagged <b>free</b>, <b>occupied</b>, or <b>unknown</b>. The trick is honest ray-casting: along each ray, cells in front of the first return are confidently empty, the return marks an obstacle, and — crucially — everything in the obstacle's <i>shadow</i> stays <b>unknown</b>, because the sensor never saw it.</p>
+        <p>Drag <b>sensor range</b>: a short range reveals only a small disc, so most of the map is unknown. As range grows the free region expands and more obstacles get hit — until the fractions <i>plateau</i>, because no extra range can see <i>through</i> an obstacle. Drag <b>sweep</b> to watch a rotating lidar paint the map angle-by-angle, each ray independently resolving its own line of sight.</p>
+        <div class='why'>This is the same problem OncoSeg solves, wearing a different hat: predicting a <b>dense per-voxel label over a 3D grid</b>. A BEV occupancy grid is voxel occupancy of a road scene; OncoSeg's segmentation is voxel occupancy of a tumor in an MRI volume. Both must reason about regions they can't directly observe — the lidar's shadow is the radiologist's partial-volume / low-contrast zone — and both express that honestly as <i>unknown / uncertain</i> rather than guessing. The free/occupied/unknown split here is exactly the confident-foreground / confident-background / boundary-uncertainty trichotomy the uncertainty widgets quantify for segmentation.</div>
+        <div class='ctrl'><label>Sensor range</label><input type='range' id='occupancyRange' min='3' max='30' step='1' value='12'><span class='val' id='occupancyRangeV'>12 cells</span></div>
+        <div class='ctrl'><label>Rotating sweep</label><input type='range' id='occupancySweep' min='0.05' max='1' step='0.01' value='1'><span class='val' id='occupancySweepV'>100%</span></div>
+        <div class='pill-row'><span class='minipill'>dense 3D labels</span><span class='minipill'>ray-cast free/occupied</span><span class='minipill'>shadow = unknown</span><span class='minipill'>same as voxel seg</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="demo" data-demo="pointcloud">
+      <div class="console">
+        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">pointnet.py — set input → shared MLP → max-pool → permutation-invariant feature</span></div>
+        <div class="bd lab-grid">
+          <div class="canvas-wrap">
+            <canvas id="pointcloudCanvas" width="520" height="340"></canvas>
+            <div class="canvas-cap">Left: the fixed point SET, labels = position in the current order. Middle: shared MLP features per point (ink-boxed bar = the per-dim max). Right: global vector g. Step the order — g and its argmax points never move.</div>
+            <div class="readout" id="pointcloudReadout"></div>
+          </div>
+          <div class="explain">
+            <h3>PointNet: learning on a SET, not a sequence</h3>
+            <p>A point cloud is an <b>unordered set</b> — there is no canonical "point #0". PointNet handles this with three steps: (1) a <b>shared per-point MLP</b> <code>f(pᵢ)</code> applied <i>independently</i> with the <i>same</i> weights to every point, (2) a <b>symmetric pool</b> — element-wise <code>max</code> over all points, (3) the resulting global vector <code>g[d] = maxᵢ f(pᵢ)[d]</code>. Because max over a set ignores order, <code>g</code> is <b>permutation-invariant</b> by construction: <code>g(π·X) = g(X)</code> for any reordering π.</p>
+            <div class="why">Step the <b>order</b> control through 6 permutations of the same 8 points. The position labels on the left scramble, the feature columns in the middle slide around — but the <b>global vector g on the right is byte-identical every time</b>, and the <i>physical</i> point that supplies each dimension's max (ink-outlined) is unchanged. Tie to OncoSeg: dense CT/MRI voxels <i>do</i> have a natural grid order, so OncoSeg uses ordered conv + windowed attention. But the instant you work with <b>sparse 3D</b> — point-sampled lesion surfaces, centroid sets, multi-detector fusion, or LiDAR-style sensing with <i>no</i> natural order — you need set-based, permutation-invariant operators. Max-pool is the simplest faithful one.</div>
+            <div class="ctrl"><label>Shuffle order</label><input type="range" id="pointcloudPerm" min="0" max="5" step="1" value="0"><span class="val" id="pointcloudPermV">1 / 6</span></div>
+            <div class="pill-row"><span class="minipill">unordered set</span><span class="minipill">shared per-point MLP</span><span class="minipill">global max-pool</span><span class="minipill">g(π·X)=g(X)</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<section class="demo" data-demo="simreal">
+      <div class="console">
+        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">augment.py — domain randomization: cover the reality gap</span></div>
+        <div class="bd lab-grid">
+          <div class="canvas-wrap">
+            <canvas id="simrealCanvas" width="520" height="340"></canvas>
+            <div class="canvas-cap">Teal cloud = randomized SIM samples · coral ◆ = the fixed REAL scanner. Widen σ until it is enclosed.</div>
+            <div class="readout" id="simrealReadout"></div>
+          </div>
+          <div class="explain">
+            <h3>Sim-to-real domain randomization</h3>
+            <p>A model only generalizes to inputs it was effectively trained on. Plot every image as a point in an abstract <b>appearance space</b> (x = texture/contrast, y = brightness/illumination). The <b>training distribution</b> is a cloud of synthetic samples whose appearance we deliberately randomize; its spread is the randomization strength <code>σ</code>. One fixed <b>real</b> sample (coral ◆) sits off to the side — the reality gap.</p>
+            <p>At small <code>σ</code> the real sample is far outside the cloud (<b>out-of-distribution</b>): the model never saw anything like it, so it fails. Crank <code>σ</code> and the cloud expands; once the support contour (drawn at <code>2.5σ</code>) <b>encloses</b> the real point, it becomes <b>in-distribution</b> — the real domain is now just one more sample the network already trained against.</p>
+            <div class="why">In OncoSeg terms this is the deployment analog of augmenting across MRI/CT scanners and sites. A tumor model trained on one hospital's scanner is out-of-distribution on the next (different bias field, contrast, noise). Randomizing intensity/texture/orientation during training widens the appearance cloud so an unseen scanner lands inside it — bridging the reality gap <i>without</i> collecting labels from every new site. Over-randomize, though, and you waste capacity covering appearances no scanner ever produces.</div>
+            <div class="ctrl"><label>Randomization σ</label><input type="range" id="simrealSigma" min="0.04" max="0.40" step="0.005" value="0.10"><span class="val" id="simrealSigmaV">0.10</span></div>
+            <div class="pill-row"><span class="minipill">support = 2.5σ contour</span><span class="minipill">real fixed at dist 0.46</span><span class="minipill">crossover σ ≈ 0.18</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<section class='demo' data-demo='diffpolicy'>
+  <div class='console'>
+    <div class='bar'><span class='dotr'></span><span class='dotr g'></span><span class='dotr b'></span><span class='name'>diffusion_policy.py — denoise an ACTION trajectory, conditioned on the observation</span></div>
+    <div class='bd lab-grid'>
+      <div class='canvas-wrap'>
+        <canvas id='diffpolicyCanvas' width='520' height='340'></canvas>
+        <div class='canvas-cap'>Faint teal dashes = clean target x₀. Solid line = the path at denoise step k (coral→teal as it cleans). Coral stubs = the per-waypoint denoise pull toward x₀. Bar = noise σ.</div>
+        <div class='readout' id='diffpolicyReadout'></div>
+      </div>
+      <div class='explain'>
+        <h3>Diffusion Policy — generate the plan by denoising it</h3>
+        <p>Instead of emitting one action at a time, a <b>diffusion policy</b> treats the next <code>H</code>-step <b>action trajectory</b> as a single object to <i>generate</i>. It starts from a path of <b>pure Gaussian noise</b> and runs a learned reverse diffusion: at each step <code>k</code> (counting <code>T→0</code>) a network predicts the noise and subtracts a slice of it, so the random scribble collapses into a smooth, feasible path that reaches the goal and arcs around the obstacle — all <b>conditioned on the observation</b>.</p>
+        <p>Each waypoint follows the DDPM relation <code>xₖ = √ᾱₖ·x₀ + √(1−ᾱₖ)·ε</code> with a cosine schedule for <code>ᾱ</code>. Drag <b>k</b> from <code>T</code> down to <code>0</code>: the signal weight <code>√ᾱ</code> rises, the noise level <code>σ=√(1−ᾱ)</code> falls, the signal-to-noise ratio climbs, and the trajectory snaps onto the clean target. The coral stubs are the denoise direction the model would apply next.</p>
+        <div class='why'>This is SOTA visuomotor control (Chi et al., 2023; π0). It is deliberately <i>distinct</i> from the VLA widget: VLA emits <b>discrete, tokenized</b> actions one bin at a time, whereas a diffusion policy produces a <b>continuous, multimodal</b> whole-trajectory distribution — switch the goal and it commits to a different smooth mode rather than averaging them. The same denoise-a-structured-output recipe is why diffusion is creeping into medical imaging as a <b>segmentation / registration prior</b>: sample plausible masks or deformations rather than regress one blurry mean — and for surgical-robot or auto-contouring deployment, generating a full feasible trajectory beats greedy per-step decoding.</div>
+        <div class='ctrl'><label>Denoise step k (T→0)</label><input type='range' id='diffpolicyK' min='0' max='20' step='1' value='20'><span class='val' id='diffpolicyKV'>20</span></div>
+        <div class='ctrl'><label>Goal (condition)</label>
+          <select id='diffpolicyGoal' style='flex:1;background:rgba(12,138,141,.06);color:var(--teal);border:1px solid var(--line);border-radius:7px;padding:7px;font-family:"JetBrains Mono",monospace'>
+            <option value='0'>shelf A</option>
+            <option value='1'>bin B</option>
+            <option value='2'>tray C</option>
+          </select>
+        </div>
+        <div class='pill-row'><span class='minipill'>reverse diffusion</span><span class='minipill'>continuous trajectory</span><span class='minipill'>multimodal</span><span class='minipill'>cosine ᾱ schedule</span><span class='minipill'>obs-conditioned</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class='demo' data-demo='pinn'><div class='console'><div class='bar'><span class='dotr'></span><span class='dotr g'></span><span class='dotr b'></span><span class='name'>pinn.py - damped oscillator</span></div>
+  <div class='bd lab-grid'><div class='canvas-wrap'><canvas id='pinnCanvas' width='520' height='340'></canvas><div class='canvas-cap'>Blue=true physical u(t), teal=network fit, coral dots=sparse data, coral shading=local |ODE residual|.</div><div class='readout' id='pinnReadout'></div></div>
+  <div class='explain'><h3>Physics-Informed NN (PINN)</h3><p>Fit a curve u(t) through a handful of noisy measurements of a damped harmonic oscillator. With only the data term, infinitely many wiggly curves pass near the points — the network happily picks one and <em>overfits</em> between samples. A PINN adds a second loss: the residual of the governing equation r(t) = u&Prime; + 2&zeta;&omega;&middot;u&prime; + &omega;&sup2;&middot;u, which must be ~0 if u truly obeys the physics. Slide &lambda; to weight that residual. At &lambda;=0 the fit oscillates and r(t) is huge; as &lambda;&rarr;1 the only curve that satisfies both the data and the equation is the smooth physical solution.</p><div class='why'>Total loss = L<sub>data</sub> + &lambda;&middot;L<sub>residual</sub>. The residual is evaluated everywhere via autodiff (here: finite differences), not just at labeled points — so the equation regularizes the gaps where labels are missing. In OncoSeg-style settings with scarce annotations, encoding known biology/physics (smooth boundary growth, conservation, dose kinetics) as a soft constraint stops the model from producing impossible predictions and improves generalization from tiny cohorts.</div><div class='ctrl'><label>&lambda; (physics weight)</label><input type='range' id='pinnLambda' min='0' max='1' step='0.02' value='0'><span class='val' id='pinnLambdaV'>0.00</span></div><div class='pill-row'><span class='minipill'>&lambda;=0 &rarr; overfit, ODE violated</span><span class='minipill'>&lambda;&rarr;1 &rarr; physical solution</span></div></div></div></div></section>
+
+<section class='demo' data-demo='quant'><div class='console'><div class='bar'><span class='dotr'></span><span class='dotr g'></span><span class='dotr b'></span><span class='name'>quantize.py - PTQ FP32 -> INT8</span></div>
+  <div class='bd lab-grid'><div class='canvas-wrap'><canvas id='quantCanvas' width='520' height='340'></canvas><div class='canvas-cap'>Teal grid = 2^b reconstruction levels. Bars = weight histogram, colored by |rounding error| (coral = large). Blue = accuracy vs bit-width.</div><div class='readout' id='quantReadout'></div></div>
+  <div class='explain'><h3>Quantization: FP32 -> INT8</h3><p>A trained net stores each weight as a 32-bit float. <b>Post-training quantization</b> snaps those continuous values onto a small grid of integers. With a per-tensor <i>scale</i> s and symmetric mapping, each weight becomes <code>w_q = round(w / s)</code>, an integer in <code>[-2^(b-1), 2^(b-1)-1]</code>, and is read back as <code>w_q &middot; s</code>. The choice <code>s = max|w| / (2^(b-1)-1)</code> spends the whole integer range on the observed weights. A <b>b-bit</b> code has only <code>2^b</code> levels, so the grid spacing — and the rounding error — doubles for every bit you drop.</p>
+  <div class='why'>Why it matters for OncoSeg: a 3D segmentation backbone is large, but hospitals rarely have datacenter GPUs at the bedside. INT8 makes the weights <b>4&times; smaller</b> (8/32 of FP32) and lets integer matmul run on a clinical workstation or edge appliance with near-identical Dice. Push too far, though — the accuracy strip shows INT8 and INT6 sit on a plateau, but at 2-bit the rounding noise swamps the signal and validation accuracy <b>falls off a cliff</b>. The engineering job is finding the lowest bit-width before that knee.</div>
+  <div class='ctrl'><label>Bit-width b</label><input type='range' id='quantB' min='2' max='8' step='2' value='8'><span class='val' id='quantBV'>8-bit</span></div>
+  <div class='pill-row'><span class='minipill'>w_q = round(w/s)</span><span class='minipill'>levels = 2^b</span><span class='minipill'>mem = b/32</span></div></div></div></div></section>
+
+<section class='demo' data-demo='prune'><div class='console'><div class='bar'><span class='dotr'></span><span class='dotr g'></span><span class='dotr b'></span><span class='name'>compress.py - Magnitude Pruning</span></div>
+  <div class='bd lab-grid'><div class='canvas-wrap'><canvas id='pruneCanvas' width='520' height='340'></canvas><div class='canvas-cap'>Left: weight matrix, teal intensity = |w|; cells below the threshold (coral marker) are zeroed to <b>EMPTY</b>. Right: accuracy vs sparsity.</div><div class='readout' id='pruneReadout'></div></div>
+  <div class='explain'><h3>Magnitude pruning & sparsity</h3>
+  <p>A trained network is mostly dead weight: many connections have a tiny magnitude and barely move the output. <b>Unstructured magnitude pruning</b> ranks every weight by |w| and zeros out the smallest ones until you hit a target <i>sparsity</i> (% of weights set to 0). The surviving weights are untouched. Slide the target up and watch the smallest-magnitude cells drop to grey (zeroed) as the coral threshold sweeps right across the |w| color bar.</p>
+  <div class='why'>For a hospital deployment, this is how you ship a segmentation model that fits on the edge box next to the scanner. You can usually delete 70&ndash;80% of the weights and lose almost nothing on the validation set &mdash; the accuracy curve is <b>flat</b>. Push past the knee (~85&ndash;90%) and it falls off a <b>cliff</b>: you have started cutting load-bearing weights, not just dead ones. The sweet spot is the largest sparsity still on the plateau &mdash; a smaller, faster model with no clinically meaningful drop. (Sparse weights also store and multiply faster &mdash; only the nonzeros cost anything.)</p>
+  <div class='ctrl'><label>Target sparsity</label><input type='range' id='pruneSparsity' min='0' max='100' step='1' value='50'><span class='val' id='pruneSparsityV'>50%</span></div>
+  <div class='pill-row'><span class='minipill'>teal = kept |w|</span><span class='minipill'>grey = zeroed</span><span class='minipill'>coral = prune threshold</span></div>
+  </div></div></div></section>
+
+<section class='demo' data-demo='distill'>
+  <div class='console'>
+    <div class='bar'><span class='dotr'></span><span class='dotr g'></span><span class='dotr b'></span><span class='name'>distill.py — soften teacher logits, train the student to match</span></div>
+    <div class='bd lab-grid'>
+      <div class='canvas-wrap'>
+        <canvas id='distillCanvas' width='520' height='340'></canvas>
+        <div class='canvas-cap'>Blue = teacher logits (fixed). Teal bars = soft targets at τ; coral = the runner-up "dark-knowledge" class. Dashed line = the one-hot hard label.</div>
+        <div class='readout' id='distillReadout'></div>
+      </div>
+      <div class='explain'>
+        <h3>Knowledge distillation — train a small student on a big teacher's soft labels</h3>
+        <p>A large <b>teacher</b> outputs logits over the classes. Instead of training a small <b>student</b> on the one-hot ground-truth label, distillation trains it to match the teacher's <b>softened</b> probabilities <code>p = softmax(z / τ)</code>. A temperature <b>τ > 1</b> flattens the distribution so the small probabilities the teacher assigns to the <i>wrong</i> classes become visible — and copyable.</p>
+        <p>Those small probabilities are <b>"dark knowledge"</b>: the teacher quietly says <i>this enhancing glioma also looks a bit like a meningioma or a post-op cavity, and nothing like a normal brain</i>. The hard argmax keeps only the winner (entropy = 0); the soft target carries this whole similarity structure, so the student learns far more per example.</p>
+        <div class='why'>For deployment this is the compression lever: a 100M-parameter teacher can hand its behaviour to a student small enough to run on the scanner console or a single on-prem GPU — keeping accuracy while shrinking memory and latency at the point of care. It pairs naturally with pruning and quantization, and with self-supervised pretraining (DINO/MAE) which is how the teacher learned cheaply in the first place. The distillation loss is the KL between teacher and student soft targets, scaled by <code>τ²</code> to keep gradient magnitudes stable.</div>
+        <div class='ctrl'><label>Temperature τ</label><input type='range' id='distillTau' min='0.4' max='8' step='0.05' value='1'><span class='val' id='distillTauV'>1.00</span></div>
+        <p style='font-size:13px;color:#42535a'>τ → 0 collapses the soft target back to the one-hot hard label (entropy → 0, no extra signal). τ ≫ 1 pushes it toward uniform (entropy → ln N). The sweet spot in between is where the relational "which wrong classes are plausible" signal is richest — that is what the student copies.</p>
+        <div class='pill-row'><span class='minipill'>softmax(z/τ)</span><span class='minipill'>dark knowledge</span><span class='minipill'>KL · τ² loss</span><span class='minipill'>compress for edge</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="demo" data-demo="lora">
+  <div class="console">
+    <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">finetune.py — LoRA: freeze W, learn only ΔW = B·A</span></div>
+    <div class="bd lab-grid">
+      <div class="canvas-wrap">
+        <canvas id="loraCanvas" width="520" height="340"></canvas>
+        <div class="canvas-cap">Faint slate = frozen W (d×d). Teal = B (d×r), coral = A (r×d) — the only trainable weights. Bottom-right = their product ΔW = B·A, a genuine rank-r matrix. Drag the rank.</div>
+        <div class="readout" id="loraReadout"></div>
+      </div>
+      <div class="explain">
+        <h3>LoRA — fine-tune a giant model by training two thin matrices</h3>
+        <p>A pretrained weight matrix <code>W</code> is <b>d×d</b>. Full fine-tuning re-trains all <code>d²</code> of its entries. <b>LoRA</b> (Hu et al., 2021) <i>freezes</i> <code>W</code> entirely and learns only a <b>low-rank update</b> <code>ΔW = B·A</code>, where <code>B</code> is d×r and <code>A</code> is r×d with rank <b>r ≪ d</b>. At inference the model uses <code>W + B·A</code>. The product of a (d×r) and an (r×d) matrix can have rank at most <code>r</code>, so <code>ΔW</code> is forced to be low-rank — and that is the whole point.</p>
+        <p>Drag <b>rank r</b>. Trainable parameters are <code>2·d·r</code> instead of <code>d²</code>; the bar tracks how much of the <i>ideal</i> full update <code>ΔW</code> the rank-r factorization captures. Because real weight <i>updates</i> have a steeply decaying spectrum, even a tiny r recovers almost all of it — r=4 already captures >98% here.</p>
+        <div class="why">This is the modern recipe for adapting a <b>frozen medical foundation model</b> to a new task on a single GPU. A 3D CT/MRI encoder may carry hundreds of millions of pretrained weights; retraining them for a new tumor type risks catastrophic forgetting and demands huge compute and data. LoRA instead bolts a handful of thin <code>B</code>/<code>A</code> factors onto each attention/projection layer — at d=4096 that is <b>>99% fewer</b> trainable parameters — so a hospital can specialize a shared foundation model to its own scanner and protocol from a small labeled set, ship just the megabytes-sized adapters, and keep the original weights untouched.</div>
+        <div class="ctrl"><label>Rank r</label><input type="range" id="loraR" min="1" max="16" step="1" value="4"><span class="val" id="loraRV">4</span></div>
+        <div class="pill-row"><span class="minipill">W frozen</span><span class="minipill">ΔW = B·A</span><span class="minipill">rank r ≪ d</span><span class="minipill">2dr ≪ d²</span><span class="minipill">cheap finetune</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class='demo' data-demo='federated'><div class='console'><div class='bar'><span class='dotr'></span><span class='dotr g'></span><span class='dotr b'></span><span class='name'>fedavg.py - Federated training</span></div>
+  <div class='bd lab-grid'><div class='canvas-wrap'><canvas id='federatedCanvas' width='520' height='340'></canvas><div class='canvas-cap'>Plane = model-weight space. Teal dots = each hospital's local model; coral X = its private optimum; ringed dot = averaged global model. Only weights cross the dashed links - never scans.</div><div class='readout' id='federatedReadout'></div></div>
+  <div class='explain'><h3>Federated learning (FedAvg)</h3><p>Four hospitals hold private scans they are not allowed to share. Each trains the <em>same</em> model on its own data, drifting toward its local optimum (coral X). Once per round, every site uploads only its weight vector; the server takes the plain average (<strong>FedAvg</strong>) and broadcasts that single global model back. Drag <strong>Round</strong> to watch the global dot converge - the raw data never moves.</p>
+    <div class='why'>This is exactly how you train one OncoSeg model across hospitals under HIPAA / GDPR: scans stay behind each institution's firewall, and only gradients/weights - which carry far less identifiable signal - leave the building. The faithful part: with quadratic local losses centered at each site's optimum, the global FedAvg solution is provably the <em>mean</em> of the per-site optima, and the distance to it shrinks by a fixed factor (1-lr)<sup>E</sup> every round. Fewer local epochs E = gentler steps = more rounds to converge; this is the real communication-vs-compute trade-off in cross-silo FL.</div>
+    <div class='ctrl'><label>Round</label><input type='range' id='federatedRound' min='0' max='8' step='0.04' value='0'><span class='val' id='federatedRoundV'>0</span></div>
+    <div class='ctrl'><label>Local epochs E</label><input type='range' id='federatedEpochs' min='1' max='6' step='1' value='3'><span class='val' id='federatedEpochsV'>3</span></div>
+    <div class='pill-row'><span class='minipill'>data stays local</span><span class='minipill'>weights averaged</span><span class='minipill'>global broadcast</span></div>
+  </div></div></div></section>
+
+<section class='demo' data-demo='amp'><div class='console'><div class='bar'><span class='dotr'></span><span class='dotr g'></span><span class='dotr b'></span><span class='name'>train.py — torch.cuda.amp</span></div>
+  <div class='bd lab-grid'><div class='canvas-wrap'><canvas id='ampCanvas' width='520' height='340'></canvas><div class='canvas-cap'>FP16 magnitude axis (log10). Hollow grey = raw gradient, teal = after ×S. Coral bands = underflow / overflow.</div><div class='readout' id='ampReadout'></div></div>
+  <div class='explain'><h3>Mixed precision & loss scaling</h3><p>Automatic Mixed Precision (AMP) does the heavy matmuls in <b>FP16</b> — half the memory, ~2× the throughput on tensor cores — while keeping an <b>FP32 master copy</b> of the weights for the actual update. The catch: FP16 can only represent magnitudes down to its smallest subnormal, <code>2<sup>-24</sup> ≈ 6e-8</code>. Any gradient smaller than that <b>flushes to exactly 0</b> and that learning signal is lost forever.</p>
+  <p><b>Loss scaling</b> rescues them. Multiply the loss by a large factor <code>S</code> (a power of two) before <code>backward()</code>; by the chain rule every gradient is scaled by the same <code>S</code>, shifting the whole cloud up into FP16's representable band. Right before the FP32 master-weight update you divide the gradients back by <code>S</code> — so the math is unchanged, you've only borrowed dynamic range. Drag the slider: watch the sub-floor gradients climb out of the underflow zone. Push <code>S</code> too far and the largest gradient hits the <code>65504</code> ceiling → <b>Inf</b>; a real dynamic loss scaler detects that, halves <code>S</code> and skips the step.</p>
+  <div class='why'>Per the OncoSeg training review, the notebook trained in pure FP32 and was the exact memory/throughput win it was missing. A 3D multi-scale tumor volume is enormous; AMP roughly halves activation memory, letting you fit a larger patch or batch (better BatchNorm/Dice statistics) and train faster on the same hospital GPU. Dice-style losses on tiny lesions produce very small gradients — precisely the regime where loss scaling prevents silent underflow that would otherwise stall learning on the smallest, most clinically important tumors.</div>
+  <div class='ctrl'><label>Loss scale S = 2^k</label><input type='range' id='ampScale' min='0' max='28' step='1' value='0'><span class='val' id='ampScaleV'>2^0 = 1</span></div>
+  <div class='pill-row'><span class='minipill'>FP16 floor 2⁻²⁴≈6e-8</span><span class='minipill'>ceiling 65504</span><span class='minipill'>FP32 master copy</span></div></div></div></div></section>
+
+<section class='demo' data-demo='cellgraph'><div class='console'><div class='bar'><span class='dotr'></span><span class='dotr g'></span><span class='dotr b'></span><span class='name'>cell_graph_gnn.py — k-NN message passing</span></div>
+  <div class='bd lab-grid'><div class='canvas-wrap'><canvas id='cellgraphCanvas' width='520' height='340'></canvas><div class='canvas-cap'>Coral = tumor nuclei, teal = immune nuclei. The ringed node is the cell being updated; lines = its k nearest-neighbor edges; its inner core recolors to the aggregated feature.</div><div class='readout' id='cellgraphReadout'></div></div>
+  <div class='explain'><h3>Cell-graph GNN</h3><p>Instead of one image patch, model the tissue as a <strong>graph</strong>: each detected nucleus is a node carrying a feature (here a scalar &ldquo;tumor-ness&rdquo; score), and edges connect each node to its <strong>k nearest spatial neighbors</strong>. A single GNN <em>message-passing</em> step replaces a node&rsquo;s feature with the <strong>mean of its k neighbors&rsquo; features</strong> — a mean-pool aggregation — the core idea behind GCN &amp; GraphSAGE-mean (which additionally keep the node&rsquo;s own feature and apply a learned weight + nonlinearity; dropped here for clarity). Slide k to grow the neighborhood and watch the highlighted tumor cell&rsquo;s feature get pulled toward its surroundings.</p>
+    <div class='why'>The highlighted cell is a <strong>tumor</strong> nucleus (original feature 0.85) but it sits inside a ring of <strong>immune</strong> cells. With small k, all neighbors are immune, so message passing rewrites its feature down to ~0.16 — the model now &ldquo;knows&rdquo; this tumor cell is immune-infiltrated. This <em>tumor-microenvironment context</em> is invisible to a per-patch CNN cropped on that single nucleus; it only emerges from the spatial graph. Raise k past the immune ring (k&ge;7) and the nearby tumor cells re-enter, nudging the feature back up — a direct view of how neighborhood size sets the receptive field of a cell-graph model.</div>
+    <div class='ctrl'><label>k neighbors</label><input type='range' id='cellgraphK' min='1' max='8' step='1' value='3'><span class='val' id='cellgraphKV'>3</span></div>
+    <div class='pill-row'><span class='minipill'>nodes = nuclei</span><span class='minipill'>edges = k-NN</span><span class='minipill'>update = mean(neighbors)</span></div>
+  </div></div></div></section>
+
+<section class="demo" data-demo="stainnorm">
+  <div class="console">
+    <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">macenko.py — match a scanner's colour to a fixed reference</span></div>
+    <div class="bd lab-grid">
+      <div class="canvas-wrap">
+        <canvas id="stainnormCanvas" width="520" height="360"></canvas>
+        <div class="canvas-cap">Same tissue, three renders: SOURCE (lab-B cast) → NORMALIZED (Macenko) vs the fixed REFERENCE. Bars = mean colour distance ΔE to reference.</div>
+        <div class="readout" id="stainnormReadout"></div>
+      </div>
+      <div class="explain">
+        <h3>Macenko stain normalization — beating the scanner colour cast</h3>
+        <p>Send one glass slide to two labs and the H&E images come back <i>different colours</i>: scanner optics, dye lots and protocols give every site its own cast. A model trained on lab-A pinks then sees lab-B purples as a brand-new distribution. <b>Macenko et&nbsp;al. (2009)</b> fixes this without touching the network: work in <b>optical density</b> <code>OD = −log₁₀(I/I₀)</code>, estimate each image's two-vector stain basis <code>Mₛ = {H,E}</code>, deconvolve to per-stain concentrations <code>C = Mₛ⁻¹·OD</code>, rescale those concentrations so their <b>robust (99th-percentile) maximum</b> matches a fixed reference, then <b>recompose in the reference basis</b> <code>M_ref</code>. The output wears the reference's colours but keeps the source's tissue structure.</p>
+        <div class="why">This is a <b>domain-shift</b> fix, the histology twin of MRI intensity normalization in <b>demo&nbsp;03</b>. Drag the cast: the raw SOURCE marches away from the REFERENCE (red ΔE bar climbs), yet the NORMALIZED output stays pinned at ΔE≈0 (teal bar) for <i>every</i> cast — because by construction it is the reference's stain matrix at the reference's concentration scale. Run this as a deterministic pre-processing step and a hospital can deploy one model across every scanner it owns.</div>
+        <div class="ctrl"><label>Scanner cast (lab&nbsp;B)</label><input type="range" id="stainnormCast" min="-1" max="1" step="0.01" value="0.55"><span class="val" id="stainnormCastV">+0.55 warm</span></div>
+        <div class="pill-row"><span class="minipill">OD = −log₁₀(I/I₀)</span><span class="minipill">C = Mₛ⁻¹·OD</span><span class="minipill">match 99th-pct scale</span><span class="minipill">recompose in M_ref</span><span class="minipill">after ΔE ≈ const</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /lab-layout -->
 
     <div class="rule"></div>
     <div class="disc"><b>About these widgets:</b> they compute the real operations (softmax, scaled dot-product attention, convolution, Dice, predictive entropy, ECE, RECIST thresholds) on small toy tensors for clarity. The intuition is identical to the 128³ volumes in the actual model; only the scale differs.</div>
@@ -1113,7 +1416,8 @@ function initLab(){ if(labInit)return; labInit=true;
     attention:Attn,mha:MHA,window:Win,xattn:XAttn,temporal:Temporal,
     unet:UNet,ds:DS,sw:SW,head:Head,loss:Loss,dice:Dice,
     dropout:Drop,entropy:Entropy,calib:Calib,hd95:HD,cc:CC,recist:Recist,
-    dino:Dino,mae:Mae,clip:Clip,diffusion:Diffusion,wsi:Wsi,stain:Stain,nuclei:Nuclei,mil:Mil,pathfm:PathFM,vit:ViT,rope:Rope,moe:Moe,mamba:Mamba,flash:Flash,jepa:Jepa,worldroll:WorldRoll,vlm:Vlm,vcot:VCoT,vla:Vla});
+    dino:Dino,mae:Mae,clip:Clip,diffusion:Diffusion,wsi:Wsi,stain:Stain,nuclei:Nuclei,mil:Mil,pathfm:PathFM,vit:ViT,rope:Rope,moe:Moe,mamba:Mamba,flash:Flash,jepa:Jepa,worldroll:WorldRoll,vlm:Vlm,vcot:VCoT,vla:Vla,
+    dreamer:Dreamer,genie:Genie,nerf:Nerf,gsplat:Gsplat,occupancy:Occupancy,pointcloud:PointCloud,simreal:Simreal,diffpolicy:DiffPolicy,pinn:Pinn,quant:Quant,prune:Prune,distill:Distill,lora:Lora,federated:Federated,amp:Amp,cellgraph:Cellgraph,stainnorm:Stainnorm});
   Object.values(MOD).forEach(m=>{ try{ m.init && m.init(); }catch(e){ console.error('init',e); } });
   setupModuleTabs();
   setupPlay();
@@ -1129,8 +1433,8 @@ function showModule(key,fromPlay){
   if(!fromPlay) Play.stop();
 }
 /* ----- category rail ----- */
-const CAT_LABELS={"foundcv":"Foundations · CV","tcore":"Transformer core","segarch":"Segmentation arch","train":"Training objectives","uncert":"Uncertainty & eval","clinical":"Clinical endpoint","foundssl":"Foundation / self-sup","path":"Digital pathology","arch":"Modern architectures","world":"World models","vlmcat":"Visual reasoning / VLM","vlacat":"Vision-Language-Action"};
-const KEYCAT={"conv":"foundcv","act":"foundcv","norm":"foundcv","upconv":"foundcv","patch":"tcore","attention":"tcore","mha":"tcore","window":"tcore","xattn":"tcore","temporal":"tcore","unet":"segarch","ds":"segarch","sw":"segarch","head":"segarch","loss":"train","dice":"train","dropout":"uncert","entropy":"uncert","calib":"uncert","hd95":"uncert","cc":"uncert","recist":"clinical","dino":"foundssl","mae":"foundssl","clip":"foundssl","diffusion":"foundssl","wsi":"path","stain":"path","nuclei":"path","mil":"path","pathfm":"path","vit":"arch","rope":"arch","moe":"arch","mamba":"arch","flash":"arch","jepa":"world","worldroll":"world","vlm":"vlmcat","vcot":"vlmcat","vla":"vlacat"};
+const CAT_LABELS={"foundcv":"Foundations · CV","tcore":"Transformer core","segarch":"Segmentation arch","train":"Training objectives","uncert":"Uncertainty & eval","clinical":"Clinical endpoint","foundssl":"Foundation / self-sup","path":"Digital pathology","arch":"Modern architectures","world":"World models","vlmcat":"Visual reasoning / VLM","vlacat":"Vision-Language-Action","phys":"Physical AI & 3D","edge":"Efficiency & edge","pathx":"Pathology · advanced"};
+const KEYCAT={"conv":"foundcv","act":"foundcv","norm":"foundcv","upconv":"foundcv","patch":"tcore","attention":"tcore","mha":"tcore","window":"tcore","xattn":"tcore","temporal":"tcore","unet":"segarch","ds":"segarch","sw":"segarch","head":"segarch","loss":"train","dice":"train","dropout":"uncert","entropy":"uncert","calib":"uncert","hd95":"uncert","cc":"uncert","recist":"clinical","dino":"foundssl","mae":"foundssl","clip":"foundssl","diffusion":"foundssl","wsi":"path","stain":"path","nuclei":"path","mil":"path","pathfm":"path","vit":"arch","rope":"arch","moe":"arch","mamba":"arch","flash":"arch","jepa":"world","worldroll":"world","dreamer":"world","genie":"world","vlm":"vlmcat","vcot":"vlmcat","vla":"vlacat","nerf":"phys","gsplat":"phys","occupancy":"phys","pointcloud":"phys","simreal":"phys","diffpolicy":"phys","pinn":"phys","quant":"edge","prune":"edge","distill":"edge","lora":"edge","federated":"edge","amp":"edge","cellgraph":"pathx","stainnorm":"pathx"};
 let curCat=null;
 function setCat(catId){
   if(!catId)return; curCat=catId;
@@ -1154,7 +1458,7 @@ function setupModuleTabs(){
 /* ---------- PLAY ENGINE: auto-drives each widget's own controls ---------- */
 const ORDER=['conv','act','norm','upconv','patch','attention','mha','window','xattn','temporal',
   'unet','ds','sw','head','loss','dice','dropout','entropy','calib','hd95','cc','recist',
-  'dino','mae','clip','diffusion','wsi','stain','nuclei','mil','pathfm','vit','rope','moe','mamba','flash','jepa','worldroll','vlm','vcot','vla'];
+  'dino','mae','clip','diffusion','wsi','stain','nuclei','mil','pathfm','vit','rope','moe','mamba','flash','jepa','worldroll','dreamer','genie','vlm','vcot','vla','nerf','gsplat','occupancy','pointcloud','simreal','diffpolicy','pinn','quant','prune','distill','lora','federated','amp','cellgraph','stainnorm'];
 const SCRIPT={
   conv:p=>{const opts=['edge','sobelx','blur','sharp'];setSel('convKernel',opts[Math.floor(p*3.999)],Conv,'kernel');},
   act:p=>{const opts=['relu','leaky','gelu','sigmoid','tanh'];setSel('actFn',opts[Math.floor(p*4.999)],Act,'fn');setR('actX','actXV',(-4+8*p),Act,'x',v=>v.toFixed(2));},
@@ -1178,6 +1482,30 @@ const SCRIPT={
   hd95:p=>{setR('hdSpike','hdSpikeV',p*60,HD,'spike',v=>''+Math.round(v));},
   cc:p=>{setR('ccMin','ccMinV',Math.round(p*30),CC,'min',v=>''+v);},
   recist:p=>{setR('recistDelta','recistDeltaV',-100+220*p,Recist,'delta',v=>Math.round(v)+'%');},
+  dreamer:p=>{ setR('dreamerH','dreamerHV', Math.round(1+p*23), Dreamer,'H', v=>''+Math.round(v)); },
+  genie:p=>{ const a=Math.min(3,Math.floor(p*4*0.999)); setR('genieAct','genieActV', a, Genie,'act', v=>Genie.codebook[Math.round(v)].name, v=>Math.round(v)); },
+  nerf:p=>{ setR('nerfT','nerfTV', p, Nerf,'t', v=>v.toFixed(2)); },
+  gsplat:p=>{ setR('gsplatN','gsplatNV', 1+Math.round(p*13), Gsplat,'N', v=>''+Math.round(v), v=>Math.round(v)); },
+  occupancy:p=>{ setR('occupancySweep','occupancySweepV', Math.min(1, 0.05+p*1.25), Occupancy,'sweep', v=>Math.round(v*100)+'%'); setR('occupancyRange','occupancyRangeV', Math.round(5+13*(0.5-0.5*Math.cos(p*Math.PI*2))), Occupancy,'range', v=>Math.round(v)+' cells', v=>Math.round(v)); },
+  pointcloud:p=>{ const n=PointCloud.perms.length; const i=Math.min(n-1,Math.floor(p*n*0.999)); setR('pointcloudPerm','pointcloudPermV', i, PointCloud,'perm', v=>(v+1)+' / '+n); },
+  simreal:p=>{ setR('simrealSigma','simrealSigmaV', 0.04+0.36*p, Simreal,'sigma', v=>(+v).toFixed(2)); },
+  diffpolicy:p=>{ const n=DiffPolicy.goals?DiffPolicy.goals.length:3;
+const idx=Math.min(n-1,Math.floor(p*n*0.999));
+setSel('diffpolicyGoal',''+idx,DiffPolicy,'goal');
+const local=Math.min(1,(p*n)-idx);
+setR('diffpolicyK','diffpolicyKV',(1-local)*DiffPolicy.T,DiffPolicy,'k',v=>''+Math.round(v)); },
+  pinn:p=>{ const v=p<0.5?p*2:1-(p-0.5)*2; setR('pinnLambda','pinnLambdaV', v, Pinn,'lam', x=>x.toFixed(2)); },
+  quant:p=>{ const bits=[8,6,4,2];const b=bits[Math.min(bits.length-1,Math.floor(p*bits.length*0.999))];setR('quantB','quantBV',b,Quant,'b',v=>v+'-bit'); },
+  prune:p=>{ const sp=Math.round(p*100);
+setR('pruneSparsity','pruneSparsityV', sp, Prune,'sparsity', v=>v.toFixed(0)+'%', v=>v/100); },
+  distill:p=>{ setR('distillTau','distillTauV', 0.4 + p*7.6, Distill,'tau', v=>v.toFixed(2)); },
+  lora:p=>{ setR('loraR','loraRV', p, Lora,'r', v=>String(v), v=>Math.max(1,Math.round(1+v*15))); },
+  federated:p=>{ setR('federatedRound','federatedRoundV', p*Federated.MAXR, Federated,'R', v=>Math.floor(v)); },
+  amp:p=>{ // sweep loss scale 0 -> sweet spot, pausing to show full rescue (S=2^20)
+const k = Math.round(20 * Math.min(1, p * 1.15));
+setR('ampScale','ampScaleV', k, Amp, 'logS', v=>'2^'+v+' = '+Math.pow(2,v).toLocaleString()); },
+  cellgraph:p=>{ const k=Math.max(1,Math.round(1+p*7));setR('cellgraphK','cellgraphKV',k,Cellgraph,'k',v=>String(v)); },
+  stainnorm:p=>{ setR('stainnormCast','stainnormCastV', -1+2*p, Stainnorm,'cast', v=>{const c=+v; return Math.abs(c)<0.04?'0 (matched)':(c>0?'+':'')+c.toFixed(2)+(c>0?' warm':' cool');}); },
   dino:p=>{ setR('dinoTrain','dinoTrainV', p, Dino,'train', v=>v.toFixed(2)); },
   mae:p=>{ setR('maeRatio','maeRatioV', p*0.85, Mae,'ratio', v=>(v*100).toFixed(0)+'%'); },
   clip:p=>{ setR('clipArc','clipArcV', p*100, Clip,'arc', v=>(v/100).toFixed(2), v=>v/100); },
@@ -3331,6 +3659,1556 @@ draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
   document.getElementById('vlaReadout').innerHTML=
     `t=<b>${this.t.toFixed(1)}</b>/${this.T} · token a${curIdx+1} = <b style="color:${PHOS}">dx=${dxs}, dy=${dys}, grip=${cur.grip?'<span style=\"color:'+AMBER+'\">close</span>':'open'}</b> · <b>${phase}</b>. `+
     `Same recipe as RT-2 / OpenVLA / π0: image + text → ${pl.NB}-bin action tokens, executed over a ${this.T}-step chunk.`;
+}};
+
+
+
+/* ===== frontier-2 widgets (world / physical-AI / edge / pathology) ===== */
+/* ---- Dreamer / RSSM latent imagination ---- */
+const Dreamer={init(){
+  this.c=document.getElementById('dreamerCanvas');this.ctx=this.c.getContext('2d');
+  this.H=12;                       // imagination horizon (steps), slider-driven
+  this.gamma=0.95;                 // discount factor
+  this.K=4;                        // number of REAL observed frames encoded to latent
+  // --- latent manifold drawing region (a 2-D projection of the RSSM state h_t) ---
+  this.mx=58; this.my=40; this.mw=300; this.mh=262; // manifold box on the left/center
+  // --- a fixed reward "value landscape": a Gaussian bump = high-return region ---
+  // coords are in latent units, latent space ~ [-1,1]^2
+  this.goal=[0.62,0.42];           // peak of the reward field (the thing worth reaching)
+  this.sig=0.62;                   // reward field width
+  // --- K real frames encode to these posterior latents (deterministic, seeded) ---
+  // they sit on a curved 1-D manifold (the data we actually observed)
+  this.obs=[];
+  for(let i=0;i<this.K;i++){const u=i/(this.K-1);            // 0..1 along the observed clip
+    const a=-2.1+u*1.7;                                       // angle along an arc
+    this.obs.push([-0.80+0.95*u, -0.30+0.34*Math.sin(a*1.6)]);}
+  this.z0=this.obs[this.K-1];                                // start imagining from the LAST real latent
+  const s=document.getElementById('dreamerH');
+  s.addEventListener('input',()=>{this.H=+s.value;document.getElementById('dreamerHV').textContent=this.H;this.draw();});
+  this.draw();
+},
+// reward model r(z): how good is being at latent z (the critic's per-step signal source)
+reward(z){const dx=z[0]-this.goal[0],dy=z[1]-this.goal[1];
+  return Math.exp(-(dx*dx+dy*dy)/(2*this.sig*this.sig));},   // in (0,1]
+// RSSM PRIOR transition: deterministic recurrent step h_{t+1}=f(h_t,a_t).
+// The learned actor steers the latent toward higher reward (gradient of the field)
+// plus a fixed recurrent "momentum" curl so the path is a smooth dream, not a beeline.
+imagine(H){const pts=[this.z0.slice()];let z=this.z0.slice();
+  for(let k=0;k<H;k++){
+    const dx=this.goal[0]-z[0], dy=this.goal[1]-z[1];        // actor: ascend the value field
+    const g=0.22;                                            // actor step gain
+    const curl=0.10;                                         // recurrent momentum (deterministic)
+    const nz=[ z[0]+g*dx - curl*dy, z[1]+g*dy + curl*dx ];
+    nz[0]=Math.max(-0.98,Math.min(0.98,nz[0]));
+    nz[1]=Math.max(-0.98,Math.min(0.98,nz[1]));
+    pts.push(nz); z=nz;
+  }
+  return pts;
+},
+// discounted return G = Σ_{t=1..H} γ^{t-1} r(z_t) over the imagined rollout (no t=0 start state)
+ret(pts){let G=0;for(let t=1;t<pts.length;t++){G+=Math.pow(this.gamma,t-1)*this.reward(pts[t]);}return G;},
+// map latent coords [-1,1]^2 -> manifold pixels
+toPx(z){return [this.mx+(z[0]+1)/2*this.mw, this.my+(1-(z[1]+1)/2)*this.mh];},
+draw(){const ctx=this.ctx,W=this.c.width,Hc=this.c.height;clear(ctx,W,Hc);
+  const H=this.H;
+  // ---- reward field as a faint teal heatmap (the value landscape) ----
+  const NC=22;const cw=this.mw/NC, ch=this.mh/NC;
+  for(let i=0;i<NC;i++)for(let j=0;j<NC;j++){
+    const zx=-1+2*(i+0.5)/NC, zy=1-2*(j+0.5)/NC;
+    const r=this.reward([zx,zy]);
+    ctx.fillStyle=rampTeal(0.10+0.85*r);ctx.globalAlpha=0.5;
+    ctx.fillRect(this.mx+i*cw, this.my+j*ch, cw+0.6, ch+0.6);
+  }
+  ctx.globalAlpha=1;
+  // manifold frame + title
+  ctx.strokeStyle=GRID;ctx.lineWidth=1;ctx.strokeRect(this.mx,this.my,this.mw,this.mh);
+  ctx.fillStyle=INKSOFT;fontMono(ctx,10.5);ctx.textAlign='left';
+  ctx.fillText('latent manifold  (RSSM state h_t projected to 2-D)',this.mx,this.my-10);
+  // ---- goal marker (peak of reward field) ----
+  const gp=this.toPx(this.goal);
+  ctx.strokeStyle=ACCENT;ctx.lineWidth=1.4;ctx.beginPath();ctx.arc(gp[0],gp[1],9,0,7);ctx.stroke();
+  ctx.fillStyle=ACCENT;ctx.beginPath();ctx.arc(gp[0],gp[1],2.4,0,7);ctx.fill();
+  fontMono(ctx,9);ctx.fillText('high reward',gp[0]+12,gp[1]+3);
+  // ---- K REAL frames -> encoded posterior latents (coral squares on an arc) ----
+  ctx.strokeStyle='rgba(227,90,49,.5)';ctx.lineWidth=1.4;ctx.setLineDash([4,3]);ctx.beginPath();
+  this.obs.forEach((z,i)=>{const p=this.toPx(z);i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]);});
+  ctx.stroke();ctx.setLineDash([]);
+  this.obs.forEach((z,i)=>{const p=this.toPx(z);
+    ctx.fillStyle=ACCENT2;ctx.fillRect(p[0]-3.5,p[1]-3.5,7,7);
+    ctx.fillStyle=INKSOFT;fontMono(ctx,8.5);ctx.textAlign='center';ctx.fillText('o'+(i+1),p[0],p[1]-7);});
+  ctx.textAlign='left';
+  // ---- imagined latent rollout (teal line + fading dots) ----
+  const pts=this.imagine(H);
+  ctx.strokeStyle=ACCENT;ctx.lineWidth=2.4;ctx.beginPath();
+  pts.forEach((z,i)=>{const p=this.toPx(z);i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]);});
+  ctx.stroke();
+  // discounted weight controls dot size/alpha: later steps matter less (γ^t)
+  for(let k=0;k<pts.length;k++){const p=this.toPx(pts[k]);
+    const w=Math.pow(this.gamma,k);
+    if(k===0){ctx.fillStyle=INK;ctx.beginPath();ctx.arc(p[0],p[1],4.5,0,7);ctx.fill();
+      fontMono(ctx,9.5);ctx.fillText('z₀ = last real latent',p[0]+8,p[1]-6);}
+    else{ctx.fillStyle=`rgba(12,138,141,${0.30+0.6*w})`;ctx.beginPath();ctx.arc(p[0],p[1],3,0,7);ctx.fill();}
+  }
+  // mark the final imagined state
+  const last=this.toPx(pts[pts.length-1]);
+  ctx.strokeStyle=ACCENT;ctx.lineWidth=1.4;ctx.beginPath();ctx.arc(last[0],last[1],6,0,7);ctx.stroke();
+  // ---- right panel: per-step reward bars + accumulating discounted return ----
+  const px0=378, py0=46, pw=124, ph=210;
+  ctx.fillStyle=INKSOFT;fontMono(ctx,10);ctx.textAlign='left';
+  ctx.fillText('imagined return',px0,py0-16);
+  ctx.fillText('Σ γᵗ r(zₜ)',px0,py0-3);
+  // axes
+  ctx.strokeStyle=GRID;ctx.lineWidth=1;ctx.beginPath();
+  ctx.moveTo(px0,py0);ctx.lineTo(px0,py0+ph);ctx.lineTo(px0+pw,py0+ph);ctx.stroke();
+  // cumulative discounted return curve over the horizon (normalized by its max possible)
+  let G=0;const maxG=1/(1-this.gamma); // upper bound if r==1 every step, for scaling
+  const curve=[0];
+  for(let t=1;t<pts.length;t++){G+=Math.pow(this.gamma,t-1)*this.reward(pts[t]);curve.push(G);}
+  const Gtot=G;
+  // bars: discounted reward contributed at each step  γ^{t-1} r(z_t)
+  const Hmax=24;const bw=pw/Hmax;
+  for(let t=1;t<pts.length;t++){
+    const contrib=Math.pow(this.gamma,t-1)*this.reward(pts[t]);
+    const bh=(contrib)*ph*0.92;                       // contrib in [0,1]
+    const x=px0+(t-1)*bw;
+    ctx.fillStyle=`rgba(12,138,141,${0.35+0.5*Math.pow(this.gamma,t-1)})`;
+    ctx.fillRect(x+0.6,py0+ph-bh,Math.max(1.5,bw-1.2),bh);
+  }
+  // accumulating-return line (coral), scaled to maxG
+  ctx.strokeStyle=ACCENT2;ctx.lineWidth=2;ctx.beginPath();
+  curve.forEach((cv,t)=>{const x=px0+t*bw, y=py0+ph-(cv/maxG)*ph;t?ctx.lineTo(x,y):ctx.moveTo(x,y);});
+  ctx.stroke();
+  const lastC=curve[curve.length-1];
+  const lx=px0+(curve.length-1)*bw, ly=py0+ph-(lastC/maxG)*ph;
+  ctx.fillStyle=ACCENT2;ctx.beginPath();ctx.arc(lx,ly,3.5,0,7);ctx.fill();
+  ctx.fillStyle=INKSOFT;fontMono(ctx,9);ctx.textAlign='left';
+  ctx.fillText('H='+H,px0+pw-26,py0+ph+13);
+  ctx.fillStyle=ACCENT2;ctx.fillText('— return',px0,py0+ph+13);
+  // ---- readout ----
+  const r1=this.reward(pts[1]||this.z0);
+  document.getElementById('dreamerReadout').innerHTML=
+    `Encoded <b>${this.K}</b> real frames → posterior latents (coral); imagining <b>${H}</b> steps forward in latent space — <b>no pixel decode</b>. `+
+    `First imagined reward r(z₁)=<b>${r1.toFixed(2)}</b>. Discounted return over H: `+
+    `G = Σ γᵗ r(zₜ) = <b style="color:${ACCENT2}">${Gtot.toFixed(2)}</b> (γ=${this.gamma}). `+
+    `Later steps are discounted by γᵗ, so the curve flattens — the actor-critic is trained on <b>this imagined G</b>, never touching the simulator again.`;
+}};
+
+/* ---- Genie: learned latent actions (action-controllable video world model) ---- */
+const Genie={init(){
+  this.c=document.getElementById('genieCanvas');this.ctx=this.c.getContext('2d');
+  this.N=6;                       // 6x6 tiled "world"
+  this.act=3;                     // chosen latent action (0..3); start = "right"
+  this.sx=2; this.sy=3;           // sprite (a token) position in the grid (deterministic)
+  // VQ codebook: 4 DISCRETE latent actions, each a learned 2D direction code.
+  // In Genie these emerge unsupervised from video; here they map to the cardinal moves.
+  this.codebook=[ {dx:0,dy:-1,name:'↑ up',  ar:'↑'}, {dx:0,dy:1,name:'↓ down', ar:'↓'},
+                  {dx:-1,dy:0,name:'← left',ar:'←'}, {dx:1,dy:0,name:'→ right',ar:'→'} ];
+  // Observed transition (prev->cur) the Latent-Action-Model infers FROM.
+  // Sprite moved +1 in x between the two frames -> the LAM should quantize this to "right".
+  this.prev={x:1,y:3}; this.cur={x:2,y:3};
+  const s=document.getElementById('genieAct');
+  s.addEventListener('input',()=>{this.act=Math.round(+s.value);
+    document.getElementById('genieActV').textContent=this.codebook[this.act].name;this.draw();});
+  document.getElementById('genieActV').textContent=this.codebook[this.act].name;
+  this.draw();
+},
+// Latent Action Model: encode observed displacement, VQ to nearest codebook vector.
+inferLatent(){const d={dx:this.cur.x-this.prev.x, dy:this.cur.y-this.prev.y};
+  const dist=this.codebook.map(c=>Math.hypot(c.dx-d.dx, c.dy-d.dy));   // VQ nearest-neighbour
+  let best=0;for(let i=1;i<dist.length;i++)if(dist[i]<dist[best])best=i;
+  const probs=softmax(dist.map(x=>-x*3));                               // interpretable soft assignment
+  return {d,dist,best,probs};},
+// Dynamics model: current frame + chosen latent action -> next frame (toroidal wrap).
+applyAction(x,y,a){const c=this.codebook[a];
+  return { x:((x+c.dx)%this.N+this.N)%this.N, y:((y+c.dy)%this.N+this.N)%this.N };},
+// draw one grid "frame" with a sprite at (gx,gy); optional ghost target highlight.
+frame(ox,oy,cell,gx,gy,opt){const ctx=this.ctx;opt=opt||{};
+  for(let i=0;i<this.N;i++)for(let j=0;j<this.N;j++){
+    ctx.fillStyle=EMPTY;ctx.fillRect(ox+i*cell+1,oy+j*cell+1,cell-2,cell-2);
+  }
+  ctx.strokeStyle=GRID;ctx.lineWidth=1;
+  for(let i=0;i<=this.N;i++){ctx.beginPath();ctx.moveTo(ox+i*cell,oy);ctx.lineTo(ox+i*cell,oy+this.N*cell);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(ox,oy+i*cell);ctx.lineTo(ox+this.N*cell,oy+i*cell);ctx.stroke();}
+  if(opt.ghost){const gx2=opt.ghost.x,gy2=opt.ghost.y;
+    ctx.fillStyle='rgba(227,90,49,.16)';ctx.fillRect(ox+gx2*cell+1,oy+gy2*cell+1,cell-2,cell-2);
+    ctx.strokeStyle=ACCENT2;ctx.setLineDash([4,3]);ctx.lineWidth=1.6;
+    ctx.strokeRect(ox+gx2*cell+1.5,oy+gy2*cell+1.5,cell-3,cell-3);ctx.setLineDash([]);}
+  const cxp=ox+gx*cell+cell/2, cyp=oy+gy*cell+cell/2;
+  ctx.fillStyle=opt.spriteColor||ACCENT;
+  ctx.beginPath();ctx.arc(cxp,cyp,cell*0.30,0,7);ctx.fill();
+  ctx.fillStyle='#f8fafb';ctx.beginPath();ctx.arc(cxp,cyp,cell*0.12,0,7);ctx.fill();
+  return {cx:cxp,cy:cyp,ox,oy,cell};
+},
+draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
+  const inf=this.inferLatent();
+  const nxt=this.applyAction(this.sx,this.sy,this.act);
+  const cell=34, gw=this.N*cell;
+  // ===== LEFT panel: Latent Action Model (inference from prev->cur) =====
+  ctx.textAlign='left';fontMono(ctx,10.5);ctx.fillStyle=INKSOFT;
+  ctx.fillText('LATENT ACTION MODEL  (infer z from video)',16,18);
+  const lx=16, ly=34, mini=14;
+  ctx.fillStyle=INKSOFT;fontMono(ctx,9);
+  ctx.fillText('frame t-1',lx,ly-3);ctx.fillText('frame t',lx+this.N*mini+26,ly-3);
+  const drawMini=(ox,oy,gx,gy)=>{for(let i=0;i<this.N;i++)for(let j=0;j<this.N;j++){ctx.fillStyle=EMPTY;ctx.fillRect(ox+i*mini+1,oy+j*mini+1,mini-2,mini-2);}
+    ctx.fillStyle=INKSOFT;ctx.beginPath();ctx.arc(ox+gx*mini+mini/2,oy+gy*mini+mini/2,mini*0.30,0,7);ctx.fill();};
+  drawMini(lx,ly,this.prev.x,this.prev.y);
+  drawMini(lx+this.N*mini+26,ly,this.cur.x,this.cur.y);
+  ctx.strokeStyle=INKSOFT;ctx.lineWidth=1.6;ctx.beginPath();
+  const ax=lx+this.N*mini+6, ay=ly+this.N*mini/2;ctx.moveTo(ax,ay);ctx.lineTo(ax+14,ay);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(ax+14,ay);ctx.lineTo(ax+9,ay-4);ctx.lineTo(ax+9,ay+4);ctx.closePath();ctx.fillStyle=INKSOFT;ctx.fill();
+  const by=ly+this.N*mini+24; ctx.fillStyle=INKSOFT;fontMono(ctx,9.5);ctx.textAlign='left';
+  ctx.fillText('VQ codebook match  (argmin dist -> z):',lx,by-7);
+  this.codebook.forEach((c,i)=>{const yy=by+i*18;
+    ctx.fillStyle=i===inf.best?ACCENT:INKSOFT;fontMono(ctx,11);ctx.textAlign='left';
+    ctx.fillText('z'+i+' '+c.ar,lx,yy+9);
+    const bx=lx+38,bw=118; ctx.fillStyle=EMPTY;ctx.fillRect(bx,yy,bw,11);
+    ctx.fillStyle=i===inf.best?ACCENT:'rgba(66,83,90,.4)';ctx.fillRect(bx,yy,bw*inf.probs[i],11);
+    ctx.fillStyle=INKSOFT;fontMono(ctx,9);ctx.textAlign='left';ctx.fillText((inf.probs[i]*100).toFixed(0)+'%',bx+bw+6,yy+9);
+  });
+  // ===== RIGHT panel: Dynamics model (generate next frame from chosen action) =====
+  const rox=300, roy=50;
+  ctx.fillStyle=INKSOFT;fontMono(ctx,10.5);ctx.textAlign='left';
+  ctx.fillText('DYNAMICS MODEL  (generate t+1 | a)',rox-2,18);
+  ctx.fillStyle=INKSOFT;fontMono(ctx,9);ctx.fillText('current frame  +  action a'+this.act+' '+this.codebook[this.act].ar,rox,roy-7);
+  const f=this.frame(rox,roy,cell,this.sx,this.sy,{ghost:nxt});
+  const tcx=rox+nxt.x*cell+cell/2, tcy=roy+nxt.y*cell+cell/2;
+  if(nxt.x!==this.sx||nxt.y!==this.sy){
+    ctx.strokeStyle=ACCENT2;ctx.lineWidth=2.2;ctx.beginPath();ctx.moveTo(f.cx,f.cy);ctx.lineTo(tcx,tcy);ctx.stroke();
+    const ang=Math.atan2(tcy-f.cy,tcx-f.cx);ctx.fillStyle=ACCENT2;ctx.beginPath();
+    ctx.moveTo(tcx,tcy);ctx.lineTo(tcx-9*Math.cos(ang-0.4),tcy-9*Math.sin(ang-0.4));
+    ctx.lineTo(tcx-9*Math.cos(ang+0.4),tcy-9*Math.sin(ang+0.4));ctx.closePath();ctx.fill();
+  }
+  ctx.fillStyle=ACCENT2;fontMono(ctx,9);ctx.textAlign='center';
+  ctx.fillText('predicted frame t+1',rox+gw/2,roy+gw+16);
+  ctx.textAlign='left';
+  document.getElementById('genieReadout').innerHTML=
+    `LAM sees obs &Delta;=(${inf.d.dx},${inf.d.dy}) &rarr; quantizes to latent <b>z=${inf.best}</b> ${this.codebook[inf.best].ar} at <b>${(inf.probs[inf.best]*100).toFixed(0)}%</b> (no action labels). `+
+    `You chose <b>a${this.act}</b> ${this.codebook[this.act].name} &rarr; dynamics rolls (${this.sx},${this.sy}) to <b style="color:${ACCENT2}">(${nxt.x},${nxt.y})</b>. One model, any action you pick.`;
+}};
+
+const Nerf={init(){
+  this.c=document.getElementById('nerfCanvas');this.ctx=this.c.getContext('2d');
+  this.t=0.42;                      // ray lateral offset (0..1) — which pixel/ray we render
+  this.N=40; this.near=0; this.far=6; this.delta=(this.far-this.near)/this.N;
+  // deterministic 2D density field rho(depth s, height y): two fixed Gaussian "blobs".
+  // The ray marches in depth s at a fixed height y = offset. Sweeping offset = sweeping the rendered pixel.
+  this.blobs=[
+    {cs:2.2, cy:0.42, A:2.6, ss:0.55, sy:0.16, col:[12,138,141]},   // dense teal core, near
+    {cs:4.0, cy:0.62, A:1.7, ss:0.60, sy:0.20, col:[227,90,49]}     // coral satellite, deeper
+  ];
+  const s=document.getElementById('nerfT');
+  s.addEventListener('input',()=>{this.t=+s.value;document.getElementById('nerfTV').textContent=this.t.toFixed(2);this.draw();});
+  this.draw();
+},
+// total density sampled at depth s for the ray at height off
+sigmaAt(s,off){let d=0;for(const b of this.blobs){d+=b.A*Math.exp(-(((s-b.cs)/b.ss)**2+((off-b.cy)/b.sy)**2));}return d;},
+// emitted color at (s,off): density-weighted blend of each blob's color (so the integral mixes teal->coral)
+colorAt(s,off){let r=0,g=0,bl=0,w=0;for(const b of this.blobs){const ww=b.A*Math.exp(-(((s-b.cs)/b.ss)**2+((off-b.cy)/b.sy)**2));r+=ww*b.col[0];g+=ww*b.col[1];bl+=ww*b.col[2];w+=ww;}
+  if(w>1e-6)return[r/w,g/w,bl/w];return[210,222,226];},
+// march the ray and accumulate the faithful volume-rendering integral
+render(off){
+  const N=this.N,dl=this.delta; let T=1,acc=0,C=[0,0,0]; const sig=[],Tarr=[],warr=[],cols=[];
+  for(let i=0;i<N;i++){
+    const s=this.near+(i+0.5)*dl;
+    const si=this.sigmaAt(s,off), ci=this.colorAt(s,off);
+    const alpha=1-Math.exp(-si*dl);     // opacity contributed by this slab
+    const w=T*alpha;                     // weight = transmittance * local opacity
+    sig.push(si);Tarr.push(T);warr.push(w);cols.push(ci);
+    C[0]+=w*ci[0];C[1]+=w*ci[1];C[2]+=w*ci[2];
+    acc+=w;
+    T*=(1-alpha);                        // transmittance for the NEXT sample: T_{i+1}=T_i*(1-alpha_i)
+  }
+  return{sig,Tarr,warr,cols,C,acc,Tfinal:T};
+},
+draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
+  const off=this.t,N=this.N,dl=this.delta;
+  const R=this.render(off);
+  const maxSig=Math.max(0.01,...this.blobs.map(b=>b.A)); // fixed scale ceiling for bars/heat
+
+  // ---------- PANEL A: the scene + the marching ray ----------
+  const ax=24, ay=28, aw=302, ah=120;
+  ctx.fillStyle='#f1f5f6';ctx.fillRect(ax,ay,aw,ah);
+  // paint the density field as a faint teal heat field (deterministic)
+  const gx=46, gy=24, cw=aw/gx, chh=ah/gy;
+  for(let j=0;j<gy;j++)for(let i=0;i<gx;i++){
+    const s=this.near+((i+0.5)/gx)*(this.far-this.near);
+    const y=(j+0.5)/gy;
+    const d=this.sigmaAt(s,y);
+    ctx.fillStyle=rampTeal(Math.min(1,d/(maxSig*1.05)));
+    ctx.fillRect(ax+i*cw,ay+j*chh,cw+0.6,chh+0.6);
+  }
+  ctx.strokeStyle=GRID;ctx.lineWidth=1;ctx.strokeRect(ax,ay,aw,ah);
+  // the ray: horizontal line at height = offset, from camera (left) into the scene (right)
+  const ry=ay+off*ah;
+  ctx.strokeStyle=INK;ctx.lineWidth=1.6;ctx.setLineDash([5,3]);
+  ctx.beginPath();ctx.moveTo(ax-12,ry);ctx.lineTo(ax+aw,ry);ctx.stroke();ctx.setLineDash([]);
+  // camera eye
+  ctx.fillStyle=INK;ctx.beginPath();ctx.arc(ax-12,ry,4,0,7);ctx.fill();
+  ctx.fillStyle=INKSOFT;fontMono(ctx,9.5);ctx.textAlign='right';ctx.fillText('eye',ax-18,ry+3);
+  // sample dots along the ray, sized by their weight w_i = T_i*alpha_i (where the color comes from)
+  ctx.textAlign='left';
+  const wMax=Math.max(1e-6,...R.warr);
+  for(let i=0;i<N;i++){
+    const sx=ax+((i+0.5)/N)*aw;
+    const wr=R.warr[i]/wMax;
+    if(wr>0.04){ctx.fillStyle=`rgba(227,90,49,${0.25+0.6*wr})`;ctx.beginPath();ctx.arc(sx,ry,1.5+3.5*wr,0,7);ctx.fill();}
+  }
+  ctx.fillStyle=INKSOFT;fontMono(ctx,10);ctx.fillText('scene density σ(x)  ·  ray marches eye → far',ax,ay-9);
+
+  // rendered-pixel swatch (right of panel A)
+  const px=ax+aw+22, pw=120, pyc=ay+6;
+  const c=R.C.map(v=>Math.round(Math.max(0,Math.min(255,v))));
+  // composite the integral over a white background by accumulated opacity (thin ray reads pale)
+  const a=R.acc, bg=255;
+  const disp=c.map(v=>Math.round(v*a+bg*(1-a)));
+  ctx.fillStyle=`rgb(${disp[0]},${disp[1]},${disp[2]})`;ctx.fillRect(px,pyc+14,pw,52);
+  ctx.strokeStyle=GRID;ctx.strokeRect(px,pyc+14,pw,52);
+  ctx.fillStyle=INKSOFT;fontMono(ctx,10);ctx.fillText('rendered pixel C',px,pyc+8);
+  fontMono(ctx,9.5);ctx.fillText(`opacity α = ${a.toFixed(2)}`,px,pyc+82);
+  ctx.fillText(`RGB ${c[0]},${c[1]},${c[2]}`,px,pyc+96);
+
+  // ---------- PANEL B: per-sample σ bars + transmittance & accumulated-opacity curves ----------
+  const bx=24, by=192, bw=W-48, bh=118;
+  ctx.strokeStyle=GRID;ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(bx,by);ctx.lineTo(bx,by+bh);ctx.lineTo(bx+bw,by+bh);ctx.stroke();
+  // gridlines + 0..1 axis labels (for T and accumulated opacity)
+  ctx.strokeStyle='rgba(209,221,226,.7)';
+  for(let k=0;k<=4;k++){const yy=by+bh-(k/4)*bh;ctx.beginPath();ctx.moveTo(bx,yy);ctx.lineTo(bx+bw,yy);ctx.stroke();
+    ctx.fillStyle=INKSOFT;fontMono(ctx,9);ctx.textAlign='right';ctx.fillText((k/4).toFixed(2),bx-4,yy+3);}
+  ctx.textAlign='left';
+  // σ density bars (teal), scaled by a fixed ceiling so the sweep is comparable frame-to-frame
+  const slot=bw/N, sigCeil=maxSig*1.05;
+  for(let i=0;i<N;i++){
+    const xx=bx+i*slot, hN=Math.min(1,R.sig[i]/sigCeil), bhh=hN*bh*0.92;
+    ctx.fillStyle=rampTeal(0.35+0.6*hN);
+    ctx.fillRect(xx+0.6,by+bh-bhh,slot-1.2,bhh);
+  }
+  // transmittance T_i curve (coral, decaying) — survives only until the ray hits something opaque
+  ctx.strokeStyle=ACCENT2;ctx.lineWidth=2;ctx.beginPath();
+  for(let i=0;i<N;i++){const xx=bx+(i+0.5)*slot, yy=by+bh-R.Tarr[i]*bh;i?ctx.lineTo(xx,yy):ctx.moveTo(xx,yy);}ctx.stroke();
+  // running accumulated opacity (1 − T) curve (dark ink, rising) = the integral so far
+  ctx.strokeStyle=INK;ctx.lineWidth=1.6;ctx.setLineDash([4,3]);ctx.beginPath();
+  let run=0,Tr=1;
+  for(let i=0;i<N;i++){const alpha=1-Math.exp(-R.sig[i]*dl);run+=Tr*alpha;Tr*=(1-alpha);
+    const xx=bx+(i+0.5)*slot, yy=by+bh-run*bh;i?ctx.lineTo(xx,yy):ctx.moveTo(xx,yy);}
+  ctx.stroke();ctx.setLineDash([]);
+  // labels / legend
+  ctx.fillStyle=INKSOFT;fontMono(ctx,10);
+  ctx.fillText('sample index  i  (eye → far)',bx,by+bh+16);
+  const lx=bx+150,ly=by-8;
+  ctx.fillStyle=ACCENT;ctx.fillRect(lx,ly-8,12,8);ctx.fillStyle=INKSOFT;ctx.fillText('σ·δ density',lx+16,ly);
+  ctx.fillStyle=ACCENT2;ctx.fillRect(lx+118,ly-8,12,3);ctx.fillStyle=INKSOFT;ctx.fillText('Tᵢ transmittance',lx+134,ly);
+  ctx.fillStyle=INK;ctx.fillRect(lx+268,ly-8,12,3);ctx.fillStyle=INKSOFT;ctx.fillText('accum. opacity',lx+284,ly);
+
+  // ---------- readout ----------
+  const cR=c[0],cG=c[1],cB=c[2];
+  document.getElementById('nerfReadout').innerHTML=
+    `ray offset = <b>${off.toFixed(2)}</b> · samples N=<b>${N}</b> · step δ=<b>${dl.toFixed(2)}</b><br>`+
+    `accumulated opacity = 1 − T<sub>N</sub> = <b>${R.acc.toFixed(3)}</b>  (final transmittance T<sub>N</sub>=${R.Tfinal.toFixed(3)})<br>`+
+    `rendered C = Σ Tᵢ·(1−e<sup>−σᵢδ</sup>)·cᵢ = <b>(${cR},${cG},${cB})</b> — the transmittance-weighted integral of the colors the ray passed through.`;
+}};
+
+const Gsplat={init(){
+  this.c=document.getElementById('gsplatCanvas');this.ctx=this.c.getContext('2d');
+  this.N=14;
+  /* ---- 14 DETERMINISTIC 2D gaussians (projected splats). Fixed arrays => identical every render. ----
+     each: [mu_x, mu_y, opacity, depth, scale_x, scale_y, rot, [r,g,b]]  (mu in image coords 0..1) */
+  const defs=[
+    [0.30,0.40, 0.86, 0.20, 0.135,0.075,  0.5,  [ 44,150,146]],
+    [0.62,0.34, 0.92, 0.55, 0.110,0.150, -0.6,  [227, 90, 49]],
+    [0.47,0.58, 0.80, 0.35, 0.160,0.090,  0.2,  [ 46,133,201]],
+    [0.72,0.66, 0.88, 0.80, 0.100,0.120,  1.1,  [ 12,138,141]],
+    [0.22,0.70, 0.74, 0.15, 0.130,0.130, -0.3,  [227, 90, 49]],
+    [0.55,0.22, 0.90, 0.62, 0.090,0.140,  0.9,  [ 46,133,201]],
+    [0.40,0.30, 0.70, 0.45, 0.180,0.080,  0.4,  [ 44,150,146]],
+    [0.80,0.45, 0.84, 0.25, 0.105,0.105, -0.9,  [227, 90, 49]],
+    [0.33,0.55, 0.78, 0.70, 0.120,0.160,  0.7,  [ 12,138,141]],
+    [0.66,0.52, 0.82, 0.40, 0.140,0.100, -0.4,  [ 46,133,201]],
+    [0.50,0.46, 0.95, 0.50, 0.075,0.075,  0.0,  [227, 90, 49]],
+    [0.27,0.32, 0.72, 0.88, 0.150,0.110,  1.3,  [ 44,150,146]],
+    [0.74,0.30, 0.80, 0.10, 0.110,0.130, -1.1,  [ 12,138,141]],
+    [0.45,0.72, 0.86, 0.30, 0.130,0.120,  0.6,  [ 46,133,201]],
+  ];
+  this.G=defs.map(d=>{
+    const [mx,my,op,depth,sx,sy,rot,col]=d;
+    /* Σ = R·diag(sx²,sy²)·Rᵀ ; store analytic inverse covariance for the gaussian footprint */
+    const c=Math.cos(rot), s=Math.sin(rot), a=sx*sx, b=sy*sy;
+    const S00=c*c*a+s*s*b, S01=c*s*(a-b), S11=s*s*a+c*c*b;
+    const det=S00*S11-S01*S01;
+    return {mx,my,op,depth,col, inv:[S11/det,-S01/det,S00/det]};
+  }).sort((p,q)=>p.depth-q.depth);   /* front (small depth) first — fixed render order */
+  const sl=document.getElementById('gsplatN');
+  sl.addEventListener('input',()=>{this.N=+sl.value;document.getElementById('gsplatNV').textContent=this.N;this.draw();});
+  this.draw();
+},
+draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
+  const use=this.G.slice(0,this.N);
+  /* ===== LEFT: composited novel view, rasterized per-cell front-to-back ===== */
+  const ox=18, oy=40, IW=300, IH=240, GX=60, GY=48;   /* image rect + cell grid */
+  const cw=IW/GX, ch=IH/GY;
+  ctx.fillStyle='#fbfdfe';ctx.fillRect(ox,oy,IW,IH);
+  let painted=0, sumA=0, blends=0;
+  for(let gy=0;gy<GY;gy++)for(let gx=0;gx<GX;gx++){
+    const x=(gx+0.5)/GX, y=(gy+0.5)/GY;
+    let T=1, R=0, Gc=0, B=0, A=0;
+    for(const g of use){
+      const dx=x-g.mx, dy=y-g.my;
+      const m=g.inv[0]*dx*dx+2*g.inv[1]*dx*dy+g.inv[2]*dy*dy;   /* Mahalanobis dist² */
+      if(m>9) continue;                                         /* 3σ footprint cull */
+      const al=g.op*Math.exp(-0.5*m);                           /* projected gaussian α */
+      const w=al*T;                                             /* over-composite weight */
+      R+=g.col[0]*w; Gc+=g.col[1]*w; B+=g.col[2]*w; A+=w; blends++;
+      T*=(1-al);
+      if(T<0.003) break;                                        /* early terminate: opaque */
+    }
+    sumA+=A; if(A>0.5)painted++;
+    if(A>0.004){
+      /* composite over the light panel: result = fg + (1-A)*panel  */
+      const pr=251,pg=253,pb=254;
+      const r=Math.round(R + (1-A)*pr*A + pr*(1-A)*0); // keep colors crisp over light bg
+      ctx.fillStyle=`rgb(${Math.round(R+(1-A)*pr)},${Math.round(Gc+(1-A)*pg)},${Math.round(B+(1-A)*pb)})`;
+      ctx.fillRect(ox+gx*cw,oy+gy*ch,cw+0.6,ch+0.6);
+    }
+  }
+  ctx.strokeStyle=GRID;ctx.lineWidth=1;ctx.strokeRect(ox,oy,IW,IH);
+  /* outline ONLY the rendered splats' 1σ ellipses so you see footprints being added */
+  for(let i=0;i<use.length;i++){const g=use[i];
+    /* recover Σ eigen-axes from inverse for a rough 1σ ellipse */
+    const a=g.inv[0],b=g.inv[1],d=g.inv[2];
+    const tr=a+d, det=a*d-b*b, disc=Math.sqrt(Math.max(0,tr*tr/4-det));
+    const l1=tr/2+disc, l2=tr/2-disc;               /* eigenvalues of inv => 1/σ² */
+    const r1=1/Math.sqrt(Math.max(1e-4,l1)), r2=1/Math.sqrt(Math.max(1e-4,l2));
+    const ang=0.5*Math.atan2(2*b,a-d);
+    ctx.save();ctx.translate(ox+g.mx*IW,oy+g.my*IH);ctx.rotate(-ang);
+    ctx.beginPath();ctx.ellipse(0,0,r2*IW,r1*IH,0,0,7);
+    ctx.strokeStyle=`rgba(${g.col[0]},${g.col[1]},${g.col[2]},0.55)`;ctx.lineWidth=1;ctx.stroke();
+    ctx.restore();
+  }
+  ctx.fillStyle=INKSOFT;fontMono(ctx,11);ctx.textAlign='left';
+  ctx.fillText('rasterized view',ox,oy-10);
+
+  /* ===== RIGHT: depth-sorted splat stack (front → back), shows the blend order ===== */
+  const sx0=ox+IW+34, sy0=oy, sH=IH;
+  ctx.fillStyle=INKSOFT;fontMono(ctx,10);ctx.fillText('depth order',sx0,oy-10);
+  ctx.fillText('(front → back)',sx0,oy+3);
+  const rows=this.G.length, rh=sH/rows;
+  for(let i=0;i<rows;i++){
+    const g=this.G[i], on=i<this.N;
+    const ry=sy0+8+i*rh;
+    /* opacity proportional to splat opacity, dim if not yet rendered */
+    const c=g.col, baseA=on?0.20+0.75*g.op:0.07;
+    ctx.fillStyle=`rgba(${c[0]},${c[1]},${c[2]},${baseA})`;
+    ctx.fillRect(sx0,ry,108,rh-4);
+    ctx.strokeStyle=on?`rgba(${c[0]},${c[1]},${c[2]},0.9)`:GRID;ctx.lineWidth=on?1.4:1;
+    ctx.strokeRect(sx0+0.5,ry+0.5,108,rh-4);
+    ctx.fillStyle=on?'#fff':INKSOFT;fontMono(ctx,9);ctx.textAlign='left';
+    ctx.fillText('g'+(i<9?'0':'')+(i+1)+' z='+g.depth.toFixed(2),sx0+5,ry+rh*0.5+1);
+    /* opacity tick */
+    if(on){ctx.fillStyle=`rgba(${c[0]},${c[1]},${c[2]},0.95)`;ctx.fillRect(sx0+78,ry+2,30*g.op,rh-8);}
+  }
+  /* divider marking how far the slider reached */
+  if(this.N<rows){const dy=sy0+8+this.N*rh-2;
+    ctx.strokeStyle=ACCENT2;ctx.setLineDash([4,3]);ctx.lineWidth=1.6;
+    ctx.beginPath();ctx.moveTo(sx0-4,dy);ctx.lineTo(sx0+114,dy);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle=ACCENT2;fontMono(ctx,9);ctx.fillText('culled below',sx0,dy+rh*0.5+2);}
+
+  const cover=(painted/(GX*GY)*100), meanA=sumA/(GX*GY);
+  document.getElementById('gsplatReadout').innerHTML=
+    `splats rendered <b>${this.N}/${this.G.length}</b> · pixel-blend ops <b>${blends.toLocaleString()}</b> · surface coverage <b>${cover.toFixed(0)}%</b> · mean accumulated α <b>${meanA.toFixed(2)}</b><br>`+
+    `Each pixel = <b>Σ cᵢ·αᵢ·Tᵢ</b>, T=Π(1−αⱼ) front→back; front splats occlude back ones (T→0, then culled). This is a single <b>rasterize</b> pass — <b>no per-ray MLP</b> like NeRF — which is why splatting renders novel views in <b>real time</b>.`;
+}};
+
+const Occupancy={
+  G:25, sx:12, sy:12,
+  obstacles:[
+    {x0:3,y0:3,x1:7,y1:5},{x0:17,y0:4,x1:20,y1:10},{x0:4,y0:17,x1:9,y1:20},
+    {x0:16,y0:18,x1:21,y1:21},{x0:9,y0:8,x1:11,y1:9},{x0:13,y0:14,x1:15,y1:16}
+  ],
+  isObs(cx,cy){for(const o of this.obstacles)if(cx>=o.x0&&cx<=o.x1&&cy>=o.y0&&cy<=o.y1)return true;return false;},
+  init(){
+    this.c=document.getElementById('occupancyCanvas');this.ctx=this.c.getContext('2d');
+    this.range=12;this.sweep=1;
+    const sr=document.getElementById('occupancyRange');
+    sr.addEventListener('input',()=>{this.range=+sr.value;document.getElementById('occupancyRangeV').textContent=this.range+' cells';this.draw();});
+    const ss=document.getElementById('occupancySweep');
+    ss.addEventListener('input',()=>{this.sweep=+ss.value;document.getElementById('occupancySweepV').textContent=Math.round(this.sweep*100)+'%';this.draw();});
+    this.draw();
+  },
+  scan(){
+    const G=this.G,sx=this.sx,sy=this.sy,R=this.range,total=240,n=Math.max(1,Math.round(total*this.sweep));
+    const st=Array.from({length:G},()=>new Array(G).fill(0));
+    const hits=[];
+    for(let r=0;r<n;r++){
+      const a=(r/total)*Math.PI*2,dx=Math.cos(a),dy=Math.sin(a),steps=Math.ceil(R*4);
+      let last=-1,ex=sx,ey=sy,stopped=false;
+      for(let s=1;s<=steps;s++){
+        const t=(s/steps)*R,cx=Math.round(sx+dx*t),cy=Math.round(sy+dy*t);
+        if(cx<0||cy<0||cx>=G||cy>=G){ex=sx+dx*Math.min(t,R);ey=sy+dy*Math.min(t,R);break;}
+        const id=cy*G+cx;if(id===last){ex=cx;ey=cy;continue;}last=id;
+        if(cx===sx&&cy===sy){st[cy][cx]=1;ex=cx;ey=cy;continue;}
+        if(this.isObs(cx,cy)){st[cy][cx]=2;ex=cx;ey=cy;stopped=true;break;}
+        else{if(st[cy][cx]===0)st[cy][cx]=1;ex=cx;ey=cy;}
+      }
+      if(r%12===0)hits.push({ex,ey,stopped});
+    }
+    st[sy][sx]=1;
+    return {st,hits};
+  },
+  draw(){
+    const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
+    const G=this.G,sx=this.sx,sy=this.sy;
+    const gridPx=300, cs=gridPx/G, ox=14, oy=(H-gridPx)/2;
+    const {st,hits}=this.scan();
+    let occ=0,free=0,unk=0;
+    for(let y=0;y<G;y++)for(let x=0;x<G;x++){
+      const v=st[y][x];let fill;
+      if(v===2){fill=ACCENT2;occ++;}
+      else if(v===1){fill=rampTeal(0.30);free++;}
+      else{fill=EMPTY;unk++;}
+      ctx.fillStyle=fill;ctx.fillRect(ox+x*cs+0.5,oy+y*cs+0.5,cs-1,cs-1);
+    }
+    ctx.strokeStyle=GRID;ctx.lineWidth=1;
+    for(let i=0;i<=G;i+=5){ctx.beginPath();ctx.moveTo(ox+i*cs,oy);ctx.lineTo(ox+i*cs,oy+gridPx);ctx.moveTo(ox,oy+i*cs);ctx.lineTo(ox+gridPx,oy+i*cs);ctx.stroke();}
+    ctx.strokeStyle=INKSOFT;ctx.lineWidth=1;ctx.strokeRect(ox,oy,gridPx,gridPx);
+    const scx=ox+(sx+0.5)*cs, scy=oy+(sy+0.5)*cs;
+    ctx.lineWidth=1;
+    hits.forEach(h=>{
+      ctx.strokeStyle=h.stopped?'rgba(227,90,49,0.30)':'rgba(12,138,141,0.20)';
+      ctx.beginPath();ctx.moveTo(scx,scy);ctx.lineTo(ox+(h.ex+0.5)*cs,oy+(h.ey+0.5)*cs);ctx.stroke();
+    });
+    ctx.beginPath();ctx.arc(scx,scy,Math.min(this.range,17.7)*cs,0,7);ctx.setLineDash([4,4]);ctx.strokeStyle='rgba(46,133,201,0.5)';ctx.lineWidth=1.5;ctx.stroke();ctx.setLineDash([]);
+    ctx.beginPath();ctx.arc(scx,scy,7,0,7);ctx.fillStyle=ACCENT;ctx.fill();ctx.lineWidth=2;ctx.strokeStyle=ACCENT3;ctx.stroke();
+    const lx=ox+gridPx+22, ly=oy+10, tot=G*G;
+    fontMono(ctx,11);ctx.textAlign='left';
+    ctx.fillStyle=INKSOFT;ctx.fillText('BEV occupancy grid',lx,ly);
+    const rows=[['occupied',ACCENT2,occ],['free',rampTeal(0.55),free],['unknown',EMPTY,unk]];
+    rows.forEach((r,i)=>{const yy=ly+30+i*40;
+      ctx.fillStyle=r[1];ctx.fillRect(lx,yy-10,14,14);ctx.strokeStyle=INKSOFT;ctx.lineWidth=1;ctx.strokeRect(lx,yy-10,14,14);
+      ctx.fillStyle=INK;fontMono(ctx,11);ctx.fillText(r[0],lx+22,yy+1);
+      ctx.fillStyle=INKSOFT;fontMono(ctx,10);ctx.fillText((r[2]/tot*100).toFixed(0)+'%  ('+r[2]+')',lx+22,yy+15);
+    });
+    ctx.fillStyle=INKSOFT;fontMono(ctx,9.5);
+    ctx.fillText('teal dot = sensor',lx,ly+162);
+    ctx.fillText('dashed ring = range',lx,ly+177);
+    ctx.fillText('coral block = obstacle',lx,ly+192);
+    ctx.fillText('shadows stay unknown',lx,ly+207);
+    document.getElementById('occupancyReadout').innerHTML=
+      `range <b>${this.range}</b> cells · sweep <b>${Math.round(this.sweep*100)}%</b> → occupied <b>${(occ/tot*100).toFixed(0)}%</b> · free <b>${(free/tot*100).toFixed(0)}%</b> · unknown <b>${(unk/tot*100).toFixed(0)}%</b> (Σ=100%). Cells in an obstacle's <b>shadow</b> are never revealed — extra range can't see through walls, so unknown plateaus.`;
+  }
+};
+
+/* ---- PointNet permutation invariance ---- */
+const PointCloud={init(){
+  this.c=document.getElementById('pointcloudCanvas');this.ctx=this.c.getContext('2d');
+  this.N=8; this.D=4; this.perm=0;
+  /* deterministic point SET (seeded trig) — coords in [-1,1]^2; this is the unordered input set */
+  this.base=[];
+  for(let i=0;i<this.N;i++){
+    const a=i*2.3999632;                       // golden-angle spread → well-scattered, deterministic
+    const r=0.30+0.62*((i*0.61803)%1);
+    this.base.push([Math.cos(a)*r, Math.sin(a)*r]);
+  }
+  /* shared per-point MLP: 4 fixed neurons. f(p)[d]=relu(w·p+b), SAME weights for EVERY point. */
+  this.W=[[ 1.20,-0.30, 0.10],   // dim0: emphasises +x
+          [-0.40, 1.30,-0.05],   // dim1: emphasises +y
+          [ 0.85, 0.85,-0.20],   // dim2: +x+y diagonal
+          [-0.95, 0.70, 0.15]];  // dim3: up-left
+  /* fixed permutation orders of the SAME 8 points (index relabelings) */
+  this.perms=[
+    [0,1,2,3,4,5,6,7],
+    [3,0,7,1,5,2,6,4],
+    [7,6,5,4,3,2,1,0],
+    [2,5,1,7,0,6,3,4],
+    [4,2,6,0,3,7,1,5],
+    [1,3,5,7,0,2,4,6]];
+  const s=document.getElementById('pointcloudPerm');
+  s.addEventListener('input',()=>{this.perm=+s.value;document.getElementById('pointcloudPermV').textContent=(this.perm+1)+' / '+this.perms.length;this.draw();});
+  this.draw();
+},
+/* shared MLP applied to one point → D relu features */
+feat(p){const f=[];for(let d=0;d<this.D;d++){const w=this.W[d];f.push(Math.max(0, w[0]*p[0]+w[1]*p[1]+w[2]));}return f;},
+draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
+  const order=this.perms[this.perm];
+  const dCol=[ACCENT,ACCENT2,ACCENT3,'#8a6fb0'];
+  // ---- per-point features in CURRENT order, and global max-pool over the set ----
+  const feats=order.map(idx=>this.feat(this.base[idx]));        // features listed in current order
+  const g=[],argSet=[];                                         // g[d]=global max; argSet[d]=ORIGINAL point id supplying it
+  for(let d=0;d<this.D;d++){
+    let best=0,bv=-1e9;
+    for(let i=0;i<this.N;i++){if(feats[i][d]>bv){bv=feats[i][d];best=i;}}
+    g.push(bv); argSet.push(order[best]);                       // map back to the physical (original) point
+  }
+  // ---- LEFT: the scattered point SET (positions fixed; labels = current order index) ----
+  const px=20,py=42,pw=210,ph=250;
+  fontMono(ctx,11);ctx.fillStyle=INKSOFT;ctx.textAlign='left';
+  ctx.fillText('POINT SET  (unordered, N=8)',px,30);
+  ctx.strokeStyle=GRID;ctx.lineWidth=1;ctx.strokeRect(px,py,pw,ph);
+  ctx.beginPath();ctx.moveTo(px+pw/2,py);ctx.lineTo(px+pw/2,py+ph);ctx.moveTo(px,py+ph/2);ctx.lineTo(px+pw,py+ph/2);ctx.strokeStyle='#e7eef1';ctx.stroke();
+  const toX=x=>px+pw/2+x*(pw/2-18), toY=y=>py+ph/2-y*(ph/2-18);
+  const winners={};argSet.forEach((oi,d)=>{winners[oi]=d;});    // original ids that supply some max dim
+  for(let i=0;i<this.N;i++){
+    const oi=order[i];const p=this.base[oi];const X=toX(p[0]),Y=toY(p[1]);
+    const isWin=(oi in winners);
+    ctx.beginPath();ctx.arc(X,Y,isWin?9:6,0,7);
+    ctx.fillStyle=isWin?dCol[winners[oi]]:EMPTY;ctx.fill();
+    if(isWin){ctx.lineWidth=2;ctx.strokeStyle=INK;ctx.stroke();}
+    ctx.fillStyle=isWin?'#fff':INKSOFT;fontMono(ctx,isWin?10:9);ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(''+i,X,Y);                                     // label = position in CURRENT order
+    ctx.textBaseline='alphabetic';
+  }
+  fontMono(ctx,9);ctx.fillStyle=INKSOFT;ctx.textAlign='left';
+  ctx.fillText('label = index in current order',px,py+ph+15);
+  // ---- MIDDLE: shared MLP — per-point feature columns (current order) ----
+  const mx=250,my=58,cw=18,ch=46,gap=4;
+  fontMono(ctx,11);ctx.fillStyle=INKSOFT;ctx.textAlign='left';
+  ctx.fillText('SHARED MLP → per-point features',mx,30);
+  fontMono(ctx,9);ctx.fillText('point  0  1  2  3  4  5  6  7   (current order)',mx,46);
+  const fmax=2.6;
+  for(let d=0;d<this.D;d++){
+    const rowY=my+d*(ch+gap);
+    ctx.fillStyle=dCol[d];fontMono(ctx,10);ctx.textAlign='right';ctx.fillText('f'+d,mx-4,rowY+ch/2+4);ctx.textAlign='left';
+    for(let i=0;i<this.N;i++){
+      const v=feats[i][d];const x=mx+8+i*(cw+1),h=Math.max(1,v/fmax*ch);
+      const isMax=(order[i]===argSet[d]);
+      ctx.fillStyle=isMax?dCol[d]:(d===1?rampWarm(0.18+0.5*(v/fmax)):rampTeal(0.18+0.5*(v/fmax)));
+      ctx.fillRect(x,rowY+ch-h,cw,h);
+      ctx.strokeStyle=GRID;ctx.lineWidth=1;ctx.strokeRect(x,rowY,cw,ch);
+      if(isMax){ctx.strokeStyle=INK;ctx.lineWidth=2;ctx.strokeRect(x-1,rowY-1,cw+2,ch+2);}  // boxed = this dim's max
+    }
+  }
+  // arrow → maxpool
+  const ax=mx+8+this.N*(cw+1)+10;
+  ctx.strokeStyle=INKSOFT;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(ax,my+90);ctx.lineTo(ax+24,my+90);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(ax+24,my+90);ctx.lineTo(ax+18,my+86);ctx.lineTo(ax+18,my+94);ctx.closePath();ctx.fillStyle=INKSOFT;ctx.fill();
+  fontMono(ctx,9);ctx.fillStyle=INKSOFT;ctx.textAlign='center';ctx.fillText('MAX',ax+12,my+78);ctx.fillText('pool',ax+12,my+108);
+  // ---- RIGHT: global feature vector g (the invariant output) ----
+  const gx=ax+34,gy=my,gw=42;
+  fontMono(ctx,11);ctx.fillStyle=INKSOFT;ctx.textAlign='left';ctx.fillText('GLOBAL g',gx,30);
+  for(let d=0;d<this.D;d++){
+    const rowY=gy+d*(ch+gap);const h=Math.max(2,g[d]/fmax*ch);
+    ctx.fillStyle=EMPTY;ctx.fillRect(gx,rowY,gw,ch);
+    ctx.fillStyle=dCol[d];ctx.fillRect(gx,rowY+ch-h,gw,h);
+    ctx.strokeStyle=INK;ctx.lineWidth=1.5;ctx.strokeRect(gx,rowY,gw,ch);
+    ctx.fillStyle='#fff';fontMono(ctx,10);ctx.textAlign='center';ctx.fillText(g[d].toFixed(2),gx+gw/2,rowY+ch-5);
+  }
+  document.getElementById('pointcloudReadout').innerHTML=
+    `order <b>${this.perm+1}/${this.perms.length}</b> = [${order.join(' ')}] · g = [${g.map(v=>v.toFixed(2)).join(', ')}] · argmax points (original ids) = [${argSet.join(', ')}]. Reorder the inputs — <b>g and its argmax points never change</b>: max over a set is permutation-invariant.`;
+}};
+
+const Simreal={init(){
+  this.c=document.getElementById('simrealCanvas');this.ctx=this.c.getContext('2d');
+  this.sigma=0.10;
+  this.K=2.5;                               // training-support contour drawn at 2.5 sigma
+  this.C={x:0.42,y:0.46};                   // base SIM appearance (cloud center)
+  this.R={x:0.78,y:0.74};                   // fixed REAL scanner sample (dist 0.456 from C)
+  // 72 deterministic seeded standard-normal offsets (Box-Muller, fixed LCG seed) -> stable autoplay
+  this.N=72; this.off=[];
+  let s=20240626>>>0; const rnd=()=>{s=(1664525*s+1013904223)>>>0;return s/4294967296;};
+  for(let i=0;i<this.N;i++){const u1=Math.max(1e-6,rnd()),u2=rnd();
+    const r=Math.sqrt(-2*Math.log(u1)),th=2*Math.PI*u2;
+    this.off.push({x:r*Math.cos(th),y:r*Math.sin(th)});}
+  const sl=document.getElementById('simrealSigma');
+  sl.addEventListener('input',()=>{this.sigma=+sl.value;document.getElementById('simrealSigmaV').textContent=this.sigma.toFixed(2);this.draw();});
+  this.draw();
+},
+draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
+  const ox=58,oy=20,sz=290;                       // appearance-space plot box
+  const X=v=>ox+v*sz, Y=v=>oy+(1-v)*sz;           // y axis points up
+  const sig=this.sigma, K=this.K;
+  const dist=Math.hypot(this.R.x-this.C.x,this.R.y-this.C.y);   // appearance-space distance
+  const supportR=K*sig;                                         // support radius (appearance units)
+  const z=dist/Math.max(sig,1e-6);                              // distance to center, in sigmas
+  const inDist=dist<=supportR;                                  // real enclosed by support?
+  const coverage=Math.min(1,Math.PI*supportR*supportR);         // fraction of unit appearance box covered
+
+  // ---- frame + faint grid ----
+  ctx.strokeStyle=GRID;ctx.lineWidth=1;
+  for(let i=0;i<=8;i++){const t=i/8;
+    ctx.beginPath();ctx.moveTo(X(t),Y(0));ctx.lineTo(X(t),Y(1));ctx.stroke();
+    ctx.beginPath();ctx.moveTo(X(0),Y(t));ctx.lineTo(X(1),Y(t));ctx.stroke();}
+  ctx.strokeStyle=INKSOFT;ctx.lineWidth=1.2;ctx.strokeRect(X(0),Y(1),sz,sz);
+  fontMono(ctx,10);ctx.fillStyle=INKSOFT;ctx.textAlign='center';
+  ctx.fillText('texture / contrast →',X(0.5),Y(0)+30);
+  ctx.save();ctx.translate(X(0)-34,Y(0.5));ctx.rotate(-Math.PI/2);ctx.fillText('brightness / illumination →',0,0);ctx.restore();
+
+  // ---- training-support disk (the covered region) ----
+  const cx=X(this.C.x),cy=Y(this.C.y),pr=supportR*sz;
+  ctx.save();ctx.beginPath();ctx.rect(X(0),Y(1),sz,sz);ctx.clip();      // keep fill inside the box
+  ctx.beginPath();ctx.arc(cx,cy,pr,0,7);
+  ctx.fillStyle=inDist?'rgba(12,138,141,.14)':'rgba(227,90,49,.07)';ctx.fill();
+  ctx.setLineDash([5,4]);ctx.lineWidth=1.6;ctx.strokeStyle=inDist?ACCENT:INKSOFT;ctx.stroke();ctx.setLineDash([]);
+  ctx.restore();
+  ctx.textAlign='left';fontMono(ctx,9.5);ctx.fillStyle=INKSOFT;
+  ctx.fillText(K.toFixed(1)+'σ support',cx-22,cy-pr-6>oy?cy-pr-6:cy+pr+14);
+
+  // ---- randomized SIM cloud (deterministic, scaled by sigma) ----
+  for(let i=0;i<this.N;i++){
+    const sx=this.C.x+this.off[i].x*sig, sy=this.C.y+this.off[i].y*sig;
+    if(sx<0||sx>1||sy<0||sy>1)continue;
+    const rr=Math.hypot(this.off[i].x,this.off[i].y);            // density: closer = darker teal
+    ctx.beginPath();ctx.arc(X(sx),Y(sy),2.4,0,7);
+    ctx.fillStyle=rampTeal(Math.max(.18,1-rr/3.2));ctx.fill();
+  }
+
+  // ---- base SIM center ----
+  ctx.beginPath();ctx.arc(cx,cy,4.5,0,7);ctx.fillStyle=ACCENT;ctx.fill();
+  ctx.lineWidth=1.5;ctx.strokeStyle='#fff';ctx.stroke();
+
+  // ---- connector: center -> real ----
+  const rx=X(this.R.x),ry=Y(this.R.y);
+  ctx.setLineDash([3,3]);ctx.lineWidth=1.2;ctx.strokeStyle=inDist?ACCENT:WARN;
+  ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(rx,ry);ctx.stroke();ctx.setLineDash([]);
+
+  // ---- fixed REAL sample (coral diamond) ----
+  ctx.save();ctx.translate(rx,ry);ctx.rotate(Math.PI/4);
+  const d=7.5;ctx.fillStyle=ACCENT2;ctx.fillRect(-d,-d,2*d,2*d);
+  ctx.lineWidth=1.6;ctx.strokeStyle='#fff';ctx.strokeRect(-d,-d,2*d,2*d);ctx.restore();
+  ctx.textAlign='left';fontMono(ctx,10.5);ctx.fillStyle=ACCENT2;
+  ctx.fillText('REAL scanner',rx+12,ry+4);
+
+  // ---- verdict badge ----
+  const bw=120,bh=22,bx=X(1)-bw-6,by=oy+6;
+  ctx.fillStyle=inDist?'rgba(12,138,141,.14)':'rgba(210,59,42,.12)';
+  ctx.strokeStyle=inDist?ACCENT:WARN;ctx.lineWidth=1.4;
+  ctx.beginPath();ctx.rect(bx,by,bw,bh);ctx.fill();ctx.stroke();
+  fontMono(ctx,11);ctx.fillStyle=inDist?ACCENT:WARN;ctx.textAlign='center';
+  ctx.fillText(inDist?'IN-distribution':'OUT-of-dist.',bx+bw/2,by+15);
+
+  // ---- coverage bar ----
+  const cbx=X(0)+4,cby=oy+6,cbw=150,cbh=10;
+  ctx.fillStyle=EMPTY;ctx.fillRect(cbx,cby,cbw,cbh);
+  ctx.fillStyle=ACCENT;ctx.fillRect(cbx,cby,cbw*coverage,cbh);
+  ctx.strokeStyle=GRID;ctx.lineWidth=1;ctx.strokeRect(cbx,cby,cbw,cbh);
+  fontMono(ctx,9.5);ctx.fillStyle=INKSOFT;ctx.textAlign='left';
+  ctx.fillText('coverage '+(coverage*100).toFixed(0)+'%',cbx,cby+cbh+12);
+
+  document.getElementById('simrealReadout').innerHTML=
+    `randomization σ = <b>${sig.toFixed(2)}</b> &middot; support = ${K}σ = <b>${supportR.toFixed(2)}</b> &middot; dist(real, sim-center) = <b>${dist.toFixed(2)}</b><br>`+
+    `real sample sits <b>${z.toFixed(2)}σ</b> from center → <b>${inDist?'IN-distribution ✓':'OUT-of-distribution ✗'}</b> &middot; appearance coverage ≈ <b>${(coverage*100).toFixed(0)}%</b>.<br>`+
+    (inDist
+      ? `Cloud now encloses the real scanner — the model trained against this appearance, so the reality gap is bridged.`
+      : `Cloud too tight — widen σ until the ${K}σ contour swallows the coral ◆ (crossover σ ≈ ${(dist/K).toFixed(2)}).`);
+}};
+
+const DiffPolicy={init(){
+  this.c=document.getElementById('diffpolicyCanvas');this.ctx=this.c.getContext('2d');
+  this.T=20;            // total diffusion steps
+  this.k=this.T;        // slider value = current denoise step k (T=noisy .. 0=clean)
+  this.goal=0;          // which goal the observation conditions on
+  // ---- OBSERVATION (deterministic). Robot start + a few candidate goals; one is conditioned on.
+  this.start={x:0.14,y:0.50};
+  this.goals=[
+    {name:'shelf A', gx:0.86,gy:0.22, col:ACCENT2},
+    {name:'bin B',   gx:0.86,gy:0.80, col:ACCENT3},
+    {name:'tray C',  gx:0.52,gy:0.14, col:ACCENT},
+  ];
+  // ---- fixed obstacle the feasible path must arc around (part of the observation)
+  this.obs={x:0.50,y:0.50,r:0.135};
+  this.H=12;            // action-horizon: # of waypoints in the trajectory
+  // ---- fixed seeded standard-normal noise field eps[i]={x,y} per waypoint (Box-Muller).
+  //      Same draw every render -> denoising is deterministic -> autoplay is stable.
+  this.eps=[]; let s=20240626;
+  const rnd=()=>{s=(s*1103515245+12345)&0x7fffffff;return s/0x7fffffff;};
+  for(let i=0;i<this.H;i++){
+    const u1=Math.max(1e-6,rnd()),u2=rnd();
+    const mag=Math.sqrt(-2*Math.log(u1));
+    this.eps.push({x:mag*Math.cos(2*Math.PI*u2), y:mag*Math.sin(2*Math.PI*u2)});
+  }
+  const sl=document.getElementById('diffpolicyK');
+  sl.addEventListener('input',()=>{this.k=+sl.value;document.getElementById('diffpolicyKV').textContent=Math.round(this.k);this.draw();});
+  const sel=document.getElementById('diffpolicyGoal');
+  sel.addEventListener('input',()=>{this.goal=+sel.value;this.draw();});
+  this.draw();
+},
+// cosine variance schedule (Nichol & Dhariwal): abar(0)=1 (clean) -> abar(T)~0 (pure noise)
+alphaBar(k){const sf=0.008,f=t=>Math.cos((t+sf)/(1+sf)*Math.PI/2)**2;const t=k/this.T;return f(t)/f(0);},
+// CLEAN target trajectory x0 = a smooth, feasible, obstacle-avoiding path start->goal.
+// Deterministic: a quadratic Bezier whose control point is pushed off the obstacle.
+clean(){
+  const g=this.goals[this.goal],a=this.start,b={x:g.gx,y:g.gy};
+  const mx=(a.x+b.x)/2,my=(a.y+b.y)/2;                  // midpoint
+  let nx=-(b.y-a.y),ny=(b.x-a.x);const nl=Math.hypot(nx,ny)||1;nx/=nl;ny/=nl;
+  // push control point to the side of the obstacle that bends away from it
+  const side=((this.obs.x-mx)*nx+(this.obs.y-my)*ny)>0?-1:1;
+  const bend=0.26;
+  const cx=mx+nx*side*bend, cy=my+ny*side*bend;
+  const path=[];
+  for(let i=0;i<this.H;i++){
+    const u=i/(this.H-1);const w=1-u;
+    path.push({x:w*w*a.x+2*w*u*cx+u*u*b.x, y:w*w*a.y+2*w*u*cy+u*u*b.y});
+  }
+  return path;
+},
+draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
+  const sx=20,sy=42,sw=W-40,sh=H-78;
+  const toPx=p=>({x:sx+p.x*sw,y:sy+p.y*sh});
+  const k=this.k, ab=this.alphaBar(k), sig=Math.sqrt(1-ab), sa=Math.sqrt(ab);
+  const snr=ab/(1-ab+1e-9);
+  const g=this.goals[this.goal];
+  const x0=this.clean();
+  // current diffusion iterate of the ACTION sequence:
+  //   x_k = sqrt(abar_k)*x0 + sqrt(1-abar_k)*eps   (per-waypoint, fixed eps)
+  const NOISE=0.30; // scale eps into image-space units so it is visible but bounded
+  // soft-clamp to (0,1) only by the noise fraction sig, so the CLEAN path (sig=0) passes
+  // through exactly and the noisy cloud (sig->1) stays on-canvas.
+  const sc=(v,a)=>v*(1-a)+a*(0.5+0.5*Math.tanh(2*(v-0.5)));
+  const xk=[];
+  for(let i=0;i<this.H;i++){
+    // x_k = sqrt(abar)*x0 + sqrt(1-abar)*eps, with the noise re-centered on the workspace
+    // mid so that as signal fades the cloud hovers around the scene (not off-canvas).
+    const rx=sa*x0[i].x+(1-sa)*0.5+sig*this.eps[i].x*NOISE;
+    const ry=sa*x0[i].y+(1-sa)*0.5+sig*this.eps[i].y*NOISE;
+    xk.push({x:sc(rx,sig), y:sc(ry,sig)});
+  }
+
+  // ----- scene background + grid -----
+  ctx.fillStyle='#f8fafb';ctx.fillRect(sx,sy,sw,sh);
+  ctx.strokeStyle=GRID;ctx.lineWidth=1;ctx.strokeRect(sx,sy,sw,sh);
+  for(let i=1;i<8;i++){ctx.beginPath();ctx.moveTo(sx+i*sw/8,sy);ctx.lineTo(sx+i*sw/8,sy+sh);ctx.stroke();}
+  for(let i=1;i<5;i++){ctx.beginPath();ctx.moveTo(sx,sy+i*sh/5);ctx.lineTo(sx+sw,sy+i*sh/5);ctx.stroke();}
+  fontMono(ctx,10);ctx.fillStyle=INKSOFT;ctx.textAlign='left';
+  ctx.fillText('observation o  ->  denoise k='+Math.round(k)+'  ->  action trajectory',sx,sy-7);
+
+  // ----- obstacle (must be avoided) -----
+  const op=toPx(this.obs),orr=this.obs.r*sw;
+  ctx.fillStyle='rgba(210,59,42,.10)';ctx.strokeStyle='rgba(210,59,42,.55)';ctx.lineWidth=1.4;
+  ctx.setLineDash([4,3]);ctx.beginPath();ctx.arc(op.x,op.y,orr,0,7);ctx.fill();ctx.stroke();ctx.setLineDash([]);
+  fontMono(ctx,9.5);ctx.fillStyle=WARN;ctx.textAlign='center';ctx.fillText('obstacle',op.x,op.y+3);ctx.textAlign='left';
+
+  // ----- goals (the conditioned one is highlighted) -----
+  this.goals.forEach((gg,i)=>{const p=toPx({x:gg.gx,y:gg.gy});const isT=i===this.goal;
+    ctx.globalAlpha=isT?1:0.42;ctx.fillStyle=gg.col;ctx.strokeStyle=isT?INK:GRID;ctx.lineWidth=isT?2:1;
+    ctx.beginPath();ctx.arc(p.x,p.y,9,0,7);ctx.fill();ctx.stroke();ctx.globalAlpha=1;
+    if(isT){ctx.strokeStyle=gg.col;ctx.lineWidth=1.8;ctx.setLineDash([3,3]);ctx.beginPath();ctx.arc(p.x,p.y,15,0,7);ctx.stroke();ctx.setLineDash([]);}
+    fontMono(ctx,9);ctx.fillStyle=isT?INK:INKSOFT;ctx.textAlign='center';ctx.fillText(gg.name,p.x,p.y-13);ctx.textAlign='left';});
+
+  // ----- ghost of the clean target x0 (faint teal dashed) -----
+  ctx.strokeStyle='rgba(12,138,141,.22)';ctx.lineWidth=1.4;ctx.setLineDash([3,4]);ctx.beginPath();
+  x0.forEach((p,i)=>{const q=toPx(p);i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y);});ctx.stroke();ctx.setLineDash([]);
+
+  // ----- the current (partially denoised) trajectory x_k -----
+  // color interpolates from light/coral-noisy -> teal-clean by the signal fraction sa
+  const col=rampTeal(sa);
+  ctx.strokeStyle=col;ctx.lineWidth=2.4;ctx.beginPath();
+  xk.forEach((p,i)=>{const q=toPx(p);i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y);});ctx.stroke();
+  // waypoints + per-waypoint denoise vector (where the next reverse step pulls it, toward x0)
+  for(let i=0;i<this.H;i++){const q=toPx(xk[i]);
+    if(sig>0.04){const t=toPx(x0[i]);
+      ctx.strokeStyle='rgba(227,90,49,.5)';ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(q.x,q.y);ctx.lineTo(q.x+(t.x-q.x)*0.5,q.y+(t.y-q.y)*0.5);ctx.stroke();}
+    ctx.fillStyle=col;ctx.beginPath();ctx.arc(q.x,q.y,3,0,7);ctx.fill();
+  }
+  // start (end-effector) marker
+  const spx=toPx(this.start);
+  ctx.fillStyle=INK;ctx.beginPath();ctx.arc(spx.x,spx.y,5,0,7);ctx.fill();
+  ctx.strokeStyle='#fff';ctx.lineWidth=1.5;ctx.stroke();
+  fontMono(ctx,9);ctx.fillStyle=INKSOFT;ctx.textAlign='left';ctx.fillText('EE start',spx.x+8,spx.y+3);
+
+  // ----- noise-level bar (top-right) -----
+  const bw=150,bh=8,bx=W-bw-22,by=sy+4;
+  ctx.fillStyle=EMPTY;ctx.fillRect(bx,by,bw,bh);
+  ctx.fillStyle=rampWarm(sig);ctx.fillRect(bx,by,bw*sig,bh);
+  ctx.strokeStyle=GRID;ctx.lineWidth=1;ctx.strokeRect(bx,by,bw,bh);
+  fontMono(ctx,9);ctx.fillStyle=INKSOFT;ctx.textAlign='right';
+  ctx.fillText('noise sigma='+sig.toFixed(2),bx+bw,by+bh+12);ctx.textAlign='left';
+
+  // ----- readout -----
+  const phase = k>=this.T*0.66 ? 'pure-noise prior (random actions)'
+              : k>=this.T*0.25 ? 'denoising — path collapsing toward feasible'
+              : k>0 ? 'near-clean — refining the trajectory' : 'clean trajectory — ready to execute';
+  document.getElementById('diffpolicyReadout').innerHTML=
+    'step k=<b>'+Math.round(k)+'</b>/'+this.T+' · &sigma;=<b>'+sig.toFixed(2)+'</b> · &radic;&aelig;<sub>k</sub>=<b>'+sa.toFixed(2)+'</b> · SNR=<b>'+(snr<1000?snr.toFixed(2):'&infin;')+'</b> &rarr; goal &ldquo;<b style="color:'+g.col+'">'+g.name+'</b>&rdquo; · <b>'+phase+'</b>. '+
+    'x<sub>k</sub> = &radic;&aelig;&middot;x&#8320; + &radic;(1&minus;&aelig;)&middot;&epsilon; over '+this.H+' continuous waypoints; reverse steps subtract predicted noise until the path is smooth, obstacle-free and lands on the goal.';
+}};
+
+const Pinn={
+  zeta:0.18,om:2.6,A:1.0,T:3.2,lam:0.0,
+  init(){this.c=document.getElementById('pinnCanvas');this.ctx=this.c.getContext('2d');this.lam=0.0;
+    const s=document.getElementById('pinnLambda');s.addEventListener('input',()=>{this.lam=+s.value;document.getElementById('pinnLambdaV').textContent=this.lam.toFixed(2);this.draw();});
+    this.draw();},
+  utrue(t){const omd=this.om*Math.sqrt(1-this.zeta*this.zeta);return this.A*Math.exp(-this.zeta*this.om*t)*Math.cos(omd*t);},
+  data(){return [0.15,0.7,1.25,1.9,2.45,3.0].map(t=>({t,u:this.utrue(t)}));},
+  wiggle(t){let w=0;for(let k=1;k<=4;k++){w+=Math.sin((1.7*k+2.1)*t+0.6*k)/(k*1.6);}let g=1;for(const d of this.data()){g*=1-0.9*Math.exp(-((t-d.t)*(t-d.t))/0.012);}return 0.55*w*g;},
+  ufit(t){return this.utrue(t)+(1-this.lam)*this.wiggle(t);},
+  metrics(){const h=0.004,N=Math.floor(this.T/h);let s=0,c=0;for(let i=2;i<N-2;i++){const t=i*h;const up=(this.ufit(t+h)-this.ufit(t-h))/(2*h);const upp=(this.ufit(t+h)-2*this.ufit(t)+this.ufit(t-h))/(h*h);const r=upp+2*this.zeta*this.om*up+this.om*this.om*this.ufit(t);s+=r*r;c++;}const resid=Math.sqrt(s/c);let d=0;const dd=this.data();for(const p of dd){const e=this.ufit(p.t)-p.u;d+=e*e;}const dloss=Math.sqrt(d/dd.length);return {resid,dloss};},
+  draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
+    const pad=34, plotW=W-pad-14, plotH=180, x0=pad, y0=22;
+    const tx=t=>x0+(t/this.T)*plotW;
+    const uy=u=>y0+plotH/2-(u/1.25)*(plotH/2-8);
+    ctx.strokeStyle=GRID;ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(x0,y0);ctx.lineTo(x0,y0+plotH);ctx.lineTo(x0+plotW,y0+plotH);ctx.stroke();
+    ctx.strokeStyle=GRID;ctx.setLineDash([3,4]);ctx.beginPath();ctx.moveTo(x0,uy(0));ctx.lineTo(x0+plotW,uy(0));ctx.stroke();ctx.setLineDash([]);
+    ctx.strokeStyle='rgba(46,133,201,0.45)';ctx.lineWidth=1.5;ctx.beginPath();
+    for(let i=0;i<=240;i++){const t=this.T*i/240;const xx=tx(t),yy=uy(this.utrue(t));i?ctx.lineTo(xx,yy):ctx.moveTo(xx,yy);}ctx.stroke();
+    const m=this.metrics();
+    const h2=0.01;
+    for(let i=0;i<=120;i++){const t=this.T*i/120;const up=(this.ufit(t+h2)-this.ufit(t-h2))/(2*h2);const upp=(this.ufit(t+h2)-2*this.ufit(t)+this.ufit(t-h2))/(h2*h2);const r=Math.abs(upp+2*this.zeta*this.om*up+this.om*this.om*this.ufit(t));const a=Math.min(0.55,r/30);if(a>0.04){ctx.fillStyle=rampWarm(Math.min(1,r/25));ctx.globalAlpha=a;ctx.fillRect(tx(t)-2,y0,4,plotH);ctx.globalAlpha=1;}}
+    ctx.strokeStyle=ACCENT;ctx.lineWidth=2.4;ctx.beginPath();
+    for(let i=0;i<=300;i++){const t=this.T*i/300;const xx=tx(t),yy=uy(this.ufit(t));i?ctx.lineTo(xx,yy):ctx.moveTo(xx,yy);}ctx.stroke();
+    for(const d of this.data()){ctx.fillStyle=ACCENT2;ctx.beginPath();ctx.arc(tx(d.t),uy(d.u),4.2,0,7);ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=1.4;ctx.stroke();}
+    fontMono(ctx,11);ctx.fillStyle=INKSOFT;ctx.textAlign='left';ctx.fillText('u(t)',x0+4,y0+12);ctx.textAlign='right';ctx.fillText('t',x0+plotW,y0+plotH+14);
+    const by=y0+plotH+30, bx=x0+150;
+    fontMono(ctx,11);ctx.textAlign='left';ctx.fillStyle=INK;ctx.fillText('Loss decomposition',x0,by-6);
+    const dataN=Math.min(1,m.dloss/0.04), residN=Math.min(1,m.resid/24);
+    const barFull=W-bx-20;
+    ctx.fillStyle=EMPTY;ctx.fillRect(bx,by+4,barFull,16);ctx.fillStyle=ACCENT3;ctx.fillRect(bx,by+4,barFull*dataN,16);
+    ctx.fillStyle=INKSOFT;ctx.textAlign='right';ctx.fillText('data fit',bx-8,by+16);
+    ctx.fillStyle=EMPTY;ctx.fillRect(bx,by+30,barFull,16);ctx.fillStyle=ACCENT2;ctx.fillRect(bx,by+30,barFull*residN,16);
+    ctx.fillStyle=INKSOFT;ctx.fillText('PDE resid ×λ',bx-8,by+42);
+    const tot=dataN+this.lam*residN;
+    ctx.fillStyle=EMPTY;ctx.fillRect(bx,by+56,barFull,10);ctx.fillStyle=INK;ctx.fillRect(bx,by+56,barFull*Math.min(1,tot/2),10);
+    ctx.fillStyle=INKSOFT;ctx.fillText('total',bx-8,by+65);
+    document.getElementById('pinnReadout').innerHTML='residual RMS <b>'+m.resid.toFixed(1)+'</b> &nbsp;|&nbsp; data RMS <b>'+m.dloss.toFixed(3)+'</b> &nbsp;|&nbsp; &lambda;=<b>'+this.lam.toFixed(2)+'</b><br>'+(this.lam<0.15?'physics OFF — curve wiggles between points, ODE violated':this.lam>0.85?'physics ON — smooth physical solution, residual ≈ 0':'physics pulling the fit toward the equation');
+  }};
+
+const Quant={
+  init(){
+    this.c=document.getElementById('quantCanvas');this.ctx=this.c.getContext('2d');
+    this.b=8;
+    // deterministic weight tensor (seeded trig) ~ N=200 values in [-wmax,wmax]
+    this.N=200;this.W=[];
+    for(let i=0;i<this.N;i++){
+      const v=Math.sin(i*0.7)*0.55+Math.sin(i*0.13+1.0)*0.35+0.08*Math.cos(i*2.1);
+      this.W.push(v);
+    }
+    this.wmax=0;for(const v of this.W)this.wmax=Math.max(this.wmax,Math.abs(v));
+    let r=0;for(const v of this.W)r+=v*v;this.rms=Math.sqrt(r/this.N);
+    const s=document.getElementById('quantB');
+    s.addEventListener('input',()=>{this.b=+s.value;document.getElementById('quantBV').textContent=this.b+'-bit';this.draw();});
+    this.draw();
+  },
+  // symmetric signed post-training quantization
+  qStats(b){
+    const qmax=Math.pow(2,b-1)-1;            // 8-bit -> 127
+    const s=this.wmax/qmax;                  // scale
+    let err=0,maxe=0;const errs=[];
+    for(const v of this.W){
+      let q=Math.round(v/s);
+      if(q>qmax)q=qmax;if(q<-qmax-1)q=-qmax-1;
+      const e=Math.abs(q*s-v);
+      errs.push(e);err+=e;if(e>maxe)maxe=e;
+    }
+    return {qmax,s,errs,meanErr:err/this.N,maxErr:maxe};
+  },
+  acc(meanErr){const noise=meanErr/this.rms;return 0.921/(1+Math.pow(noise*1.9,2.4));},
+  draw(){
+    const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
+    const st=this.qStats(this.b),wm=this.wmax;
+    const pl=44,pr=W-16,pt=22,pb=H-118;
+    const x=v=>pl+(v+wm)/(2*wm)*(pr-pl);
+    const BINS=41,hist=new Array(BINS).fill(0);
+    const bidx=v=>{let bi=Math.floor((v+wm)/(2*wm)*BINS);if(bi>=BINS)bi=BINS-1;if(bi<0)bi=0;return bi;};
+    for(const v of this.W)hist[bidx(v)]++;
+    const hmax=Math.max.apply(null,hist);
+    ctx.strokeStyle=GRID;ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(pl,pb);ctx.lineTo(pr,pb);ctx.stroke();
+    // quantization grid lines (2^b reconstruction levels)
+    const qmax=st.qmax,dense=(2*qmax+1>33);
+    for(let q=-qmax-1;q<=qmax;q++){
+      const lv=q*st.s;if(lv<-wm-1e-6||lv>wm+1e-6)continue;
+      const lx=x(lv);
+      ctx.strokeStyle=dense?'rgba(12,138,141,0.12)':'rgba(12,138,141,0.32)';
+      ctx.beginPath();ctx.moveTo(lx,pt);ctx.lineTo(lx,pb);ctx.stroke();
+    }
+    // per-bin mean rounding error -> bar color (rampWarm)
+    const binErr=new Array(BINS).fill(0),binN=new Array(BINS).fill(0);
+    for(let i=0;i<this.N;i++){const bi=bidx(this.W[i]);binErr[bi]+=st.errs[i];binN[bi]++;}
+    const eNorm=(st.s/2)||1; // max possible |error| ~ s/2
+    const bw=(pr-pl)/BINS;
+    for(let bi=0;bi<BINS;bi++){
+      if(!hist[bi])continue;
+      const bx=pl+bi/BINS*(pr-pl),bh=hist[bi]/hmax*(pb-pt);
+      const me=binN[bi]?binErr[bi]/binN[bi]:0;
+      ctx.fillStyle=rampWarm(Math.min(1,me/eNorm));
+      ctx.fillRect(bx+0.6,pb-bh,bw-1.2,bh);
+    }
+    // FP32 continuous reference outline
+    ctx.strokeStyle='rgba(14,28,33,0.32)';ctx.lineWidth=1.4;ctx.beginPath();
+    for(let bi=0;bi<BINS;bi++){const cx=pl+(bi+0.5)/BINS*(pr-pl),cy=pb-hist[bi]/hmax*(pb-pt);bi?ctx.lineTo(cx,cy):ctx.moveTo(cx,cy);}
+    ctx.stroke();
+    fontMono(ctx,11);ctx.fillStyle=INKSOFT;ctx.textAlign='center';
+    ctx.fillText('0',x(0),pb+14);ctx.fillText('+w_max',x(wm)-24,pb+14);ctx.fillText('-w_max',x(-wm)+24,pb+14);
+    ctx.textAlign='left';ctx.fillStyle=INK;ctx.fillText('weight value  ->  '+Math.pow(2,this.b)+' integer levels',pl,pt-7);
+    // accuracy vs bit-width strip
+    const ay0=pb+34,ay1=H-18,ax0=pl,ax1=pr,bits=[8,6,4,2];
+    ctx.strokeStyle=GRID;ctx.beginPath();ctx.moveTo(ax0,ay1);ctx.lineTo(ax1,ay1);ctx.stroke();
+    const ax=b=>ax0+(8-b)/6*(ax1-ax0);
+    const ay=a=>ay1-(a-0.45)/(0.95-0.45)*(ay1-ay0);
+    ctx.strokeStyle=ACCENT3;ctx.lineWidth=2;ctx.beginPath();
+    bits.forEach((b,i)=>{const a=this.acc(this.qStats(b).meanErr),px=ax(b),py=ay(a);i?ctx.lineTo(px,py):ctx.moveTo(px,py);});
+    ctx.stroke();
+    bits.forEach(b=>{const a=this.acc(this.qStats(b).meanErr),px=ax(b),py=ay(a);
+      ctx.fillStyle=(b===this.b)?ACCENT2:ACCENT3;ctx.beginPath();ctx.arc(px,py,b===this.b?5:3,0,7);ctx.fill();
+      fontMono(ctx,10);ctx.fillStyle=INKSOFT;ctx.textAlign='center';ctx.fillText(b+'b',px,ay1+12);});
+    fontMono(ctx,11);ctx.fillStyle=ACCENT3;ctx.textAlign='left';ctx.fillText('val. accuracy vs bit-width',ax0,ay0-4);
+    const acur=this.acc(st.meanErr);
+    document.getElementById('quantReadout').innerHTML=
+      'b = <b>'+this.b+'-bit</b> &nbsp; levels = 2^'+this.b+' = <b>'+Math.pow(2,this.b)+'</b><br>'+
+      'scale s = w_max/(2^(b-1)-1) = <b>'+st.s.toFixed(4)+'</b><br>'+
+      'mean |quant err| = <b style="color:'+ACCENT2+'">'+st.meanErr.toFixed(4)+'</b> &nbsp;(max '+st.maxErr.toFixed(3)+')<br>'+
+      'memory = b/32 = <b style="color:'+ACCENT+'">'+(this.b/32*100).toFixed(0)+'%</b> of FP32 ('+(32/this.b).toFixed(1)+'x smaller)<br>'+
+      'est. accuracy = <b style="color:'+ACCENT3+'">'+(acur*100).toFixed(1)+'%</b> '+
+      (this.b>=6?'(&asymp; lossless)':this.b>=4?'(small drop)':'(<b style="color:'+WARN+'">cliff</b>)');
+  }
+};
+
+const Prune={
+  COLS:24, ROWS:16,
+  init(){
+    this.c=document.getElementById('pruneCanvas');this.ctx=this.c.getContext('2d');
+    this.N=this.COLS*this.ROWS;
+    // deterministic seeded |weights| in [0,1) via fixed fractional trig (stable across reloads & autoplay)
+    this.W=new Array(this.N);
+    for(let i=0;i<this.N;i++){let v=Math.sin(i*12.9898+78.233)*43758.5453;this.W[i]=v-Math.floor(v);}
+    // precompute the ascending sort order ONCE (indices, smallest |w| first) -> faithful magnitude pruning
+    this.order=this.W.map((v,i)=>[v,i]).sort((a,b)=>a[0]-b[0]).map(p=>p[1]);
+    this.sortedVals=this.order.map(i=>this.W[i]);
+    this.sparsity=0.50;
+    const s=document.getElementById('pruneSparsity');
+    s.addEventListener('input',()=>{this.sparsity=+s.value/100;document.getElementById('pruneSparsityV').textContent=(+s.value).toFixed(0)+'%';this.draw();});
+    document.getElementById('pruneSparsityV').textContent=(this.sparsity*100).toFixed(0)+'%';
+    this.draw();
+  },
+  // accuracy vs sparsity: flat plateau, knee ~88%, then a steep cliff toward a chance floor
+  acc(s){
+    const base=0.934, floor=0.16;
+    const gate=1/(1+Math.exp((s-0.88)/0.028));   // ~1 below the knee, ~0 above it
+    const drift=0.015*Math.max(0,s-0.6);          // tiny realistic pre-knee decay
+    return Math.max(floor, floor+(base-floor)*gate - drift);
+  },
+  draw(){
+    const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
+    const N=this.N, C=this.COLS, R=this.ROWS;
+    const k=Math.round(this.sparsity*N);           // number of smallest-|w| connections to zero
+    // rank-based keep mask: yields EXACT target sparsity and is tie-robust (true magnitude pruning)
+    const keep=new Array(N).fill(true);
+    for(let j=0;j<k;j++) keep[this.order[j]]=false;
+    const thr = k<=0 ? 0 : (k>=N ? 1 : this.sortedVals[k-1]); // displayed |w| prune threshold
+    const zeros=k, nonzero=N-zeros;
+
+    // ---------- left panel: weight-matrix heatmap ----------
+    const x0=22, y0=44, gridW=246, cellGap=1;
+    const cw=(gridW-(C-1)*cellGap)/C;
+    const gridH=R*cw+(R-1)*cellGap;
+    ctx.font=fontMono(ctx,11); ctx.fillStyle=INKSOFT; ctx.textAlign='left';
+    ctx.fillText('weight matrix   color = |w|', x0, y0-10);
+    for(let r=0;r<R;r++)for(let c=0;c<C;c++){
+      const i=r*C+c, px=x0+c*(cw+cellGap), py=y0+r*(cw+cellGap);
+      ctx.fillStyle = keep[i] ? rampTeal(this.W[i]) : EMPTY;
+      ctx.fillRect(px,py,cw,cw);
+    }
+    // |w| legend bar + coral threshold marker
+    const lbY=y0+gridH+15, lbW=gridW, lbH=10;
+    for(let p=0;p<lbW;p++){ ctx.fillStyle=rampTeal(p/(lbW-1)); ctx.fillRect(x0+p,lbY,1,lbH); }
+    ctx.strokeStyle=GRID; ctx.lineWidth=1; ctx.strokeRect(x0,lbY,lbW,lbH);
+    const tx=x0+thr*lbW;
+    ctx.strokeStyle=WARN; ctx.lineWidth=2; ctx.beginPath();ctx.moveTo(tx,lbY-4);ctx.lineTo(tx,lbY+lbH+4);ctx.stroke();
+    ctx.font=fontMono(ctx,10);
+    ctx.fillStyle=INKSOFT; ctx.textAlign='left';  ctx.fillText('0',x0,lbY+lbH+14);
+    ctx.textAlign='right'; ctx.fillText('|w|max',x0+lbW,lbY+lbH+14);
+    ctx.fillStyle=WARN; ctx.textAlign='center';
+    ctx.fillText('prune < '+thr.toFixed(2), Math.max(x0+30,Math.min(tx,x0+lbW-30)), lbY-7);
+
+    // ---------- right panel: accuracy vs sparsity ----------
+    const axX=x0+gridW+38, axY=44, axW=W-axX-18, axH=168;
+    const ax0=axX, ay0=axY, ax1=axX+axW, ay1=axY+axH;
+    // safe-zone shading up to the knee (~80%)
+    const knX=ax0+0.80*axW;
+    ctx.fillStyle='rgba(12,138,141,0.07)'; ctx.fillRect(ax0,ay0,knX-ax0,axH);
+    // gridlines + ticks
+    ctx.font=fontMono(ctx,10);
+    [0,0.25,0.5,0.75,1.0].forEach(g=>{const yy=ay1-g*axH;ctx.strokeStyle=GRID;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(ax0,yy);ctx.lineTo(ax1,yy);ctx.stroke();ctx.fillStyle=INKSOFT;ctx.textAlign='right';ctx.fillText((g*100).toFixed(0),ax0-4,yy+3);});
+    ctx.strokeStyle=GRID;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(ax0,ay0);ctx.lineTo(ax0,ay1);ctx.lineTo(ax1,ay1);ctx.stroke();
+    ctx.fillStyle=INKSOFT;ctx.textAlign='center';
+    [0,0.5,0.9,1.0].forEach(g=>{ctx.fillText((g*100).toFixed(0)+'%',ax0+g*axW,ay1+13);});
+    ctx.fillText('sparsity',(ax0+ax1)/2,ay1+25);
+    ctx.save();ctx.translate(ax0-27,(ay0+ay1)/2);ctx.rotate(-Math.PI/2);ctx.fillText('accuracy %',0,0);ctx.restore();
+    ctx.font=fontMono(ctx,9);
+    ctx.fillStyle=ACCENT;ctx.textAlign='left';ctx.fillText('flat / safe',ax0+4,ay0+11);
+    ctx.fillStyle=WARN;ctx.textAlign='right';ctx.fillText('cliff',ax1-4,ay0+11);
+    // accuracy curve
+    ctx.strokeStyle=ACCENT;ctx.lineWidth=2;ctx.beginPath();
+    for(let p=0;p<=100;p++){const s=p/100,a=this.acc(s),xx=ax0+s*axW,yy=ay1-a*axH;p?ctx.lineTo(xx,yy):ctx.moveTo(xx,yy);}
+    ctx.stroke();
+    // current operating point
+    const curA=this.acc(this.sparsity), cx=ax0+this.sparsity*axW, cy=ay1-curA*axH;
+    ctx.strokeStyle=ACCENT2;ctx.lineWidth=1;ctx.setLineDash([3,3]);
+    ctx.beginPath();ctx.moveTo(cx,ay1);ctx.lineTo(cx,cy);ctx.lineTo(ax0,cy);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle=ACCENT2;ctx.beginPath();ctx.arc(cx,cy,4,0,7);ctx.fill();
+    ctx.strokeStyle='#fff';ctx.lineWidth=1.5;ctx.stroke();
+
+    const acc0=this.acc(0), drop=acc0-curA, compress=N/Math.max(1,nonzero);
+    const onPlateau=this.sparsity<=0.80;
+    document.getElementById('pruneReadout').innerHTML=
+      'sparsity <b>'+(this.sparsity*100).toFixed(0)+'%</b> &nbsp; zeros <b>'+zeros+'</b>/'+N+
+      ' &nbsp; nonzero <b>'+nonzero+'</b> &nbsp; |w| thr <b>'+thr.toFixed(3)+'</b><br>'+
+      'accuracy <b style="color:'+(drop>0.05?WARN:ACCENT)+'">'+(curA*100).toFixed(1)+'%</b> '+
+      '(&minus;'+(drop*100).toFixed(1)+' pts) &nbsp; storage <b>'+compress.toFixed(1)+'&times;</b> smaller &nbsp; '+
+      '<span style="color:'+(onPlateau?ACCENT:WARN)+'">'+(onPlateau?'still on the plateau &mdash; safe to ship':'past the cliff &mdash; cutting load-bearing weights')+'</span>';
+  }
+};
+Prune.init();
+
+const Distill={init(){
+  this.c=document.getElementById('distillCanvas');this.ctx=this.c.getContext('2d');
+  this.tau=1.0;
+  /* fixed TEACHER logits over 6 classes (deterministic) — one clear winner plus
+     structured 'dark knowledge': meningioma & post-op are close runners-up while
+     edema/normal/artifact sit far below. The hard argmax throws all of that away. */
+  this.logits=[7.8,5.6,5.1,2.4,1.0,-0.6];
+  this.names=['enh. glioma','meningioma','post-op','edema','normal','artifact'];
+  const s=document.getElementById('distillTau');
+  s.addEventListener('input',()=>{this.tau=+s.value;document.getElementById('distillTauV').textContent=this.tau.toFixed(2);this.draw();});
+  this.draw();
+},
+state(){
+  const z=this.logits, N=z.length;
+  const top=z.indexOf(Math.max(...z));
+  const soft=softmax(z,this.tau);                 // teacher soft targets at tau  (== softmax(z/tau))
+  const hard=z.map((v,i)=>i===top?1:0);           // one-hot hard label
+  const ln=v=>v>1e-12?Math.log(v):0;
+  const ent=-soft.reduce((a,p)=>a+p*ln(p),0);     // Shannon entropy in nats
+  const emax=Math.log(N);                         // uniform upper bound = ln(N)
+  let ru=-1,rv=-1; soft.forEach((p,i)=>{if(i!==top&&p>rv){rv=p;ru=i;}}); // dark-knowledge runner-up
+  return {soft,hard,ent,emax,en:ent/emax,top,ru,rv,N};
+},
+draw(){const ctx=this.ctx,W=this.c.width,Hc=this.c.height;clear(ctx,W,Hc);
+  const st=this.state(),soft=st.soft,N=st.N;
+  const top=52, rh=36, lx=22, lw=88, bx=150, bw=250;
+  fontMono(ctx,11);ctx.textAlign='left';ctx.fillStyle=INKSOFT;
+  ctx.fillText('TEACHER logit',lx,34);
+  ctx.fillText('soft target  p = softmax(logit / τ)',bx,34);
+  const zmin=Math.min(...this.logits),zmax=Math.max(...this.logits),zr=(zmax-zmin)||1;
+  for(let i=0;i<N;i++){
+    const y=top+i*rh, hot=i===st.top, dk=i===st.ru;
+    ctx.fillStyle=hot?ACCENT:(dk?ACCENT2:INKSOFT);fontMono(ctx,10);ctx.textAlign='left';
+    ctx.fillText(this.names[i],lx,y-3);
+    const lwn=lw*((this.logits[i]-zmin)/zr);
+    ctx.fillStyle=EMPTY;ctx.fillRect(lx,y,lw,11);
+    ctx.fillStyle='rgba(46,133,201,.50)';ctx.fillRect(lx,y,Math.max(2,lwn),11);
+    ctx.fillStyle=INKSOFT;fontMono(ctx,8.5);ctx.textAlign='right';
+    ctx.fillText(this.logits[i].toFixed(1),lx+lw,y+9.5);
+    ctx.fillStyle=EMPTY;ctx.fillRect(bx,y,bw,15);
+    const col=hot?ACCENT:(dk?ACCENT2:'rgba(12,138,141,.40)');
+    ctx.fillStyle=col;ctx.fillRect(bx,y,Math.max(1,bw*soft[i]),15);
+    ctx.fillStyle=col;fontMono(ctx,9.5);ctx.textAlign='right';
+    ctx.fillText((soft[i]*100).toFixed(1)+'%',bx+bw,y+12);
+  }
+  ctx.strokeStyle='rgba(14,28,33,.32)';ctx.setLineDash([3,3]);ctx.lineWidth=1;
+  for(let i=0;i<N;i++){const y=top+i*rh;const hx=bx+bw*st.hard[i];
+    ctx.beginPath();ctx.moveTo(hx,y-2);ctx.lineTo(hx,y+17);ctx.stroke();}
+  ctx.setLineDash([]);
+  ctx.fillStyle=INKSOFT;fontMono(ctx,8.5);ctx.textAlign='left';
+  ctx.fillText('dashed = one-hot hard label (what argmax keeps)',bx,top+N*rh+10);
+  const ey=top+N*rh+26, ex=lx, ew=W-44;
+  ctx.fillStyle=INKSOFT;fontMono(ctx,9.5);ctx.textAlign='left';
+  ctx.fillText('soft-target entropy →',ex,ey-6);
+  ctx.fillStyle=EMPTY;ctx.fillRect(ex,ey,ew,11);
+  ctx.fillStyle=rampTeal(st.en);ctx.fillRect(ex,ey,Math.max(1,ew*st.en),11);
+  ctx.strokeStyle=GRID;ctx.beginPath();ctx.moveTo(ex+ew,ey-3);ctx.lineTo(ex+ew,ey+14);ctx.stroke();
+  ctx.fillStyle=INKSOFT;fontMono(ctx,8.5);ctx.textAlign='right';
+  ctx.fillText('ln '+N+'='+st.emax.toFixed(2),ex+ew,ey-3);
+  document.getElementById('distillReadout').innerHTML=
+    `τ = <b>${this.tau.toFixed(2)}</b> · soft-target entropy H = <b>${st.ent.toFixed(3)}</b> nats (max ln${N}=${st.emax.toFixed(2)}). `+
+    `The <b>hard</b> label is 100% ${this.names[st.top]}, 0% everything else (H=0 — one bit of info). `+
+    `The teacher's <b>soft</b> label keeps ${this.names[st.top]} at <b>${(soft[st.top]*100).toFixed(0)}%</b> yet also exposes <b>${this.names[st.ru]}</b> at <b>${(st.rv*100).toFixed(1)}%</b> — 'dark knowledge' that those two classes resemble each other. Higher τ → softer → more of that relational signal for the student to copy.`;
+}};
+
+const Lora={init(){
+  this.c=document.getElementById('loraCanvas');this.ctx=this.c.getContext('2d');
+  this.d=24; this.r=4; this.D=4096; const d=this.d;
+  /* deterministic ideal update ΔW* = Σ_k s_k·u_k·v_kᵀ with a decaying spectrum (mimics real weight-update spectra). rank-r LoRA keeps the first r outer products → ΔW=B·A is exactly rank r. */
+  this.comps=[];const sv=[3.0,1.7,1.05,0.66,0.42,0.27,0.18,0.125,0.09,0.066,0.05,0.038,0.03,0.024,0.02,0.017];
+  const vec=(off)=>{const v=[];for(let i=0;i<d;i++){let s=Math.sin(i*12.9898+off)*43758.5453;v.push((s-Math.floor(s))*2-1);}return v;};
+  for(let k=0;k<sv.length;k++)this.comps.push({u:vec(k*7.1+1.3),v:vec(k*5.7+90.2),s:sv[k]});
+  this.target=this.buildUpdate(this.comps.length);
+  let e=0;for(const row of this.target)for(const x of row)e+=x*x;this.Etot=e;
+  const s=document.getElementById('loraR');
+  s.addEventListener('input',()=>{this.r=Math.max(1,Math.round(+s.value));document.getElementById('loraRV').textContent=this.r;this.draw();});
+  this.draw();
+},
+buildUpdate(R){const d=this.d;const M=[];for(let i=0;i<d;i++)M.push(new Array(d).fill(0));
+  for(let k=0;k<R;k++){const{u,v,s}=this.comps[k];for(let i=0;i<d;i++)for(let j=0;j<d;j++)M[i][j]+=s*u[i]*v[j];}return M;},
+draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
+  const d=this.d,r=this.r;
+  const approx=this.buildUpdate(r);
+  let diff=0;for(let i=0;i<d;i++)for(let j=0;j<d;j++){const e=this.target[i][j]-approx[i][j];diff+=e*e;}
+  const captured=Math.max(0,Math.min(1,1-diff/this.Etot));
+  let mx=0;for(let i=0;i<d;i++)for(let j=0;j<d;j++)mx=Math.max(mx,Math.abs(approx[i][j]));mx=mx||1;
+  const px=2.2; const gx=18, gy=58;
+  ctx.textAlign='left';fontMono(ctx,12);ctx.fillStyle=INK;
+  ctx.fillText('frozen W  ('+d+'×'+d+')',gx,gy-12);
+  for(let i=0;i<d;i++)for(let j=0;j<d;j++){const s=Math.sin(i*3.1+j*1.7+5.0);const v=0.5+0.5*s;
+    ctx.fillStyle=`rgba(66,83,90,${0.10+v*0.10})`;ctx.fillRect(gx+j*px,gy+i*px,px-0.4,px-0.4);}
+  ctx.strokeStyle=GRID;ctx.lineWidth=1;ctx.strokeRect(gx-1,gy-1,d*px+1,d*px+1);
+  ctx.fillStyle=INKSOFT;fontMono(ctx,9);ctx.fillText('d² = '+(d*d)+' params · LOCKED',gx,gy+d*px+14);
+  const bx=gx+d*px+34, bw=r*px;
+  ctx.fillStyle=ACCENT;fontMono(ctx,12);ctx.fillText('B (d×r)',bx,gy-12);
+  for(let i=0;i<d;i++)for(let j=0;j<r;j++){const v=Math.abs(this.comps[j].u[i]);
+    ctx.fillStyle=`rgba(12,138,141,${0.30+v*0.6})`;ctx.fillRect(bx+j*px,gy+i*px,px-0.4,px-0.4);}
+  ctx.strokeStyle=ACCENT;ctx.lineWidth=1.2;ctx.strokeRect(bx-1,gy-1,bw+1,d*px+1);
+  const ax=bx+bw+30, aw=d*px, ah=r*px;
+  ctx.fillStyle=ACCENT2;fontMono(ctx,12);ctx.fillText('A (r×d)',ax,gy-12);
+  for(let i=0;i<r;i++)for(let j=0;j<d;j++){const v=Math.abs(this.comps[i].v[j]);
+    ctx.fillStyle=`rgba(227,90,49,${0.30+v*0.6})`;ctx.fillRect(ax+j*px,gy+i*px,px-0.4,px-0.4);}
+  ctx.strokeStyle=ACCENT2;ctx.lineWidth=1.2;ctx.strokeRect(ax-1,gy-1,aw+1,ah+1);
+  ctx.fillStyle=INKSOFT;fontMono(ctx,9);ctx.fillText('trainable: B + A',bx,gy+d*px+14);
+  ctx.fillStyle=ACCENT3;fontMono(ctx,13);ctx.fillText('×',bx+bw+12,gy+d*px/2+4);
+  const rx=ax, ry=gy+r*px+44;
+  ctx.fillStyle=INK;fontMono(ctx,12);ctx.fillText('ΔW = B·A  (rank '+r+')',rx,ry-12);
+  for(let i=0;i<d;i++)for(let j=0;j<d;j++){const v=Math.abs(approx[i][j])/mx;
+    ctx.fillStyle=rampTeal(Math.pow(v,0.7));ctx.fillRect(rx+j*px,ry+i*px,px-0.4,px-0.4);}
+  ctx.strokeStyle=GRID;ctx.lineWidth=1;ctx.strokeRect(rx-1,ry-1,d*px+1,d*px+1);
+  ctx.strokeStyle=ACCENT3;ctx.lineWidth=1.4;
+  ctx.beginPath();ctx.moveTo(rx+d*px*0.5,gy+r*px+6);ctx.lineTo(rx+d*px*0.5,ry-8);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(rx+d*px*0.5-4,ry-12);ctx.lineTo(rx+d*px*0.5,ry-6);ctx.lineTo(rx+d*px*0.5+4,ry-12);ctx.stroke();
+  const full=d*d, lo=2*d*r;
+  const fullD=this.D*this.D, loD=2*this.D*r, redBig=100*(1-loD/fullD);
+  const mxb=rx, mby=ry+d*px+22, mbw=d*px;
+  ctx.fillStyle=INKSOFT;fontMono(ctx,9);ctx.textAlign='left';
+  ctx.fillText('ΔW energy captured vs ideal update: '+(captured*100).toFixed(1)+'%',mxb,mby);
+  ctx.fillStyle=EMPTY;ctx.fillRect(mxb,mby+5,mbw,9);
+  ctx.fillStyle=captured>0.9?ACCENT:ACCENT2;ctx.fillRect(mxb,mby+5,mbw*captured,9);
+  ctx.strokeStyle=GRID;ctx.lineWidth=1;ctx.strokeRect(mxb,mby+5,mbw,9);
+  document.getElementById('loraReadout').innerHTML=
+    `Rank <b>r = ${r}</b> · <b>ΔW = B·A</b> is exactly rank ${r}. `+
+    `Trainable params <b>2·d·r = ${lo.toLocaleString()}</b> vs full <b>d² = ${full.toLocaleString()}</b> (toy d=${d}). `+
+    `At a real foundation-model width <b>d=${this.D.toLocaleString()}</b>: <b>2dr = ${loD.toLocaleString()}</b> vs <b>d² = ${fullD.toLocaleString()}</b> → <b>${redBig.toFixed(2)}% fewer</b> trainable params. `+
+    `Yet B·A already captures <b>${(captured*100).toFixed(1)}%</b> of the ideal update — because weight updates are intrinsically low-rank.`;
+}};
+
+const Federated={
+  O:[[0.22,0.32],[0.80,0.27],[0.27,0.80],[0.75,0.73]],
+  NAMES:['St. Mary','Lakeside','Northgate','Cedars'],
+  G0:[0.50,0.93], MAXR:8, lr:0.5,
+  init(){
+    this.c=document.getElementById('federatedCanvas');this.ctx=this.c.getContext('2d');
+    this.R=0; this.E=3;
+    const sr=document.getElementById('federatedRound');
+    sr.addEventListener('input',()=>{this.R=+sr.value;document.getElementById('federatedRoundV').textContent=Math.floor(this.R);this.draw();});
+    const se=document.getElementById('federatedEpochs');
+    se.addEventListener('input',()=>{this.E=+se.value;document.getElementById('federatedEpochsV').textContent=this.E;this.draw();});
+    this.draw();
+  },
+  decay(){return Math.pow(1-this.lr,this.E);},
+  globalAt(r){var g=this.G0.slice();var d=this.decay();for(var k=0;k<r;k++){var W=this.O.map(function(o){return [o[0]+(g[0]-o[0])*d,o[1]+(g[1]-o[1])*d];});g=[(W[0][0]+W[1][0]+W[2][0]+W[3][0])/4,(W[0][1]+W[1][1]+W[2][1]+W[3][1])/4];}return g;},
+  state(){
+    var R=this.R,r0=Math.floor(R),f=R-r0,d=this.decay();
+    var gPrev=this.globalAt(r0),gNext=this.globalAt(Math.min(r0+1,this.MAXR));
+    var Wfull=this.O.map(function(o){return [o[0]+(gPrev[0]-o[0])*d,o[1]+(gPrev[1]-o[1])*d];});
+    var Wcur=this.O.map(function(o,i){return [gPrev[0]+(Wfull[i][0]-gPrev[0])*f,gPrev[1]+(Wfull[i][1]-gPrev[1])*f];});
+    var g=[gPrev[0]+(gNext[0]-gPrev[0])*f,gPrev[1]+(gNext[1]-gPrev[1])*f];
+    var cen=[(this.O[0][0]+this.O[1][0]+this.O[2][0]+this.O[3][0])/4,(this.O[0][1]+this.O[1][1]+this.O[2][1]+this.O[3][1])/4];
+    return {r0:r0,f:f,gPrev:gPrev,g:g,Wcur:Wcur,cen:cen};
+  },
+  draw(){
+    var ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
+    var PAD=46, plotW=W-2*PAD, plotH=H-2*PAD-8;
+    var X=function(u){return PAD+u*plotW;}, Y=function(v){return PAD+(1-v)*plotH;};
+    // backdrop panel
+    ctx.fillStyle='rgba(12,138,141,0.04)';ctx.fillRect(PAD-18,PAD-18,plotW+36,plotH+36);
+    // gridlines
+    ctx.strokeStyle=GRID;ctx.lineWidth=1;
+    for(var i=0;i<=4;i++){var gx=PAD+i/4*plotW;ctx.beginPath();ctx.moveTo(gx,PAD-12);ctx.lineTo(gx,PAD+plotH+12);ctx.stroke();var gy=PAD+i/4*plotH;ctx.beginPath();ctx.moveTo(PAD-12,gy);ctx.lineTo(PAD+plotW+12,gy);ctx.stroke();}
+    ctx.fillStyle=INKSOFT;ctx.font=fontMono(ctx,11);ctx.textAlign='left';
+    ctx.fillText('model-weight space (2-D projection)',PAD-12,PAD-24);
+    var s=this.state();
+    // server position (center top of plane)
+    var srv=[0.50,0.50];
+    // broadcast strength: bright at start of a round, fading as locals diverge
+    var broadcast=1-s.f;
+    // dashed broadcast / upload links between server and each hospital local model
+    for(var h=0;h<4;h++){
+      var px=X(s.Wcur[h][0]),py=Y(s.Wcur[h][1]);
+      var sx=X(srv[0]),sy=Y(srv[1]);
+      ctx.setLineDash([4,4]);
+      // upload (weights -> server): warms as round completes; broadcast: teal at round start
+      var up=s.f;
+      ctx.strokeStyle='rgba(227,90,49,'+(0.12+0.32*up).toFixed(3)+')';
+      ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(sx,sy);ctx.stroke();
+      ctx.strokeStyle='rgba(12,138,141,'+(0.10+0.30*broadcast).toFixed(3)+')';
+      ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(px,py);ctx.stroke();
+      ctx.setLineDash([]);
+    }
+    // each hospital: private optimum (coral X), local model dot (teal), label
+    for(var k=0;k<4;k++){
+      var ox=X(this.O[k][0]),oy=Y(this.O[k][1]);
+      var lx=X(s.Wcur[k][0]),ly=Y(s.Wcur[k][1]);
+      // private-data well around the local optimum
+      ctx.fillStyle='rgba(227,90,49,0.07)';ctx.beginPath();ctx.arc(ox,oy,26,0,2*Math.PI);ctx.fill();
+      // optimum marker (X)
+      ctx.strokeStyle=ACCENT2;ctx.lineWidth=2;
+      ctx.beginPath();ctx.moveTo(ox-6,oy-6);ctx.lineTo(ox+6,oy+6);ctx.moveTo(ox+6,oy-6);ctx.lineTo(ox-6,oy+6);ctx.stroke();
+      // path from current local model to its optimum
+      ctx.setLineDash([2,3]);ctx.strokeStyle='rgba(227,90,49,0.35)';ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(ox,oy);ctx.stroke();ctx.setLineDash([]);
+      // local model dot
+      ctx.fillStyle=ACCENT;ctx.beginPath();ctx.arc(lx,ly,6,0,2*Math.PI);ctx.fill();
+      ctx.strokeStyle='#fff';ctx.lineWidth=1.4;ctx.stroke();
+      // hospital label near optimum, nudged outward
+      ctx.fillStyle=INKSOFT;ctx.font=fontMono(ctx,10);
+      var nx=this.O[k][0]<0.5?ox-4:ox+4; ctx.textAlign=this.O[k][0]<0.5?'right':'left';
+      var ny=this.O[k][1]<0.5?oy+22:oy-14;
+      ctx.fillText('⊕ '+this.NAMES[k],nx,ny);
+    }
+    // centroid (FedAvg fixed point) faint target
+    var cx=X(s.cen[0]),cy=Y(s.cen[1]);
+    ctx.setLineDash([3,3]);ctx.strokeStyle='rgba(46,133,201,0.55)';ctx.lineWidth=1.2;
+    ctx.beginPath();ctx.arc(cx,cy,12,0,2*Math.PI);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle=ACCENT3;ctx.font=fontMono(ctx,9);ctx.textAlign='center';
+    ctx.fillText('FedAvg optimum',cx,cy+24);
+    // server node
+    var sX=X(srv[0]),sY=Y(srv[1]);
+    ctx.fillStyle='#fff';ctx.strokeStyle=INK;ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.arc(sX,sY,15,0,2*Math.PI);ctx.fill();ctx.stroke();
+    ctx.fillStyle=INK;ctx.font=fontMono(ctx,9);ctx.textAlign='center';ctx.fillText('SERVER',sX,sY+3);
+    // global model dot (the broadcast model), travels gPrev -> gNext
+    var gx=X(s.g[0]),gy=Y(s.g[1]);
+    ctx.strokeStyle=ACCENT3;ctx.lineWidth=2.2;ctx.beginPath();ctx.arc(gx,gy,10,0,2*Math.PI);ctx.stroke();
+    ctx.fillStyle=ACCENT3;ctx.beginPath();ctx.arc(gx,gy,5,0,2*Math.PI);ctx.fill();
+    ctx.fillStyle=INK;ctx.font=fontMono(ctx,10);ctx.textAlign='left';ctx.fillText('global w',gx+13,gy+4);
+    // metrics
+    var dist=Math.hypot(s.g[0]-s.cen[0],s.g[1]-s.cen[1]);
+    var d=this.decay();
+    var phase= s.f<0.5 ? '<b style="color:'+ACCENT+'">broadcast → local training</b>' : '<b style="color:'+ACCENT2+'">upload weights → average</b>';
+    document.getElementById('federatedReadout').innerHTML=
+      'round <b>'+s.r0+'</b> / '+this.MAXR+' &nbsp; E=<b>'+this.E+'</b> local epochs<br>'+
+      'phase: '+phase+'<br>'+
+      'dist(global, FedAvg-opt) = <b>'+dist.toFixed(3)+'</b><br>'+
+      'per-round contraction (1−lr)<sup>E</sup> = <b>'+d.toFixed(3)+'</b><br>'+
+      '<span style="color:'+INKSOFT+'">scans uploaded: <b>0</b> · only weights crossed the wire (privacy-preserving)</span>';
+  }
+};
+
+const Amp={
+  init(){
+    this.c=document.getElementById('ampCanvas');this.ctx=this.c.getContext('2d');
+    this.logS=0; // log2(loss scale); 0 -> S=1 (off)
+    const s=document.getElementById('ampScale');
+    s.addEventListener('input',()=>{this.logS=+s.value;document.getElementById('ampScaleV').textContent=this.scaleLabel();this.draw();});
+    document.getElementById('ampScaleV').textContent=this.scaleLabel();
+    this.draw();
+  },
+  // IEEE FP16 magnitude landmarks as log10 magnitudes
+  consts(){return{
+    flushFloorLog10:Math.log10(Math.pow(2,-24)), // smallest subnormal; below -> underflow to 0
+    normalMinLog10 :Math.log10(Math.pow(2,-14)), // smallest normal
+    maxLog10       :Math.log10(65504)            // overflow ceiling -> Inf
+  };},
+  scaleLabel(){var S=Math.pow(2,this.logS);return '2^'+this.logS+' = '+S.toLocaleString();},
+  // deterministic gradient magnitudes (seeded trig), as log10(|grad|)
+  grads(){var g=[];for(var i=0;i<10;i++){g.push((-9+i*0.62)+0.30*Math.sin(i*2.399));}return g;},
+  draw(){
+    var ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
+    var C=this.consts(),G=this.grads(),shift=this.logS*Math.log10(2);
+    var AXLO=-10,AXHI=5,padL=58,padR=18,axY=H-92,axX0=padL,axX1=W-padR,bandTop=axY-150;
+    var X=function(l){return axX0+(axX1-axX0)*((l-AXLO)/(AXHI-AXLO));};
+    var clampX=function(l){return X(Math.min(AXHI,Math.max(AXLO,l)));};
+    // representable / danger bands
+    ctx.fillStyle='rgba(210,59,42,0.07)';ctx.fillRect(X(AXLO),bandTop,X(C.flushFloorLog10)-X(AXLO),150);
+    ctx.fillStyle='rgba(227,90,49,0.08)';ctx.fillRect(X(C.flushFloorLog10),bandTop,X(C.normalMinLog10)-X(C.flushFloorLog10),150);
+    ctx.fillStyle='rgba(12,138,141,0.08)';ctx.fillRect(X(C.normalMinLog10),bandTop,X(C.maxLog10)-X(C.normalMinLog10),150);
+    ctx.fillStyle='rgba(210,59,42,0.07)';ctx.fillRect(X(C.maxLog10),bandTop,X(AXHI)-X(C.maxLog10),150);
+    // axis + ticks
+    ctx.strokeStyle=GRID;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(axX0,axY);ctx.lineTo(axX1,axY);ctx.stroke();
+    fontMono(ctx,10);ctx.fillStyle=INKSOFT;ctx.textAlign='center';
+    for(var e=AXLO;e<=AXHI;e+=2){ctx.strokeStyle=GRID;ctx.beginPath();ctx.moveTo(X(e),axY);ctx.lineTo(X(e),axY+4);ctx.stroke();ctx.fillStyle=INKSOFT;ctx.fillText('1e'+e,X(e),axY+16);}
+    ctx.fillStyle=INKSOFT;ctx.fillText('|gradient|  (log10 scale)',(axX0+axX1)/2,axY+30);
+    // landmark dashed lines
+    var dash=function(l,col){ctx.strokeStyle=col;ctx.setLineDash([3,3]);ctx.beginPath();ctx.moveTo(X(l),bandTop);ctx.lineTo(X(l),axY+6);ctx.stroke();ctx.setLineDash([]);};
+    dash(C.flushFloorLog10,WARN);dash(C.normalMinLog10,ACCENT);dash(C.maxLog10,WARN);
+    ctx.fillStyle=WARN;ctx.fillText('underflow → 0',(X(AXLO)+X(C.flushFloorLog10))/2,bandTop+12);
+    ctx.fillStyle=ACCENT;ctx.fillText('FP16 representable',(X(C.normalMinLog10)+X(C.maxLog10))/2,bandTop+12);
+    ctx.fillStyle=WARN;ctx.fillText('overflow → Inf',(X(C.maxLog10)+X(AXHI))/2,bandTop+12);
+    // gradient dots: raw (hollow grey) -> scaled (solid)
+    var alive0=0,rescued=0,over=0;
+    for(var i=0;i<G.length;i++){
+      var l0=G[i],ls=l0+shift,yy=bandTop+26+i*9.2;
+      var orgAlive=l0>=C.flushFloorLog10; if(orgAlive)alive0++;
+      if(this.logS>0){ctx.strokeStyle='rgba(12,138,141,0.30)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(clampX(l0),yy);ctx.lineTo(clampX(ls),yy);ctx.stroke();}
+      ctx.strokeStyle='rgba(66,83,90,0.45)';ctx.lineWidth=1.2;ctx.beginPath();ctx.arc(clampX(l0),yy,3.3,0,7);ctx.stroke();
+      var ovr=ls>C.maxLog10, aliveNow=ls>=C.flushFloorLog10&&!ovr;
+      if(aliveNow&&!orgAlive)rescued++; if(ovr)over++;
+      ctx.fillStyle=ovr?WARN:(aliveNow?ACCENT:'rgba(210,59,42,0.55)');
+      ctx.beginPath();ctx.arc(clampX(ls),yy,3.6,0,7);ctx.fill();
+    }
+    // y caption
+    ctx.save();ctx.translate(16,axY-70);ctx.rotate(-Math.PI/2);ctx.textAlign='center';ctx.fillStyle=INKSOFT;fontMono(ctx,10);ctx.fillText('10 mini-batch gradients',0,0);ctx.restore();
+    // legend
+    fontMono(ctx,10);ctx.textAlign='left';
+    ctx.strokeStyle='rgba(66,83,90,0.55)';ctx.lineWidth=1.2;ctx.beginPath();ctx.arc(padL+4,H-58,3.3,0,7);ctx.stroke();ctx.fillStyle=INKSOFT;ctx.fillText('raw FP16',padL+14,H-55);
+    ctx.fillStyle=ACCENT;ctx.beginPath();ctx.arc(padL+96,H-58,3.6,0,7);ctx.fill();ctx.fillStyle=INKSOFT;ctx.fillText('scaled ×S → kept',padL+106,H-55);
+    ctx.fillStyle='rgba(210,59,42,0.6)';ctx.beginPath();ctx.arc(padL+250,H-58,3.6,0,7);ctx.fill();ctx.fillStyle=INKSOFT;ctx.fillText('lost / Inf',padL+260,H-55);
+    // readout
+    var status=over>0?("<b style='color:"+WARN+"'>OVERFLOW → dynamic scaler halves S & skips this step</b>")
+      :(this.logS===0?("loss scaling <b>off</b> — sub-floor grads silently underflow to 0")
+      :("every scaled grad is representable; unscale by 1/S before the FP32 update"));
+    document.getElementById('ampReadout').innerHTML=
+      "loss scale S = <b>"+this.scaleLabel()+"</b> &nbsp; shift = +"+shift.toFixed(1)+" decades<br>"+
+      "alive without scaling: <b>"+alive0+"/"+G.length+"</b> &nbsp; rescued from underflow: <b style='color:"+ACCENT+"'>"+rescued+"</b>"+
+      (over>0?(" &nbsp; overflowed: <b style='color:"+WARN+"'>"+over+"</b>"):"")+"<br>"+status;
+  }
+};
+
+const Cellgraph={
+  NODES:[
+    {x:250,y:172,t:0,f:0.85},{x:205,y:140,t:1,f:0.15},{x:300,y:150,t:1,f:0.20},
+    {x:210,y:210,t:1,f:0.12},{x:300,y:205,t:1,f:0.18},{x:255,y:112,t:1,f:0.22},
+    {x:255,y:232,t:1,f:0.16},{x:170,y:176,t:0,f:0.80},{x:340,y:176,t:0,f:0.82},
+    {x:430,y:88,t:0,f:0.88},{x:462,y:130,t:0,f:0.84},{x:414,y:140,t:0,f:0.86},
+    {x:90,y:272,t:1,f:0.10},{x:132,y:286,t:1,f:0.14},{x:95,y:228,t:1,f:0.17},
+    {x:382,y:250,t:0,f:0.79},{x:340,y:286,t:1,f:0.19},{x:150,y:88,t:1,f:0.21},
+    {x:110,y:140,t:0,f:0.77},{x:440,y:230,t:1,f:0.13}
+  ],
+  HI:0,
+  init(){this.c=document.getElementById('cellgraphCanvas');this.ctx=this.c.getContext('2d');this.k=3;
+    const s=document.getElementById('cellgraphK');
+    s.addEventListener('input',()=>{this.k=+s.value;document.getElementById('cellgraphKV').textContent=this.k;this.draw();});
+    this.draw();},
+  knn(k){const h=this.NODES[this.HI];
+    const d=this.NODES.map((n,j)=>({j,dist:Math.hypot(n.x-h.x,n.y-h.y)})).filter(o=>o.j!==this.HI);
+    d.sort((a,b)=>a.dist-b.dist);return d.slice(0,k).map(o=>o.j);},
+  draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
+    const nb=this.knn(this.k),nbSet=new Set(nb),hi=this.NODES[this.HI];
+    const updated=nb.reduce((s,j)=>s+this.NODES[j].f,0)/nb.length;
+    const immune=nb.filter(j=>this.NODES[j].t===1).length;
+    // faint full-graph backbone: light Delaunay-ish proximity hints (deterministic short links)
+    ctx.strokeStyle=GRID;ctx.lineWidth=1;
+    for(let i=0;i<this.NODES.length;i++)for(let j=i+1;j<this.NODES.length;j++){
+      const a=this.NODES[i],b=this.NODES[j];if(Math.hypot(a.x-b.x,a.y-b.y)<58){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}}
+    // active k-NN edges from the highlighted node
+    ctx.strokeStyle=ACCENT;ctx.lineWidth=2.2;ctx.globalAlpha=0.85;
+    nb.forEach(j=>{const n=this.NODES[j];ctx.beginPath();ctx.moveTo(hi.x,hi.y);ctx.lineTo(n.x,n.y);ctx.stroke();});
+    ctx.globalAlpha=1;
+    // nodes
+    this.NODES.forEach((n,j)=>{
+      const isHi=j===this.HI,inNb=nbSet.has(j);
+      const baseCol=n.t===0?ACCENT2:ACCENT;
+      ctx.beginPath();ctx.arc(n.x,n.y,isHi?13:9,0,7);
+      ctx.fillStyle=n.t===0?'rgba(227,90,49,0.85)':'rgba(12,138,141,0.85)';
+      if(!isHi&&!inNb)ctx.fillStyle=n.t===0?'rgba(227,90,49,0.32)':'rgba(12,138,141,0.32)';
+      ctx.fill();
+      if(inNb){ctx.lineWidth=2.4;ctx.strokeStyle=ACCENT;ctx.stroke();}
+      ctx.fillStyle=INKSOFT;fontMono(ctx,9);ctx.textAlign='center';ctx.fillText(n.f.toFixed(2),n.x,n.y-13);
+    });
+    // highlighted node: outer ring (original type) + inner core recolored to AGGREGATED feature
+    ctx.beginPath();ctx.arc(hi.x,hi.y,13,0,7);ctx.lineWidth=3.4;ctx.strokeStyle=INK;ctx.stroke();
+    ctx.beginPath();ctx.arc(hi.x,hi.y,7.5,0,7);ctx.fillStyle=rampTeal(1-updated);ctx.fill();// low updated f -> teal/immune
+    ctx.beginPath();ctx.arc(hi.x,hi.y,7.5,0,7);ctx.lineWidth=1.4;ctx.strokeStyle=INK;ctx.stroke();
+    // label for highlighted node original feature
+    fontMono(ctx,9);ctx.fillStyle=INK;ctx.textAlign='center';ctx.fillText('orig '+hi.f.toFixed(2),hi.x,hi.y+24);
+    // legend
+    ctx.textAlign='left';fontMono(ctx,10);
+    ctx.fillStyle='rgba(227,90,49,0.85)';ctx.beginPath();ctx.arc(20,318,6,0,7);ctx.fill();
+    ctx.fillStyle=INKSOFT;ctx.fillText('tumor',32,322);
+    ctx.fillStyle='rgba(12,138,141,0.85)';ctx.beginPath();ctx.arc(95,318,6,0,7);ctx.fill();
+    ctx.fillStyle=INKSOFT;ctx.fillText('immune',107,322);
+    document.getElementById('cellgraphReadout').innerHTML=
+      'k = <b>'+this.k+'</b> &nbsp; edges drawn = <b>'+this.k+'</b><br>'+
+      'neighbors: <b>'+immune+'</b> immune / <b>'+(this.k-immune)+'</b> tumor<br>'+
+      'node feature: <b>'+hi.f.toFixed(2)+'</b> &rarr; mean(neighbors) = <b>'+updated.toFixed(2)+'</b><br>'+
+      '<span style="color:'+INKSOFT+'">A tumor cell, recolored by its immune surroundings — spatial context a single patch misses.</span>';
+  }};
+
+const Stainnorm={init(){
+  this.c=document.getElementById('stainnormCanvas');this.ctx=this.c.getContext('2d');
+  this.cast=0.55;                       // scanner colour-cast strength/hue, slider in [-1,1]
+  // canonical REFERENCE H&E optical-density stain basis (Ruifrok), unit-normalized
+  this.Href=this.unit([0.650,0.704,0.286]);   // Hematoxylin -> nuclei (blue-purple)
+  this.Eref=this.unit([0.072,0.990,0.105]);   // Eosin -> stroma (pink)
+  this.G=20;
+  // ONE deterministic tissue (same biology); only the *scanner colour* differs between source & ref
+  this.cH=[];this.cE=[];
+  for(let y=0;y<this.G;y++){this.cH.push([]);this.cE.push([]);
+    for(let x=0;x<this.G;x++){const u=x/(this.G-1),v=y/(this.G-1);
+      let h=0;[[0.30,0.32,0.12],[0.70,0.42,0.10],[0.50,0.74,0.11]].forEach(b=>{const d2=(u-b[0])**2+(v-b[1])**2;h+=Math.exp(-d2/(2*b[2]*b[2]));});
+      h=Math.min(1.45,h);
+      let e=0.62+0.30*Math.sin(u*5.1+1.3)*Math.cos(v*4.4-0.7); e=Math.max(0.10,e-0.50*Math.min(1,h));
+      this.cH[y].push(h);this.cE[y].push(e);}}
+  // reference robust (99th-pct) concentration maxima == the tissue's own, so cast=0 => source===reference
+  let rH=[],rE=[];for(let y=0;y<this.G;y++)for(let x=0;x<this.G;x++){rH.push(this.cH[y][x]);rE.push(this.cE[y][x]);}
+  this.maxCref=[this.p99(rH),this.p99(rE)];
+  const s=document.getElementById('stainnormCast');
+  s.addEventListener('input',()=>{this.cast=+s.value;document.getElementById('stainnormCastV').textContent=this.castLbl();this.draw();});
+  document.getElementById('stainnormCastV').textContent=this.castLbl();
+  this.draw();
+},
+unit(v){const n=Math.hypot(v[0],v[1],v[2])||1;return [v[0]/n,v[1]/n,v[2]/n];},
+p99(a){const s=a.slice().sort((x,y)=>x-y);return s[Math.min(s.length-1,Math.floor(0.99*s.length))]||1e-6;},
+castLbl(){const c=this.cast;if(Math.abs(c)<0.04)return '0 (matched)';return (c>0?'+':'')+c.toFixed(2)+(c>0?' warm':' cool');},
+// 2x2 solve: project OD onto the (non-orthogonal) {H,E} basis  ->  C = M^-1 . OD
+solve(od,H,E){const a=H[0]*H[0]+H[1]*H[1]+H[2]*H[2];const b=H[0]*E[0]+H[1]*E[1]+H[2]*E[2];const d=E[0]*E[0]+E[1]*E[1]+E[2]*E[2];
+  const bh=H[0]*od[0]+H[1]*od[1]+H[2]*od[2];const be=E[0]*od[0]+E[1]*od[1]+E[2]*od[2];const det=a*d-b*b||1e-6;
+  return [Math.max(0,(d*bh-b*be)/det),Math.max(0,(-b*bh+a*be)/det)];},
+// the SOURCE scanner's stain basis: a colour cast rotates the H/E OD vectors apart
+srcBasis(cast){const t=cast*26*Math.PI/180,a=Math.cos(t),b=Math.sin(t);
+  const Hs=this.unit([a*this.Href[0]+b*this.Eref[0],a*this.Href[1]+b*this.Eref[1],a*this.Href[2]+b*this.Eref[2]]);
+  const t2=-cast*14*Math.PI/180,a2=Math.cos(t2),b2=Math.sin(t2);
+  const Es=this.unit([a2*this.Eref[0]+b2*this.Href[0],a2*this.Eref[1]+b2*this.Href[1],a2*this.Eref[2]+b2*this.Href[2]]);
+  return [Hs,Es];},
+srcScale(cast){return [1+0.45*cast,1-0.30*cast];},  // scanner reads stains brighter/darker
+clampRGB(o){return Math.max(0,Math.min(255,o))|0;},
+draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
+  const G=this.G,cell=6.2,top=66;
+  const px=[26,206,386];                     // three panel x-origins: SOURCE / NORMALIZED / REFERENCE
+  const Href=this.Href,Eref=this.Eref;
+  const sb=this.srcBasis(this.cast),Hs=sb[0],Es=sb[1],sc=this.srcScale(this.cast);
+  // robust max of SOURCE concentrations (Macenko target-matching step)
+  let aH=[],aE=[];for(let y=0;y<G;y++)for(let x=0;x<G;x++){aH.push(this.cH[y][x]*sc[0]);aE.push(this.cE[y][x]*sc[1]);}
+  const maxCsrc=[this.p99(aH),this.p99(aE)];
+  let dBefore=0,dAfter=0;
+  for(let y=0;y<G;y++)for(let x=0;x<G;x++){
+    const ch=this.cH[y][x],ce=this.cE[y][x];
+    const cHs=ch*sc[0],cEs=ce*sc[1];
+    // SOURCE (Beer-Lambert): OD = Cs.Ms ; I = 255*10^(-OD)
+    const odS=[cHs*Hs[0]+cEs*Es[0],cHs*Hs[1]+cEs*Es[1],cHs*Hs[2]+cEs*Es[2]];
+    const rgbS=odS.map(o=>255*Math.pow(10,-o));
+    // REFERENCE render (canonical basis, robust scale)
+    const odR=[ch*Href[0]+ce*Eref[0],ch*Href[1]+ce*Eref[1],ch*Href[2]+ce*Eref[2]];
+    const rgbR=odR.map(o=>255*Math.pow(10,-o));
+    // --- MACENKO NORMALIZE ---
+    const c=this.solve(odS,Hs,Es);                                              // 1. deconvolve source
+    const cn=[c[0]/maxCsrc[0]*this.maxCref[0],c[1]/maxCsrc[1]*this.maxCref[1]];  // 2. match robust scale
+    const odN=[cn[0]*Href[0]+cn[1]*Eref[0],cn[0]*Href[1]+cn[1]*Eref[1],cn[0]*Href[2]+cn[1]*Eref[2]];  // 3. recompose in REF basis
+    const rgbN=odN.map(o=>255*Math.pow(10,-o));
+    ctx.fillStyle='rgb('+this.clampRGB(rgbS[0])+','+this.clampRGB(rgbS[1])+','+this.clampRGB(rgbS[2])+')';ctx.fillRect(px[0]+x*cell,top+y*cell,cell-0.4,cell-0.4);
+    ctx.fillStyle='rgb('+this.clampRGB(rgbN[0])+','+this.clampRGB(rgbN[1])+','+this.clampRGB(rgbN[2])+')';ctx.fillRect(px[1]+x*cell,top+y*cell,cell-0.4,cell-0.4);
+    ctx.fillStyle='rgb('+this.clampRGB(rgbR[0])+','+this.clampRGB(rgbR[1])+','+this.clampRGB(rgbR[2])+')';ctx.fillRect(px[2]+x*cell,top+y*cell,cell-0.4,cell-0.4);
+    const dist=(p,q)=>Math.hypot(p[0]-q[0],p[1]-q[1],p[2]-q[2]);
+    dBefore+=dist(rgbS,rgbR);dAfter+=dist(rgbN,rgbR);
+  }
+  const n=G*G;dBefore/=n;dAfter/=n;
+  const pw=G*cell;
+  // panel titles + frames
+  ctx.textAlign='center';fontMono(ctx,11.5);
+  const titles=[['SOURCE',Math.abs(this.cast)<0.04?INKSOFT:WARN],['NORMALIZED',ACCENT],['REFERENCE',INKSOFT]];
+  titles.forEach((t,i)=>{ctx.fillStyle=t[1];ctx.fillText(t[0],px[i]+pw/2,52);
+    ctx.strokeStyle=i===1?ACCENT:GRID;ctx.lineWidth=i===1?1.6:1;ctx.strokeRect(px[i]-1,top-1,pw+1.5,pw+1.5);});
+  ctx.fillStyle=INKSOFT;fontMono(ctx,9.5);
+  ctx.fillText('lab B scanner',px[0]+pw/2,top+pw+15);
+  ctx.fillText('Macenko output',px[1]+pw/2,top+pw+15);
+  ctx.fillText('lab A target',px[2]+pw/2,top+pw+15);
+  // arrow source -> normalized
+  ctx.strokeStyle=ACCENT;ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(px[0]+pw+6,top+pw/2);ctx.lineTo(px[1]-6,top+pw/2);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(px[1]-6,top+pw/2);ctx.lineTo(px[1]-12,top+pw/2-4);ctx.lineTo(px[1]-12,top+pw/2+4);ctx.closePath();ctx.fillStyle=ACCENT;ctx.fill();
+  // deltaE-to-reference bar chart (before vs after)
+  const bx=px[0],by=top+pw+34,maxBar=58,scaleW=300,barH=14,barTop=by+10;
+  ctx.textAlign='left';fontMono(ctx,11);ctx.fillStyle=INK;
+  ctx.fillText('mean colour distance ΔE to REFERENCE',bx,by-2);
+  const drawBar=(yy,val,col,lab)=>{const w=Math.min(scaleW,val/maxBar*scaleW);
+    ctx.fillStyle=EMPTY;ctx.fillRect(bx+108,yy,scaleW,barH);
+    ctx.fillStyle=col;ctx.fillRect(bx+108,yy,Math.max(2,w),barH);
+    ctx.fillStyle=INKSOFT;fontMono(ctx,10.5);ctx.textAlign='right';ctx.fillText(lab,bx+102,yy+11);
+    ctx.fillStyle=INK;ctx.textAlign='left';ctx.fillText('ΔE='+val.toFixed(1),bx+114+scaleW,yy+11);};
+  drawBar(barTop,dBefore,WARN,'before');
+  drawBar(barTop+barH+8,dAfter,ACCENT,'after');
+  const ro=document.getElementById('stainnormReadout');
+  ro.innerHTML='Cast = <b>'+this.castLbl()+'</b> rotates lab-B’s stain vectors & rescales concentrations. '+
+   'Macenko: <code>C=Mₛ⁻¹·OD</code> → rescale to ref robust-max → recompose in <code>M_ref</code>. '+
+   'ΔE to reference: <b style="color:'+WARN+'">before '+dBefore.toFixed(1)+'</b> vs <b>after '+dAfter.toFixed(2)+'</b>. '+
+   (Math.abs(this.cast)<0.04
+     ? 'Source already matches the reference scanner — nothing to correct.'
+     : 'The cast throws the raw source <b>'+(dBefore/Math.max(0.01,dAfter)).toFixed(0)+'×</b> further from the target, yet the normalized output stays at ΔE≈<b>'+dAfter.toFixed(2)+'</b> — scanner-invariant by construction.');
 }};
 
 
