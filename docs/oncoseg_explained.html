@@ -3,29 +3,28 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>OncoSeg — Understand the System · Findings · Live CV Lab</title>
+<title>OncoSeg — Understand the System · Review Findings</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,900&family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  /* Reading-room / bone-paper palette (concept + findings) */
+  /* Reading-room / bone-paper palette */
   --paper:#f2ece0; --paper-2:#e9e1d2; --ink:#1c1814; --ink-soft:#4a4239;
   --line:#cdbfa6; --line-soft:#ddd2bd;
   --film:#0d0c0f;               /* radiograph film black */
   --amber:#c0691f; --amber-2:#e08a2e;
   --teal:#1f6f6a; --teal-2:#2c9a92;
-  --rust:#a23b২৪; --crimson:#a8321f; --gold:#b08313;
+  --rust:#a23b24; --crimson:#a8321f; --gold:#b08313;
   --plum:#6a3d6e;
-  /* phosphor console (lab tab) */
-  --phos:#7CF6C8; --phos-dim:#2f7d68; --grid:#16241f;
+  --phos:#7CF6C8;
   --sev-crit:#d23b2a; --sev-high:#c0691f; --sev-med:#b08313; --sev-low:#5a7d4f;
   --shadow:0 1px 0 rgba(255,255,255,.5), 0 18px 40px -22px rgba(20,16,10,.55);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
-  margin:0; background:var(--paper); color:var(--ink);
+  margin:0; background:var(--paper); color:var(--ink); overflow-x:hidden;
   font-family:"Hanken Grotesk",system-ui,sans-serif; font-size:16.5px; line-height:1.6;
   -webkit-font-smoothing:antialiased;
   background-image:
@@ -42,7 +41,7 @@ header.top{
   background:rgba(242,236,224,.86);backdrop-filter:blur(10px) saturate(1.2);
   border-bottom:1px solid var(--line);
 }
-.top-inner{display:flex;align-items:center;gap:18px;padding:13px 26px;max-width:1120px;margin:0 auto}
+.top-inner{display:flex;align-items:center;gap:14px;padding:13px 26px;max-width:1120px;margin:0 auto}
 .brand{font-family:"Fraunces",serif;font-weight:900;font-size:21px;letter-spacing:-.01em;line-height:1;display:flex;align-items:center;gap:11px}
 .brand .glyph{
   width:30px;height:30px;border-radius:50%;flex:0 0 auto;position:relative;
@@ -61,9 +60,14 @@ nav.tabs button{
 nav.tabs button .n{opacity:.5;font-weight:700}
 nav.tabs button:hover{color:var(--ink)}
 nav.tabs button.active{background:var(--ink);color:var(--paper);box-shadow:var(--shadow)}
-nav.tabs button.active.lab{background:var(--film);color:var(--phos)}
 nav.tabs button.active.flag{background:var(--crimson);color:#fff}
-@media(max-width:740px){.top-inner{flex-wrap:wrap}nav.tabs{width:100%;margin-left:0;overflow-x:auto}}
+.lablink{font-family:"JetBrains Mono",monospace;font-weight:700;font-size:12px;letter-spacing:.04em;
+  color:var(--film);background:var(--phos);border:1px solid #57c79e;border-radius:10px;
+  padding:9px 14px;white-space:nowrap;display:flex;align-items:center;gap:8px;transition:.15s;
+  box-shadow:0 0 0 0 rgba(124,246,200,.5)}
+.lablink:hover{box-shadow:0 6px 22px -8px rgba(31,111,106,.7);transform:translateY(-1px)}
+.lablink .sq{width:9px;height:9px;border-radius:2px;background:var(--film)}
+@media(max-width:820px){.top-inner{flex-wrap:wrap}nav.tabs{margin-left:0;order:3}.lablink{margin-left:auto}}
 
 /* ---------- Tab plumbing ---------- */
 .tab{display:none;animation:fade .5s ease both}
@@ -78,20 +82,16 @@ h3.sub{font-family:"Fraunces",serif;font-weight:600;font-size:22px;letter-spacin
 .lead{font-size:clamp(17px,2vw,20px);color:var(--ink-soft);max-width:62ch}
 .mono{font-family:"JetBrains Mono",monospace}
 .rule{height:1px;background:linear-gradient(90deg,var(--line),transparent);margin:54px 0}
-.tag{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
-  padding:3px 9px;border-radius:999px;border:1px solid var(--line);color:var(--ink-soft);background:var(--paper-2)}
 
 /* ---------- Cards ---------- */
 .card{background:var(--paper-2);border:1px solid var(--line-soft);border-radius:16px;padding:22px 24px;box-shadow:var(--shadow)}
 .grid{display:grid;gap:18px}
 .grid>*{min-width:0}
-.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
-@media(max-width:860px){.g2,.g3,.g4{grid-template-columns:1fr}}
+.g2{grid-template-columns:1fr 1fr}
+@media(max-width:860px){.g2{grid-template-columns:1fr}}
 .wrap>section{max-width:100%}
 
-/* ===================================================================
-   TAB 1 — UNDERSTAND
-=================================================================== */
+/* ====== TAB 1 — UNDERSTAND ====== */
 .hero{padding:64px 0 18px;position:relative}
 .hero .frame{
   border:1px solid var(--line);border-radius:20px;padding:38px 40px;background:
@@ -120,7 +120,6 @@ h3.sub{font-family:"Fraunces",serif;font-weight:600;font-size:22px;letter-spacin
 .statband div:last-child{border-right:0}
 .statband .v{font-family:"Fraunces",serif;font-weight:900;font-size:30px;line-height:1;letter-spacing:-.02em}
 .statband .l{font-size:12px;color:var(--ink-soft);margin-top:6px}
-.statband .v.warn{color:var(--crimson)}
 @media(max-width:860px){.statband{grid-template-columns:1fr 1fr}.statband div:nth-child(2){border-right:0}}
 
 .techgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:12px}
@@ -138,10 +137,13 @@ ul.clean{list-style:none;padding:0;margin:0}
 ul.clean li{padding:10px 0 10px 26px;border-bottom:1px dashed var(--line-soft);position:relative;font-size:15px}
 ul.clean li::before{content:"";position:absolute;left:2px;top:17px;width:10px;height:10px;border:2px solid var(--teal);border-radius:50%}
 ul.clean li b{font-weight:700}
+.labcta{display:flex;align-items:center;gap:20px;flex-wrap:wrap;border:1px solid var(--teal);border-radius:16px;
+  padding:22px 26px;background:linear-gradient(110deg,rgba(31,111,106,.10),rgba(124,246,200,.05));margin-top:8px}
+.labcta .go{font-family:"JetBrains Mono",monospace;font-weight:700;font-size:14px;color:#fff;background:var(--teal);
+  border-radius:11px;padding:13px 20px;white-space:nowrap;display:inline-flex;gap:9px;align-items:center;transition:.15s}
+.labcta .go:hover{background:var(--teal-2);transform:translateY(-1px)}
 
-/* ===================================================================
-   TAB 2 — FINDINGS
-=================================================================== */
+/* ====== TAB 2 — FINDINGS ====== */
 .findings-head{padding:54px 0 14px}
 .score{display:flex;gap:14px;flex-wrap:wrap;margin:22px 0 8px}
 .score .pip{border:1px solid var(--line);border-radius:12px;padding:12px 18px;background:var(--paper-2);min-width:110px}
@@ -181,95 +183,7 @@ ul.clean li b{font-weight:700}
   border:1px solid var(--teal);color:var(--teal);background:rgba(31,111,106,.08);margin-top:2px;flex:0 0 auto}
 .method-note{font-size:13px;color:var(--ink-soft);border:1px dashed var(--line);border-radius:10px;padding:12px 15px;background:rgba(255,255,255,.25)}
 
-/* ===================================================================
-   TAB 3 — LIVE CV LAB (phosphor console)
-=================================================================== */
-#lab.show{display:block}
-body{overflow-x:hidden}
-.lab-shell{
-  color:#d4e6df;width:100%;
-  background-image:
-    linear-gradient(rgba(124,246,200,.025) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(124,246,200,.025) 1px,transparent 1px);
-  background-size:42px 42px;background-color:var(--film);
-}
-.lab-pad{padding:50px 0 90px}
-.lab h1.disp,.lab h2.sec,.lab h3.sub{color:#eafff6}
-.lab .kicker{color:var(--phos)}
-.lab .lead{color:#9fc4b7}
-.lab .rule{background:linear-gradient(90deg,var(--phos-dim),transparent);opacity:.5}
-.console{border:1px solid var(--grid);border-radius:14px;background:rgba(8,14,12,.65);position:relative;
-  box-shadow:inset 0 0 60px rgba(0,0,0,.5), 0 20px 50px -30px rgba(0,0,0,.8);overflow:hidden}
-.console::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:var(--dp,0);
-  background:var(--phos);box-shadow:0 0 10px var(--phos);transition:width .18s linear;pointer-events:none;opacity:.95}
-.console .bar{display:flex;align-items:center;gap:9px;padding:10px 14px;border-bottom:1px solid var(--grid);background:rgba(124,246,200,.04)}
-.console .bar .dotr{width:9px;height:9px;border-radius:50%;background:#e0883a}.console .bar .dotr.g{background:var(--phos)}.console .bar .dotr.b{background:#3a7be0}
-.console .bar .name{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;color:#8faea3;margin-left:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.bar-play{margin-left:auto;flex:0 0 auto;font-family:"JetBrains Mono",monospace;font-size:10.5px;font-weight:700;letter-spacing:.05em;
-  color:var(--phos);background:rgba(124,246,200,.08);border:1px solid var(--phos-dim);border-radius:8px;
-  padding:5px 12px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:.15s}
-.bar-play:hover{background:rgba(124,246,200,.2)}
-.bar-play.playing{background:var(--phos);color:var(--film);border-color:var(--phos);box-shadow:0 0 16px rgba(124,246,200,.45)}
-.bar-play .tri{width:0;height:0;border-left:8px solid currentColor;border-top:5px solid transparent;border-bottom:5px solid transparent}
-.bar-play.playing .tri{border:0;width:8px;height:10px;border-left:3px solid currentColor;border-right:3px solid currentColor}
-.console .bd{padding:20px 22px}
-.lab-mono{font-family:"JetBrains Mono",monospace;color:#bfe9d9}
-/* play console */
-.playbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;border:1px solid var(--grid);border-radius:14px;
-  padding:14px 18px;margin:14px 0 8px;background:linear-gradient(100deg,rgba(124,246,200,.07),rgba(8,14,12,.4));position:relative;overflow:hidden}
-.playbar::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:var(--prog,0%);background:var(--phos);box-shadow:0 0 12px var(--phos);transition:width .25s linear}
-.play-btn{font-family:"JetBrains Mono",monospace;font-weight:700;font-size:14px;letter-spacing:.04em;
-  color:var(--film);background:var(--phos);border:0;border-radius:11px;padding:12px 22px;cursor:pointer;
-  display:flex;align-items:center;gap:10px;box-shadow:0 0 26px rgba(124,246,200,.4);transition:.15s}
-.play-btn:hover{transform:translatey(-1px);box-shadow:0 0 36px rgba(124,246,200,.6)}
-.play-btn.playing{background:transparent;color:var(--phos);border:1px solid var(--phos)}
-.play-btn .tri{width:0;height:0;border-left:11px solid currentColor;border-top:7px solid transparent;border-bottom:7px solid transparent}
-.play-btn.playing .tri{border:0;width:11px;height:13px;border-left:4px solid currentColor;border-right:4px solid currentColor}
-.play-meta{font-family:"JetBrains Mono",monospace;font-size:12px;color:#9fc4b7;line-height:1.5}
-.play-meta b{color:var(--phos)}
-.play-now{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--phos);letter-spacing:.04em}
-.play-toggle{margin-left:auto;display:flex;align-items:center;gap:8px;font-family:"JetBrains Mono",monospace;font-size:11.5px;color:#9fc4b7;cursor:pointer;user-select:none}
-.play-toggle input{accent-color:var(--phos)}
-.autonote{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--phos-dim);letter-spacing:.04em;margin:-2px 2px 16px}
-
-.module-tabs{display:flex;gap:7px;flex-wrap:wrap;margin:6px 0 6px;align-items:center}
-.module-tabs .cat{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--phos-dim);width:100%;margin:14px 0 -2px;display:flex;align-items:center;gap:9px}
-.module-tabs .cat::after{content:"";flex:1;height:1px;background:var(--grid)}
-.module-tabs button{font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--phos-dim);
-  background:transparent;border:1px solid var(--grid);border-radius:9px;padding:8px 12px;cursor:pointer;transition:.15s;
-  display:flex;align-items:center;gap:7px}
-.module-tabs button:hover{color:var(--phos);border-color:var(--phos-dim)}
-.module-tabs button.on{color:var(--film);background:var(--phos);border-color:var(--phos);font-weight:700;box-shadow:0 0 22px rgba(124,246,200,.35)}
-.module-tabs button.queued{border-color:var(--phos-dim);color:#bfe9d9}
-.module-tabs button .num{opacity:.6;font-weight:700}
-.demo{display:none}.demo.show{display:block;animation:fade .4s both}
-.lab-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:start}
-@media(max-width:900px){.lab-grid{grid-template-columns:1fr}}
-.explain h3{font-family:"Fraunces",serif;color:#eafff6;font-size:23px;margin:0 0 8px;letter-spacing:-.01em}
-.explain p{color:#a9cabe;font-size:15px;line-height:1.62}
-.explain .why{border-left:2px solid var(--phos-dim);padding:6px 0 6px 15px;margin:14px 0;color:#cfeee2;font-size:14.5px}
-.explain code{font-family:"JetBrains Mono",monospace;background:rgba(124,246,200,.1);color:var(--phos);padding:1px 6px;border-radius:5px;font-size:13px}
-.ctrl{display:flex;align-items:center;gap:12px;margin:11px 0;font-family:"JetBrains Mono",monospace;font-size:12.5px;color:#9fc4b7}
-.ctrl label{min-width:118px}
-.ctrl input[type=range]{flex:1;accent-color:var(--phos);height:3px}
-.ctrl .val{min-width:54px;text-align:right;color:var(--phos);font-weight:700}
-canvas{display:block;max-width:100%;border-radius:10px}
-.canvas-wrap{background:rgba(4,8,7,.6);border:1px solid var(--grid);border-radius:12px;padding:16px;text-align:center}
-.canvas-cap{font-family:"JetBrains Mono",monospace;font-size:11px;color:#7da093;margin-top:10px;letter-spacing:.04em}
-.readout{font-family:"JetBrains Mono",monospace;font-size:12px;color:#bfe9d9;background:rgba(124,246,200,.05);
-  border:1px solid var(--grid);border-radius:9px;padding:11px 13px;margin-top:14px;line-height:1.7}
-.readout b{color:var(--phos)}
-.pill-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
-.minipill{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--phos);border:1px solid var(--phos-dim);border-radius:999px;padding:3px 9px}
-.btn-ghost{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--phos);background:transparent;
-  border:1px solid var(--phos-dim);border-radius:9px;padding:8px 14px;cursor:pointer;transition:.15s}
-.btn-ghost:hover{background:rgba(124,246,200,.1)}
-
 footer{padding:42px 0 60px;color:var(--ink-soft);font-size:13px;border-top:1px solid var(--line);margin-top:40px}
-.lab-shell footer{border-color:var(--grid);color:#7da093}
-.disc{background:rgba(168,50,31,.07);border:1px solid rgba(168,50,31,.3);border-radius:12px;padding:14px 18px;font-size:13.5px;color:#7a2a1c}
-.lab .disc{background:rgba(124,246,200,.05);border-color:var(--phos-dim);color:#9fc4b7}
 </style>
 </head>
 <body>
@@ -282,9 +196,9 @@ footer{padding:42px 0 60px;color:var(--ink-soft);font-size:13px;border-top:1px s
     </div>
     <nav class="tabs" id="tabnav">
       <button data-tab="understand" class="active"><span class="n">01</span> Understand</button>
-      <button data-tab="findings" class="flag-btn"><span class="n">02</span> Review Findings</button>
-      <button data-tab="lab" class="lab-btn"><span class="n">03</span> Live CV Lab</button>
+      <button data-tab="findings"><span class="n">02</span> Review Findings</button>
     </nav>
+    <a class="lablink" href="oncoseg_cv_lab.html"><span class="sq"></span> Live CV Lab ↗</a>
   </div>
 </header>
 
@@ -373,7 +287,7 @@ footer{padding:42px 0 60px;color:var(--ink-soft);font-size:13px;border-top:1px s
     <section>
       <span class="kicker">The technology stack</span>
       <h2 class="sec">What it's built from</h2>
-      <p class="lead" style="margin:8px 0 20px">Every concept below gets an <b>interactive, intuitive explanation</b> in the <a href="#" data-goto="lab">Live CV Lab →</a></p>
+      <p class="lead" style="margin:8px 0 20px">Every concept below gets an <b>interactive, intuitive explanation</b> in the <a href="oncoseg_cv_lab.html">Live CV Lab ↗</a></p>
       <div class="techgrid">
         <div class="chip"><div class="t"><span class="ic" style="background:var(--plum)"></span>Swin Transformer</div><div class="d">Windowed + shifted self-attention; linear-cost global context for 3D volumes.</div></div>
         <div class="chip"><div class="t"><span class="ic" style="background:var(--amber)"></span>Cross-Attention</div><div class="d">Decoder queries encoder. Q·Kᵀ → softmax → weighted V.</div></div>
@@ -388,13 +302,24 @@ footer{padding:42px 0 60px;color:var(--ink-soft);font-size:13px;border-top:1px s
     </section>
 
     <div class="rule"></div>
+
+    <section class="labcta">
+      <div style="flex:1 1 320px">
+        <span class="kicker" style="color:var(--teal)">Go deeper</span>
+        <h3 class="sub" style="margin-top:6px">Touch the architecture — 22 live, playable widgets</h3>
+        <p style="margin:6px 0 0;color:var(--ink-soft)">The <b>Live CV Lab</b> is now its own page: convolution, attention, Swin windows, MC-Dropout, Dice, calibration/ECE, RECIST and more — each runs the real math in your browser, with a per-widget ▶ Play and a global auto-tour.</p>
+      </div>
+      <a class="go" href="oncoseg_cv_lab.html">Open the Live CV Lab ↗</a>
+    </section>
+
+    <div class="rule"></div>
     <section class="card" style="border-color:var(--amber);background:linear-gradient(180deg,rgba(192,105,31,.06),transparent)">
       <span class="kicker">Honest framing</span>
       <h3 class="sub" style="margin-top:6px">This tab is the system as intended. Tab 2 is the system as verified.</h3>
       <p style="margin:6px 0 0;color:var(--ink-soft)">A deep, adversarially-verified code &amp; data review found the engineering is solid but several headline <i>scientific</i> claims don't hold up against the committed artifacts. We keep the two views separate on purpose. <a href="#" data-goto="findings"><b>Read the findings →</b></a></p>
     </section>
   </div>
-  <footer><div class="wrap">OncoSeg · conceptual overview — built as a single self-contained page. Switch tabs above. No data leaves your browser.</div></footer>
+  <footer><div class="wrap">OncoSeg · conceptual overview. The interactive Live CV Lab lives on its <a href="oncoseg_cv_lab.html">own page</a>. No data leaves your browser.</div></footer>
 </main>
 
 <!-- =========================================================== TAB 2 -->
@@ -433,564 +358,24 @@ footer{padding:42px 0 60px;color:var(--ink-soft);font-size:13px;border-top:1px s
   <footer><div class="wrap">Findings are reproducible from the repository's committed artifacts (per-subject Dice <span class="mono">.npy</span>, eval JSON) and source at the cited <span class="mono">file:line</span> anchors.</div></footer>
 </main>
 
-<!-- =========================================================== TAB 3 -->
-<main class="tab lab" id="lab">
- <div class="lab-shell">
-  <div class="wrap lab-pad">
-    <section>
-      <span class="kicker">Live CV Lab · interactive</span>
-      <h1 class="disp">Touch the architecture.</h1>
-      <p class="lead">Every concept OncoSeg relies on — from convolution to attention to the segmentation losses and the clinical scoring — is a computer-vision / ML idea you can <b>feel</b>. The 22 widgets below run the <i>real</i> math in your browser on toy tensors. Drag a slider, or hit <b>Play</b> to watch the whole stack animate itself end-to-end.</p>
-    </section>
-
-    <div class="playbar" id="playbar" style="--prog:0%">
-      <button class="play-btn" id="playBtn"><span class="tri"></span><span id="playLabel">Play all</span></button>
-      <div class="play-meta">
-        <div>Auto-tour of every module · <b id="playCount">22</b> demos</div>
-        <div class="play-now" id="playNow">— idle —</div>
-      </div>
-      <label class="play-toggle"><input type="checkbox" id="playLoop" checked> loop</label>
-    </div>
-    <div class="autonote">Play drives each widget's own controls automatically. Click any chip to jump — or hit the <b>▶ Play</b> in any panel's title bar to loop just that one demo.</div>
-
-    <div class="module-tabs" id="moduletabs">
-      <span class="cat">Foundations · CV building blocks</span>
-      <button data-m="conv" class="on"><span class="num">01</span> Convolution</button>
-      <button data-m="act"><span class="num">02</span> Activations</button>
-      <button data-m="norm"><span class="num">03</span> Normalization</button>
-      <button data-m="upconv"><span class="num">04</span> Transposed Conv ↑</button>
-
-      <span class="cat">Transformer core</span>
-      <button data-m="patch"><span class="num">05</span> Patch Embedding</button>
-      <button data-m="attention"><span class="num">06</span> Self-Attention</button>
-      <button data-m="mha"><span class="num">07</span> Multi-Head</button>
-      <button data-m="window"><span class="num">08</span> Swin Windows</button>
-      <button data-m="xattn"><span class="num">09</span> Cross-Attention Skip</button>
-      <button data-m="temporal"><span class="num">10</span> Temporal Attention</button>
-
-      <span class="cat">Segmentation architecture</span>
-      <button data-m="unet"><span class="num">11</span> U-Net Pyramid</button>
-      <button data-m="ds"><span class="num">12</span> Deep Supervision</button>
-      <button data-m="sw"><span class="num">13</span> Sliding-Window Infer</button>
-      <button data-m="head"><span class="num">14</span> Output Head · TC/WT/ET</button>
-
-      <span class="cat">Training objectives</span>
-      <button data-m="loss"><span class="num">15</span> Dice · BCE · Focal</button>
-      <button data-m="dice"><span class="num">16</span> Dice Overlap</button>
-
-      <span class="cat">Uncertainty &amp; evaluation</span>
-      <button data-m="dropout"><span class="num">17</span> MC-Dropout</button>
-      <button data-m="entropy"><span class="num">18</span> Predictive Entropy</button>
-      <button data-m="calib"><span class="num">19</span> Calibration / ECE</button>
-      <button data-m="hd95"><span class="num">20</span> Hausdorff HD95</button>
-      <button data-m="cc"><span class="num">21</span> Connected Components</button>
-
-      <span class="cat">Clinical endpoint</span>
-      <button data-m="recist"><span class="num">22</span> RECIST 1.1</button>
-    </div>
-
-    <!-- 01. CONVOLUTION -->
-    <section class="demo show" data-demo="conv">
-      <div class="console">
-        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">cnn_decoder.py — local detail via convolution</span></div>
-        <div class="bd lab-grid">
-          <div class="canvas-wrap">
-            <canvas id="convCanvas" width="520" height="300"></canvas>
-            <div class="canvas-cap">Left: input patch. A 3×3 kernel slides over it. Right: feature response.</div>
-            <div class="readout" id="convReadout"></div>
-          </div>
-          <div class="explain">
-            <h3>Convolution — the decoder's local craftsman</h3>
-            <p>A tiny learnable <b>kernel</b> slides over the image, computing a weighted sum at each position. It is the core operation of every CNN and excels at <b>local structure</b> — edges, gradients, texture — exactly what places a crisp tumor boundary.</p>
-            <div class="why">OncoSeg's decoder is CNN, not transformer, on purpose: after the Swin encoder decides <i>what</i> and roughly <i>where</i>, convolutions reconstruct the <i>exact</i> voxel edges. Training learns these kernel weights.</div>
-            <div class="ctrl"><label>Kernel preset</label>
-              <select id="convKernel" style="flex:1;background:rgba(124,246,200,.06);color:var(--phos);border:1px solid var(--grid);border-radius:7px;padding:7px;font-family:'JetBrains Mono',monospace">
-                <option value="edge">Edge detect (Laplacian)</option>
-                <option value="sobelx">Vertical edges (Sobel-x)</option>
-                <option value="blur">Blur (smoothing)</option>
-                <option value="sharp">Sharpen</option>
-              </select>
-            </div>
-            <div class="pill-row"><span class="minipill">3×3×3 in 3D</span><span class="minipill">stride 1</span><span class="minipill">learnable weights</span><span class="minipill">weight sharing</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 02. ACTIVATIONS -->
-    <section class="demo" data-demo="act">
-      <div class="console">
-        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">nonlinearity — ReLU · LeakyReLU · GELU · Sigmoid</span></div>
-        <div class="bd lab-grid">
-          <div class="canvas-wrap">
-            <canvas id="actCanvas" width="520" height="340"></canvas>
-            <div class="canvas-cap">f(x) curves. Without a nonlinearity, stacked layers collapse to one linear map.</div>
-            <div class="readout" id="actReadout"></div>
-          </div>
-          <div class="explain">
-            <h3>Activation functions — where the network gets its power</h3>
-            <p>Between linear layers sits a nonlinearity. <b>ReLU</b> = max(0,x) is cheap but can "die". <b>LeakyReLU</b> keeps a small negative slope (used in OncoSeg's decoder convs). <b>GELU</b> is the smooth gate inside the transformer FFN. <b>Sigmoid</b> squashes logits to (0,1) probabilities at the output head.</p>
-            <div class="why">Each maps to a real spot in the code: LeakyReLU in <code>cnn_decoder</code>, GELU in the cross-attention FFN, sigmoid on the 3-channel output. Stack linear layers with no activation and you can only ever learn a straight line.</div>
-            <div class="ctrl"><label>Function</label>
-              <select id="actFn" style="flex:1;background:rgba(124,246,200,.06);color:var(--phos);border:1px solid var(--grid);border-radius:7px;padding:7px;font-family:'JetBrains Mono',monospace">
-                <option value="relu">ReLU</option><option value="leaky">LeakyReLU (0.1)</option>
-                <option value="gelu">GELU</option><option value="sigmoid">Sigmoid</option><option value="tanh">Tanh</option>
-              </select>
-            </div>
-            <div class="ctrl"><label>Probe x</label><input type="range" id="actX" min="-4" max="4" step="0.05" value="1"><span class="val" id="actXV">1.00</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 03. NORMALIZATION -->
-    <section class="demo" data-demo="norm">
-      <div class="console">
-        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">InstanceNorm3d / LayerNorm — stabilizing activations</span></div>
-        <div class="bd lab-grid">
-          <div class="canvas-wrap">
-            <canvas id="normCanvas" width="520" height="330"></canvas>
-            <div class="canvas-cap">Raw feature distribution (amber) → normalized to mean 0, var 1 (teal).</div>
-            <div class="readout" id="normReadout"></div>
-          </div>
-          <div class="explain">
-            <h3>Normalization — keeping signals well-behaved</h3>
-            <p>Deep nets train poorly when activations drift to huge or tiny scales. Normalization re-centers a group of values to <b>mean 0, variance 1</b>, then lets the network re-scale with learnable γ, β. The differences are <i>which</i> values get grouped.</p>
-            <div class="why">OncoSeg uses <b>InstanceNorm3d</b> in the decoder (per-channel, per-sample — robust to the tiny batch sizes forced by 3D volumes) and <b>LayerNorm</b> inside the transformer blocks. BatchNorm, which averages across the batch, is fragile when batch=1 or 2.</div>
-            <div class="ctrl"><label>Input mean shift</label><input type="range" id="normMean" min="-3" max="3" step="0.1" value="1.5"><span class="val" id="normMeanV">1.5</span></div>
-            <div class="ctrl"><label>Input spread</label><input type="range" id="normStd" min="0.3" max="3" step="0.1" value="1.8"><span class="val" id="normStdV">1.8</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 04. TRANSPOSED CONV -->
-    <section class="demo" data-demo="upconv">
-      <div class="console">
-        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">ConvTranspose3d — learnable upsampling in the decoder</span></div>
-        <div class="bd lab-grid">
-          <div class="canvas-wrap">
-            <canvas id="upCanvas" width="520" height="320"></canvas>
-            <div class="canvas-cap">Each low-res cell paints a scaled copy of the kernel into the high-res grid; overlaps sum.</div>
-            <div class="readout" id="upReadout"></div>
-          </div>
-          <div class="explain">
-            <h3>Transposed convolution — rebuilding resolution</h3>
-            <p>The encoder shrank the volume 32×. To produce a full-resolution mask the decoder must <b>grow</b> it back. A transposed conv (a.k.a. "deconv") does the reverse of striding: every input cell is multiplied by a learnable kernel and <i>stamped</i> into a larger output, with overlaps added.</p>
-            <div class="why">This is the <code>ConvTranspose3d(stride=2)</code> in every decoder stage, plus a final 4× head to undo the patch-embed downsample. Unlike fixed interpolation, the kernel is <i>learned</i> — so upsampling itself can sharpen edges.</div>
-            <div class="ctrl"><label>Upsample factor</label><input type="range" id="upStride" min="2" max="4" step="1" value="2"><span class="val" id="upStrideV">2</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 05. PATCH EMBEDDING -->
-    <section class="demo" data-demo="patch">
-      <div class="console">
-        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">swin_encoder.py — patch_size (4,4,4) tokenization</span></div>
-        <div class="bd lab-grid">
-          <div class="canvas-wrap">
-            <canvas id="patchCanvas" width="520" height="330"></canvas>
-            <div class="canvas-cap">The volume is cut into non-overlapping patches; each becomes one token vector.</div>
-            <div class="readout" id="patchReadout"></div>
-          </div>
-          <div class="explain">
-            <h3>Patch embedding — turning a volume into tokens</h3>
-            <p>A transformer eats a <i>sequence</i>, not a grid. Patch embedding slices the image into fixed <b>p×p×p</b> patches and linearly projects each into a <code>embed_dim</code>-vector "token". A 128³ volume with patch 4 becomes a 32³ grid of tokens.</p>
-            <div class="why">This is the very first layer of the Swin encoder (<code>patch_size=(4,4,4)</code>). Bigger patches = fewer tokens = cheaper but coarser. It's why the encoder's finest feature map is at H/4, and why the decoder needs a 4× head to get back to voxels.</div>
-            <div class="ctrl"><label>Patch size p</label><input type="range" id="patchP" min="2" max="8" step="1" value="4"><span class="val" id="patchPV">4</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 06. SELF ATTENTION -->
-    <section class="demo show" data-demo="attention">
-      <div class="console">
-        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">scaled_dot_product_attention.ipynb</span></div>
-        <div class="bd lab-grid">
-          <div class="canvas-wrap">
-            <canvas id="attnCanvas" width="520" height="360"></canvas>
-            <div class="canvas-cap">Click a query token (left). Edge opacity = attention weight after softmax.</div>
-            <div class="readout" id="attnReadout"></div>
-          </div>
-          <div class="explain">
-            <h3>Self-Attention: every voxel asks every other voxel "how relevant are you?"</h3>
-            <p>Each token emits a <b>Query</b>, a <b>Key</b> and a <b>Value</b>. Relevance between a query <code>i</code> and key <code>j</code> is their dot product <code>qᵢ·kⱼ</code>, scaled by <code>1/√d</code>, then passed through <b>softmax</b> so the weights for one query sum to 1. The output is the softmax-weighted sum of Values.</p>
-            <div class="why">Why it matters here: a CNN only sees a local neighborhood. Attention lets a voxel on one side of the brain directly reference tissue on the other — essential for deciding whether two bright blobs belong to <i>one</i> tumor.</div>
-            <div class="ctrl"><label>Temperature 1/√d</label><input type="range" id="attnTemp" min="0.15" max="2.5" step="0.05" value="1"><span class="val" id="attnTempV">1.00</span></div>
-            <p style="font-size:13px;color:#8faea3">Low temperature → softmax sharpens to "hard" attention (one neighbor wins). High → diffuse, averaging attention. This is exactly the <code>scale = head_dim^-0.5</code> term in <span class="lab-mono">cross_attention_skip.py:30</span>.</p>
-            <div class="pill-row"><span class="minipill">Q·Kᵀ</span><span class="minipill">softmax(dim=-1)</span><span class="minipill">·V</span><span class="minipill">multi-head</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 07. MULTI-HEAD -->
-    <section class="demo" data-demo="mha">
-      <div class="console">
-        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">num_heads — parallel attention subspaces</span></div>
-        <div class="bd lab-grid">
-          <div class="canvas-wrap">
-            <canvas id="mhaCanvas" width="520" height="340"></canvas>
-            <div class="canvas-cap">The channel dim splits into H heads; each head attends differently, then they concat.</div>
-            <div class="readout" id="mhaReadout"></div>
-          </div>
-          <div class="explain">
-            <h3>Multi-head attention — many questions at once</h3>
-            <p>Instead of one attention map, the <code>embed_dim</code> is split into <b>H</b> heads of size <code>d/H</code>. Each head computes its own Q·Kᵀ·V in a different subspace, so one head can track "bright edges" while another tracks "spatial proximity". Outputs are concatenated and projected.</p>
-            <div class="why">OncoSeg scales heads with depth: <code>num_heads=(3,6,12,24)</code> across the four Swin stages. Watch how each head specializes on a different feature axis below — more heads = more parallel relationships, at fixed total compute.</div>
-            <div class="ctrl"><label>Number of heads</label><input type="range" id="mhaH" min="1" max="8" step="1" value="4"><span class="val" id="mhaHV">4</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 08. SWIN WINDOWS (moved up; placeholder kept for order) -->
-
-    <!-- 09. CROSS ATTENTION -->
-    <section class="demo" data-demo="xattn">
-      <div class="console">
-        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">cross_attention_skip.py — decoder queries encoder</span></div>
-        <div class="bd lab-grid">
-          <div class="canvas-wrap">
-            <canvas id="xattnCanvas" width="520" height="380"></canvas>
-            <div class="canvas-cap">Top row = encoder features (Keys/Values). Bottom = decoder query. Bars = where the query "looks".</div>
-            <div class="readout" id="xattnReadout"></div>
-          </div>
-          <div class="explain">
-            <h3>Cross-Attention Skip: a smarter U-Net bridge</h3>
-            <p>A normal U-Net <i>concatenates</i> encoder features into the decoder — every location, indiscriminately. OncoSeg instead makes the <b>decoder the Query</b> and the <b>encoder the Key/Value</b>. The decoder pulls only the encoder positions it actually needs.</p>
-            <div class="why">Intuition: the decoder is rebuilding a tumor edge and "asks" the encoder — <i>where are the sharp boundaries that match what I'm drawing here?</i> Move the decoder query and watch which encoder columns light up.</div>
-            <div class="ctrl"><label>Decoder query pos</label><input type="range" id="xattnPos" min="0" max="100" step="1" value="40"><span class="val" id="xattnPosV">0.40</span></div>
-            <div class="ctrl"><label>Query sharpness</label><input type="range" id="xattnSharp" min="0.4" max="4" step="0.1" value="1.6"><span class="val" id="xattnSharpV">1.6</span></div>
-            <p style="font-size:13px;color:#8faea3">Residual + FFN wrap the attention (<span class="lab-mono">out = dec + attn; out += ffn(norm(out))</span>) so the skip can <i>refine</i> rather than replace the decoder's own estimate.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 10. TEMPORAL ATTENTION -->
-    <section class="demo" data-demo="temporal">
-      <div class="console">
-        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">temporal_attention.py — baseline vs follow-up fusion</span></div>
-        <div class="bd lab-grid">
-          <div class="canvas-wrap">
-            <canvas id="tempCanvas" width="520" height="340"></canvas>
-            <div class="canvas-cap">Baseline (t0) and follow-up (t1) bottlenecks; attention + difference highlight change.</div>
-            <div class="readout" id="tempReadout"></div>
-          </div>
-          <div class="explain">
-            <h3>Temporal attention — seeing what changed between scans</h3>
-            <p>For longitudinal response, OncoSeg can fuse two timepoints. The follow-up features <b>attend to</b> the baseline (cross-attention), then concatenate the explicit difference <code>t1 − t0</code> and project. The model thus represents <i>evolution</i>, not just two static masks.</p>
-            <div class="why">Operates on the deepest (bottleneck) features. Drag the tumor-growth slider: the difference channel lights up exactly where the lesion expanded — the signal a response classifier wants. <span class="lab-mono">temporal_attention.py:40-45</span>.</div>
-            <div class="ctrl"><label>Tumor change t0→t1</label><input type="range" id="tempDelta" min="-60" max="80" step="2" value="35"><span class="val" id="tempDeltaV">+35%</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 08. SWIN WINDOWS -->
-    <section class="demo" data-demo="window">
-      <div class="console">
-        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">swin_encoder.py — windowed + shifted attention</span></div>
-        <div class="bd lab-grid">
-          <div class="canvas-wrap">
-            <canvas id="winCanvas" width="520" height="360"></canvas>
-            <div class="canvas-cap">Grid = feature map. Colored squares = attention windows. Toggle the shift to see cross-window mixing.</div>
-            <div class="readout" id="winReadout"></div>
-          </div>
-          <div class="explain">
-            <h3>Swin: attention that doesn't explode in cost</h3>
-            <p>Global attention over a 128³ volume is impossible — cost grows as <b>(number of voxels)²</b>. Swin restricts attention to small <b>windows</b> (here, square tiles), making cost <i>linear</i> in volume. To let information cross window borders, alternating layers <b>shift</b> the window grid by half a window.</p>
-            <div class="why">Window-only attention would trap each region in its own tile forever. The shift is what stitches the whole volume together over successive layers — global reach, local cost.</div>
-            <div class="ctrl"><label>Window size</label><input type="range" id="winSize" min="2" max="8" step="1" value="4"><span class="val" id="winSizeV">4</span></div>
-            <button class="btn-ghost" id="winShift">Toggle shift ⟷</button>
-            <div class="readout" id="winCost" style="margin-top:14px"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 11. U-NET PYRAMID -->
-    <section class="demo" data-demo="unet">
-      <div class="console">
-        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">oncoseg.py — encoder ↓ / bottleneck / decoder ↑ with skips</span></div>
-        <div class="bd lab-grid">
-          <div class="canvas-wrap">
-            <canvas id="unetCanvas" width="520" height="360"></canvas>
-            <div class="canvas-cap">Resolution halves down the encoder, doubles up the decoder; skips bridge equal scales.</div>
-            <div class="readout" id="unetReadout"></div>
-          </div>
-          <div class="explain">
-            <h3>The U-Net shape — context down, detail up</h3>
-            <p>Segmentation needs both <b>global context</b> (what is this?) and <b>pixel precision</b> (where exactly?). The U-Net solves this with a contracting encoder, an expanding decoder, and <b>skip connections</b> that hand high-resolution detail across the "U" so the decoder doesn't have to invent it.</p>
-            <div class="why">OncoSeg's twist: the encoder is a Swin transformer, the decoder is CNN, and the skips are <i>cross-attention</i> (demo 09) instead of plain concatenation. Hover a stage to trace its skip. Channels 48→96→192→384 mirror back down.</div>
-            <div class="ctrl"><label>Highlight stage</label><input type="range" id="unetStage" min="0" max="3" step="1" value="1"><span class="val" id="unetStageV">2</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 12. DEEP SUPERVISION -->
-    <section class="demo" data-demo="ds">
-      <div class="console">
-        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">deep_supervision.py — auxiliary losses at every scale</span></div>
-        <div class="bd lab-grid">
-          <div class="canvas-wrap">
-            <canvas id="dsCanvas" width="520" height="340"></canvas>
-            <div class="canvas-cap">Each decoder stage gets its own prediction head + loss, upsampled and weighted.</div>
-            <div class="readout" id="dsReadout"></div>
-          </div>
-          <div class="explain">
-            <h3>Deep supervision — gradients reach every layer</h3>
-            <p>Normally only the final output is scored. Deep supervision attaches a <b>prediction head at each decoder stage</b> and adds their losses (with decreasing weights), so even the deepest, coarsest layers get a direct training signal. This stabilizes training and helps tiny lesions survive downsampling.</p>
-            <div class="why">Weights normalize to roughly [0.57, 0.29, 0.14] — finest scale counts most. Review caveat: the <code>src</code> library version forgets to interpolate, so its DS loss is shape-broken; only the inline trainer interpolates correctly. <span class="lab-mono">losses.py:79-90</span>.</div>
-            <div class="ctrl"><label>Decay rate</label><input type="range" id="dsDecay" min="0.2" max="0.9" step="0.05" value="0.5"><span class="val" id="dsDecayV">0.50</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 13. SLIDING-WINDOW INFERENCE -->
-    <section class="demo" data-demo="sw">
-      <div class="console">
-        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">inference.py — sliding_window_inference over the full scan</span></div>
-        <div class="bd lab-grid">
-          <div class="canvas-wrap">
-            <canvas id="swCanvas" width="520" height="340"></canvas>
-            <div class="canvas-cap">An ROI-sized window tiles the full volume with overlap; predictions are blended.</div>
-            <div class="readout" id="swReadout"></div>
-          </div>
-          <div class="explain">
-            <h3>Sliding-window inference — fitting a big scan through a small model</h3>
-            <p>The model trains on 96–128³ ROI crops, but a real scan is 240×240×155. At test time a window of the ROI size <b>slides</b> across the volume with overlap; the overlapping predictions are averaged (Gaussian-weighted) so there are no seams at tile borders.</p>
-            <div class="why">More overlap = smoother, slower. This is how OncoSeg processes a whole brain without ever holding it in memory at once. Raise the overlap and watch the seam artifacts vanish.</div>
-            <div class="ctrl"><label>Window overlap</label><input type="range" id="swOver" min="0" max="0.75" step="0.05" value="0.25"><span class="val" id="swOverV">0.25</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 14. OUTPUT HEAD -->
-    <section class="demo" data-demo="head">
-      <div class="console">
-        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">msd labels {1,2,3} → 3 overlapping sigmoid channels TC/WT/ET</span></div>
-        <div class="bd lab-grid">
-          <div class="canvas-wrap">
-            <canvas id="headCanvas" width="520" height="340"></canvas>
-            <div class="canvas-cap">Class labels become 3 nested binary regions. Each channel has its own sigmoid.</div>
-            <div class="readout" id="headReadout"></div>
-          </div>
-          <div class="explain">
-            <h3>The output head — multi-label, not multi-class</h3>
-            <p>Brain-tumor regions <b>nest</b>: ET ⊂ TC ⊂ WT. So OncoSeg does <i>not</i> use a 4-way softmax. It derives 3 <b>overlapping</b> binary regions — Tumor Core (labels 2,3), Whole Tumor (1,2,3), Enhancing (3) — and predicts each with an independent <b>sigmoid</b>. The channels need not sum to 1.</p>
-            <div class="why">This is the BraTS convention and it changes everything downstream: the loss is BCE+Dice per channel, and uncertainty must use <i>binary</i> entropy (demo 18) — a subtle bug-source the review flagged. Toggle a voxel's true class to see which channels fire. <span class="lab-mono">train_all.py:71-74</span>.</div>
-            <div class="ctrl"><label>True voxel class</label><input type="range" id="headClass" min="0" max="3" step="1" value="3"><span class="val" id="headClassV">3</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 15. LOSS FUNCTIONS -->
-    <section class="demo" data-demo="loss">
-      <div class="console">
-        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">losses.py — Dice + BCE, and why Focal handles imbalance</span></div>
-        <div class="bd lab-grid">
-          <div class="canvas-wrap">
-            <canvas id="lossCanvas" width="520" height="340"></canvas>
-            <div class="canvas-cap">Per-voxel loss vs predicted prob for a positive voxel. Focal down-weights easy cases.</div>
-            <div class="readout" id="lossReadout"></div>
-          </div>
-          <div class="explain">
-            <h3>The training objective — Dice + cross-entropy (+ Focal)</h3>
-            <p>Tumor voxels are a tiny minority, so plain cross-entropy lets the model "win" by predicting all-background. OncoSeg combines <b>Dice loss</b> (optimizes overlap directly, scale-invariant) with <b>BCE</b> (per-voxel calibration). <b>Focal</b> loss adds a <code>(1−p)^γ</code> factor that shrinks the loss on easy, confident voxels so training focuses on the hard boundary.</p>
-            <div class="why">Drag γ: at γ=0 Focal = BCE; as γ grows, confidently-correct voxels contribute almost nothing, so gradient budget flows to the ambiguous tumor rim. This is the class-imbalance fix at the heart of medical segmentation.</div>
-            <div class="ctrl"><label>Focal γ</label><input type="range" id="lossGamma" min="0" max="5" step="0.1" value="2"><span class="val" id="lossGammaV">2.0</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- E. MC DROPOUT -->
-    <section class="demo" data-demo="dropout">
-      <div class="console">
-        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">inference.py — Monte-Carlo Dropout uncertainty</span></div>
-        <div class="bd lab-grid">
-          <div class="canvas-wrap">
-            <canvas id="dropCanvas" width="520" height="340"></canvas>
-            <div class="canvas-cap">Each pass randomly drops units → a slightly different mask. Spread across passes = uncertainty.</div>
-            <div class="readout" id="dropReadout"></div>
-          </div>
-          <div class="explain">
-            <h3>MC-Dropout: turning a network into an ensemble</h3>
-            <p>Dropout normally only runs during training. Leave it <b>on at inference</b> and run the model <code>N</code> times: each pass silences a different random subset of units, giving <code>N</code> slightly different masks. The <b>mean</b> is the prediction; the <b>per-voxel disagreement</b> is the uncertainty.</p>
-            <div class="why">Where passes agree (tumor center) → confident. Where they flicker (the boundary) → the model is honestly telling you "I'm not sure here" — the signal a radiologist would want highlighted.</div>
-            <div class="ctrl"><label>Dropout rate p</label><input type="range" id="dropP" min="0" max="0.6" step="0.02" value="0.2"><span class="val" id="dropPV">0.20</span></div>
-            <div class="ctrl"><label>MC samples N</label><input type="range" id="dropN" min="1" max="40" step="1" value="12"><span class="val" id="dropNV">12</span></div>
-            <button class="btn-ghost" id="dropResample">Re-sample ⟳</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 18. PREDICTIVE ENTROPY -->
-    <section class="demo" data-demo="entropy">
-      <div class="console">
-        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">entropy — binary (correct) vs categorical (the inference.py bug)</span></div>
-        <div class="bd lab-grid">
-          <div class="canvas-wrap">
-            <canvas id="entCanvas" width="520" height="340"></canvas>
-            <div class="canvas-cap">Entropy vs probability. Maximal at p=0.5 ("coin flip"), zero at 0 or 1.</div>
-            <div class="readout" id="entReadout"></div>
-          </div>
-          <div class="explain">
-            <h3>Predictive entropy — quantifying "how unsure"</h3>
-            <p>Once you have a probability, entropy turns it into a single uncertainty number. For a <b>binary</b> (sigmoid) output it's <code>−p·log p − (1−p)·log(1−p)</code> — peaking at p=0.5. The model is most uncertain at the decision boundary.</p>
-            <div class="why">Review caveat made tangible: OncoSeg's output is <i>sigmoid</i> (independent channels), so binary entropy is correct. But <code>inference.py</code> uses the <b>categorical</b> formula <code>−Σ p·log p</code>, which omits the (1−p) mass and gives a different, invalid number. Drag p past 0.5 and compare the two curves.</div>
-            <div class="ctrl"><label>Probability p</label><input type="range" id="entP" min="0.01" max="0.99" step="0.01" value="0.5"><span class="val" id="entPV">0.50</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- F. DICE -->
-    <section class="demo" data-demo="dice">
-      <div class="console">
-        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">metrics.py — Dice overlap &amp; why it punishes small lesions</span></div>
-        <div class="bd lab-grid">
-          <div class="canvas-wrap">
-            <canvas id="diceCanvas" width="520" height="340"></canvas>
-            <div class="canvas-cap">Teal = ground truth. Amber = prediction. Overlap = where both agree. Drag prediction.</div>
-            <div class="readout" id="diceReadout"></div>
-          </div>
-          <div class="explain">
-            <h3>Dice: the overlap score that drives everything</h3>
-            <p>Dice = <code>2·|A∩B| / (|A|+|B|)</code> — twice the overlap over the total mask size. 1.0 = perfect, 0 = no overlap. It's the training loss <i>and</i> the headline metric because plain pixel accuracy is useless when 99% of voxels are background.</p>
-            <div class="why">Shrink the prediction and watch Dice collapse: for a <b>small</b> tumor, missing a handful of voxels costs far more Dice than the same miss on a large one. This is precisely why OncoSeg's worst cases are small-TC tumors — and why the review flags ET (often empty) as producing NaN Dice.</div>
-            <div class="ctrl"><label>Prediction size</label><input type="range" id="diceSize" min="20" max="160" step="2" value="100"><span class="val" id="diceSizeV">100</span></div>
-            <div class="ctrl"><label>Offset (mis-align)</label><input type="range" id="diceOff" min="0" max="120" step="2" value="20"><span class="val" id="diceOffV">20</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- G. CALIBRATION -->
-    <section class="demo" data-demo="calib">
-      <div class="console">
-        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">uncertainty_qualitative_analysis.py — the ECE trap</span></div>
-        <div class="bd lab-grid">
-          <div class="canvas-wrap">
-            <canvas id="calibCanvas" width="520" height="360"></canvas>
-            <div class="canvas-cap">Reliability diagram. Diagonal = perfect. Bars below = over-confident.</div>
-            <div class="readout" id="calibReadout"></div>
-          </div>
-          <div class="explain">
-            <h3>Calibration &amp; ECE — and how background voxels hide a problem</h3>
-            <p><b>Calibration</b> asks: when the model says "90% sure", is it right 90% of the time? <b>Expected Calibration Error (ECE)</b> averages the gap <code>|confidence − accuracy|</code> across confidence bins, <i>weighted by how many voxels fall in each bin</i>.</p>
-            <div class="why">This is the project's most important finding. Toggle the background mass: when 98% of voxels are easy background, the count-weighted ECE looks tiny (~0.01, "well-calibrated") — even though on the <b>foreground</b> the model is badly over-confident (foreground ECE ≈ 0.49). The headline metric averages the problem away.</div>
-            <div class="ctrl"><label>Background fraction</label><input type="range" id="calibBg" min="0" max="0.98" step="0.02" value="0.95"><span class="val" id="calibBgV">0.95</span></div>
-            <div class="ctrl"><label>FG over-confidence</label><input type="range" id="calibOver" min="0" max="0.6" step="0.02" value="0.5"><span class="val" id="calibOverV">0.50</span></div>
-            <div class="readout" id="calibEce" style="margin-top:12px"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 20. HAUSDORFF HD95 -->
-    <section class="demo" data-demo="hd95">
-      <div class="console">
-        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">metrics.py — boundary error: HD95 vs mean surface distance</span></div>
-        <div class="bd lab-grid">
-          <div class="canvas-wrap">
-            <canvas id="hdCanvas" width="520" height="340"></canvas>
-            <div class="canvas-cap">Two contours. Lines = each boundary point's distance to the other surface.</div>
-            <div class="readout" id="hdReadout"></div>
-          </div>
-          <div class="explain">
-            <h3>Hausdorff HD95 — Dice can't see boundary spikes</h3>
-            <p>Dice measures volume overlap but is blind to <i>shape</i>: a prediction can have great Dice yet a single nasty spur far from the tumor. <b>Hausdorff distance</b> measures the worst boundary disagreement; <b>HD95</b> uses the 95th percentile to ignore lone outlier voxels, reporting error in <b>millimetres</b>.</p>
-            <div class="why">This is OncoSeg's secondary metric (15.4mm vs UNet3D's 21.0mm — its most defensible result). Add a boundary spike and watch HD95 jump while Dice barely moves — exactly why both metrics are reported together.</div>
-            <div class="ctrl"><label>Boundary spike</label><input type="range" id="hdSpike" min="0" max="60" step="2" value="0"><span class="val" id="hdSpikeV">0</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 21. CONNECTED COMPONENTS -->
-    <section class="demo" data-demo="cc">
-      <div class="console">
-        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">recist.py — connected components = individual lesions</span></div>
-        <div class="bd lab-grid">
-          <div class="canvas-wrap">
-            <canvas id="ccCanvas" width="520" height="340"></canvas>
-            <div class="canvas-cap">A binary mask is split into separate blobs; each colored region is one lesion.</div>
-            <div class="readout" id="ccReadout"></div>
-          </div>
-          <div class="explain">
-            <h3>Connected components — counting separate lesions</h3>
-            <p>A segmentation mask is just "tumor / not tumor". To apply RECIST you must first split it into <b>individual lesions</b> — connected blobs of foreground voxels (6- or 26-connectivity in 3D). Each component is measured separately; tiny fragments below a size threshold are dropped as noise.</p>
-            <div class="why">This is the bridge from a raw mask to clinical "target lesions". The diagnose-worst-case analysis counts these too: BRATS_077 had 31 fragmented WT components — a fragmented tumor is harder to segment and to measure. Raise the noise threshold to prune specks.</div>
-            <div class="ctrl"><label>Min component size</label><input type="range" id="ccMin" min="0" max="30" step="1" value="5"><span class="val" id="ccMinV">5</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 22. RECIST -->
-    <section class="demo" data-demo="recist">
-      <div class="console">
-        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">recist.py / classifier.py — diameter → response class</span></div>
-        <div class="bd lab-grid">
-          <div class="canvas-wrap">
-            <canvas id="recistCanvas" width="520" height="330"></canvas>
-            <div class="canvas-cap">Baseline vs follow-up sum of longest diameters. Zone = RECIST verdict.</div>
-            <div class="readout" id="recistReadout"></div>
-          </div>
-          <div class="explain">
-            <h3>RECIST 1.1: turning pixels into a clinical verdict</h3>
-            <p>From the segmentation, measure each target lesion's <b>longest diameter</b>, sum them, and compare follow-up to baseline (and to the smallest-ever "nadir"):</p>
-            <ul class="clean" style="margin-top:6px">
-              <li style="color:#cfeee2"><b>CR</b> — all target lesions gone.</li>
-              <li style="color:#cfeee2"><b>PR</b> — sum drops ≥ <code>30%</code> vs baseline.</li>
-              <li style="color:#cfeee2"><b>PD</b> — sum rises ≥ <code>20%</code> vs nadir <i>and</i> ≥ <code>5mm</code> absolute.</li>
-              <li style="color:#cfeee2"><b>SD</b> — anything in between.</li>
-            </ul>
-            <div class="ctrl"><label>Follow-up Δ size</label><input type="range" id="recistDelta" min="-100" max="120" step="1" value="-40"><span class="val" id="recistDeltaV">-40%</span></div>
-            <div class="why" style="margin-top:14px">Review caveat: OncoSeg measures the longest diameter only on the single largest-<i>area</i> slice — it can under-measure elongated lesions and flip this verdict. And the README's "validated" longitudinal table is a fixed-seed <i>simulation</i>, not real follow-up scans.</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="rule"></div>
-    <div class="disc"><b>About these widgets:</b> they compute the real operations (softmax, scaled dot-product attention, convolution, Dice, predictive entropy, ECE, RECIST thresholds) on small toy tensors for clarity. The intuition is identical to the 128³ volumes in the actual model; only the scale differs.</div>
-  </div>
-  <footer><div class="wrap" style="text-align:center">Live CV Lab · all computation runs client-side · OncoSeg architecture walkthrough</div></footer>
- </div>
-</main>
-
 <script>
 /* ============================== TAB ROUTER ============================== */
 const tabs=document.querySelectorAll('#tabnav button');
-const panels={understand:document.getElementById('understand'),findings:document.getElementById('findings'),lab:document.getElementById('lab')};
+const panels={understand:document.getElementById('understand'),findings:document.getElementById('findings')};
 function showTab(id){
   for(const k in panels){panels[k].classList.toggle('show',k===id);}
   tabs.forEach(b=>{
     const on=b.dataset.tab===id;
     b.classList.toggle('active',on);
-    b.classList.toggle('lab', b.dataset.tab==='lab');
     b.classList.toggle('flag', b.dataset.tab==='findings');
   });
-  document.body.style.background = id==='lab' ? '#0d0c0f' : 'var(--paper)';
   window.scrollTo({top:0,behavior:'instant'});
-  if(id==='lab') initLab();
   if(id==='findings') buildFindings();
 }
 tabs.forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));
 document.querySelectorAll('[data-goto]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();showTab(a.dataset.goto);}));
 
-/* ============================== TAB 2 — FINDINGS DATA ============================== */
+/* ============================== FINDINGS DATA ============================== */
 const FINDINGS=[
  {sev:'critical',title:'Statistical-significance claim is false — and points the wrong way',
   where:'README.md:139,142 · docs/Paper_Results_Draft.md:11,14,82',
@@ -1216,738 +601,6 @@ document.getElementById('filterbar').addEventListener('click',e=>{
   document.querySelectorAll('#filterbar button').forEach(x=>x.classList.toggle('on',x===b));
   buildFindings();
 });
-
-/* ============================== TAB 3 — LIVE LAB ============================== */
-let labInit=false;
-// registry: data-demo key -> module object (set after each module is defined)
-const MOD={};
-function initLab(){ if(labInit)return; labInit=true;
-  Object.assign(MOD,{conv:Conv,act:Act,norm:Norm,upconv:UpConv,patch:Patch,
-    attention:Attn,mha:MHA,window:Win,xattn:XAttn,temporal:Temporal,
-    unet:UNet,ds:DS,sw:SW,head:Head,loss:Loss,dice:Dice,
-    dropout:Drop,entropy:Entropy,calib:Calib,hd95:HD,cc:CC,recist:Recist});
-  // init every module that has an init()
-  Object.values(MOD).forEach(m=>{ try{ m.init && m.init(); }catch(e){ console.error('init',e); } });
-  setupModuleTabs();
-  setupPlay();
-}
-let curMod='conv';
-function showModule(key,fromPlay){
-  const btns=document.querySelectorAll('#moduletabs button');
-  const demos=document.querySelectorAll('.demo');
-  btns.forEach(x=>x.classList.toggle('on',x.dataset.m===key));
-  demos.forEach(d=>d.classList.toggle('show',d.dataset.demo===key));
-  curMod=key;
-  // (re)draw on show so canvas isn't blank after being display:none
-  if(MOD[key] && MOD[key].draw){ try{ MOD[key].draw(); }catch(e){} }
-  // leaving a demo stops its single-demo player (unless the global tour drove us here)
-  if(typeof DemoPlay!=='undefined' && DemoPlay.on && DemoPlay.key!==key) DemoPlay.stop();
-  if(!fromPlay) Play.stop();
-}
-function setupModuleTabs(){
-  document.querySelectorAll('#moduletabs button').forEach(b=>{
-    b.addEventListener('click',()=>showModule(b.dataset.m,false));
-  });
-}
-
-/* ---------- PLAY ENGINE: auto-drives each widget's own controls ---------- */
-const ORDER=['conv','act','norm','upconv','patch','attention','mha','window','xattn','temporal',
-  'unet','ds','sw','head','loss','dice','dropout','entropy','calib','hd95','cc','recist'];
-// per-demo autoplay scripts: function(progress 0..1) mutates the widget
-const SCRIPT={
-  conv:p=>{const opts=['edge','sobelx','blur','sharp'];setSel('convKernel',opts[Math.floor(p*3.999)],Conv,'kernel');},
-  act:p=>{const opts=['relu','leaky','gelu','sigmoid','tanh'];setSel('actFn',opts[Math.floor(p*4.999)],Act,'fn');setR('actX','actXV',(-4+8*p),Act,'x',v=>v.toFixed(2));},
-  norm:p=>{setR('normMean','normMeanV',(-3+6*p),Norm,'mean',v=>v.toFixed(1));},
-  upconv:p=>{setR('upStride','upStrideV',2+Math.round(p*2),UpConv,'stride',v=>''+v);},
-  patch:p=>{setR('patchP','patchPV',2+Math.round(p*6),Patch,'p',v=>''+v);},
-  attention:p=>{Attn.sel=Math.floor(p*5.999);setR('attnTemp','attnTempV',0.2+p*2.3,Attn,'temp',v=>v.toFixed(2));},
-  mha:p=>{setR('mhaH','mhaHV',1+Math.round(p*7),MHA,'H',v=>''+v);},
-  window:p=>{setR('winSize','winSizeV',2+Math.round(p*6),Win,'win',v=>''+v);Win.shift=p>0.5;},
-  xattn:p=>{setR('xattnPos','xattnPosV',p*100,XAttn,'pos',v=>(v/100).toFixed(2),v=>v/100);},
-  temporal:p=>{setR('tempDelta','tempDeltaV',-60+140*p,Temporal,'delta',v=>(v>0?'+':'')+Math.round(v)+'%');},
-  unet:p=>{setR('unetStage','unetStageV',Math.round(p*3),UNet,'stage',v=>''+(+v+1));},
-  ds:p=>{setR('dsDecay','dsDecayV',0.2+0.7*p,DS,'decay',v=>v.toFixed(2));},
-  sw:p=>{setR('swOver','swOverV',p*0.75,SW,'over',v=>v.toFixed(2));},
-  head:p=>{setR('headClass','headClassV',Math.round(p*3),Head,'cls',v=>''+v);},
-  loss:p=>{setR('lossGamma','lossGammaV',p*5,Loss,'gamma',v=>v.toFixed(1));},
-  dice:p=>{setR('diceSize','diceSizeV',160-Math.abs(0.5-p)*2*140,Dice,'size',v=>''+Math.round(v));setR('diceOff','diceOffV',p*100,Dice,'off',v=>''+Math.round(v));},
-  dropout:p=>{setR('dropP','dropPV',p*0.6,Drop,'p',v=>v.toFixed(2));Drop.seed=1+Math.floor(p*40);},
-  entropy:p=>{setR('entP','entPV',0.02+p*0.96,Entropy,'p',v=>v.toFixed(2));},
-  calib:p=>{setR('calibBg','calibBgV',p*0.98,Calib,'bg',v=>v.toFixed(2));},
-  hd95:p=>{setR('hdSpike','hdSpikeV',p*60,HD,'spike',v=>''+Math.round(v));},
-  cc:p=>{setR('ccMin','ccMinV',Math.round(p*30),CC,'min',v=>''+v);},
-  recist:p=>{setR('recistDelta','recistDeltaV',-100+220*p,Recist,'delta',v=>Math.round(v)+'%');},
-};
-// helpers: set a range input's value + label, write to module prop, redraw
-function setR(id,labId,val,mod,prop,fmt,map){const el=document.getElementById(id);if(el){el.value=val;}
-  if(labId){const l=document.getElementById(labId);if(l&&fmt)l.textContent=fmt(val);}
-  if(mod&&prop!=null)mod[prop]=map?map(val):val; if(mod&&mod.draw)mod.draw();}
-function setSel(id,val,mod,prop){const el=document.getElementById(id);if(el)el.value=val;if(mod&&prop)mod[prop]=val;if(mod&&mod.draw)mod.draw();}
-
-const Play={
-  on:false, idx:0, t:0, raf:null, perDemo:2600, // ms per demo
-  start(){ if(typeof DemoPlay!=='undefined')DemoPlay.stop(); this.on=true; document.getElementById('playBtn').classList.add('playing');
-    document.getElementById('playLabel').textContent='Pause';
-    this.idx=ORDER.indexOf(curMod); if(this.idx<0)this.idx=0; this.t=0; this.last=null; this.loop(); },
-  stop(){ this.on=false; if(this.raf)cancelAnimationFrame(this.raf); this.raf=null;
-    const b=document.getElementById('playBtn'); if(b){b.classList.remove('playing');document.getElementById('playLabel').textContent='Play all';}
-    document.getElementById('playbar').style.setProperty('--prog','0%');
-    document.getElementById('playNow').textContent='— idle —'; },
-  loop(ts){
-    if(!this.on)return;
-    if(this.last==null)this.last=ts||0;
-    const now=ts||0; const dt=now-this.last; this.last=now; this.t+=dt;
-    const key=ORDER[this.idx];
-    if(curMod!==key) showModule(key,true);
-    const p=Math.min(1,this.t/this.perDemo);
-    try{ SCRIPT[key] && SCRIPT[key](p); }catch(e){}
-    document.getElementById('playbar').style.setProperty('--prog',(p*100).toFixed(0)+'%');
-    document.getElementById('playNow').textContent=`▶ ${this.idx+1}/${ORDER.length}  ${labelFor(key)}`;
-    if(this.t>=this.perDemo){
-      this.t=0;this.idx++;
-      if(this.idx>=ORDER.length){
-        if(document.getElementById('playLoop').checked){ this.idx=0; }
-        else { this.stop(); return; }
-      }
-    }
-    this.raf=requestAnimationFrame(this.loop.bind(this));
-  }
-};
-function labelFor(key){const b=[...document.querySelectorAll('#moduletabs button')].find(x=>x.dataset.m===key);return b?b.textContent.replace(/^\s*\d+\s*/,'').trim():key;}
-
-/* ---------- per-demo player: loops a single widget's own script ---------- */
-const DemoPlay={
-  key:null, t:0, raf:null, last:null, perDemo:3000,
-  start(key){
-    Play.stop();                 // global tour and single-demo are mutually exclusive
-    if(this.key && this.key!==key) this.stop();
-    this.key=key; this.t=0; this.last=null; this.on=true;
-    const btn=document.querySelector(`.bar-play[data-k="${key}"]`);
-    if(btn){btn.classList.add('playing');btn.querySelector('.lbl').textContent='Pause';}
-    this.loop();
-  },
-  stop(){
-    this.on=false; if(this.raf)cancelAnimationFrame(this.raf); this.raf=null;
-    if(this.key){
-      const btn=document.querySelector(`.bar-play[data-k="${this.key}"]`);
-      if(btn){btn.classList.remove('playing');btn.querySelector('.lbl').textContent='Play';}
-      const con=consoleFor(this.key); if(con)con.style.setProperty('--dp','0');
-    }
-    this.key=null;
-  },
-  loop(ts){
-    if(!this.on)return;
-    if(this.last==null)this.last=ts||0;
-    const now=ts||0; this.t+=(now-this.last); this.last=now;
-    let p=(this.t%this.perDemo)/this.perDemo;
-    try{ SCRIPT[this.key] && SCRIPT[this.key](p); }catch(e){}
-    const con=consoleFor(this.key); if(con)con.style.setProperty('--dp',(p*100).toFixed(0)+'%');
-    this.raf=requestAnimationFrame(this.loop.bind(this));
-  }
-};
-function consoleFor(key){const d=document.querySelector(`.demo[data-demo="${key}"]`);return d?d.querySelector('.console'):null;}
-
-function setupPlay(){
-  document.getElementById('playBtn').addEventListener('click',()=>{ Play.on?Play.stop():Play.start(); });
-  document.getElementById('playCount').textContent=ORDER.length;
-  // inject a Play button into every demo's console bar
-  document.querySelectorAll('.demo').forEach(demo=>{
-    const key=demo.dataset.demo; const bar=demo.querySelector('.console .bar'); if(!bar||!SCRIPT[key])return;
-    const btn=document.createElement('button');
-    btn.className='bar-play'; btn.dataset.k=key;
-    btn.innerHTML='<span class="tri"></span><span class="lbl">Play</span>';
-    btn.addEventListener('click',e=>{ e.stopPropagation();
-      (DemoPlay.on && DemoPlay.key===key) ? DemoPlay.stop() : DemoPlay.start(key); });
-    bar.appendChild(btn);
-  });
-}
-const PHOS='#7CF6C8', PHOSD='#2f7d68', AMBER='#e08a2e', TEAL='#2c9a92', GRIDC='#16241f', INKD='#9fc4b7';
-function clear(ctx,w,h){ctx.clearRect(0,0,w,h);}
-function softmax(arr,t=1){const m=Math.max(...arr);const e=arr.map(v=>Math.exp((v-m)/t));const s=e.reduce((a,b)=>a+b,0);return e.map(v=>v/s);}
-
-/* ---- A. Self-attention ---- */
-const Attn={init(){
-  this.c=document.getElementById('attnCanvas');this.ctx=this.c.getContext('2d');
-  this.N=6; this.sel=0; this.temp=1;
-  // fixed pseudo-random keys/queries in 2D for reproducibility
-  this.pos=[]; for(let i=0;i<this.N;i++){this.pos.push({x:90,y:50+i*52});}
-  this.kpos=[]; for(let i=0;i<this.N;i++){this.kpos.push({x:430,y:50+i*52});}
-  this.K=[[.9,.2],[.7,.6],[-.5,.8],[-.8,-.3],[.1,-.9],[.4,.5]];
-  this.Q=[[.85,.25],[.6,.7],[-.4,.75],[-.85,-.2],[.05,-.85],[.5,.45]];
-  this.c.addEventListener('click',e=>{
-    const r=this.c.getBoundingClientRect();const my=(e.clientY-r.top)*(this.c.height/r.height);
-    let best=0,bd=1e9;this.pos.forEach((p,i)=>{const d=Math.abs(p.y-my);if(d<bd){bd=d;best=i;}});
-    this.sel=best;this.draw();
-  });
-  const tp=document.getElementById('attnTemp');tp.addEventListener('input',()=>{this.temp=+tp.value;document.getElementById('attnTempV').textContent=this.temp.toFixed(2);this.draw();});
-  this.draw();
-},
-draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
-  ctx.fillStyle=INKD;ctx.font='11px JetBrains Mono';ctx.textAlign='center';
-  ctx.fillText('QUERIES',90,28);ctx.fillText('KEYS / VALUES',430,28);
-  const scores=this.K.map(k=>this.Q[this.sel][0]*k[0]+this.Q[this.sel][1]*k[1]);
-  const w=softmax(scores,this.temp);
-  // edges
-  this.kpos.forEach((kp,j)=>{ctx.beginPath();ctx.moveTo(this.pos[this.sel].x+16,this.pos[this.sel].y);ctx.lineTo(kp.x-16,kp.y);
-    ctx.strokeStyle=`rgba(124,246,200,${0.08+w[j]*0.92})`;ctx.lineWidth=1+w[j]*9;ctx.stroke();});
-  // nodes
-  this.pos.forEach((p,i)=>{ctx.beginPath();ctx.arc(p.x,p.y,15,0,7);
-    ctx.fillStyle=i===this.sel?PHOS:'#13241d';ctx.strokeStyle=PHOSD;ctx.lineWidth=1.5;ctx.fill();ctx.stroke();
-    ctx.fillStyle=i===this.sel?'#0d0c0f':INKD;ctx.fillText('q'+i,p.x,p.y+4);});
-  this.kpos.forEach((p,j)=>{ctx.beginPath();ctx.arc(p.x,p.y,15,0,7);
-    ctx.fillStyle='#13241d';ctx.strokeStyle=AMBER;ctx.lineWidth=1.5;ctx.fill();ctx.stroke();
-    ctx.fillStyle=AMBER;ctx.fillText('k'+j,p.x,p.y+4);
-    ctx.fillStyle=PHOS;ctx.textAlign='left';ctx.fillText((w[j]*100).toFixed(0)+'%',p.x+22,p.y+4);ctx.textAlign='center';});
-  document.getElementById('attnReadout').innerHTML=
-    `query <b>q${this.sel}</b> · weights = softmax(q·kⱼ / √d) → [${w.map(x=>x.toFixed(2)).join(', ')}] · <b>Σ = 1.00</b>`;
-}};
-
-/* ---- B. Cross-attention ---- */
-const XAttn={init(){
-  this.c=document.getElementById('xattnCanvas');this.ctx=this.c.getContext('2d');
-  this.N=12;this.pos=0.4;this.sharp=1.6;
-  // encoder "feature strength" profile (two boundary peaks)
-  this.enc=[];for(let i=0;i<this.N;i++){const x=i/(this.N-1);this.enc.push(Math.exp(-((x-0.25)**2)/0.01)+0.8*Math.exp(-((x-0.75)**2)/0.012)+0.05);}
-  const p=document.getElementById('xattnPos');p.addEventListener('input',()=>{this.pos=+p.value/100;document.getElementById('xattnPosV').textContent=this.pos.toFixed(2);this.draw();});
-  const s=document.getElementById('xattnSharp');s.addEventListener('input',()=>{this.sharp=+s.value;document.getElementById('xattnSharpV').textContent=this.sharp.toFixed(1);this.draw();});
-  this.draw();
-},
-draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
-  const m=44,bw=(W-2*m)/this.N;
-  // similarity = query position proximity * encoder strength
-  const scores=this.enc.map((e,i)=>{const x=i/(this.N-1);return (e* Math.exp(-((x-this.pos)**2)*8))*this.sharp*3;});
-  const w=softmax(scores,1);
-  ctx.fillStyle=INKD;ctx.font='11px JetBrains Mono';ctx.textAlign='left';
-  ctx.fillText('ENCODER  (Keys / Values)  — feature strength',m,30);
-  // encoder bars
-  for(let i=0;i<this.N;i++){const h=this.enc[i]*70;const x=m+i*bw;
-    ctx.fillStyle='#13241d';ctx.fillRect(x+2,60,bw-4,80);
-    ctx.fillStyle=`rgba(224,138,46,${0.25+0.6*this.enc[i]/1.05})`;ctx.fillRect(x+2,140-h,bw-4,h);}
-  // attention weights (lit columns)
-  for(let i=0;i<this.N;i++){const x=m+i*bw;
-    ctx.fillStyle=`rgba(124,246,200,${0.06+w[i]*0.94})`;ctx.fillRect(x+2,150,bw-4,90);}
-  ctx.fillStyle=PHOS;ctx.fillText('attention weight wᵢ (decoder query → encoder)',m,260);
-  // decoder query marker
-  const qx=m+this.pos*(W-2*m);
-  ctx.beginPath();ctx.moveTo(qx,300);ctx.lineTo(qx-10,330);ctx.lineTo(qx+10,330);ctx.closePath();
-  ctx.fillStyle=PHOS;ctx.fill();
-  ctx.fillStyle=INKD;ctx.textAlign='center';ctx.fillText('DECODER query (drag slider)',qx,348);
-  const top=w.indexOf(Math.max(...w));
-  document.getElementById('xattnReadout').innerHTML=
-    `decoder query at <b>${this.pos.toFixed(2)}</b> attends most to encoder col <b>${top}</b> (w=${(w[top]*100).toFixed(0)}%). It pulls the nearest <i>boundary</i> feature, not a blind average.`;
-}};
-
-/* ---- C. Swin windows ---- */
-const Win={init(){
-  this.c=document.getElementById('winCanvas');this.ctx=this.c.getContext('2d');
-  this.grid=16;this.win=4;this.shift=false;
-  const s=document.getElementById('winSize');s.addEventListener('input',()=>{this.win=+s.value;document.getElementById('winSizeV').textContent=this.win;this.draw();});
-  document.getElementById('winShift').addEventListener('click',()=>{this.shift=!this.shift;this.draw();});
-  this.draw();
-},
-draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
-  const G=this.grid,cell=300/G,ox=30,oy=30,off=this.shift?Math.floor(this.win/2):0;
-  // cells
-  for(let i=0;i<G;i++)for(let j=0;j<G;j++){ctx.fillStyle='#101d18';ctx.fillRect(ox+i*cell,oy+j*cell,cell-1,cell-1);}
-  // windows colored
-  const cols=['rgba(124,246,200,.18)','rgba(224,138,46,.18)','rgba(58,123,224,.16)','rgba(170,90,180,.16)'];
-  let cidx=0;
-  for(let wi=-off;wi<G;wi+=this.win){for(let wj=-off;wj<G;wj+=this.win){
-    const c=cols[cidx%cols.length];cidx++;
-    ctx.fillStyle=c;ctx.strokeStyle=PHOSD;ctx.lineWidth=1;
-    const x0=Math.max(0,wi),y0=Math.max(0,wj),x1=Math.min(G,wi+this.win),y1=Math.min(G,wj+this.win);
-    ctx.fillRect(ox+x0*cell,oy+y0*cell,(x1-x0)*cell,(y1-y0)*cell);
-    ctx.strokeRect(ox+x0*cell,oy+y0*cell,(x1-x0)*cell,(y1-y0)*cell);
-  }}
-  ctx.fillStyle=INKD;ctx.font='11px JetBrains Mono';ctx.textAlign='left';
-  ctx.fillText(this.shift?'SHIFTED windows — attention now crosses previous borders':'REGULAR windows — attention stays inside each tile',ox,oy+320);
-  // cost comparison
-  const nv=G*G, full=nv*nv, windowed=nv*this.win*this.win;
-  document.getElementById('winCost').innerHTML=
-    `Full attention cost ∝ N² = <b>${full.toLocaleString()}</b><br>Windowed cost ∝ N·w² = <b style="color:${PHOS}">${windowed.toLocaleString()}</b> → <b>${(full/windowed).toFixed(0)}× cheaper</b> at w=${this.win}`;
-  document.getElementById('winReadout').innerHTML=`A 16×16 map has ${nv} tokens. Real OncoSeg runs this in 3D over a 128³ volume — global attention would be hopeless; windows make it linear.`;
-}};
-
-/* ---- D. Convolution ---- */
-const Conv={init(){
-  this.c=document.getElementById('convCanvas');this.ctx=this.c.getContext('2d');
-  this.G=12;this.kernel='edge';this.t=0;
-  // input: a diagonal blob / edge
-  this.img=[];for(let y=0;y<this.G;y++){this.img.push([]);for(let x=0;x<this.G;x++){
-    this.img[y].push((x+y> this.G*0.9 && x+y<this.G*1.5)?0.95:( ((x-3)**2+(y-8)**2<6)?0.8:0.08));}}
-  this.kernels={edge:[[0,-1,0],[-1,4,-1],[0,-1,0]],sobelx:[[-1,0,1],[-2,0,2],[-1,0,1]],blur:[[1,1,1],[1,1,1],[1,1,1]].map(r=>r.map(v=>v/9)),sharp:[[0,-1,0],[-1,5,-1],[0,-1,0]]};
-  const sel=document.getElementById('convKernel');sel.addEventListener('change',()=>{this.kernel=sel.value;this.draw();});
-  this.draw();
-  this.anim();
-},
-conv(){const G=this.G,k=this.kernels[this.kernel],out=[];
-  for(let y=0;y<G;y++){out.push([]);for(let x=0;x<G;x++){let s=0;
-    for(let ky=-1;ky<=1;ky++)for(let kx=-1;kx<=1;kx++){const yy=Math.min(G-1,Math.max(0,y+ky)),xx=Math.min(G-1,Math.max(0,x+kx));s+=this.img[yy][xx]*k[ky+1][kx+1];}
-    out[y].push(s);}}
-  return out;
-},
-draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
-  const cell=18,ox=20,oy=50,gap=200;
-  const out=this.conv();
-  ctx.fillStyle=INKD;ctx.font='11px JetBrains Mono';ctx.textAlign='left';
-  ctx.fillText('INPUT',ox,40);ctx.fillText('FEATURE MAP',ox+gap+40,40);
-  for(let y=0;y<this.G;y++)for(let x=0;x<this.G;x++){
-    const v=this.img[y][x];ctx.fillStyle=`rgb(${20+v*150},${30+v*210},${25+v*170})`;ctx.fillRect(ox+x*cell,oy+y*cell,cell-1,cell-1);
-    let o=out[y][x];o=Math.max(-1,Math.min(1,o));const mag=Math.abs(o);
-    ctx.fillStyle=o>=0?`rgba(124,246,200,${0.12+mag*0.88})`:`rgba(224,138,46,${0.12+mag*0.88})`;
-    ctx.fillRect(ox+gap+40+x*cell,oy+y*cell,cell-1,cell-1);}
-  // sliding kernel highlight
-  const ky=Math.floor(this.t/this.G)%this.G,kx=this.t%this.G;
-  ctx.strokeStyle=PHOS;ctx.lineWidth=2;ctx.strokeRect(ox+(kx-1)*cell,oy+(ky-1)*cell,cell*3,cell*3);
-  document.getElementById('convReadout').innerHTML=`kernel = <b>${this.kernel}</b> · each output voxel = Σ (kernel × local 3×3 patch). Green = positive response, amber = negative.`;
-},
-anim(){this.t=(this.t+1);this.draw();setTimeout(()=>requestAnimationFrame(()=>this.anim()),140);}
-};
-
-/* ---- E. MC Dropout ---- */
-const Drop={init(){
-  this.c=document.getElementById('dropCanvas');this.ctx=this.c.getContext('2d');
-  this.G=22;this.p=0.2;this.N=12;this.seed=1;
-  // truth disk
-  this.truth=[];const cx=11,cy=11;for(let y=0;y<this.G;y++){this.truth.push([]);for(let x=0;x<this.G;x++){
-    const r=Math.sqrt((x-cx)**2+(y-cy)**2);this.truth[y].push(r<7?1:0);}}
-  const p=document.getElementById('dropP');p.addEventListener('input',()=>{this.p=+p.value;document.getElementById('dropPV').textContent=this.p.toFixed(2);this.draw();});
-  const n=document.getElementById('dropN');n.addEventListener('input',()=>{this.N=+n.value;document.getElementById('dropNV').textContent=this.N;this.draw();});
-  document.getElementById('dropResample').addEventListener('click',()=>{this.seed=(this.seed*16807+1)%2147483647;this.draw();});
-  this.draw();
-},
-rnd(s){let x=Math.sin(s*12.9898)*43758.5453;return x-Math.floor(x);}
-,draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
-  const G=this.G,cell=13,ox=30,oy=30;
-  // probability = fraction of passes voting tumor; boundary gets noise scaled by p
-  const acc=[];for(let y=0;y<G;y++){acc.push(new Array(G).fill(0));}
-  for(let s=0;s<this.N;s++){for(let y=0;y<G;y++)for(let x=0;x<G;x++){
-    const cx=11,cy=11,r=Math.sqrt((x-cx)**2+(y-cy)**2);
-    const logit=(7-r); // distance to boundary
-    const noise=(this.rnd(this.seed*7+s*131+y*23+x*991)-0.5)*this.p*14;
-    acc[y][x]+= (logit+noise>0)?1:0;}}
-  // draw mean prob + uncertainty
-  let totU=0,bU=0,bN=0;
-  for(let y=0;y<G;y++)for(let x=0;x<G;x++){
-    const pr=acc[y][x]/this.N; const u=4*pr*(1-pr); // variance-like uncertainty (max at 0.5)
-    totU+=u; const onB=this.truth[y][x]!==(pr>0.5?1:0);
-    ctx.fillStyle=`rgba(124,246,200,${pr*0.92+0.04})`;ctx.fillRect(ox+x*cell,oy+y*cell,cell-1,cell-1);
-    if(u>0.25){ctx.strokeStyle=`rgba(224,138,46,${u})`;ctx.lineWidth=1.4;ctx.strokeRect(ox+x*cell+0.5,oy+y*cell+0.5,cell-2,cell-2);}
-    const cx=11,cy=11,rr=Math.sqrt((x-cx)**2+(y-cy)**2);if(Math.abs(rr-7)<1.6){bU+=u;bN++;}
-  }
-  ctx.fillStyle=INKD;ctx.font='11px JetBrains Mono';ctx.textAlign='left';
-  ctx.fillText('mean mask = teal · high disagreement = amber outline',ox,oy+G*cell+22);
-  document.getElementById('dropReadout').innerHTML=
-    `${this.N} passes @ p=${this.p.toFixed(2)} · total uncertainty <b>${totU.toFixed(1)}</b> · boundary uncertainty/voxel <b>${(bN?bU/bN:0).toFixed(2)}</b> ≫ interior. Uncertainty concentrates on the <b>edge</b> — exactly where it should.`;
-}};
-
-/* ---- F. Dice ---- */
-const Dice={init(){
-  this.c=document.getElementById('diceCanvas');this.ctx=this.c.getContext('2d');
-  this.size=100;this.off=20;
-  const s=document.getElementById('diceSize');s.addEventListener('input',()=>{this.size=+s.value;document.getElementById('diceSizeV').textContent=this.size;this.draw();});
-  const o=document.getElementById('diceOff');o.addEventListener('input',()=>{this.off=+o.value;document.getElementById('diceOffV').textContent=this.off;this.draw();});
-  this.draw();
-},
-draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
-  const gtR=70,gx=200,gy=170;const px=gx+this.off,py=gy,pr=this.size/2;
-  // areas via circle-circle intersection
-  const d=this.off;const A=Math.PI*gtR*gtR,B=Math.PI*pr*pr;let inter=0;
-  if(d>=gtR+pr)inter=0;else if(d<=Math.abs(gtR-pr))inter=Math.PI*Math.min(gtR,pr)**2;
-  else{const a=gtR,b=pr;const part=(r1,r2)=>r1*r1*Math.acos((d*d+r1*r1-r2*r2)/(2*d*r1));
-    inter=part(a,b)+part(b,a)-0.5*Math.sqrt((-d+a+b)*(d+a-b)*(d-a+b)*(d+a+b));}
-  const dice=2*inter/(A+B);
-  // ground truth
-  ctx.beginPath();ctx.arc(gx,gy,gtR,0,7);ctx.fillStyle='rgba(44,154,146,.45)';ctx.fill();ctx.strokeStyle=TEAL;ctx.lineWidth=2;ctx.stroke();
-  // prediction
-  ctx.beginPath();ctx.arc(px,py,pr,0,7);ctx.fillStyle='rgba(224,138,46,.40)';ctx.fill();ctx.strokeStyle=AMBER;ctx.lineWidth=2;ctx.stroke();
-  ctx.fillStyle=INKD;ctx.font='12px JetBrains Mono';ctx.textAlign='left';
-  ctx.fillText('● ground truth',330,60);ctx.fillStyle=TEAL;ctx.fillRect(330,52,9,9);
-  ctx.fillStyle=INKD;ctx.fillText('● prediction',330,84);ctx.fillStyle=AMBER;ctx.fillRect(330,76,9,9);
-  // dice bar
-  ctx.fillStyle='#13241d';ctx.fillRect(330,120,150,16);ctx.fillStyle=dice>0.7?PHOS:(dice>0.4?AMBER:'#d23b2a');ctx.fillRect(330,120,150*dice,16);
-  ctx.fillStyle='#eafff6';ctx.font='13px JetBrains Mono';ctx.fillText('Dice = '+dice.toFixed(3),330,112);
-  document.getElementById('diceReadout').innerHTML=
-    `Dice = 2·|A∩B| / (|A|+|B|) = <b>${dice.toFixed(3)}</b> · overlap ${(inter).toFixed(0)} px² · pred ${(B).toFixed(0)} · GT ${(A).toFixed(0)}. Shrink/offset the prediction → Dice falls fast, steeper for small masks.`;
-}};
-
-/* ---- G. Calibration ---- */
-const Calib={init(){
-  this.c=document.getElementById('calibCanvas');this.ctx=this.c.getContext('2d');
-  this.bg=0.95;this.over=0.5;
-  const b=document.getElementById('calibBg');b.addEventListener('input',()=>{this.bg=+b.value;document.getElementById('calibBgV').textContent=this.bg.toFixed(2);this.draw();});
-  const o=document.getElementById('calibOver');o.addEventListener('input',()=>{this.over=+o.value;document.getElementById('calibOverV').textContent=this.over.toFixed(2);this.draw();});
-  this.draw();
-},
-draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
-  const ox=60,oy=40,sz=270;
-  // axes
-  ctx.strokeStyle=GRIDC;ctx.lineWidth=1;
-  for(let i=0;i<=5;i++){ctx.beginPath();ctx.moveTo(ox,oy+sz-i*sz/5);ctx.lineTo(ox+sz,oy+sz-i*sz/5);ctx.stroke();
-    ctx.beginPath();ctx.moveTo(ox+i*sz/5,oy);ctx.lineTo(ox+i*sz/5,oy+sz);ctx.stroke();}
-  // perfect diagonal
-  ctx.strokeStyle=PHOSD;ctx.setLineDash([5,4]);ctx.beginPath();ctx.moveTo(ox,oy+sz);ctx.lineTo(ox+sz,oy);ctx.stroke();ctx.setLineDash([]);
-  // bins: background bin at low conf (well-calibrated), foreground bins over-confident
-  const nb=10;let eceAll=0,eceFg=0,fgMass=0;
-  const counts=[],confs=[],accs=[];
-  for(let i=0;i<nb;i++){const conf=(i+0.5)/nb;confs.push(conf);
-    let acc, count;
-    if(i===0){acc=conf; count=this.bg;} // background bin: calibrated, huge mass
-    else{acc=Math.max(0,conf-this.over*(conf)); count=(1-this.bg)/(nb-1);} // foreground: over-confident
-    accs.push(acc);counts.push(count);}
-  const tot=counts.reduce((a,b)=>a+b,0);
-  for(let i=0;i<nb;i++){const wgt=counts[i]/tot;eceAll+=wgt*Math.abs(confs[i]-accs[i]);
-    if(i>0){eceFg+=counts[i]*Math.abs(confs[i]-accs[i]);fgMass+=counts[i];}}
-  eceFg=fgMass?eceFg/fgMass:0;
-  // draw bars (accuracy) vs confidence
-  for(let i=0;i<nb;i++){const x=ox+i*sz/nb;const bh=accs[i]*sz;
-    ctx.fillStyle=i===0?'rgba(58,123,224,.5)':'rgba(224,138,46,.55)';
-    ctx.fillRect(x+3,oy+sz-bh,sz/nb-6,bh);
-    // confidence tick
-    ctx.strokeStyle=PHOS;ctx.lineWidth=2;const cy=oy+sz-confs[i]*sz;ctx.beginPath();ctx.moveTo(x+3,cy);ctx.lineTo(x+sz/nb-3,cy);ctx.stroke();}
-  ctx.fillStyle=INKD;ctx.font='10px JetBrains Mono';ctx.textAlign='center';
-  ctx.fillText('confidence →',ox+sz/2,oy+sz+24);
-  ctx.save();ctx.translate(ox-30,oy+sz/2);ctx.rotate(-Math.PI/2);ctx.fillText('accuracy →',0,0);ctx.restore();
-  ctx.textAlign='left';ctx.fillStyle='#3a7be0';ctx.fillText('■ background bin',ox+sz-120,oy+14);
-  ctx.fillStyle=AMBER;ctx.fillText('■ foreground bins',ox+sz-120,oy+30);
-  ctx.fillStyle=PHOS;ctx.fillText('— confidence',ox+sz-120,oy+46);
-  document.getElementById('calibReadout').innerHTML=`Bars = observed accuracy · green ticks = claimed confidence. Gap = miscalibration.`;
-  document.getElementById('calibEce').innerHTML=
-    `Count-weighted (reported) ECE = <b style="color:${PHOS}">${eceAll.toFixed(3)}</b> &nbsp;·&nbsp; Foreground-only ECE = <b style="color:#d23b2a">${eceFg.toFixed(3)}</b><br>At ${(this.bg*100).toFixed(0)}% background, the headline ECE hides the foreground gap — <b>this is the repo's flagged bug</b>.`;
-}};
-
-/* ---- H. RECIST ---- */
-const Recist={init(){
-  this.c=document.getElementById('recistCanvas');this.ctx=this.c.getContext('2d');
-  this.delta=-40;
-  const d=document.getElementById('recistDelta');d.addEventListener('input',()=>{this.delta=+d.value;document.getElementById('recistDeltaV').textContent=this.delta+'%';this.draw();});
-  this.draw();
-},
-classify(pct){if(pct<=-100)return['CR',PHOS];if(pct<=-30)return['PR',TEAL];if(pct>=20)return['PD','#d23b2a'];return['SD',AMBER];}
-,draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
-  const base=120,fu=base*(1+this.delta/100);
-  const ox=70,oy=60,bw=70,maxh=180,scale=maxh/200;
-  // zones legend bar
-  const zx=300;
-  const zones=[['CR',PHOS,'-100%'],['PR',TEAL,'≤-30%'],['SD',AMBER,'-30..+20%'],['PD','#d23b2a','≥+20%']];
-  ctx.font='12px JetBrains Mono';
-  zones.forEach((z,i)=>{ctx.fillStyle=z[1];ctx.fillRect(zx,oy+i*34,14,14);ctx.fillStyle=INKD;ctx.textAlign='left';ctx.fillText(`${z[0]}  ${z[2]}`,zx+22,oy+i*34+12);});
-  // bars
-  ctx.fillStyle='#13241d';ctx.fillRect(ox,oy+maxh-base*scale,bw,base*scale);
-  ctx.fillStyle=TEAL;ctx.fillRect(ox,oy+maxh-base*scale,bw,base*scale);
-  const [cls,col]=this.classify(this.delta);
-  ctx.fillStyle=col;ctx.fillRect(ox+110,oy+maxh-Math.max(2,fu*scale),bw,Math.max(2,fu*scale));
-  ctx.fillStyle=INKD;ctx.textAlign='center';ctx.font='11px JetBrains Mono';
-  ctx.fillText('baseline',ox+bw/2,oy+maxh+18);ctx.fillText('sum-LD '+base,ox+bw/2,oy+maxh+32);
-  ctx.fillText('follow-up',ox+110+bw/2,oy+maxh+18);ctx.fillText('sum-LD '+fu.toFixed(0),ox+110+bw/2,oy+maxh+32);
-  // verdict
-  ctx.fillStyle=col;ctx.font='28px Fraunces, serif';ctx.textAlign='left';ctx.fillText(cls,zx,oy+170);
-  document.getElementById('recistReadout').innerHTML=
-    `Δsum-LD = <b>${this.delta>0?'+':''}${this.delta}%</b> → verdict <b style="color:${col}">${cls}</b>. PR at ≤−30%, PD at ≥+20% (& ≥5mm abs). This is the clinical endpoint OncoSeg automates.`;
-}};
-
-/* ============================================================
-   NEW MODULES (02 act, 03 norm, 04 upconv, 05 patch, 07 mha,
-   10 temporal, 11 unet, 12 ds, 13 sw, 14 head, 15 loss,
-   18 entropy, 20 hd95, 21 cc)
-============================================================ */
-function fontMono(ctx,s=11){ctx.font=s+'px JetBrains Mono';}
-
-/* ---- 02. Activations ---- */
-const Act={init(){this.c=document.getElementById('actCanvas');this.ctx=this.c.getContext('2d');this.fn='relu';this.x=1;
-  const s=document.getElementById('actFn');s.addEventListener('input',()=>{this.fn=s.value;this.draw();});
-  const x=document.getElementById('actX');x.addEventListener('input',()=>{this.x=+x.value;document.getElementById('actXV').textContent=this.x.toFixed(2);this.draw();});
-  this.draw();},
-f(v){switch(this.fn){case 'relu':return Math.max(0,v);case 'leaky':return v>0?v:0.1*v;
-  case 'gelu':return 0.5*v*(1+Math.tanh(0.7978845608*(v+0.044715*v*v*v)));
-  case 'sigmoid':return 1/(1+Math.exp(-v));case 'tanh':return Math.tanh(v);}return v;},
-draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
-  const ox=60,oy=20,w=W-90,h=H-70,cx=ox+w/2,cy=oy+h/2;
-  ctx.strokeStyle=GRIDC;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(ox,cy);ctx.lineTo(ox+w,cy);ctx.moveTo(cx,oy);ctx.lineTo(cx,oy+h);ctx.stroke();
-  const sx=w/8, sy=h/4; // x in [-4,4], y in [-2,2]
-  ctx.strokeStyle=PHOS;ctx.lineWidth=2.4;ctx.beginPath();
-  for(let i=0;i<=200;i++){const vx=-4+8*i/200;const vy=this.f(vx);const px=cx+vx*sx;const py=cy-Math.max(-2,Math.min(2,vy))*sy;
-    if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);}ctx.stroke();
-  const vy=this.f(this.x);const px=cx+this.x*sx;const py=cy-Math.max(-2,Math.min(2,vy))*sy;
-  ctx.fillStyle=AMBER;ctx.beginPath();ctx.arc(px,py,6,0,7);ctx.fill();
-  ctx.strokeStyle='rgba(224,138,46,.4)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(px,cy);ctx.lineTo(px,py);ctx.lineTo(cx,py);ctx.stroke();
-  ctx.fillStyle=INKD;fontMono(ctx,10);ctx.textAlign='center';ctx.fillText('x',ox+w-6,cy+14);ctx.fillText('f(x)',cx+18,oy+8);
-  document.getElementById('actReadout').innerHTML=`<b>${this.fn}</b>(${this.x.toFixed(2)}) = <b>${vy.toFixed(3)}</b>. Without this bend, stacking layers = one big linear map. OncoSeg uses LeakyReLU (decoder), GELU (FFN), sigmoid (head).`;
-}};
-
-/* ---- 03. Normalization ---- */
-const Norm={init(){this.c=document.getElementById('normCanvas');this.ctx=this.c.getContext('2d');this.mean=1.5;this.std=1.8;
-  this.base=[];for(let i=0;i<40;i++){this.base.push((Math.sin(i*1.7)+Math.sin(i*0.6)*0.7+Math.cos(i*2.3)*0.5));}
-  const m=document.getElementById('normMean');m.addEventListener('input',()=>{this.mean=+m.value;document.getElementById('normMeanV').textContent=this.mean.toFixed(1);this.draw();});
-  const s=document.getElementById('normStd');s.addEventListener('input',()=>{this.std=+s.value;document.getElementById('normStdV').textContent=this.std.toFixed(1);this.draw();});
-  this.draw();},
-draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
-  const raw=this.base.map(v=>v*this.std+this.mean);
-  const mu=raw.reduce((a,b)=>a+b,0)/raw.length;const vr=raw.reduce((a,b)=>a+(b-mu)**2,0)/raw.length;const sd=Math.sqrt(vr)||1;
-  const norm=raw.map(v=>(v-mu)/sd);
-  const ox=40,topY=40,botY=200,plotH=120;
-  const drawSeries=(arr,y0,col,lbl)=>{ctx.strokeStyle=GRIDC;ctx.beginPath();ctx.moveTo(ox,y0);ctx.lineTo(W-20,y0);ctx.stroke();
-    const bw=(W-ox-30)/arr.length;
-    arr.forEach((v,i)=>{const hh=Math.max(-plotH/2,Math.min(plotH/2,v*plotH/6));ctx.fillStyle=col;ctx.fillRect(ox+i*bw,y0-hh,bw-1.5,hh);});
-    ctx.fillStyle=INKD;fontMono(ctx,11);ctx.textAlign='left';ctx.fillText(lbl,ox,y0-plotH/2-10);};
-  drawSeries(raw,topY+plotH/2,'rgba(224,138,46,.7)',`RAW  μ=${mu.toFixed(2)}  σ=${sd.toFixed(2)}`);
-  drawSeries(norm,botY+plotH/2,'rgba(124,246,200,.7)','NORMALIZED  μ≈0  σ≈1  (then learnable γ,β rescale)');
-  document.getElementById('normReadout').innerHTML=`Input drifted to μ=${mu.toFixed(2)}, σ=${sd.toFixed(2)} → normalized to μ≈0, σ≈1. OncoSeg: <b>InstanceNorm3d</b> in decoder (batch-size-robust), <b>LayerNorm</b> in transformer.`;
-}};
-
-/* ---- 04. Transposed conv ---- */
-const UpConv={init(){this.c=document.getElementById('upCanvas');this.ctx=this.c.getContext('2d');this.stride=2;
-  this.in=[[0.9,0.2,0.6],[0.3,0.8,0.1],[0.5,0.4,0.95]];
-  const s=document.getElementById('upStride');s.addEventListener('input',()=>{this.stride=+s.value;document.getElementById('upStrideV').textContent=this.stride;this.draw();});
-  this.draw();},
-draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
-  const N=3,st=this.stride,outN=N*st;
-  // input grid
-  const icell=28,iox=20,ioy=70;
-  ctx.fillStyle=INKD;fontMono(ctx,11);ctx.textAlign='left';ctx.fillText('INPUT '+N+'×'+N,iox,55);
-  for(let y=0;y<N;y++)for(let x=0;x<N;x++){const v=this.in[y][x];ctx.fillStyle=`rgba(224,138,46,${0.2+v*0.7})`;ctx.fillRect(iox+x*icell,ioy+y*icell,icell-2,icell-2);}
-  // output grid (each input cell stamps st x st block)
-  const ocell=Math.min(20,200/outN),oox=260,ooy=70;
-  ctx.fillText(`OUTPUT ${outN}×${outN}  (stride ${st})`,oox,55);
-  const out=[];for(let y=0;y<outN;y++){out.push(new Array(outN).fill(0));}
-  for(let y=0;y<N;y++)for(let x=0;x<N;x++){const v=this.in[y][x];for(let dy=0;dy<st;dy++)for(let dx=0;dx<st;dx++){out[y*st+dy][x*st+dx]+=v*(1-0.12*(dx+dy));}}
-  let mx=0;out.forEach(r=>r.forEach(v=>mx=Math.max(mx,v)));
-  for(let y=0;y<outN;y++)for(let x=0;x<outN;x++){const v=out[y][x]/(mx||1);ctx.fillStyle=`rgba(124,246,200,${0.12+v*0.85})`;ctx.fillRect(oox+x*ocell,ooy+y*ocell,ocell-1,ocell-1);}
-  document.getElementById('upReadout').innerHTML=`Each of ${N*N} input cells stamps a learnable ${st}×${st} kernel → a ${outN}×${outN} map. Decoder stages use stride-2; a final 4× head undoes the patch-embed downsample.`;
-}};
-
-/* ---- 05. Patch embedding ---- */
-const Patch={init(){this.c=document.getElementById('patchCanvas');this.ctx=this.c.getContext('2d');this.p=4;
-  const s=document.getElementById('patchP');s.addEventListener('input',()=>{this.p=+s.value;document.getElementById('patchPV').textContent=this.p;this.draw();});
-  this.draw();},
-draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
-  const img=32,cell=8,ox=20,oy=40,p=this.p;
-  ctx.fillStyle=INKD;fontMono(ctx,11);ctx.textAlign='left';ctx.fillText('IMAGE 32×32 (a brain slice)',ox,30);
-  // a faux brain blob
-  for(let y=0;y<img;y++)for(let x=0;x<img;x++){const r=Math.sqrt((x-16)**2+(y-15)**2);const t=Math.sqrt((x-19)**2+(y-13)**2);
-    let v=r<13?0.25:0.05; if(t<5)v=0.85; if(t<2.4)v=0.6;
-    ctx.fillStyle=`rgb(${20+v*150},${30+v*200},${25+v*160})`;ctx.fillRect(ox+x*cell,oy+y*cell,cell,cell);}
-  // patch grid overlay
-  ctx.strokeStyle='rgba(124,246,200,.55)';ctx.lineWidth=1;
-  for(let i=0;i<=img;i+=p){ctx.beginPath();ctx.moveTo(ox+i*cell,oy);ctx.lineTo(ox+i*cell,oy+img*cell);ctx.stroke();
-    ctx.beginPath();ctx.moveTo(ox,oy+i*cell);ctx.lineTo(ox+img*cell,oy+i*cell);ctx.stroke();}
-  // tokens column
-  const ntok=Math.ceil(img/p);const tx=ox+img*cell+34;
-  ctx.fillStyle=PHOS;ctx.fillText(`${ntok}×${ntok} tokens`,tx,30);
-  for(let i=0;i<Math.min(ntok*ntok,40);i++){const yy=oy+i*6;if(yy>oy+img*cell)break;ctx.fillStyle='rgba(124,246,200,.5)';ctx.fillRect(tx,yy,90*(0.3+0.7*((i*53%100)/100)),4);}
-  document.getElementById('patchReadout').innerHTML=`patch=${p} → a 32×32 image becomes <b>${ntok}×${ntok}=${ntok*ntok}</b> tokens, each a learned vector. OncoSeg uses patch (4,4,4): a 128³ volume → 32³ tokens at embed_dim 48.`;
-}};
-
-/* ---- 07. Multi-head ---- */
-const MHA={init(){this.c=document.getElementById('mhaCanvas');this.ctx=this.c.getContext('2d');this.H=4;
-  const s=document.getElementById('mhaH');s.addEventListener('input',()=>{this.H=+s.value;document.getElementById('mhaHV').textContent=this.H;this.draw();});
-  this.draw();},
-draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
-  const N=6,heads=this.H;const cols=['#7CF6C8','#e0883a','#3a7be0','#b05ab4','#2c9a92','#e0c66a','#d23b2a','#9fc4b7'];
-  const gw=(W-60)/heads, gh=150, ox=30, oy=50;
-  ctx.fillStyle=INKD;fontMono(ctx,11);ctx.textAlign='left';ctx.fillText(`embed_dim split into ${heads} heads · each head = its own ${N}×${N} attention map`,ox,30);
-  for(let h=0;h<heads;h++){const bx=ox+h*gw;const cell=Math.min(gh/N,(gw-14)/N);
-    // pseudo attention map per head (different pattern per head)
-    for(let i=0;i<N;i++)for(let j=0;j<N;j++){const v=0.5+0.5*Math.sin(i*1.3+h*2.1)*Math.cos(j*1.1+h*0.7);
-      const c=cols[h%cols.length];ctx.globalAlpha=0.12+v*0.85;ctx.fillStyle=c;ctx.fillRect(bx+j*cell,oy+i*cell,cell-1,cell-1);}
-    ctx.globalAlpha=1;ctx.fillStyle=cols[h%cols.length];fontMono(ctx,10);ctx.fillText('head '+h,bx,oy+gh+16);}
-  document.getElementById('mhaReadout').innerHTML=`${heads} heads × head_dim = embed_dim (fixed compute). Each head attends in a different subspace — one tracks edges, another proximity. OncoSeg: heads (3,6,12,24) across stages.`;
-}};
-
-/* ---- 10. Temporal attention ---- */
-const Temporal={init(){this.c=document.getElementById('tempCanvas');this.ctx=this.c.getContext('2d');this.delta=35;
-  const s=document.getElementById('tempDelta');s.addEventListener('input',()=>{this.delta=+s.value;document.getElementById('tempDeltaV').textContent=(this.delta>0?'+':'')+this.delta+'%';this.draw();});
-  this.draw();},
-draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
-  const G=18,cell=11,gap=20;const r0=5,r1=r0*Math.sqrt(1+this.delta/100);
-  const drawDisk=(ox,r,col,lbl)=>{const oy=70;ctx.fillStyle=INKD;fontMono(ctx,11);ctx.textAlign='left';ctx.fillText(lbl,ox,oy-16);
-    for(let y=0;y<G;y++)for(let x=0;x<G;x++){const d=Math.sqrt((x-9)**2+(y-9)**2);const on=d<r;
-      ctx.fillStyle=on?col:'#101d18';ctx.fillRect(ox+x*cell,oy+y*cell,cell-1,cell-1);}};
-  drawDisk(20,r0,'rgba(44,154,146,.85)','t0 baseline');
-  drawDisk(20+G*cell+gap,r1,'rgba(224,138,46,.8)','t1 follow-up');
-  // difference map
-  const dox=20+2*(G*cell+gap), oy=70;ctx.fillStyle=PHOS;ctx.fillText('|t1 − t0| change',dox,oy-16);
-  for(let y=0;y<G;y++)for(let x=0;x<G;x++){const d=Math.sqrt((x-9)**2+(y-9)**2);const a=d<r0,b=d<r1;
-    const diff=(a!==b);ctx.fillStyle=diff?'rgba(124,246,200,.95)':'#101d18';ctx.fillRect(dox+x*cell,oy+y*cell,cell-1,cell-1);}
-  const cls=this.delta>=20?'growth (→PD)':this.delta<=-30?'shrink (→PR)':'stable (→SD)';
-  document.getElementById('tempReadout').innerHTML=`tumor change <b>${this.delta>0?'+':''}${this.delta}%</b> → difference ring lights up where it ${this.delta>=0?'grew':'shrank'}. The classifier reads this as <b>${cls}</b>. Cross-attention + (t1−t0) is the temporal module.`;
-}};
-
-/* ---- 11. U-Net pyramid ---- */
-const UNet={init(){this.c=document.getElementById('unetCanvas');this.ctx=this.c.getContext('2d');this.stage=1;
-  const s=document.getElementById('unetStage');s.addEventListener('input',()=>{this.stage=+s.value;document.getElementById('unetStageV').textContent=(this.stage+1);this.draw();});
-  this.draw();},
-draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
-  const dims=[48,96,192,384];const res=['H/4','H/8','H/16','H/32'];
-  const encX=70, decX=W-70, midY=70; const stepY=58; const wbase=120;
-  // encoder boxes (left, descending)
-  const boxes=[];
-  for(let i=0;i<4;i++){const y=midY+i*stepY;const ww=wbase-i*22;
-    boxes.push({ex:encX-ww/2,dx:decX-ww/2,y,ww,i});}
-  // draw connections (skips)
-  for(let i=0;i<3;i++){const b=boxes[i];ctx.strokeStyle=i===this.stage?PHOS:'rgba(124,246,200,.2)';ctx.lineWidth=i===this.stage?2.5:1;ctx.setLineDash(i===this.stage?[]:[4,4]);
-    ctx.beginPath();ctx.moveTo(encX+b.ww/2,b.y);ctx.lineTo(decX-b.ww/2,b.y);ctx.stroke();ctx.setLineDash([]);
-    if(i===this.stage){ctx.fillStyle=PHOS;fontMono(ctx,10);ctx.textAlign='center';ctx.fillText('cross-attn skip',W/2,b.y-6);}}
-  // bottleneck link
-  const bb=boxes[3];ctx.strokeStyle=AMBER;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(encX,bb.y+18);ctx.lineTo(decX,bb.y+18);ctx.stroke();
-  const drawBox=(x,y,ww,lbl,sel,col)=>{ctx.fillStyle=sel?col:'#13241d';ctx.strokeStyle=col;ctx.lineWidth=sel?2.5:1.2;
-    ctx.fillRect(x,y-15,ww,30);ctx.strokeRect(x,y-15,ww,30);ctx.fillStyle=sel?'#0d0c0f':INKD;fontMono(ctx,10);ctx.textAlign='center';ctx.fillText(lbl,x+ww/2,y+4);};
-  boxes.forEach(b=>{drawBox(b.ex,b.y,b.ww,dims[b.i]+'·'+res[b.i],b.i===this.stage,TEAL);
-    drawBox(b.dx,b.y,b.ww,dims[b.i]+'·'+res[b.i],b.i===this.stage,'#c9863a');});
-  ctx.fillStyle=TEAL;fontMono(ctx,11);ctx.textAlign='center';ctx.fillText('Swin encoder ↓',encX,midY-26);
-  ctx.fillStyle='#e0883a';ctx.fillText('CNN decoder ↑',decX,midY-26);
-  document.getElementById('unetReadout').innerHTML=`Stage <b>${this.stage+1}</b>: ${dims[this.stage]} channels @ ${res[this.stage]}. The skip hands encoder detail straight across to the matching decoder scale — so fine boundaries survive the bottleneck.`;
-}};
-
-/* ---- 12. Deep supervision ---- */
-const DS={init(){this.c=document.getElementById('dsCanvas');this.ctx=this.c.getContext('2d');this.decay=0.5;
-  const s=document.getElementById('dsDecay');s.addEventListener('input',()=>{this.decay=+s.value;document.getElementById('dsDecayV').textContent=this.decay.toFixed(2);this.draw();});
-  this.draw();},
-draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
-  const n=3;let raw=[];for(let i=0;i<n;i++)raw.push(Math.pow(this.decay,i));const tot=raw.reduce((a,b)=>a+b,0);const w=raw.map(v=>v/tot);
-  const res=['H/16 (coarse)','H/8','H/4 (fine)'];const oy=60,bx=40,bw=220,gap=78;
-  ctx.fillStyle=INKD;fontMono(ctx,11);ctx.textAlign='left';ctx.fillText('decoder stage → its own head → weighted loss',bx,30);
-  for(let i=0;i<n;i++){const y=oy+i*gap;
-    // stage box
-    ctx.fillStyle='#13241d';ctx.strokeStyle='#c9863a';ctx.lineWidth=1.4;ctx.fillRect(bx,y,90,40);ctx.strokeRect(bx,y,90,40);
-    ctx.fillStyle=INKD;fontMono(ctx,10);ctx.textAlign='center';ctx.fillText(res[i],bx+45,y+24);
-    // arrow
-    ctx.strokeStyle=PHOSD;ctx.beginPath();ctx.moveTo(bx+90,y+20);ctx.lineTo(bx+150,y+20);ctx.stroke();
-    ctx.fillStyle=PHOS;ctx.fillText('1×1 head',bx+120,y+12);
-    // weight bar
-    ctx.fillStyle='#13241d';ctx.fillRect(bx+160,y+8,bw,24);ctx.fillStyle=`rgba(124,246,200,${0.4+w[i]*0.6})`;ctx.fillRect(bx+160,y+8,bw*w[i],24);
-    ctx.fillStyle='#eafff6';ctx.textAlign='left';ctx.fillText('w='+w[i].toFixed(3),bx+166,y+24);}
-  document.getElementById('dsReadout').innerHTML=`decay ${this.decay.toFixed(2)} → weights [${w.map(v=>v.toFixed(2)).join(', ')}] (Σ=1). Finest scale dominates; coarse heads still get gradient. Caveat: src DS loss skips interpolation → shape error.`;
-}};
-
-/* ---- 13. Sliding window ---- */
-const SW={init(){this.c=document.getElementById('swCanvas');this.ctx=this.c.getContext('2d');this.over=0.25;
-  const s=document.getElementById('swOver');s.addEventListener('input',()=>{this.over=+s.value;document.getElementById('swOverV').textContent=this.over.toFixed(2);this.draw();});
-  this.draw();},
-draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
-  const vw=300,vh=240,ox=30,oy=50,roi=110;const step=Math.max(12,Math.round(roi*(1-this.over)));
-  ctx.fillStyle=INKD;fontMono(ctx,11);ctx.textAlign='left';ctx.fillText('full scan (240×240×155) — ROI window tiles with overlap',ox,30);
-  // coverage accumulation
-  const acc=[];const gx=60,gy=48;const cw=vw/gx,ch=vh/gy;
-  for(let j=0;j<gy;j++){acc.push(new Array(gx).fill(0));}
-  let nx=0;
-  for(let x=0;x+roi<=vw+step;x+=step){for(let y=0;y+roi<=vh+step;y+=step){nx++;
-    const x0=Math.min(x,vw-roi),y0=Math.min(y,vh-roi);
-    for(let j=0;j<gy;j++)for(let i=0;i<gx;i++){const px=i*cw,py=j*ch;if(px>=x0&&px<x0+roi&&py>=y0&&py<y0+roi)acc[j][i]++;}}}
-  let mx=0;acc.forEach(r=>r.forEach(v=>mx=Math.max(mx,v)));
-  for(let j=0;j<gy;j++)for(let i=0;i<gx;i++){const v=acc[j][i]/(mx||1);ctx.fillStyle=`rgba(124,246,200,${0.07+v*0.6})`;ctx.fillRect(ox+i*cw,oy+j*ch,cw,ch);}
-  ctx.strokeStyle=AMBER;ctx.lineWidth=2;ctx.strokeRect(ox,oy,roi,roi);ctx.fillStyle=AMBER;ctx.fillText('one ROI',ox+4,oy+14);
-  ctx.strokeStyle=GRIDC;ctx.strokeRect(ox,oy,vw,vh);
-  document.getElementById('swReadout').innerHTML=`overlap ${(this.over*100).toFixed(0)}% → step ${step}px → <b>${nx}</b> windows. Brighter = more overlap (Gaussian-blended). Higher overlap removes tile seams but costs more passes.`;
-}};
-
-/* ---- 14. Output head ---- */
-const Head={init(){this.c=document.getElementById('headCanvas');this.ctx=this.c.getContext('2d');this.cls=3;
-  const s=document.getElementById('headClass');s.addEventListener('input',()=>{this.cls=+s.value;document.getElementById('headClassV').textContent=this.cls;this.draw();});
-  this.draw();},
-draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
-  // label semantics: 0 bg,1 edema,2 necrotic,3 enhancing
-  const inTC=(this.cls===2||this.cls===3), inWT=(this.cls>=1), inET=(this.cls===3);
-  const names=['Background','Edema (1)','Necrotic core (2)','Enhancing (3)'];
-  ctx.fillStyle=INKD;fontMono(ctx,12);ctx.textAlign='left';ctx.fillText('true voxel class: '+names[this.cls],30,34);
-  const chans=[['TC  (core = 2,3)',inTC,TEAL],['WT  (whole = 1,2,3)',inWT,'#3a7be0'],['ET  (enhancing = 3)',inET,'#e0883a']];
-  chans.forEach((c,i)=>{const y=70+i*78;
-    ctx.fillStyle=INKD;fontMono(ctx,12);ctx.fillText(c[0],40,y-12);
-    // sigmoid lamp
-    ctx.fillStyle=c[1]?c[2]:'#13241d';ctx.strokeStyle=c[2];ctx.lineWidth=2;ctx.beginPath();ctx.arc(70,y+18,20,0,7);ctx.fill();ctx.stroke();
-    ctx.fillStyle=c[1]?'#0d0c0f':INKD;ctx.textAlign='center';fontMono(ctx,12);ctx.fillText(c[1]?'1':'0',70,y+22);
-    // prob bar
-    const pv=c[1]?0.93:0.06;ctx.fillStyle='#13241d';ctx.fillRect(120,y+8,300,22);ctx.fillStyle=`rgba(124,246,200,${0.3+pv*0.6})`;ctx.fillRect(120,y+8,300*pv,22);
-    ctx.fillStyle='#eafff6';ctx.textAlign='left';ctx.fillText('σ(logit) ≈ '+pv.toFixed(2),126,y+24);});
-  const sum=(inTC?0.93:0.06)+(inWT?0.93:0.06)+(inET?0.93:0.06);
-  document.getElementById('headReadout').innerHTML=`3 <b>independent</b> sigmoids — channels overlap (ET⊂TC⊂WT) and sum to <b>${sum.toFixed(2)}</b> ≠ 1. That's why it's multi-label, not 4-way softmax — and why uncertainty must use binary entropy.`;
-}};
-
-/* ---- 15. Loss functions ---- */
-const Loss={init(){this.c=document.getElementById('lossCanvas');this.ctx=this.c.getContext('2d');this.gamma=2;
-  const s=document.getElementById('lossGamma');s.addEventListener('input',()=>{this.gamma=+s.value;document.getElementById('lossGammaV').textContent=this.gamma.toFixed(1);this.draw();});
-  this.draw();},
-draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
-  const ox=55,oy=20,w=W-90,h=H-70,maxL=4;
-  ctx.strokeStyle=GRIDC;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(ox,oy+h);ctx.lineTo(ox+w,oy+h);ctx.moveTo(ox,oy);ctx.lineTo(ox,oy+h);ctx.stroke();
-  const curve=(fn,col,lw)=>{ctx.strokeStyle=col;ctx.lineWidth=lw;ctx.beginPath();
-    for(let i=1;i<=200;i++){const p=i/201;const L=Math.min(maxL,fn(p));const px=ox+p*w;const py=oy+h-(L/maxL)*h;if(i===1)ctx.moveTo(px,py);else ctx.lineTo(px,py);}ctx.stroke();};
-  // BCE for positive voxel = -log p ; Focal = (1-p)^g * -log p
-  curve(p=>-Math.log(p),'rgba(159,196,182,.7)',1.6);          // BCE
-  curve(p=>Math.pow(1-p,this.gamma)*(-Math.log(p)),PHOS,2.6); // Focal
-  ctx.fillStyle=INKD;fontMono(ctx,10);ctx.textAlign='left';ctx.fillText('loss',ox-2,oy+8);ctx.fillText('p (pred prob for a TRUE tumor voxel) →',ox,oy+h+22);
-  ctx.fillStyle='#9fc4b7';ctx.fillText('— BCE  (−log p)',ox+w-150,oy+14);ctx.fillStyle=PHOS;ctx.fillText(`— Focal  γ=${this.gamma.toFixed(1)}`,ox+w-150,oy+30);
-  const easy=Math.pow(1-0.9,this.gamma)*(-Math.log(0.9)), bce09=-Math.log(0.9);
-  document.getElementById('lossReadout').innerHTML=`At p=0.9 (easy voxel): BCE=${bce09.toFixed(3)} vs Focal=<b>${easy.toFixed(3)}</b> (×${(easy/bce09).toFixed(2)}). γ shrinks easy-voxel loss so gradient flows to the hard tumor rim. OncoSeg trains Dice+BCE.`;
-}};
-
-/* ---- 18. Predictive entropy ---- */
-const Entropy={init(){this.c=document.getElementById('entCanvas');this.ctx=this.c.getContext('2d');this.p=0.5;
-  const s=document.getElementById('entP');s.addEventListener('input',()=>{this.p=+s.value;document.getElementById('entPV').textContent=this.p.toFixed(2);this.draw();});
-  this.draw();},
-draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
-  const ox=55,oy=20,w=W-90,h=H-70;const ln2=Math.log(2);
-  ctx.strokeStyle=GRIDC;ctx.beginPath();ctx.moveTo(ox,oy+h);ctx.lineTo(ox+w,oy+h);ctx.moveTo(ox,oy);ctx.lineTo(ox,oy+h);ctx.stroke();
-  const bin=p=>-(p*Math.log(p)+(1-p)*Math.log(1-p));      // correct, max=ln2
-  const cat=p=>-(p*Math.log(p));                           // categorical (the bug), different shape
-  const maxY=1.0;
-  const curve=(fn,col,lw)=>{ctx.strokeStyle=col;ctx.lineWidth=lw;ctx.beginPath();
-    for(let i=1;i<200;i++){const p=i/200;const py=oy+h-(Math.min(maxY,fn(p))/maxY)*h;const px=ox+p*w;if(i===1)ctx.moveTo(px,py);else ctx.lineTo(px,py);}ctx.stroke();};
-  curve(bin,PHOS,2.6); curve(cat,'rgba(224,138,46,.8)',1.8);
-  const px=ox+this.p*w, py=oy+h-(Math.min(maxY,bin(this.p))/maxY)*h;
-  ctx.fillStyle='#eafff6';ctx.beginPath();ctx.arc(px,py,5,0,7);ctx.fill();
-  ctx.strokeStyle='rgba(124,246,200,.3)';ctx.beginPath();ctx.moveTo(px,oy);ctx.lineTo(px,oy+h);ctx.stroke();
-  ctx.fillStyle=INKD;fontMono(ctx,10);ctx.textAlign='left';ctx.fillText('entropy',ox-4,oy+8);ctx.fillText('p →',ox+w-24,oy+h+20);
-  ctx.fillStyle=PHOS;ctx.fillText('— binary (correct)',ox+w-160,oy+14);ctx.fillStyle='#e0883a';ctx.fillText('— categorical (inference.py)',ox+w-200,oy+30);
-  document.getElementById('entReadout').innerHTML=`p=${this.p.toFixed(2)} → binary H=<b>${bin(this.p).toFixed(3)}</b> nats (max ${ln2.toFixed(3)} at 0.5) vs categorical ${cat(this.p).toFixed(3)}. For sigmoid outputs only the binary form is valid — the shipped inference path uses the wrong one.`;
-}};
-
-/* ---- 20. Hausdorff HD95 ---- */
-const HD={init(){this.c=document.getElementById('hdCanvas');this.ctx=this.c.getContext('2d');this.spike=0;
-  const s=document.getElementById('hdSpike');s.addEventListener('input',()=>{this.spike=+s.value;document.getElementById('hdSpikeV').textContent=this.spike;this.draw();});
-  this.draw();},
-draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
-  const cx=190,cy=170,R=90;const n=60;const gt=[],pr=[];
-  for(let i=0;i<n;i++){const a=i/n*2*Math.PI;gt.push([cx+R*Math.cos(a),cy+R*Math.sin(a)]);
-    let rr=R*0.92; if(this.spike>0 && i===15)rr=R*0.92+this.spike; pr.push([cx+rr*Math.cos(a),cy+rr*Math.sin(a)]);}
-  const poly=(pts,col,lw)=>{ctx.strokeStyle=col;ctx.lineWidth=lw;ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));ctx.closePath();ctx.stroke();};
-  poly(gt,'rgba(44,154,146,.9)',2);poly(pr,'rgba(224,138,46,.9)',2);
-  // distances pred->gt
-  const dists=pr.map(p=>{let m=1e9;gt.forEach(g=>{const d=Math.hypot(p[0]-g[0],p[1]-g[1]);if(d<m)m=d;});return m;});
-  const sorted=[...dists].sort((a,b)=>a-b);const hd95=sorted[Math.floor(0.95*(sorted.length-1))];const hdmax=sorted[sorted.length-1];const asd=dists.reduce((a,b)=>a+b,0)/dists.length;
-  // draw worst line
-  let wi=0;dists.forEach((d,i)=>{if(d>dists[wi])wi=i;});const p=pr[wi];let mg=gt[0],md=1e9;gt.forEach(g=>{const d=Math.hypot(p[0]-g[0],p[1]-g[1]);if(d<md){md=d;mg=g;}});
-  ctx.strokeStyle='#d23b2a';ctx.lineWidth=2;ctx.setLineDash([4,3]);ctx.beginPath();ctx.moveTo(p[0],p[1]);ctx.lineTo(mg[0],mg[1]);ctx.stroke();ctx.setLineDash([]);
-  // fake dice (overlap barely changes with one spike)
-  const dice=(0.97-Math.min(0.05,this.spike/2000)).toFixed(3);
-  ctx.fillStyle=INKD;fontMono(ctx,11);ctx.textAlign='left';ctx.fillText('teal = GT · amber = prediction',30,30);
-  document.getElementById('hdReadout').innerHTML=`Dice ≈ <b>${dice}</b> (barely moves) · mean surf dist ${asd.toFixed(1)} · <b style="color:#d23b2a">HD95 ${hd95.toFixed(1)}</b> · HDmax ${hdmax.toFixed(1)}. One spike wrecks HDmax; HD95 trims lone outliers. Reported in mm.`;
-}};
-
-/* ---- 21. Connected components ---- */
-const CC={init(){this.c=document.getElementById('ccCanvas');this.ctx=this.c.getContext('2d');this.min=5;
-  // build a fixed mask with several blobs + specks
-  this.G=30;this.mask=[];for(let y=0;y<this.G;y++){this.mask.push(new Array(this.G).fill(0));}
-  const blob=(cx,cy,r)=>{for(let y=0;y<this.G;y++)for(let x=0;x<this.G;x++)if((x-cx)**2+(y-cy)**2<r*r)this.mask[y][x]=1;};
-  blob(8,8,5);blob(21,10,3.5);blob(15,22,4);this.mask[2][2]=1;this.mask[27][5]=1;this.mask[4][26]=1;this.mask[26][26]=1;this.mask[26][27]=1;
-  const s=document.getElementById('ccMin');s.addEventListener('input',()=>{this.min=+s.value;document.getElementById('ccMinV').textContent=this.min;this.draw();});
-  this.draw();},
-label(){const G=this.G,lab=[];for(let y=0;y<G;y++)lab.push(new Array(G).fill(0));let cur=0;const sizes={};
-  for(let y=0;y<G;y++)for(let x=0;x<G;x++){if(this.mask[y][x]&&!lab[y][x]){cur++;const st=[[y,x]];lab[y][x]=cur;let cnt=0;
-    while(st.length){const [cy,cx]=st.pop();cnt++;[[0,1],[0,-1],[1,0],[-1,0]].forEach(([dy,dx])=>{const ny=cy+dy,nx=cx+dx;
-      if(ny>=0&&ny<G&&nx>=0&&nx<G&&this.mask[ny][nx]&&!lab[ny][nx]){lab[ny][nx]=cur;st.push([ny,nx]);}});}sizes[cur]=cnt;}}
-  return {lab,sizes,cur};},
-draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
-  const {lab,sizes,cur}=this.label();const cell=10,ox=30,oy=40;
-  const cols=['#7CF6C8','#e0883a','#3a7be0','#b05ab4','#2c9a92','#e0c66a'];
-  let kept=0;
-  for(let y=0;y<this.G;y++)for(let x=0;x<this.G;x++){const id=lab[y][x];
-    if(!id){ctx.fillStyle='#101d18';}else if(sizes[id]<this.min){ctx.fillStyle='#3a2a20';}else{ctx.fillStyle=cols[(id-1)%cols.length];}
-    ctx.fillRect(ox+x*cell,oy+y*cell,cell-1,cell-1);}
-  for(const k in sizes)if(sizes[k]>=this.min)kept++;
-  ctx.fillStyle=INKD;fontMono(ctx,11);ctx.textAlign='left';ctx.fillText('colored = kept lesion · brown = pruned speck',ox,30);
-  document.getElementById('ccReadout').innerHTML=`${cur} raw components → <b>${kept}</b> lesions kept at min-size ${this.min} (smaller = noise). Each kept blob becomes a RECIST target lesion. BRATS_077 had 31 WT fragments → hard case.`;
-}};
 </script>
 </body>
 </html>
