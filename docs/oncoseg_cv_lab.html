@@ -9,9 +9,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,900&family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#f2ece0; --paper-2:#e9e1d2; --ink:#1c1814; --ink-soft:#4a4239;
-  --line:#cdbfa6; --line-soft:#ddd2bd;
-  --teal:#1f6f6a; --teal-2:#2c9a92; --amber:#c0691f; --amber-2:#e08a2e;
+  --paper:#f4f7f9; --paper-2:#e8eef1; --ink:#0e1c21; --ink-soft:#42535a;
+  --line:#c9d7dc; --line-soft:#dce6ea;
+  --teal:#0a7d80; --teal-2:#d8512c; --amber:#d8512c; --amber-2:#d8512c;
   --shadow:0 1px 0 rgba(255,255,255,.5), 0 18px 40px -22px rgba(20,16,10,.55);
 }
 *{box-sizing:border-box}
@@ -19,8 +19,8 @@ html{scroll-behavior:smooth}
 body{margin:0;background:var(--paper);color:var(--ink);overflow-x:hidden;
   font-family:"Hanken Grotesk",system-ui,sans-serif;font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased;
   background-image:
-    radial-gradient(circle at 12% 8%, rgba(192,105,31,.05), transparent 40%),
-    radial-gradient(circle at 88% 92%, rgba(31,111,106,.05), transparent 45%),
+    radial-gradient(circle at 12% 8%, rgba(216,81,44,.05), transparent 40%),
+    radial-gradient(circle at 88% 92%, rgba(12,138,141,.06), transparent 45%),
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");}
 a{color:var(--amber);text-decoration:none}
 .wrap{max-width:1120px;margin:0 auto;padding:0 26px}
@@ -88,12 +88,12 @@ h1.disp{font-family:"Fraunces",serif;font-weight:900;font-size:clamp(38px,6.6vw,
 .ctrl input[type=range]{flex:1;accent-color:var(--teal);height:3px}
 .ctrl .val{min-width:54px;text-align:right;color:var(--teal);font-weight:700}
 canvas{display:block;max-width:100%;border-radius:10px}
-.canvas-wrap{background:#f7f2e8;border:1px solid var(--line-soft);border-radius:12px;padding:16px;text-align:center}
+.canvas-wrap{background:#f8fafb;border:1px solid var(--line-soft);border-radius:12px;padding:16px;text-align:center}
 .canvas-cap{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--ink-soft);margin-top:10px;letter-spacing:.04em}
 .readout{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--ink);background:rgba(31,111,106,.06);border:1px solid var(--line-soft);border-radius:9px;padding:11px 13px;margin-top:14px;line-height:1.7}
 .readout b{color:var(--teal)}
 .pill-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
-.minipill{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--teal);border:1px solid var(--line);border-radius:999px;padding:3px 9px;background:rgba(31,111,106,.05)}
+.minipill{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--teal);border:1px solid var(--line);border-radius:999px;padding:3px 9px;background:rgba(12,138,141,.06)}
 .btn-ghost{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--teal);background:var(--paper-2);border:1px solid var(--line);border-radius:9px;padding:8px 14px;cursor:pointer;transition:.15s}
 .btn-ghost:hover{background:rgba(31,111,106,.1)}
 footer{padding:42px 0 60px;color:var(--ink-soft);font-size:13px;border-top:1px solid var(--line);margin-top:40px}
@@ -117,7 +117,7 @@ footer{padding:42px 0 60px;color:var(--ink-soft);font-size:13px;border-top:1px s
     <section>
       <span class="kicker">Live CV Lab · interactive</span>
       <h1 class="disp">Touch the architecture.</h1>
-      <p class="lead">Every concept OncoSeg relies on — from convolution to attention to the segmentation losses and the clinical scoring — is a computer-vision / ML idea you can <b>feel</b>. The 22 widgets below run the <i>real</i> math in your browser on toy tensors. Drag a slider, or hit <b>Play</b> to watch the whole stack animate itself end-to-end.</p>
+      <p class="lead">Every concept OncoSeg relies on — convolution, attention, the segmentation losses, the clinical scoring — plus the wider <b>frontier of visual AI</b> it sits within: foundation &amp; self-supervised models, digital pathology, the modern transformer/SSM architectures, world models, VLMs and VLA policies. <b>41 widgets</b> run the <i>real</i> math in your browser on toy tensors — each a computer-vision / ML idea you can <b>feel</b>. Drag a slider, or hit <b>Play</b> to watch the whole stack animate itself end-to-end.</p>
     </section>
 
     <div class="playbar" id="playbar" style="--prog:0%">
@@ -164,6 +164,38 @@ footer{padding:42px 0 60px;color:var(--ink-soft);font-size:13px;border-top:1px s
 
       <span class="cat">Clinical endpoint</span>
       <button data-m="recist"><span class="num">22</span> RECIST 1.1</button>
+
+      <span class="cat">Foundation &amp; self-supervised vision</span>
+      <button data-m="dino"><span class="num">23</span> DINO attention</button>
+      <button data-m="mae"><span class="num">24</span> Masked Autoencoder</button>
+      <button data-m="clip"><span class="num">25</span> CLIP Alignment</button>
+      <button data-m="diffusion"><span class="num">26</span> Diffusion denoising</button>
+
+      <span class="cat">Digital pathology / histology</span>
+      <button data-m="wsi"><span class="num">27</span> WSI Pyramid &amp; Tiling</button>
+      <button data-m="stain"><span class="num">28</span> H&E Stain Deconvolution</button>
+      <button data-m="nuclei"><span class="num">29</span> Nuclei Instances</button>
+      <button data-m="mil"><span class="num">30</span> Attention-MIL</button>
+      <button data-m="pathfm"><span class="num">31</span> Pathology FM (UNI/Virchow)</button>
+
+      <span class="cat">Modern architectures (SOTA)</span>
+      <button data-m="vit"><span class="num">32</span> ViT [CLS] + Position</button>
+      <button data-m="rope"><span class="num">33</span> Positional Encoding</button>
+      <button data-m="moe"><span class="num">34</span> Mixture-of-Experts</button>
+      <button data-m="mamba"><span class="num">35</span> State-Space (Mamba)</button>
+      <button data-m="flash"><span class="num">36</span> FlashAttention</button>
+
+      <span class="cat">World models</span>
+      <button data-m="jepa"><span class="num">37</span> JEPA latent prediction</button>
+      <button data-m="worldroll"><span class="num">38</span> World-Model Rollout</button>
+
+      <span class="cat">Visual reasoning &amp; VLMs</span>
+      <button data-m="vlm"><span class="num">39</span> VLM joint attention</button>
+      <button data-m="vcot"><span class="num">40</span> Visual CoT + grounding</button>
+
+      <span class="cat">Vision-Language-Action (VLA)</span>
+      <button data-m="vla"><span class="num">41</span> VLA policy</button>
+
     </div>
 
     <!-- 01. CONVOLUTION -->
@@ -638,6 +670,413 @@ footer{padding:42px 0 60px;color:var(--ink-soft);font-size:13px;border-top:1px s
       </div>
     </section>
 
+
+<section class="demo" data-demo="dino">
+      <div class="console">
+        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">pretrain.py — DINO: emergent [CLS] attention, no labels</span></div>
+        <div class="bd lab-grid">
+          <div class="canvas-wrap">
+            <canvas id="dinoCanvas" width="520" height="340"></canvas>
+            <div class="canvas-cap">Patch grid = the input image. Amber dashed = the object. Teal = where the [CLS] token attends — diffuse early, locked onto the object late.</div>
+            <div class="readout" id="dinoReadout"></div>
+          </div>
+          <div class="explain">
+            <h3>DINO: attention that finds the object — with zero labels</h3>
+            <p>A Vision Transformer trained <i>self-supervised</i> (DINO: student matches a teacher across crops, no class labels) develops something striking: the <code>[CLS]</code> token's attention spontaneously localizes the salient object. Each patch gets an attention weight <code>w<sub>i</sub> = softmax(β·feature<sub>i</sub>)</code>; we measure how peaked that map is with normalized entropy <code>H = −Σ w<sub>i</sub> log w<sub>i</sub> / log N</code>.</p>
+            <p>Drag <b>training progress</b>: at 0% features are random, so attention is uniform (H = 1.0) and the foreground gets only its fair <i>area</i> share (chance). As pretraining proceeds the inverse-temperature β grows, attention sharpens, entropy falls, and the foreground share races past chance toward ~100% — the object boundary emerges on its own.</p>
+            <div class="why">Labels are the scarce resource in medical imaging — annotating a 3D tumor is hours of an expert's time. Self-supervised pretraining (DINO-style) is exactly how modern medical foundation models learn rich, object-aware features from oceans of <b>unlabeled</b> CT/MRI, so that fine-tuning a segmenter like OncoSeg needs only a handful of labeled scans. The entropy-drop / foreground-rise you see here is the signal that useful structure was learned before a single mask was ever shown.</div>
+            <div class="ctrl"><label>Training progress</label><input type="range" id="dinoTrain" min="0" max="1" step="0.01" value="0"><span class="val" id="dinoTrainV">0.00</span></div>
+            <div class="pill-row"><span class="minipill">no labels</span><span class="minipill">ViT [CLS]</span><span class="minipill">emergent localization</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<section class="demo" data-demo="mae">
+  <div class="console">
+    <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">mae_pretrain.py — mask patches, reconstruct the rest</span></div>
+    <div class="bd lab-grid">
+      <div class="canvas-wrap">
+        <canvas id="maeCanvas" width="520" height="340"></canvas>
+        <div class="canvas-cap">Original → masked input (gray = hidden patches) → reconstruction. Drag the mask ratio.</div>
+        <div class="readout" id="maeReadout"></div>
+      </div>
+      <div class="explain">
+        <h3>Masked Autoencoder — learn by filling in the blanks</h3>
+        <p>Cut the image into patches, <b>hide most of them at random</b>, and train the network to <b>reconstruct the missing pixels</b> from the few that remain. The encoder only ever sees the visible patches; a lightweight decoder paints the holes back in. No labels needed — the image is its own supervision.</p>
+        <div class="why">The headline MAE finding (He et al., 2021): you can mask <b>75%</b> of patches and still rebuild a plausible image, because natural scans are <i>redundant</i> — a handful of patches carry the gist. That redundancy is exactly why MAE-style <b>self-supervised pretraining</b> works so well for data-hungry <b>3D medical encoders</b>: a model can learn anatomy from thousands of <i>unlabelled</i> volumes before ever seeing a hand-drawn tumor mask. Drag past 75% and watch the reconstruction stay structurally faithful — the tumor blob survives.</p>
+        <div class="ctrl"><label>Mask ratio</label><input type="range" id="maeRatio" min="0" max="0.85" step="0.01" value="0.75"><span class="val" id="maeRatioV">75%</span></div>
+        <div class="pill-row"><span class="minipill">self-supervised</span><span class="minipill">no labels</span><span class="minipill">asymmetric enc/dec</span><span class="minipill">pretrain → finetune</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="demo" data-demo="clip">
+      <div class="console">
+        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">clip.py — contrastive image↔text cosine alignment</span></div>
+        <div class="bd lab-grid">
+          <div class="canvas-wrap">
+            <canvas id="clipCanvas" width="520" height="340"></canvas>
+            <div class="canvas-cap">Teal = image embedding (drag the arc). Amber = caption embeddings. Bars = softmax(cosine).</div>
+            <div class="readout" id="clipReadout"></div>
+          </div>
+          <div class="explain">
+            <h3>CLIP: matching a picture to the words that describe it</h3>
+            <p>CLIP projects an image and each candidate caption into the <b>same vector space</b>, normalized to unit length. Their agreement is the <b>cosine similarity</b> <code>cos(θ) = img·text</code> — which, for unit vectors, is just the dot product. A temperature-scaled <b>softmax</b> over those cosines turns the scores into a probability per caption, and the highest one is the prediction.</p>
+            <div class="why">This single idea is the engine of <i>zero-shot</i> classification: to label a scan you never trained a classifier on, you embed it once and compare it to text prompts like "an MRI of an enhancing glioma" vs "a normal brain MRI" — no new head, no fine-tuning. The same image↔text bridge is what lets vision-language models draft a radiology <i>report</i> from pixels. Drag the image embedding around the arc and watch the winning caption flip.</div>
+            <div class="ctrl"><label>Image embedding (arc)</label><input type="range" id="clipArc" min="0" max="100" step="1" value="0"><span class="val" id="clipArcV">0.00</span></div>
+            <div class="ctrl"><label>Temperature τ</label><input type="range" id="clipTemp" min="0.04" max="0.6" step="0.01" value="0.10"><span class="val" id="clipTempV">0.10</span></div>
+            <p style="font-size:13px;color:#42535a">Low τ → softmax sharpens to a confident single match (CLIP's learned logit-scale is a small τ). High τ → diffuse, hedged probabilities. This is the exact <code>logits = img·textᵀ / τ</code> term in a CLIP head.</p>
+            <div class="pill-row"><span class="minipill">L2-normalized</span><span class="minipill">cosine = dot</span><span class="minipill">softmax(sim/τ)</span><span class="minipill">zero-shot</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<section class="demo" data-demo="diffusion">
+      <div class="console">
+        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">diffusion.py — forward noising &amp; the reverse score (denoise) direction</span></div>
+        <div class="bd lab-grid">
+          <div class="canvas-wrap">
+            <canvas id="diffusionCanvas" width="520" height="360"></canvas>
+            <div class="canvas-cap">Left = noisy x_t (a brain slice + tumor blob). Right = clean target x₀. Amber arrows = the score: where the model pulls each pixel to remove noise.</div>
+            <div class="readout" id="diffusionReadout"></div>
+          </div>
+          <div class="explain">
+            <h3>Diffusion: corrupt with noise, then learn to walk back</h3>
+            <p>A diffusion model defines a <b>forward</b> process that gradually drowns an image in Gaussian noise: <code>x_t = √ᾱ·x₀ + √(1−ᾱ)·ε</code>, where <code>ᾱ(t)</code> follows a cosine schedule from ≈1 (clean) at t=0 to ≈0 (pure noise) at t=1. A U-Net is trained to <b>predict the noise ε</b> at any t. Generation runs the process in <b>reverse</b>: estimate ε, subtract a step of it, repeat — climbing the <i>score</i> <code>∇ₓ log p(x_t)</code> back onto the data manifold.</p>
+            <div class="why">Diffusion is the SOTA engine for image synthesis and <b>augmentation</b>, and is now used as a <b>segmentation prior</b>: conditioning the reverse process can sample or sharpen plausible tumor masks, and the inherent stochasticity yields per-voxel uncertainty — the same signal the MC-Dropout widget estimates by a cruder route. Drag t: as noise rises the slice dissolves, σ grows, SNR drops, and the amber denoise arrows lengthen — that vector field <i>is</i> what the network learns to predict.</div>
+            <div class="ctrl"><label>Timestep t (0=clean, 1=noise)</label><input type="range" id="diffusionT" min="0" max="1" step="0.01" value="0"><span class="val" id="diffusionTV">0.00</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<section class="demo" data-demo="wsi">
+  <div class="console">
+    <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">deepzoom — gigapixel WSI: resolution pyramid + tile reader</span></div>
+    <div class="bd lab-grid">
+      <div class="canvas-wrap">
+        <canvas id="wsiCanvas" width="520" height="340"></canvas>
+        <div class="canvas-cap">Stylized H&amp;E thumbnail. The grid is the tiling at this pyramid level; one tile is what the GPU actually sees.</div>
+        <div class="readout" id="wsiReadout"></div>
+      </div>
+      <div class="explain">
+        <h3>The whole-slide pyramid — when the image won't fit in memory</h3>
+        <p>A digitized histology slide is a <b>gigapixel</b> image: scan a glass slide at 40× and you get on the order of <b>100,000 × 100,000 pixels ≈ 10¹⁰ pixels</b> — about <b>30&nbsp;GB</b> raw. No GPU holds that. So the file is stored as a <b>multi-resolution pyramid</b> of fixed-size <b>tiles</b> (DeepZoom convention): level&nbsp;0 is one coarse thumbnail tile, and each level up <i>quadruples</i> the resolution into <code>4ᴸ</code> tiles (1, 4, 16, 64, 256, …) — higher level = finer detail = more tiles. You read only the tiles you need, at the zoom you need. (OpenSlide numbers it the other way: its level 0 is full-resolution.)</p>
+        <div class="why">This is the <i>opposite memory regime</i> from OncoSeg. OncoSeg's MRI is a compact <code>128³ ≈ 2×10⁶</code>-voxel volume that fits whole on one card — its challenge is 3D context. Histology can't fit at all, so the entire pipeline (tile → infer → stitch) is built around <b>tiling</b>, the same trick OncoSeg uses for inference (demo 13, sliding window) but forced on it from the very first byte.</div>
+        <div class="ctrl"><label>Pyramid level L</label><input type="range" id="wsiLevel" min="0" max="4" step="1" value="2"><span class="val" id="wsiLevelV">2</span></div>
+        <div class="pill-row"><span class="minipill">tiles = 4ᴸ</span><span class="minipill">~10¹⁰ px</span><span class="minipill">~30 GB raw</span><span class="minipill">read on demand</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="demo" data-demo="stain">
+      <div class="console">
+        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">color_deconvolution.py — H&amp;E → Hematoxylin + Eosin (Ruifrok)</span></div>
+        <div class="bd lab-grid">
+          <div class="canvas-wrap">
+            <canvas id="stainCanvas" width="520" height="340"></canvas>
+            <div class="canvas-cap">Left: raw H&amp;E patch. Right: the channel(s) recovered by projecting onto the stain basis.</div>
+            <div class="readout" id="stainReadout"></div>
+          </div>
+          <div class="explain">
+            <h3>H&amp;E stain deconvolution — unmixing two dyes</h3>
+            <p>In histology, <b>Hematoxylin</b> stains nuclei blue-purple and <b>Eosin</b> stains stroma/cytoplasm pink. The camera only sees their <i>mixture</i>. Each dye absorbs light along a fixed colour direction, so in <b>optical-density</b> space <code>OD = −log₁₀(I/I₀)</code> the two stains form a basis. Inverting that 2-vector basis recovers each dye's concentration per pixel — a linear unmixing, exactly Ruifrok &amp; Johnston (2001).</p>
+            <div class="why">Stain colour drifts between labs, scanners and batches — the histology analog of MRI intensity drift in <b>demo 03</b>. Deconvolving onto canonical H/E vectors (then renormalizing) is <i>stain normalization</i>: it makes inputs comparable before they hit the network, just like InstanceNorm. Spin the basis angle to mis-set the vectors and watch the nuclei "bleed" into the stroma channel — a wrong basis corrupts every downstream feature.</div>
+            <div class="ctrl"><label>View blend</label><input type="range" id="stainView" min="0" max="1" step="0.01" value="0"><span class="val" id="stainViewV">RGB</span></div>
+            <div class="ctrl"><label>Basis angle err</label><input type="range" id="stainAngle" min="-40" max="40" step="1" value="0"><span class="val" id="stainAngleV">0°</span></div>
+            <div class="pill-row"><span class="minipill">OD = −log₁₀(I/I₀)</span><span class="minipill">C = M⁻¹·OD</span><span class="minipill">H=[.65,.70,.29]</span><span class="minipill">E=[.07,.99,.11]</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<section class="demo" data-demo="nuclei">
+      <div class="console">
+        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">hovernet_idea.py — distance-map watershed splits touching nuclei</span></div>
+        <div class="bd lab-grid">
+          <div class="canvas-wrap">
+            <canvas id="nucleiCanvas" width="560" height="360"></canvas>
+            <div class="canvas-cap">Left: one merged semantic mask, shaded by distance-to-edge; black dots = markers. Right: instances after watershed.</div>
+            <div class="readout" id="nucleiReadout"></div>
+          </div>
+          <div class="explain">
+            <h3>Instance segmentation — counting cells, not just labelling tumor</h3>
+            <p>Semantic segmentation answers <i>"is this pixel a nucleus?"</i> — so five touching nuclei come back as <b>one</b> fused blob. <b>Instance</b> segmentation must additionally say <i>which</i> nucleus each pixel belongs to. The classic recipe (and the spirit of <b>HoVer-Net</b>): take the foreground mask, compute its <b>distance transform</b> (each pixel's distance to the nearest edge), keep the high-distance peaks as <b>markers</b>, then run a <b>watershed</b> so every pixel joins its nearest marker.</p>
+            <div class="why">Drag the threshold and watch the count vs the true 5. Too <b>low</b> → markers merge → the clump stays one object (under-split). The right band → exactly one marker per nucleus → correct count. Too <b>high</b> → the elongated dividing cell's distance ridge breaks into two peaks → over-split. OncoSeg outputs <i>region</i> masks (TC/WT/ET), not per-cell instances — so counting individual lesions or cells is a strictly harder problem layered on top, exactly the gap between a semantic mask and a clinical object count.</div>
+            <div class="ctrl"><label>Marker threshold h</label><input type="range" id="nucleiThr" min="0" max="0.96" step="0.02" value="0.30"><span class="val" id="nucleiThrV">0.30</span></div>
+            <div class="pill-row"><span class="minipill">distance transform</span><span class="minipill">marker = h-maxima</span><span class="minipill">watershed</span><span class="minipill">instance ≠ semantic</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<section class="demo" data-demo="mil">
+  <div class="console">
+    <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">attention_mil.py — bag of patches → one slide label</span></div>
+    <div class="bd lab-grid">
+      <div class="canvas-wrap">
+        <canvas id="milCanvas" width="520" height="340"></canvas>
+        <div class="canvas-cap">Top: 10 patches in one slide (amber = tumor). Bars = softmax attention. Bottom: pooled slide score vs 0.5 threshold.</div>
+        <div class="readout" id="milReadout"></div>
+      </div>
+      <div class="explain">
+        <h3>Multiple-Instance Learning — one label for a whole bag</h3>
+        <p>A gigapixel slide is far too big to label per pixel, but a pathologist <i>can</i> say "this slide is cancer / not". MIL learns from exactly that: the slide is a <b>bag</b> of N patch <b>instances</b>, and only the <b>bag</b> carries a label. The model scores each patch, computes an <b>attention weight</b> <code>aᵢ = softmax(tanh(V·hᵢ) ⊙ sigmoid(U·hᵢ))</code>, and pools them into one prediction <code>z = Σ aᵢ·pᵢ</code> (Ilse et&nbsp;al. 2018, ABMIL).</p>
+        <div class="why">The MI assumption: a bag is positive if <b>any</b> instance is positive. Drag the slider — with zero tumor patches the slide reads <b>benign</b>; the <i>first</i> tumor patch flips it to <b>malignant</b> and grabs most of the attention. This is how you'd pre-train OncoSeg's encoder on slides/scans labeled only "cancer/not" — <b>no voxel masks</b> — and the attention bars double as a free interpretable heatmap of which patches drove the call.</div>
+        <div class="ctrl"><label>Tumor patches</label><input type="range" id="milK" min="0" max="10" step="1" value="3"><span class="val" id="milKV">3</span></div>
+        <div class="pill-row"><span class="minipill">bag → 1 label</span><span class="minipill">softmax aᵢ, Σ=1</span><span class="minipill">weak supervision</span><span class="minipill">permutation-invariant</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="demo" data-demo="pathfm">
+  <div class="console">
+    <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">foundation_model.py — frozen UNI/Virchow embeddings + kNN retrieval</span></div>
+    <div class="bd lab-grid">
+      <div class="canvas-wrap">
+        <canvas id="pathfmCanvas" width="520" height="340"></canvas>
+        <div class="canvas-cap">30 H&amp;E patches embedded in feature space. Click or drag to pick a query; lines = its k nearest neighbors. Retrieved class = majority vote.</div>
+        <div class="readout" id="pathfmReadout"></div>
+      </div>
+      <div class="explain">
+        <h3>Pathology foundation models — morphology becomes geometry</h3>
+        <p>A pathology FM (UNI, Virchow, …) is a huge encoder pretrained on millions of unlabeled tissue patches. It maps each patch to a <b>feature vector</b> in which patches that <i>look alike</i> land near each other. Tumor, stroma and immune patches form distinct <b>clusters</b> — so a brand-new patch can be classified just by looking at <b>who its neighbors are</b>.</p>
+        <div class="why">This is the modern recipe: <b>freeze</b> the foundation encoder and train only a tiny head (here, a parameter-free kNN vote). It is exactly the OncoSeg move — start from a pretrained encoder rather than learning vision from scratch on a few hundred scans. Frozen features that cluster cleanly are the whole game; the head can be almost trivial.</div>
+        <div class="ctrl"><label>Query patch</label><input type="range" id="pathfmQuery" min="0" max="29" step="1" value="0"><span class="val" id="pathfmQueryV">#0</span></div>
+        <div class="ctrl"><label>Neighbors k</label><input type="range" id="pathfmK" min="1" max="9" step="1" value="7"><span class="val" id="pathfmKV">7</span></div>
+        <div class="pill-row"><span class="minipill">frozen encoder</span><span class="minipill">kNN retrieval</span><span class="minipill">majority vote</span><span class="minipill">no fine-tuning</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="demo" data-demo="vit">
+      <div class="console">
+        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">vision_transformer.py — [CLS] aggregation + positional encoding</span></div>
+        <div class="bd lab-grid">
+          <div class="canvas-wrap">
+            <canvas id="vitCanvas" width="520" height="340"></canvas>
+            <div class="canvas-cap">Every patch feeds the [CLS] token (line width = attention weight). PE tags each grid slot. Shuffle the patches and watch.</div>
+            <div class="readout" id="vitReadout"></div>
+          </div>
+          <div class="explain">
+            <h3>ViT: the [CLS] token, and why position must be injected</h3>
+            <p>A Vision Transformer cuts the image into patch tokens, prepends one extra learnable <b>[CLS]</b> token, and lets attention run. The [CLS] token attends to every patch and becomes a single <b>global summary</b> vector. But attention has no built-in sense of <i>where</i> a patch was — so each patch token gets a <b>positional encoding</b> added before the first layer.</p>
+            <div class="why">Without PE, [CLS] pooling is a pure <b>set</b> operation: <code>Σ softmax(q·tokenₛ)·valueₛ</code> is permutation-invariant, so a scrambled image and the real one produce the <i>identical</i> output (drag PE to 0 and shuffle — ‖Δ‖ stays exactly 0.000). PE breaks that symmetry by binding a position signature to each slot. This is the encoder family behind <b>SAM</b>, <b>DINO</b> and the medical foundation models OncoSeg's Swin transformer descends from.</div>
+            <div class="ctrl"><label>PE strength</label><input type="range" id="vitPe" min="0" max="1" step="0.02" value="0.7"><span class="val" id="vitPeV">0.70</span></div>
+            <button class="btn-ghost" id="vitShuffle">Shuffle patches ⟳</button>
+            <div class="pill-row"><span class="minipill">[CLS] global token</span><span class="minipill">+ positional encoding</span><span class="minipill">permutation-invariant w/o PE</span><span class="minipill">SAM · DINO backbone</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<section class="demo" data-demo="rope">
+      <div class="console">
+        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">positional_encoding — sin/cos at geometric frequencies</span></div>
+        <div class="bd lab-grid">
+          <div class="canvas-wrap">
+            <canvas id="ropeCanvas" width="520" height="340"></canvas>
+            <div class="canvas-cap">Top: the 24-d position code for token <b>p</b> (teal=sin, amber=cos, per frequency). Bottom: PE(p)·PE(p+Δ) vs offset Δ — invariant to <i>where</i> p sits.</div>
+            <div class="readout" id="ropeReadout"></div>
+          </div>
+          <div class="explain">
+            <h3>Positional encoding — telling a transformer <i>where</i> a token is</h3>
+            <p>Self-attention is permutation-blind: shuffle the patch tokens and the math is unchanged. So before attention, each token at index <code>p</code> is stamped with a fixed vector built from sines and cosines at <b>geometrically spaced frequencies</b> <code>ω_k = 10000^(−2k/d)</code>: <code>PE[p,2k]=sin(p·ω_k)</code>, <code>PE[p,2k+1]=cos(p·ω_k)</code>. Low-k pairs spin fast (fine local position); high-k pairs spin slowly (coarse global position) — like the hands of a set of clocks.</p>
+            <div class="why">The magic property: <code>PE(p)·PE(p+Δ) = Σ_k cos(ω_k·Δ)</code> — it depends only on the <b>relative</b> offset Δ, never on the absolute p. That is what lets attention learn "attend to my neighbour" once and apply it everywhere. In OncoSeg this is how the Swin/transformer encoder knows a voxel-patch's location in the 3D grid without convolution's hard-wired locality — and it's the exact idea <b>RoPE</b> generalises by <i>rotating</i> Q/K instead of adding the code.</div>
+            <div class="ctrl"><label>Token position p</label><input type="range" id="ropePos" min="0" max="56" step="1" value="6"><span class="val" id="ropePosV">6</span></div>
+            <div class="ctrl"><label>Compare offset Δ</label><input type="range" id="ropeOff" min="0" max="40" step="1" value="7"><span class="val" id="ropeOffV">7</span></div>
+            <div class="pill-row"><span class="minipill">d_model=24</span><span class="minipill">12 sin/cos pairs</span><span class="minipill">relative ⇒ dot dep. on Δ only</span><span class="minipill">RoPE precursor</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<section class="demo" data-demo="moe">
+      <div class="console">
+        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">moe_layer.py — sparse gate · top-k routing · load balance</span></div>
+        <div class="bd lab-grid">
+          <div class="canvas-wrap">
+            <canvas id="moeCanvas" width="520" height="340"></canvas>
+            <div class="canvas-cap">Left: gate scores the token against 8 experts. Center: top-2 light up (run); the rest stay idle. Bottom: per-expert load over a token stream.</div>
+            <div class="readout" id="moeReadout"></div>
+          </div>
+          <div class="explain">
+            <h3>Mixture-of-Experts — capacity without the compute bill</h3>
+            <p>A dense layer runs <i>every</i> parameter on <i>every</i> token. A sparse <b>MoE</b> layer holds <code>N</code> expert sub-networks but a tiny <b>gate</b> picks only the <b>top-k</b> per token: <code>logits = Wᵍ·x</code>, then <code>softmax</code>, then keep the k largest and renormalize their weights so they sum to 1. The output is that gated blend of just the k chosen experts — the other N−k do <b>zero</b> compute.</p>
+            <div class="why">This is how Mixtral 8×7B and DeepSeek-V3 hit frontier quality cheaply: 8 experts of parameters, but only <b>2 run per token</b> → ~25% of the FLOPs of using all of them. For a 3D medical model the same trick lets you grow specialist capacity (one expert good at edemas, another at enhancing cores) without paying for all of it on every voxel patch. The catch — watch the bottom bars — is <b>load imbalance</b>: a skewed token stream sends most tokens to a few experts, so MoE training adds an auxiliary <i>load-balancing loss</i> to spread tokens out.</div>
+            <div class="ctrl"><label>Token feature θ</label><input type="range" id="moeAngle" min="0" max="359" step="1" value="20"><span class="val" id="moeAngleV">20°</span></div>
+            <div class="ctrl"><label>Tokens in stream</label><input type="range" id="moeTokens" min="1" max="80" step="1" value="24"><span class="val" id="moeTokensV">24</span></div>
+            <div class="pill-row"><span class="minipill">N=8 experts</span><span class="minipill">top-k=2</span><span class="minipill">softmax gate</span><span class="minipill">k/N = 25% FLOPs</span><span class="minipill">load balance</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<section class="demo" data-demo="mamba">
+      <div class="console">
+        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">state_space.py — selective scan hₜ = A·hₜ₋₁ + Bₜ·xₜ vs O(N²) attention</span></div>
+        <div class="bd lab-grid">
+          <div class="canvas-wrap">
+            <canvas id="mambaCanvas" width="520" height="340"></canvas>
+            <div class="canvas-cap">Top: the recurrent state carried left→right through the sequence, gated by content. Bottom: cost ∝ N² (attention) vs ∝ N (SSM).</div>
+            <div class="readout" id="mambaReadout"></div>
+          </div>
+          <div class="explain">
+            <h3>State-space models — linear-time sequence modeling</h3>
+            <p>Self-attention compares every token to every other token, so its cost grows as <b>N²</b>. A state-space model (Mamba) instead carries a single recurrent <b>hidden state</b>: <code>hₜ = A·hₜ₋₁ + Bₜ·xₜ</code>. It walks the sequence once, updating that state token-by-token — a <b>selective scan</b> — so cost grows only as <b>N</b>, with O(1) memory per step.</p>
+            <p>What makes it <i>selective</i>: the input gate <code>Bₜ = σ(w·xₜ)</code> is <b>content-dependent</b>. The model decides per-token how much of the new input to write into memory, and <code>A</code> sets how long old information lingers. Drag <b>A</b> toward 1 and the state remembers longer; lower it and memory decays fast.</p>
+            <div class="why">For OncoSeg-style problems this matters whenever the sequence is <i>long</i>: a 128³ volume flattens to ~2 million tokens, and a longitudinal study stacks many timepoints. Quadratic attention is hopeless there, but a linear-time scan stays tractable — the same reason Swin windows (demo 08) cap attention cost. SSMs are the emerging alternative to making long 3D/temporal medical sequences affordable.</div>
+            <div class="ctrl"><label>Sequence length N</label><input type="range" id="mambaLen" min="2" max="64" step="1" value="24"><span class="val" id="mambaLenV">24</span></div>
+            <div class="ctrl"><label>Memory A (decay)</label><input type="range" id="mambaDecay" min="0.3" max="0.97" step="0.01" value="0.82"><span class="val" id="mambaDecayV">0.82</span></div>
+            <div class="pill-row"><span class="minipill">recurrent scan</span><span class="minipill">O(N) time</span><span class="minipill">O(1) state</span><span class="minipill">content-dependent gate</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<section class="demo" data-demo="flash">
+  <div class="console">
+    <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">flash_attention.py — IO-aware tiled attention</span></div>
+    <div class="bd lab-grid">
+      <div class="canvas-wrap">
+        <canvas id="flashCanvas" width="520" height="340"></canvas>
+        <div class="canvas-cap">Faded cells are <b>never materialized</b>. The amber box is the on-chip tile; only running max&nbsp;m and sum&nbsp;ℓ persist between tiles.</div>
+        <div class="readout" id="flashReadout"></div>
+      </div>
+      <div class="explain">
+        <h3>FlashAttention: same softmax, never store the N×N matrix</h3>
+        <p>Plain attention computes the full score matrix <code>S = QKᵀ/√d</code>, writes all <b>N²</b> entries to HBM, runs softmax over each row, then multiplies by V. The bottleneck is not FLOPs — it is shuttling that N² matrix to and from slow GPU memory. FlashAttention streams S in <b>column tiles</b> and keeps each query row's softmax up to date with an <b>online</b> running max <code>m</code> and running sum <code>ℓ</code>, rescaling by <code>exp(mₒₗ𝒹 − mₙₑ𝓌)</code> as each tile arrives. The full row is never held at once.</p>
+        <div class="why">Why it matters here: OncoSeg attends over large 3D volumes and across baseline/follow-up scans. The attention map alone would be tens of GB — impossible to materialize. Tiling makes peak memory grow with <i>tile size</i>, not with N², which is exactly what lets long-context and large-volume attention run on a real GPU. (Distinct from Swin: that shrinks the <i>receptive field</i>; this keeps full global attention but shrinks the <i>memory/IO</i>.)</div>
+        <div class="ctrl"><label>Tile size (block width)</label><input type="range" id="flashTile" min="1" max="16" step="1" value="4"><span class="val" id="flashTileV">4</span></div>
+        <p style="font-size:13px;color:#42535a">Slide tile&nbsp;→&nbsp;16 and the on-chip box covers the whole matrix: no savings, you are back to naive. Slide&nbsp;→&nbsp;1 and peak memory drops to <code>O(N·1)</code>. The output is bit-for-bit the same softmax (Δ≈1e-16) at every setting — only the HBM traffic changes.</p>
+        <div class="pill-row"><span class="minipill">online softmax</span><span class="minipill">running max m</span><span class="minipill">running sum ℓ</span><span class="minipill">O(N·tile) memory</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="demo" data-demo="jepa">
+      <div class="console">
+        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">jepa.py — predict the masked region's representation, not its pixels</span></div>
+        <div class="bd lab-grid">
+          <div class="canvas-wrap">
+            <canvas id="jepaCanvas" width="520" height="340"></canvas>
+            <div class="canvas-cap">Left: context visible, amber target masked. Right: JEPA fills the target's LATENT (bars); a pixel MAE only manages a blurry mean.</div>
+            <div class="readout" id="jepaReadout"></div>
+          </div>
+          <div class="explain">
+            <h3>JEPA: predict in latent space, not pixels</h3>
+            <p>Masked-image models hide a region and ask the network to fill it back in. <b>Pixel MAE</b> predicts the raw pixels — but the exact texture under a mask is largely <i>unknowable</i>, so the best the loss can do is the smooth average, giving a blurry guess. <b>JEPA</b> (I-JEPA / V-JEPA) instead encodes the context, then a <code>predictor</code> outputs the <i>target encoder's latent</i> for the masked block — an abstract feature vector (here: mean, blob-mass, centroid, edge-energy). It is scored by <b>cosine similarity</b> to the true target latent, never by pixel error.</p>
+            <div class="why">Drag the mask larger: the <b>pixel MSE bar climbs steeply</b> (more high-frequency detail hidden → blurrier) while the <b>latent cosine stays high</b> — the lesion's <i>gist</i> (it's a round bright blob, roughly here) is predictable even when its precise speckle is not. That is the whole point: JEPA learns transferable <b>semantics</b> and discards unpredictable pixel noise. For OncoSeg, this is the pretraining you'd want before fine-tuning on scarce labelled tumors — representations that capture lesion structure, not scanner artefacts.</div>
+            <div class="ctrl"><label>Mask size (cells)</label><input type="range" id="jepaMask" min="1" max="8" step="1" value="3"><span class="val" id="jepaMaskV">3</span></div>
+            <div class="pill-row"><span class="minipill">target latent = abstract features</span><span class="minipill">cosine match, not pixel MSE</span><span class="minipill">semantics &gt; detail</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<section class="demo" data-demo="worldroll">
+      <div class="console">
+        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">world_model.py — autoregressive rollout &amp; error accumulation</span></div>
+        <div class="bd lab-grid">
+          <div class="canvas-wrap">
+            <canvas id="worldrollCanvas" width="520" height="340"></canvas>
+            <div class="canvas-cap">Gray = the true world's orbit. Teal = the model imagining the future, one frame fed back into the next.</div>
+            <div class="readout" id="worldrollReadout"></div>
+          </div>
+          <div class="explain">
+            <h3>World models: imagining the future, one frame at a time</h3>
+            <p>A <b>world model</b> learns the dynamics of a scene: given the current state, predict the <i>next</i> frame. To dream a whole trajectory it runs <b>autoregressively</b> — it feeds its own prediction back in as the next input. A single step is almost perfect; but each frame carries a tiny error, and feeding a slightly-wrong state back in makes the <b>next</b> error a little bigger. Errors <b>compound</b>, so the imagined orbit slowly drifts off the true one.</p>
+            <div class="why">This drift is <i>the</i> central challenge of model-based RL and video world models (Dreamer, Genie, GAIA). The same idea underlies any longitudinal medical prediction that rolls a model forward in time — predicting how a tumor evolves scan-to-scan: a 1-step forecast is trustworthy, but unrolling many steps without re-grounding on real data accumulates error fast. Slide the horizon and watch the teal trajectory peel away from gray.</div>
+            <div class="ctrl"><label>Rollout horizon k</label><input type="range" id="worldrollHorizon" min="1" max="32" step="1" value="8"><span class="val" id="worldrollHorizonV">8</span></div>
+            <div class="pill-row"><span class="minipill">next-frame prediction</span><span class="minipill">feed output → input</span><span class="minipill">compounding error</span><span class="minipill">drift</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<section class="demo" data-demo="vlm">
+  <div class="console">
+    <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">vlm_report.py — vision-language joint attention (image↔text)</span></div>
+    <div class="bd lab-grid">
+      <div class="canvas-wrap">
+        <canvas id="vlmCanvas" width="520" height="340"></canvas>
+        <div class="canvas-cap">Left: 6×6 image patch tokens (grey = anatomy, teal = attention). Right: the report's word tokens. Amber box = peak patch. Pick a word.</div>
+        <div class="readout" id="vlmReadout"></div>
+      </div>
+      <div class="explain">
+        <h3>Vision-language attention: words that point at pixels</h3>
+        <p>A VLM doesn't keep image and text in separate towers — it lays <b>image patch tokens</b> and <b>word tokens</b> in <i>one</i> sequence and runs the same attention across both. A word's query <code>q</code> dot-products against every patch's key <code>kⱼ</code>; <code>softmax(q·kⱼ/√d)</code> is the patch attention map. Pick "tumor", "left", or "bright" and watch that word's attention light up the matching region (teal). "Tumor" finds the lesion; "left" sweeps the left column; "bright" hits the lesion <i>and</i> the bright streak on the right that "tumor" rightly ignores.</p>
+        <div class="why">This is exactly how a VLM <b>generates a radiology report</b>: each word it emits is grounded by attending back into the image. The grounding map is also the explanation — you can show a clinician <i>which voxels</i> made the model write "enhancing tumor in the left lobe." For OncoSeg, the same image features the Swin encoder produces become the keys a language head attends to when narrating a scan or RECIST response.</div>
+        <div class="ctrl"><label>Query word</label>
+          <select id="vlmWord" style="flex:1;background:rgba(31,111,106,.06);color:var(--phos);border:1px solid var(--grid);border-radius:7px;padding:7px;font-family:'JetBrains Mono',monospace">
+            <option value="tumor">"tumor" — semantic object</option>
+            <option value="left">"left" — spatial / location</option>
+            <option value="bright">"bright" — appearance / intensity</option>
+          </select>
+        </div>
+        <div class="pill-row"><span class="minipill">one shared sequence</span><span class="minipill">cross-modal attention</span><span class="minipill">softmax(q·k/√d)</span><span class="minipill">text→pixel grounding</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="demo" data-demo="vcot">
+      <div class="console">
+        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">vqa_report.py — grounded visual chain-of-thought (read → attend → reason → answer)</span></div>
+        <div class="bd lab-grid">
+          <div class="canvas-wrap">
+            <canvas id="vcotCanvas" width="520" height="340"></canvas>
+            <div class="canvas-cap">Step 1 read · 2 attend + box the grounded region · 3 sub-conclusion · 4 final answer. The box snaps to the argmax-attended lesion.</div>
+            <div class="readout" id="vcotReadout"></div>
+          </div>
+          <div class="explain">
+            <h3>Visual chain-of-thought — reason in steps, point before you answer</h3>
+            <p>Ask a vision-language model a question about a scan and it can blurt an answer in one shot — and confidently hallucinate. <b>Grounded visual CoT</b> forces it to think in stages: (1) <b>read</b> the question, (2) <b>attend</b> — compute a softmax over candidate regions and <b>draw a box</b> on the winner, (3) state a <b>sub-conclusion</b> measured from that box, and (4) give a <b>final answer</b> that must cite the box.</p>
+            <div class="why">Step 2 runs the same scaled-dot-product attention <code>softmax(β·q·kⱼ/√d)</code> as the self-attention demo (06) — with a sharpening temperature β — where the question is the query, the image regions are keys, and the argmax region becomes the bounding box. Tie to OncoSeg: its real output is a segmented lesion + a measured diameter. A report generator that grounds "the enhancing lesion measures <i>D</i> mm" on <i>that</i> box — instead of guessing — is what cuts hallucination in medical VQA. Drag the step slider to watch the attended region move and the reasoning chain accumulate.</div>
+            <div class="ctrl"><label>Reasoning step</label><input type="range" id="vcotStep" min="1" max="4" step="1" value="1"><span class="val" id="vcotStepV">1</span></div>
+            <div class="pill-row"><span class="minipill">read</span><span class="minipill">attend → box</span><span class="minipill">sub-conclude</span><span class="minipill">grounded answer</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<section class="demo" data-demo="vla">
+      <div class="console">
+        <div class="bar"><span class="dotr"></span><span class="dotr g"></span><span class="dotr b"></span><span class="name">vla_policy.py — image + instruction → action tokens</span></div>
+        <div class="bd lab-grid">
+          <div class="canvas-wrap">
+            <canvas id="vlaCanvas" width="520" height="340"></canvas>
+            <div class="canvas-cap">Left: camera view, dashed ring = the instructed target. Right: decoded action-token chunk; amber row = the token executing now.</div>
+            <div class="readout" id="vlaReadout"></div>
+          </div>
+          <div class="explain">
+            <h3>VLA: one model from pixels to motor commands</h3>
+            <p>A Vision-Language-Action model (RT-2, OpenVLA, π0) takes a <b>camera image</b> plus a <b>language instruction</b> and emits a short chunk of <b>action tokens</b>. Continuous end-effector deltas <code>(dx, dy)</code> and the gripper command are <i>discretized</i> into bins — here 256 — so motor control becomes next-token prediction, the same machinery as a language model.</p>
+            <p style="font-size:13px;color:#42535a">Pick the instruction, then drag <b>timestep</b>: the policy decodes a 6-step plan toward the chosen object, the arm follows each token, and the gripper <b>closes</b> on the final token to grasp.</p>
+            <div class="pill-row"><span class="minipill">image+text → tokens</span><span class="minipill">256-bin actions</span><span class="minipill">action chunk</span><span class="minipill">terminal grasp</span></div>
+            <div class="ctrl"><label>Instruction (target)</label>
+              <select id="vlaInstr">
+                <option value="0">pick up the red block</option>
+                <option value="1">pick up the blue cup</option>
+                <option value="2">pick up the green can</option>
+                <option value="3">pick up the yellow ball</option>
+              </select>
+            </div>
+            <div class="ctrl"><label>Timestep t</label><input type="range" id="vlaT" min="0" max="6" step="0.1" value="0"><span class="val" id="vlaTV">0</span></div>
+            <div class="why" style="margin-top:14px">Tie-in: a VLA <b>unifies perception, language, and control</b> in one autoregressive policy — but it is only as good as its eyes. A segmentation/perception stack like <span class="lab-mono">OncoSeg</span> is exactly that front-end: it turns raw voxels into the object/region representation a downstream policy (or a clinician) acts on. Garbage perception → wrong target token → wrong action.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
     <div class="rule"></div>
     <div class="disc"><b>About these widgets:</b> they compute the real operations (softmax, scaled dot-product attention, convolution, Dice, predictive entropy, ECE, RECIST thresholds) on small toy tensors for clarity. The intuition is identical to the 128³ volumes in the actual model; only the scale differs.</div>
  </div>
@@ -652,7 +1091,8 @@ function initLab(){ if(labInit)return; labInit=true;
   Object.assign(MOD,{conv:Conv,act:Act,norm:Norm,upconv:UpConv,patch:Patch,
     attention:Attn,mha:MHA,window:Win,xattn:XAttn,temporal:Temporal,
     unet:UNet,ds:DS,sw:SW,head:Head,loss:Loss,dice:Dice,
-    dropout:Drop,entropy:Entropy,calib:Calib,hd95:HD,cc:CC,recist:Recist});
+    dropout:Drop,entropy:Entropy,calib:Calib,hd95:HD,cc:CC,recist:Recist,
+    dino:Dino,mae:Mae,clip:Clip,diffusion:Diffusion,wsi:Wsi,stain:Stain,nuclei:Nuclei,mil:Mil,pathfm:PathFM,vit:ViT,rope:Rope,moe:Moe,mamba:Mamba,flash:Flash,jepa:Jepa,worldroll:WorldRoll,vlm:Vlm,vcot:VCoT,vla:Vla});
   Object.values(MOD).forEach(m=>{ try{ m.init && m.init(); }catch(e){ console.error('init',e); } });
   setupModuleTabs();
   setupPlay();
@@ -674,7 +1114,8 @@ function setupModuleTabs(){
 
 /* ---------- PLAY ENGINE: auto-drives each widget's own controls ---------- */
 const ORDER=['conv','act','norm','upconv','patch','attention','mha','window','xattn','temporal',
-  'unet','ds','sw','head','loss','dice','dropout','entropy','calib','hd95','cc','recist'];
+  'unet','ds','sw','head','loss','dice','dropout','entropy','calib','hd95','cc','recist',
+  'dino','mae','clip','diffusion','wsi','stain','nuclei','mil','pathfm','vit','rope','moe','mamba','flash','jepa','worldroll','vlm','vcot','vla'];
 const SCRIPT={
   conv:p=>{const opts=['edge','sobelx','blur','sharp'];setSel('convKernel',opts[Math.floor(p*3.999)],Conv,'kernel');},
   act:p=>{const opts=['relu','leaky','gelu','sigmoid','tanh'];setSel('actFn',opts[Math.floor(p*4.999)],Act,'fn');setR('actX','actXV',(-4+8*p),Act,'x',v=>v.toFixed(2));},
@@ -698,6 +1139,29 @@ const SCRIPT={
   hd95:p=>{setR('hdSpike','hdSpikeV',p*60,HD,'spike',v=>''+Math.round(v));},
   cc:p=>{setR('ccMin','ccMinV',Math.round(p*30),CC,'min',v=>''+v);},
   recist:p=>{setR('recistDelta','recistDeltaV',-100+220*p,Recist,'delta',v=>Math.round(v)+'%');},
+  dino:p=>{ setR('dinoTrain','dinoTrainV', p, Dino,'train', v=>v.toFixed(2)); },
+  mae:p=>{ setR('maeRatio','maeRatioV', p*0.85, Mae,'ratio', v=>(v*100).toFixed(0)+'%'); },
+  clip:p=>{ setR('clipArc','clipArcV', p*100, Clip,'arc', v=>(v/100).toFixed(2), v=>v/100); },
+  diffusion:p=>{ setR('diffusionT','diffusionTV', p, Diffusion,'t', v=>v.toFixed(2)); },
+  wsi:p=>{ setR('wsiLevel','wsiLevelV', Math.round(p*4), Wsi,'level', v=>''+Math.round(v)); },
+  stain:p=>{ setR('stainView','stainViewV', p, Stain,'view', v=>{const x=+v;return x<0.17?'RGB':x<0.5?'H mix':x<0.83?'H only':'E only';}); Stain.angle = Math.round(Math.sin(p*Math.PI*2)*18); const ae=document.getElementById('stainAngle'); if(ae)ae.value=Stain.angle; const al=document.getElementById('stainAngleV'); if(al)al.textContent=Stain.angle+'°'; if(Stain.draw)Stain.draw(); },
+  nuclei:p=>{ setR('nucleiThr','nucleiThrV', 0.88*p, Nuclei,'thr', v=>v.toFixed(2)); },
+  mil:p=>{ setR('milK','milKV', Math.round(p*10), Mil,'k', v=>''+Math.round(v)); },
+  pathfm:p=>{ setR('pathfmK','pathfmKV', 1+Math.round(p*8), PathFM,'k', v=>''+v); setR('pathfmQuery','pathfmQueryV', Math.round(p*29), PathFM,'qi', v=>'#'+Math.round(v), v=>Math.round(v)); },
+  vit:p=>{ ViT.shuffled=true;const b=document.getElementById('vitShuffle');if(b)b.textContent='Un-shuffle ⟳';setR('vitPe','vitPeV',p,ViT,'pe',v=>(+v).toFixed(2)); },
+  rope:p=>{ setR('ropePos','ropePosV', Math.round(p*56), Rope,'pos', v=>''+Math.round(v)); setR('ropeOff','ropeOffV', Math.round(2+p*30), Rope,'off', v=>''+Math.round(v)); },
+  moe:p=>{ setR('moeAngle','moeAngleV', p*359, Moe,'angle', v=>Math.round(v)+'°', v=>Math.round(v)); setR('moeTokens','moeTokensV', 4+p*44, Moe,'tokens', v=>''+Math.round(v), v=>Math.round(v)); },
+  mamba:p=>{ setR('mambaLen','mambaLenV', 2+Math.round(p*62), Mamba,'len', v=>''+v); },
+  flash:p=>{ Flash.phase=(p*2)%1;setR('flashTile','flashTileV', 1+Math.round((1-p)*15), Flash,'tile', v=>''+Math.round(v)); },
+  jepa:p=>{ setR('jepaMask','jepaMaskV', 1+Math.round(p*7), Jepa,'mask', v=>''+Math.round(v)); },
+  worldroll:p=>{ setR('worldrollHorizon','worldrollHorizonV', Math.round(1+p*31), WorldRoll,'H', v=>''+Math.round(v)); },
+  vlm:p=>{ const opts=['tumor','left','bright'];setSel('vlmWord',opts[Math.floor(p*2.999)],Vlm,'word'); },
+  vcot:p=>{ setR('vcotStep','vcotStepV', 1+Math.floor(p*3.999), VCoT,'step', v=>''+Math.round(v)); },
+  vla:p=>{ const n=Vla.objects?Vla.objects.length:4;
+  const idx=Math.min(n-1,Math.floor(p*n*0.999));
+  setSel('vlaInstr',''+idx,Vla,'target');
+  const local=Math.min(1,(p*n)-idx);
+  setR('vlaT','vlaTV',local*Vla.T,Vla,'t',v=>v.toFixed(1)); },
 };
 function setR(id,labId,val,mod,prop,fmt,map){const el=document.getElementById(id);if(el){el.value=val;}
   if(labId){const l=document.getElementById(labId);if(l&&fmt)l.textContent=fmt(val);}
@@ -780,7 +1244,13 @@ function setupPlay(){
     bar.appendChild(btn);
   });
 }
-const PHOS='#1f6f6a', PHOSD='#a99a7e', AMBER='#e08a2e', TEAL='#2c9a92', GRIDC='#d8ccb4', INKD='#4a4239';
+const ACCENT='#0c8a8d', ACCENT2='#e35a31', ACCENT3='#2e85c9', INK='#0e1c21', INKSOFT='#42535a', GRID='#d1dde2', EMPTY='#dde7eb', WARN='#d23b2a';
+/* back-compat aliases for the original widgets */
+const PHOS=ACCENT, PHOSD='#9fb1b6', AMBER=ACCENT2, TEAL=ACCENT, GRIDC=GRID, INKD=INKSOFT;
+function _lerpRGB(a,b,t){return 'rgb('+a.map((x,i)=>Math.round(x+(b[i]-x)*t)).join(',')+')';}
+const _RT=[[228,238,240],[12,138,141]], _RW=[[251,231,223],[227,90,49]];
+function rampTeal(v){v=Math.max(0,Math.min(1,v));return _lerpRGB(_RT[0],_RT[1],v);}
+function rampWarm(v){v=Math.max(0,Math.min(1,v));return _lerpRGB(_RW[0],_RW[1],v);}
 function clear(ctx,w,h){ctx.clearRect(0,0,w,h);}
 function softmax(arr,t=1){const m=Math.max(...arr);const e=arr.map(v=>Math.exp((v-m)/t));const s=e.reduce((a,b)=>a+b,0);return e.map(v=>v/s);}
 function fontMono(ctx,s=11){ctx.font=s+'px JetBrains Mono';}
@@ -1311,6 +1781,1515 @@ draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
   ctx.fillStyle=INKD;fontMono(ctx,11);ctx.textAlign='left';ctx.fillText('colored = kept lesion · brown = pruned speck',ox,30);
   document.getElementById('ccReadout').innerHTML=`${cur} raw components → <b>${kept}</b> lesions kept at min-size ${this.min} (smaller = noise). Each kept blob becomes a RECIST target lesion. BRATS_077 had 31 WT fragments → hard case.`;
 }};
+
+
+/* ===== SOTA expansion widgets ===== */
+const Dino={init(){
+  this.c=document.getElementById('dinoCanvas');this.ctx=this.c.getContext('2d');
+  this.G=12; this.train=0;
+  const s=document.getElementById('dinoTrain');
+  s.addEventListener('input',()=>{this.train=+s.value;document.getElementById('dinoTrainV').textContent=this.train.toFixed(2);this.draw();});
+  this.draw();
+},
+fgAt(x,y){
+  const cx=4.4,cy=6.8,ax=2.7,ay=3.5,dx=(x-cx)/ax,dy=(y-cy)/ay;
+  let v=Math.exp(-(dx*dx+dy*dy)*1.15);
+  const ex=(x-7.2)/2.0,ey=(y-4.6)/2.2; v=Math.max(v,0.82*Math.exp(-(ex*ex+ey*ey)*1.3));
+  return v;
+},
+bgTex(x,y){return 0.5+0.5*Math.sin(x*1.7+0.6)*Math.cos(y*1.3-0.4);},
+weights(t){
+  const G=this.G,N=G*G,fg=[],sal=[];
+  for(let y=0;y<G;y++)for(let x=0;x<G;x++){const f=this.fgAt(x,y);fg.push(f);sal.push(f-0.10+0.06*this.bgTex(x,y));}
+  const beta=2.2+9.0*t;
+  const focused=softmax(sal.map(s=>beta*s));
+  const uni=1/N,alpha=t;
+  let w=focused.map(f=>(1-alpha)*uni+alpha*f);
+  const ws=w.reduce((a,b)=>a+b,0);w=w.map(v=>v/ws);
+  return {w,fg};
+},
+draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
+  const G=this.G,cell=20,ox=34,oy=42,t=this.train;
+  const {w,fg}=this.weights(t);
+  const N=G*G,maxw=Math.max(...w);
+  let Hsum=0;for(const p of w){if(p>0)Hsum-=p*Math.log(p);}const Hn=Hsum/Math.log(N);
+  let fgFrac=0,fgArea=0;for(let i=0;i<N;i++){if(fg[i]>0.5){fgFrac+=w[i];fgArea++;}}fgArea/=N;
+  ctx.fillStyle=INKD;fontMono(ctx,11);ctx.textAlign='left';
+  ctx.fillText('input patches + [CLS] attention heat-map (teal = where CLS looks)',ox,oy-16);
+  for(let y=0;y<G;y++)for(let x=0;x<G;x++){
+    const i=y*G+x,X=ox+x*cell,Y=oy+y*cell,f=fg[i];
+    ctx.fillStyle=`rgba(74,66,57,${0.05+f*0.18})`;ctx.fillRect(X,Y,cell-1,cell-1);
+    const a=Math.pow(w[i]/maxw,0.7);
+    ctx.fillStyle=`rgba(31,111,106,${a*0.9})`;ctx.fillRect(X,Y,cell-1,cell-1);
+  }
+  ctx.strokeStyle=GRIDC;ctx.lineWidth=1;
+  for(let k=0;k<=G;k++){ctx.beginPath();ctx.moveTo(ox+k*cell,oy);ctx.lineTo(ox+k*cell,oy+G*cell);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(ox,oy+k*cell);ctx.lineTo(ox+G*cell,oy+k*cell);ctx.stroke();}
+  ctx.strokeStyle=AMBER;ctx.lineWidth=1.6;ctx.setLineDash([4,3]);
+  for(let y=0;y<G;y++)for(let x=0;x<G;x++){const i=y*G+x,X=ox+x*cell,Y=oy+y*cell;
+    if(fg[i]>0.5){
+      if(x===0||fg[i-1]<=0.5){ctx.beginPath();ctx.moveTo(X,Y);ctx.lineTo(X,Y+cell);ctx.stroke();}
+      if(x===G-1||fg[i+1]<=0.5){ctx.beginPath();ctx.moveTo(X+cell,Y);ctx.lineTo(X+cell,Y+cell);ctx.stroke();}
+      if(y===0||fg[i-G]<=0.5){ctx.beginPath();ctx.moveTo(X,Y);ctx.lineTo(X+cell,Y);ctx.stroke();}
+      if(y===G-1||fg[i+G]<=0.5){ctx.beginPath();ctx.moveTo(X,Y+cell);ctx.lineTo(X+cell,Y+cell);ctx.stroke();}
+    }}
+  ctx.setLineDash([]);
+  const mx=ox+G*cell+24,mw=120;
+  ctx.textAlign='left';fontMono(ctx,11);
+  ctx.fillStyle=INKD;ctx.fillText('attention entropy',mx,oy+8);
+  ctx.fillStyle='#dde7eb';ctx.fillRect(mx,oy+16,mw,12);
+  ctx.fillStyle=Hn>0.8?AMBER:PHOS;ctx.fillRect(mx,oy+16,mw*Hn,12);
+  ctx.fillStyle=INKD;ctx.fillText(Hn.toFixed(3)+' / 1.0',mx,oy+42);
+  ctx.fillText('foreground attention',mx,oy+78);
+  ctx.fillStyle='#dde7eb';ctx.fillRect(mx,oy+86,mw,12);
+  ctx.fillStyle=PHOS;ctx.fillRect(mx,oy+86,mw*Math.min(1,fgFrac),12);
+  ctx.fillStyle=INKD;ctx.fillText((fgFrac*100).toFixed(0)+'%',mx,oy+112);
+  ctx.strokeStyle=AMBER;ctx.lineWidth=1.5;const bx=mx+mw*fgArea;
+  ctx.beginPath();ctx.moveTo(bx,oy+82);ctx.lineTo(bx,oy+102);ctx.stroke();
+  ctx.fillStyle=AMBER;fontMono(ctx,9);ctx.fillText('chance',bx-4,oy+128);
+  fontMono(ctx,11);ctx.fillStyle=INKD;
+  const stage=t<0.15?'init: no labels, random features':t<0.55?'pretraining: features organizing':t<0.9?'features localize the object':'converged: object-centric attention';
+  ctx.fillText('training progress '+(t*100).toFixed(0)+'%  ·  '+stage,ox,oy+G*cell+24);
+  document.getElementById('dinoReadout').innerHTML=
+    `Self-supervised ViT, <b>no labels</b>. As training → <b>${(t*100).toFixed(0)}%</b>: [CLS] attention entropy <b>${Hn.toFixed(3)}</b> (1.0=uniform/diffuse → low=peaked) and foreground-attention <b>${(fgFrac*100).toFixed(0)}%</b> (chance ≈ ${(fgArea*100).toFixed(0)}%). The model discovers the object's boundary with <b>zero supervision</b>.`;
+}};
+
+const Mae={init(){
+  this.c=document.getElementById('maeCanvas');this.ctx=this.c.getContext('2d');
+  this.ratio=0.75;this.N=12;const N=this.N;
+  /* deterministic "brain slice": smooth anatomy + skull ring + one bright tumor blob */
+  this.img=[];
+  for(let j=0;j<N;j++){this.img.push([]);for(let i=0;i<N;i++){
+    const x=(i+0.5)/N,y=(j+0.5)/N;
+    let v=0.34+0.16*Math.sin(6.0*x+1.1)*Math.cos(5.0*y+0.4)+0.10*Math.sin(11.0*x*y);
+    const r=Math.hypot(x-0.5,y-0.5);
+    v+=0.18*Math.exp(-((r-0.42)**2)/0.004);
+    v+=0.62*Math.exp(-((x-0.62)**2+(y-0.40)**2)/0.018);
+    this.img[j].push(Math.max(0,Math.min(1,v)));}}
+  /* fixed seeded mask ORDER → masking is monotonic & resumable as ratio grows */
+  this.order=[];
+  for(let j=0;j<N;j++)for(let i=0;i<N;i++){let s=Math.sin(i*73.13+j*19.31+7.7)*43758.5453;this.order.push({i,j,k:s-Math.floor(s)});}
+  this.order.sort((a,b)=>a.k-b.k);
+  const s=document.getElementById('maeRatio');s.addEventListener('input',()=>{this.ratio=+s.value;document.getElementById('maeRatioV').textContent=(this.ratio*100).toFixed(0)+'%';this.draw();});
+  this.draw();
+},
+shade(v){return `rgb(${Math.round(231-v*200)},${Math.round(224-v*113)},${Math.round(204-v*98)})`;},
+compute(){const N=this.N,total=N*N;
+  const nMask=Math.round(this.ratio*total);
+  const masked=new Set();for(let m=0;m<nMask;m++)masked.add(this.order[m].j*N+this.order[m].i);
+  const vis=[];for(let j=0;j<N;j++)for(let i=0;i<N;i++)if(!masked.has(j*N+i))vis.push({i,j,v:this.img[j][i]});
+  const visFrac=vis.length/total;
+  const bw=0.85+1.4*(1-visFrac);             /* bandwidth grows → blurrier guess when fewer patches are visible */
+  const recon=[];
+  for(let j=0;j<N;j++){recon.push([]);for(let i=0;i<N;i++){
+    if(!masked.has(j*N+i)){recon[j].push(this.img[j][i]);continue;}
+    let num=0,den=0;                          /* Nadaraya-Watson fill: distance-weighted avg of visible patches */
+    for(const a of vis){const d2=(a.i-i)**2+(a.j-j)**2;const w=Math.exp(-d2/(2*bw*bw));num+=w*a.v;den+=w;}
+    recon[j].push(den>1e-9?num/den:0.34);
+  }}
+  let err=0,cnt=0;for(let j=0;j<N;j++)for(let i=0;i<N;i++)if(masked.has(j*N+i)){err+=Math.abs(recon[j][i]-this.img[j][i]);cnt++;}
+  return {masked,recon,nMask,mae:cnt?err/cnt:0,visFrac,bw};
+},
+draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
+  const N=this.N,total=N*N;const {masked,recon,nMask,mae}=this.compute();
+  const cell=11, gap=26, oy=48, panelW=N*cell;
+  const ox0=Math.round((W-(panelW*3+gap*2))/2), ox1=ox0+panelW+gap, ox2=ox1+panelW+gap;
+  ctx.textAlign='center';fontMono(ctx,11);
+  ctx.fillStyle=INKD;ctx.fillText('ORIGINAL',ox0+panelW/2,34);
+  ctx.fillStyle='#3a322a';ctx.fillText('MASKED INPUT',ox1+panelW/2,34);
+  ctx.fillStyle=PHOS;ctx.fillText('RECONSTRUCTION',ox2+panelW/2,34);
+  for(let j=0;j<N;j++)for(let i=0;i<N;i++){
+    const x=i*cell,y=oy+j*cell;const m=masked.has(j*N+i);
+    ctx.fillStyle=this.shade(this.img[j][i]);ctx.fillRect(ox0+x,y,cell-1,cell-1);
+    if(m){ctx.fillStyle='#b9ad97';ctx.fillRect(ox1+x,y,cell-1,cell-1);}
+    else {ctx.fillStyle=this.shade(this.img[j][i]);ctx.fillRect(ox1+x,y,cell-1,cell-1);}
+    ctx.fillStyle=this.shade(recon[j][i]);ctx.fillRect(ox2+x,y,cell-1,cell-1);
+    if(m){ctx.strokeStyle='rgba(31,111,106,.4)';ctx.lineWidth=1;ctx.strokeRect(ox2+x+0.5,y+0.5,cell-2,cell-2);}
+  }
+  ctx.strokeStyle=GRIDC;ctx.lineWidth=1;[ox0,ox1,ox2].forEach(o=>ctx.strokeRect(o,oy,panelW,panelW));
+  ctx.fillStyle=PHOSD;fontMono(ctx,15);ctx.textAlign='center';
+  ctx.fillText('→',ox0+panelW+gap/2,oy+panelW/2+5);
+  ctx.fillText('→',ox1+panelW+gap/2,oy+panelW/2+5);
+  ctx.fillStyle=INKD;fontMono(ctx,9.5);
+  ctx.fillText('mask '+(this.ratio*100).toFixed(0)+'%',ox1+panelW/2,oy+panelW+15);
+  ctx.fillStyle=PHOS;ctx.fillText('decoder fills [M]',ox2+panelW/2,oy+panelW+15);
+  const q=Math.max(0,Math.min(1,1-mae/0.35));
+  const bx=ox0,by=oy+panelW+26,bw=panelW*3+gap*2;
+  ctx.fillStyle='#dde7eb';ctx.fillRect(bx,by,bw,15);
+  ctx.fillStyle=q>0.7?PHOS:(q>0.45?AMBER:'#d23b2a');ctx.fillRect(bx,by,bw*q,15);
+  ctx.fillStyle='#3a322a';ctx.textAlign='left';fontMono(ctx,10);
+  ctx.fillText('reconstruction fidelity (1 − MAE) = '+(q*100).toFixed(0)+'%',bx+5,by+11);
+  document.getElementById('maeReadout').innerHTML=
+    `<b>${(this.ratio*100).toFixed(0)}%</b> of ${total} patches hidden (${nMask}) · only <b>${total-nMask}</b> visible patches feed the encoder · reconstruction MAE over masked region = <b>${mae.toFixed(3)}</b>. Even at <b>75%</b> the tumor blob is still recoverable — a few patches carry the gist.`;
+}};
+
+const Clip={init(){
+  this.c=document.getElementById('clipCanvas');this.ctx=this.c.getContext('2d');
+  this.arc=0.0;this.temp=0.10;
+  /* deterministic caption embeddings: fixed unit vectors on a circle */
+  this.caps=[
+    {t:'glioma · enhancing', a:0.55},
+    {t:'meningioma',          a:1.35},
+    {t:'no tumor · normal',   a:2.55},
+    {t:'post-op cavity',      a:3.45},
+    {t:'edema · non-enh.',    a:5.00},
+  ].map(c=>({t:c.t,x:Math.cos(c.a),y:Math.sin(c.a)}));
+  const a=document.getElementById('clipArc');
+  a.addEventListener('input',()=>{this.arc=+a.value/100;document.getElementById('clipArcV').textContent=this.arc.toFixed(2);this.draw();});
+  const tp=document.getElementById('clipTemp');
+  tp.addEventListener('input',()=>{this.temp=+tp.value;document.getElementById('clipTempV').textContent=this.temp.toFixed(2);this.draw();});
+  this.draw();
+},
+state(){
+  /* image embedding = unit vector swept along an arc; cosine sim = dot product */
+  const theta=0.2+this.arc*5.0;
+  const ix=Math.cos(theta),iy=Math.sin(theta);
+  const sims=this.caps.map(c=>ix*c.x+iy*c.y);   /* exact cosine, both unit length */
+  const probs=softmax(sims,this.temp);          /* temperature-scaled softmax */
+  return {theta,ix,iy,sims,probs};
+},
+draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
+  const s=this.state(),sims=s.sims,probs=s.probs;
+  const top=probs.indexOf(Math.max(...probs));
+  /* ---- left: shared embedding space (unit circle) ---- */
+  const cx=148,cy=170,R=112;
+  ctx.fillStyle=INKD;fontMono(ctx,11);ctx.textAlign='center';
+  ctx.fillText('SHARED EMBEDDING SPACE',cx,30);
+  ctx.strokeStyle=GRIDC;ctx.lineWidth=1;
+  ctx.beginPath();ctx.arc(cx,cy,R,0,7);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(cx-R,cy);ctx.lineTo(cx+R,cy);ctx.moveTo(cx,cy-R);ctx.lineTo(cx,cy+R);ctx.stroke();
+  /* caption points + faint cosine-angle spokes */
+  this.caps.forEach((c,i)=>{const px=cx+c.x*R,py=cy-c.y*R;
+    ctx.strokeStyle='rgba(169,154,126,.45)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(px,py);ctx.stroke();
+    const hot=i===top;ctx.beginPath();ctx.arc(px,py,hot?9:6,0,7);
+    ctx.fillStyle=hot?AMBER:'#dde7eb';ctx.strokeStyle=AMBER;ctx.lineWidth=1.5;ctx.fill();ctx.stroke();
+    ctx.fillStyle=hot?AMBER:PHOSD;fontMono(ctx,9.5);
+    const lx=cx+c.x*(R+15),ly=cy-c.y*(R+15);ctx.textAlign=c.x<-.15?'right':(c.x>.15?'left':'center');
+    ctx.fillText('t'+i,lx,ly+3);});
+  /* image embedding vector (teal) */
+  const ipx=cx+s.ix*R,ipy=cy-s.iy*R;
+  ctx.strokeStyle=PHOS;ctx.lineWidth=2.4;ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(ipx,ipy);ctx.stroke();
+  ctx.beginPath();ctx.arc(ipx,ipy,8,0,7);ctx.fillStyle=PHOS;ctx.fill();
+  ctx.strokeStyle='#f4f7f9';ctx.lineWidth=1.5;ctx.stroke();
+  ctx.fillStyle=PHOS;fontMono(ctx,10);ctx.textAlign='center';ctx.fillText('img',ipx,ipy-13);
+  /* arc of the cosine angle to the winning caption */
+  ctx.strokeStyle='rgba(31,111,106,.55)';ctx.lineWidth=1.5;
+  const ta=Math.atan2(this.caps[top].y,this.caps[top].x),ia=Math.atan2(s.iy,s.ix);
+  ctx.beginPath();ctx.arc(cx,cy,26,-ia,-ta,ia<ta);ctx.stroke();
+  /* ---- right: softmax probability bars ---- */
+  const bx=320,by=58,bw=176,rh=46;
+  ctx.fillStyle=INKD;fontMono(ctx,11);ctx.textAlign='left';
+  ctx.fillText('P(caption | image) = softmax(cos/τ)',bx,40);
+  this.caps.forEach((c,i)=>{const y=by+i*rh,hot=i===top;
+    ctx.fillStyle='#dde7eb';ctx.fillRect(bx,y,bw,16);
+    ctx.fillStyle=hot?PHOS:'rgba(31,111,106,.42)';ctx.fillRect(bx,y,bw*probs[i],16);
+    ctx.fillStyle=hot?PHOS:INKD;fontMono(ctx,9.5);ctx.textAlign='left';
+    ctx.fillText(c.t,bx,y-4);
+    ctx.fillStyle=hot?PHOS:PHOSD;ctx.textAlign='right';
+    ctx.fillText('cos '+sims[i].toFixed(2)+'  '+(probs[i]*100).toFixed(0)+'%',bx+bw,y+28);});
+  document.getElementById('clipReadout').innerHTML=
+    `best match → <b>${this.caps[top].t}</b> · p=<b>${(probs[top]*100).toFixed(1)}%</b> · cos=${sims[top].toFixed(3)} · τ=${this.temp.toFixed(2)}. Σp=<b>${probs.reduce((a,b)=>a+b,0).toFixed(2)}</b>. Image & captions are unit vectors, so similarity is pure cosine — the basis of zero-shot labeling.`;
+}};
+
+const Diffusion={init(){
+  this.c=document.getElementById('diffusionCanvas');this.ctx=this.c.getContext('2d');
+  this.t=0; this.G=16;
+  // x0: a seeded "brain slice" — smooth ellipse of tissue with a bright tumor blob. Deterministic.
+  this.x0=[]; const cx=7.5,cy=7.5;
+  for(let y=0;y<this.G;y++){this.x0.push([]);for(let x=0;x<this.G;x++){
+    const r=Math.sqrt(((x-cx)/7.6)**2+((y-cy)/7.0)**2);
+    let v=r<1 ? 0.34+0.10*Math.cos(x*0.9)*Math.sin(y*0.8) : 0.05;   // skull / tissue
+    const td=Math.sqrt((x-10.5)**2+(y-5.5)**2);                      // tumor blob
+    if(td<3.0) v=Math.max(v,0.92-0.16*td);
+    this.x0[y].push(Math.max(0,Math.min(1,v)));
+  }}
+  // fixed seeded standard-normal field eps[y][x] (Box–Muller) — same draw every render → autoplay is stable.
+  this.eps=[]; let s=12345;
+  const u=()=>{let v=Math.sin(s*12.9898+s*0.013)*43758.5453;s++;return v-Math.floor(v);};
+  for(let y=0;y<this.G;y++){this.eps.push([]);for(let x=0;x<this.G;x++){
+    const u1=Math.max(1e-6,u()),u2=u();
+    this.eps[y].push(Math.sqrt(-2*Math.log(u1))*Math.cos(2*Math.PI*u2));
+  }}
+  const sl=document.getElementById('diffusionT');
+  sl.addEventListener('input',()=>{this.t=+sl.value;document.getElementById('diffusionTV').textContent=this.t.toFixed(2);this.draw();});
+  this.draw();
+},
+// cosine schedule (Nichol & Dhariwal): ᾱ(t) = cos((t+0.008)/1.008 · π/2)²
+abar(t){const f=Math.cos(((t+0.008)/1.008)*Math.PI/2);return Math.max(1e-4,f*f);},
+draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
+  const G=this.G,t=this.t,ab=this.abar(t),sa=Math.sqrt(ab),sn=Math.sqrt(1-ab);
+  const sigma=sn/sa;                 // noise std relative to signal (VP "sigma")
+  const snrDb=10*Math.log10(ab/(1-ab+1e-9));
+  // forward sample  x_t = √ᾱ·x0 + √(1−ᾱ)·ε   (DDPM, variance-preserving)
+  const cell=15, ox=28, oy=46;
+  let mse=0,n=0; const xt=[];
+  for(let y=0;y<G;y++){xt.push([]);for(let x=0;x<G;x++){
+    const v=sa*this.x0[y][x]+sn*this.eps[y][x]; xt[y].push(v);
+    const sh=Math.max(0,Math.min(1,v));
+    ctx.fillStyle=`rgba(31,111,106,${0.06+sh*0.9})`;
+    ctx.fillRect(ox+x*cell,oy+y*cell,cell-1,cell-1);
+    mse+=(v-this.x0[y][x])**2;n++;
+  }}
+  ctx.fillStyle=INKD;fontMono(ctx,11);ctx.textAlign='left';
+  ctx.fillText(`x_t  (t=${t.toFixed(2)})`,ox,oy-10);
+  // clean reference panel (right, half scale)
+  const rx=ox+G*cell+34;
+  for(let y=0;y<G;y++)for(let x=0;x<G;x++){const sh=this.x0[y][x];
+    ctx.fillStyle=`rgba(31,111,106,${0.06+sh*0.9})`;
+    ctx.fillRect(rx+x*cell*0.55,oy+y*cell*0.55,cell*0.55-0.5,cell*0.55-0.5);}
+  ctx.fillStyle=PHOSD;fontMono(ctx,10);ctx.fillText('clean x₀ (target manifold)',rx,oy-10);
+  // ----- learned score / denoise arrows on a coarse grid -----
+  // optimal denoiser predicts the noise: ε̂ = (x_t − √ᾱ·x0)/√(1−ᾱ) = ε.
+  // score / reverse direction points x_t back toward x0:  dir ∝ (x0 − x_t), scaled by remaining noise √(1−ᾱ).
+  const step=3;
+  ctx.lineWidth=1.6;ctx.strokeStyle=AMBER;ctx.fillStyle=AMBER;ctx.lineCap='round';
+  for(let y=1;y<G;y+=step)for(let x=1;x<G;x+=step){
+    const cxp=ox+x*cell+cell/2, cyp=oy+y*cell+cell/2;
+    const drift=(this.x0[y][x]-xt[y][x]);           // denoise pull
+    const L=Math.max(-12,Math.min(12, drift*16*sn+0.001));
+    const ex=L*0.45, ey=L;                          // slight diagonal → reads as a vector field
+    ctx.beginPath();ctx.moveTo(cxp,cyp);ctx.lineTo(cxp+ex,cyp-ey);ctx.stroke();
+    const ang=Math.atan2(-ey,ex),hl=3.2;
+    ctx.beginPath();ctx.moveTo(cxp+ex,cyp-ey);
+    ctx.lineTo(cxp+ex-hl*Math.cos(ang-0.5),cyp-ey-hl*Math.sin(ang-0.5));
+    ctx.lineTo(cxp+ex-hl*Math.cos(ang+0.5),cyp-ey-hl*Math.sin(ang+0.5));
+    ctx.closePath();ctx.fill();
+  }
+  ctx.fillStyle=INKD;fontMono(ctx,10);ctx.textAlign='left';
+  ctx.fillText('amber = learned score ∇log p — denoise pull toward x₀',ox,oy+G*cell+20);
+  // noise-fraction bar
+  const by=oy+G*cell+34, bw=G*cell;
+  ctx.fillStyle=GRIDC;ctx.fillRect(ox,by,bw,8);
+  ctx.fillStyle=AMBER;ctx.fillRect(ox,by,bw*(1-ab),8);
+  ctx.fillStyle=PHOSD;fontMono(ctx,10);
+  ctx.fillText('noise fraction √(1−ᾱ) = '+sn.toFixed(2),ox,by+22);
+
+  const rmse=Math.sqrt(mse/n);
+  document.getElementById('diffusionReadout').innerHTML=
+    `t=<b>${t.toFixed(2)}</b> · ᾱ(t)=<b>${ab.toFixed(3)}</b> · σ=√(1−ᾱ)/√ᾱ=<b>${sigma.toFixed(2)}</b> · SNR=<b>${snrDb.toFixed(1)} dB</b><br>`+
+    `x_t = √ᾱ·x₀ + √(1−ᾱ)·ε. The U-Net is trained to predict ε; the <b>score</b> (amber) = −ε/√(1−ᾱ) points back to the data manifold. Reverse sampling subtracts the predicted noise step-by-step (corruption RMSE now ${rmse.toFixed(2)}).`;
+}};
+
+const Wsi={init(){
+  this.c=document.getElementById('wsiCanvas');this.ctx=this.c.getContext('2d');
+  this.level=2;
+  const s=document.getElementById('wsiLevel');s.addEventListener('input',()=>{this.level=+s.value;document.getElementById('wsiLevelV').textContent=this.level;this.draw();});
+  this.draw();
+},
+/* deterministic H&E-style tissue density at unit-square coord (x,y)∈[0,1] */
+tissue(x,y){
+  const v=0.5
+    +0.30*Math.sin(x*7.1+y*2.3)
+    +0.22*Math.cos(x*3.7-y*5.1)
+    +0.18*Math.sin((x+y)*9.4)
+    +0.12*Math.cos(x*13.0)*Math.sin(y*11.0);
+  return Math.max(0,Math.min(1,v));
+},
+draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
+  const S=300,ox=24,oy=26;                 /* slide thumbnail box */
+  const side=Math.pow(2,this.level), ntiles=side*side; /* 4^L tiles */
+  /* ---- paint the stylized H&E tissue thumbnail (fine grid of swatches) ---- */
+  const g=60, sw=S/g;
+  for(let j=0;j<g;j++)for(let i=0;i<g;i++){
+    const d=this.tissue((i+0.5)/g,(j+0.5)/g);   /* 0=empty glass, 1=dense nuclei */
+    /* H&E palette: pale eosin-pink glass → purple-blue hematoxylin nuclei */
+    const r=Math.round(238-90*d), gg=Math.round(214-150*d), b=Math.round(225-70*d);
+    ctx.fillStyle=`rgb(${r},${gg},${b})`;ctx.fillRect(ox+i*sw,oy+j*sw,sw+0.6,sw+0.6);
+  }
+  ctx.strokeStyle=PHOSD;ctx.lineWidth=1;ctx.strokeRect(ox,oy,S,S);
+  /* ---- tiling grid for this pyramid level ---- */
+  const t=S/side;
+  ctx.strokeStyle='rgba(31,111,106,.55)';ctx.lineWidth=1;
+  for(let k=0;k<=side;k++){
+    ctx.beginPath();ctx.moveTo(ox+k*t,oy);ctx.lineTo(ox+k*t,oy+S);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(ox,oy+k*t);ctx.lineTo(ox+S,oy+k*t);ctx.stroke();
+  }
+  /* ---- highlight ONE tile = what actually streams to the GPU ---- */
+  const hi=Math.min(side-1,Math.floor(side*0.62)), hj=Math.min(side-1,Math.floor(side*0.38));
+  ctx.fillStyle='rgba(224,138,46,.16)';ctx.fillRect(ox+hi*t,oy+hj*t,t,t);
+  ctx.strokeStyle=AMBER;ctx.lineWidth=2.2;ctx.strokeRect(ox+hi*t+1,oy+hj*t+1,t-2,t-2);
+  if(side<=8){ctx.fillStyle=AMBER;fontMono(ctx,9);ctx.textAlign='center';ctx.fillText('1 tile',ox+hi*t+t/2,oy+hj*t+t/2+3);}
+  /* ---- pyramid sketch (mini stack) on the right ---- */
+  const px=ox+S+34, py=oy+8;
+  ctx.fillStyle=INKD;fontMono(ctx,10);ctx.textAlign='left';ctx.fillText('PYRAMID',px,py-2);
+  for(let L=0;L<=4;L++){
+    const ww=24+L*22, hh=12; const yy=py+10+L*30;
+    ctx.fillStyle=L===this.level?'rgba(31,111,106,.85)':'#dde7eb';
+    ctx.strokeStyle=L===this.level?PHOS:PHOSD;ctx.lineWidth=L===this.level?2:1;
+    ctx.fillRect(px,yy,ww,hh);ctx.strokeRect(px,yy,ww,hh);
+    ctx.fillStyle=L===this.level?PHOS:INKD;fontMono(ctx,9);ctx.textAlign='left';
+    ctx.fillText('L'+L+'·'+(Math.pow(4,L))+'t',px+ww+6,yy+10);
+  }
+  /* caption under thumbnail */
+  ctx.fillStyle=INKD;fontMono(ctx,10);ctx.textAlign='left';
+  ctx.fillText(side+'×'+side+' = '+ntiles+' tiles cover the slide',ox,oy+S+18);
+  /* ---- readout: faithful numbers ---- */
+  const slidePx=1e10, gb=Math.round(slidePx*3/1e9);          /* 100k×100k, 3B/px */
+  const tilePxApprox=(side<=1)?slidePx:Math.round(slidePx/ntiles);
+  document.getElementById('wsiReadout').innerHTML=
+    `Level <b>${this.level}</b> → <b>${side}×${side} = ${ntiles}</b> tiles (4<sup>${this.level}</sup>). A 100k×100k slide ≈ <b>10¹⁰ px ≈ ${gb} GB</b> raw — it cannot fit in memory, so you stream tiles. Each tile here covers ~${tilePxApprox.toExponential(1)} px; the model only ever sees the <b style="color:${AMBER}">amber</b> one at a time. Opposite of OncoSeg's compact 128³ MRI.`;
+}};
+
+const Stain={init(){
+  this.c=document.getElementById('stainCanvas');this.ctx=this.c.getContext('2d');
+  this.view=0; this.angle=0;
+  // canonical Ruifrok H&E optical-density stain vectors (unit-normalized)
+  this.H0=this.unit([0.650,0.704,0.286]);   // Hematoxylin → nuclei (blue-purple)
+  this.E0=this.unit([0.072,0.990,0.105]);   // Eosin → stroma/cytoplasm (pink)
+  this.GG=22;  // patch grid
+  // deterministic concentration fields: nuclei clusters (H) + diffuse stroma (E)
+  this.cH=[];this.cE=[];
+  for(let y=0;y<this.GG;y++){this.cH.push([]);this.cE.push([]);
+    for(let x=0;x<this.GG;x++){
+      const u=x/(this.GG-1),v=y/(this.GG-1);
+      // three nuclei blobs (seeded trig — fully deterministic)
+      let h=0;
+      const blobs=[[0.30,0.32,0.11],[0.70,0.40,0.09],[0.50,0.72,0.10]];
+      blobs.forEach(b=>{const d2=(u-b[0])**2+(v-b[1])**2;h+=Math.exp(-d2/(2*b[2]*b[2]));});
+      h=Math.min(1.4,h)*1.05;
+      // stroma fills the background, modulated by a smooth texture, low where nuclei sit
+      let e=0.55+0.30*Math.sin(u*5.1+1.3)*Math.cos(v*4.4-0.7);
+      e=Math.max(0.10,e-0.55*Math.min(1,h));
+      this.cH[y].push(h);this.cE[y].push(e);
+    }}
+  const vw=document.getElementById('stainView');
+  vw.addEventListener('input',()=>{this.view=+vw.value;document.getElementById('stainViewV').textContent=this.viewLbl();this.draw();});
+  const ag=document.getElementById('stainAngle');
+  ag.addEventListener('input',()=>{this.angle=+ag.value;document.getElementById('stainAngleV').textContent=this.angle+'°';this.draw();});
+  this.draw();
+},
+unit(v){const n=Math.hypot(v[0],v[1],v[2])||1;return [v[0]/n,v[1]/n,v[2]/n];},
+viewLbl(){const v=this.view;if(v<0.17)return 'RGB';if(v<0.5)return 'H mix';if(v<0.83)return 'H only';return 'E only';},
+// rotate the Hematoxylin OD vector toward Eosin by `deg` (mis-set basis); keep unit length
+misH(deg){const t=deg*Math.PI/180;const a=Math.cos(t),b=Math.sin(t);
+  const H=this.H0,E=this.E0;const r=[a*H[0]+b*E[0],a*H[1]+b*E[1],a*H[2]+b*E[2]];return this.unit(r);},
+// 2x2 inverse of the Gram matrix to project OD onto the (possibly non-orthogonal) {H,E} basis
+solve(od,H,E){
+  const a=H[0]*H[0]+H[1]*H[1]+H[2]*H[2];
+  const b=H[0]*E[0]+H[1]*E[1]+H[2]*E[2];
+  const d=E[0]*E[0]+E[1]*E[1]+E[2]*E[2];
+  const bh=H[0]*od[0]+H[1]*od[1]+H[2]*od[2];
+  const be=E[0]*od[0]+E[1]*od[1]+E[2]*od[2];
+  const det=a*d-b*b||1e-6;
+  const cH=( d*bh - b*be)/det;
+  const cE=(-b*bh + a*be)/det;
+  return [Math.max(0,cH),Math.max(0,cE)];
+},
+draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
+  const G=this.GG,cell=9,lox=24,loy=52,rox=296,roy=52;
+  const Htrue=this.H0,Etrue=this.E0;            // true basis used to BUILD the image
+  const Hest=this.misH(this.angle),Eest=Etrue;  // basis the analyst USES to unmix
+  const v=this.view;
+  // blend weights: how much H-channel vs E-channel to show (RGB shown when v small)
+  const wRGB=Math.max(0,1-v/0.17);                       // 1 at v=0 → fades by 0.17
+  const showH=v>=0.17?Math.max(0,1-Math.abs(v-0.5)/0.33):0;   // peaks at 0.5
+  const showE=v>=0.5?Math.min(1,(v-0.5)/0.33):0;              // ramps in after 0.5
+  let bleed=0,bleedN=0,sumH=0,sumE=0;
+  for(let y=0;y<G;y++)for(let x=0;x<G;x++){
+    const ch=this.cH[y][x],ce=this.cE[y][x];
+    // forward model (Beer-Lambert): OD = ch*Htrue + ce*Etrue ; I = 255*10^(-OD)
+    const od=[ch*Htrue[0]+ce*Etrue[0],ch*Htrue[1]+ce*Etrue[1],ch*Htrue[2]+ce*Etrue[2]];
+    const rgb=od.map(o=>Math.max(0,Math.min(255,255*Math.pow(10,-o))));
+    // LEFT: raw H&E patch
+    ctx.fillStyle=`rgb(${rgb[0]|0},${rgb[1]|0},${rgb[2]|0})`;
+    ctx.fillRect(lox+x*cell,loy+y*cell,cell-0.5,cell-0.5);
+    // recover concentrations with the (possibly mis-set) estimated basis
+    const c=this.solve(od,Hest,Eest);
+    const rH=c[0],rE=c[1];
+    sumH+=rH;sumE+=rE;
+    // bleed = E-channel intensity where there is really only H (nuclei interior, low true E)
+    if(ch>0.7&&ce<0.25){bleed+=rE;bleedN++;}
+    // RIGHT: blended view. Pure-H = brownish/teal nuclei map; pure-E = pink stroma map
+    const odH=Hest.map(k=>k*rH), odE=Eest.map(k=>k*rE);
+    const hCol=odH.map(o=>255*Math.pow(10,-o));   // H-only reconstruction in RGB
+    const eCol=odE.map(o=>255*Math.pow(10,-o));   // E-only reconstruction in RGB
+    let R,Gc,B;
+    R=wRGB*rgb[0]+showH*hCol[0]+showE*eCol[0];
+    Gc=wRGB*rgb[1]+showH*hCol[1]+showE*eCol[1];
+    B=wRGB*rgb[2]+showH*hCol[2]+showE*eCol[2];
+    // normalize blend so it doesn't dim when weights overlap
+    const wsum=wRGB+showH+showE||1;
+    ctx.fillStyle=`rgb(${Math.max(0,Math.min(255,R/wsum))|0},${Math.max(0,Math.min(255,Gc/wsum))|0},${Math.max(0,Math.min(255,B/wsum))|0})`;
+    ctx.fillRect(rox+x*cell,roy+y*cell,cell-0.5,cell-0.5);
+  }
+  // labels
+  ctx.fillStyle=INKD;fontMono(ctx,11);ctx.textAlign='left';
+  ctx.fillText('H&E PATCH (mixed)',lox,42);
+  const rlbl=v<0.17?'RGB (no unmix)':(v<0.5?'H + E blend':(v<0.83?'HEMATOXYLIN — nuclei':'EOSIN — stroma'));
+  ctx.fillText(rlbl,rox,42);
+  // stain-vector key
+  const ky=loy+G*cell+18;
+  ctx.fillStyle='rgb(120,70,150)';ctx.fillRect(lox,ky-9,11,11);
+  ctx.fillStyle=INKD;ctx.fillText('Hematoxylin (nuclei)',lox+16,ky);
+  ctx.fillStyle='rgb(225,120,160)';ctx.fillRect(lox+186,ky-9,11,11);
+  ctx.fillStyle=INKD;ctx.fillText('Eosin (stroma)',lox+202,ky);
+  // angle warning
+  if(Math.abs(this.angle)>2){ctx.fillStyle='#d23b2a';fontMono(ctx,10);
+    ctx.fillText('basis mis-set '+this.angle+'° → leakage',rox,roy+G*cell+18);}
+  const tot=sumH+sumE||1;const fH=sumH/tot,fE=sumE/tot;
+  const bleedV=bleedN?bleed/bleedN:0;
+  document.getElementById('stainReadout').innerHTML=
+    `OD=−log₁₀(I/I₀); C=M⁻¹·OD on basis {H,E}. Stain fractions: <b>H ${(fH*100).toFixed(0)}%</b> / <b>E ${(fE*100).toFixed(0)}%</b>. `+
+    (Math.abs(this.angle)>2
+      ? `Mis-set basis (${this.angle}°) → E-channel bleed in nuclei = <b style="color:#d23b2a">${bleedV.toFixed(2)}</b> — a wrong basis corrupts separation.`
+      : `Correct basis → nuclei sit cleanly in H, stroma in E (bleed ≈ <b>${bleedV.toFixed(2)}</b>). This is stain normalization — histology's intensity normalization.`);
+}};
+
+/* ---- Nuclei instance segmentation (distance-map watershed) ---- */
+const Nuclei={init(){
+  this.c=document.getElementById('nucleiCanvas');this.ctx=this.c.getContext('2d');
+  this.thr=0.30; this.G=50; this.TRUE=5;
+  // 5 ground-truth nuclei, all touching -> their union is ONE merged mask.
+  // 4 are round; the 5th is an elongated "dividing" cell (two lobes = still ONE nucleus).
+  const cx0=25,cy0=24,R=10,r=6.8,off=3,pr=6.2; const NUC=[];
+  for(let i=0;i<4;i++){const a=-Math.PI/2+i*2*Math.PI/5;NUC.push([{cx:cx0+R*Math.cos(a),cy:cy0+R*Math.sin(a),r}]);}
+  {const a=-Math.PI/2+4*2*Math.PI/5,bx=cx0+R*Math.cos(a),by=cy0+R*Math.sin(a),tx=-Math.sin(a),ty=Math.cos(a);
+   NUC.push([{cx:bx-off*tx,cy:by-off*ty,r:pr},{cx:bx+off*tx,cy:by+off*ty,r:pr}]);}
+  const G=this.G;this.fg=[];for(let y=0;y<G;y++)this.fg.push(new Array(G).fill(0));
+  for(let y=0;y<G;y++)for(let x=0;x<G;x++){o:for(const nuc of NUC)for(const s of nuc){if((x-s.cx)**2+(y-s.cy)**2<=s.r*s.r){this.fg[y][x]=1;break o;}}}
+  // distance transform: each fg pixel -> Euclidean distance to nearest background pixel
+  let dist=[];for(let y=0;y<G;y++)dist.push(new Array(G).fill(0));
+  for(let y=0;y<G;y++)for(let x=0;x<G;x++){if(!this.fg[y][x])continue;let b=1e9;
+    for(let yy=0;yy<G;yy++)for(let xx=0;xx<G;xx++)if(!this.fg[yy][xx]){const d=Math.hypot(x-xx,y-yy);if(d<b)b=d;}dist[y][x]=b;}
+  // smooth the distance map (2x box blur within fg) -- standard step that suppresses spurious peaks
+  for(let p=0;p<2;p++){const nx=[];for(let y=0;y<G;y++)nx.push(new Array(G).fill(0));
+    for(let y=0;y<G;y++)for(let x=0;x<G;x++){if(!this.fg[y][x])continue;let s=0,c=0;
+      for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const yy=y+dy,xx=x+dx;
+        if(yy>=0&&yy<G&&xx>=0&&xx<G&&this.fg[yy][xx]){s+=dist[yy][xx];c++;}}nx[y][x]=s/c;}dist=nx;}
+  this.dist=dist;this.maxD=0;for(let y=0;y<G;y++)for(let x=0;x<G;x++)if(dist[y][x]>this.maxD)this.maxD=dist[y][x];
+  const s=document.getElementById('nucleiThr');
+  s.addEventListener('input',()=>{this.thr=+s.value;document.getElementById('nucleiThrV').textContent=this.thr.toFixed(2);this.draw();});
+  this.draw();
+},
+comps(m){const G=this.G,lab=[];for(let y=0;y<G;y++)lab.push(new Array(G).fill(0));let cur=0;
+  for(let y=0;y<G;y++)for(let x=0;x<G;x++){if(m[y][x]&&!lab[y][x]){cur++;const st=[[y,x]];lab[y][x]=cur;
+    while(st.length){const a=st.pop(),cy=a[0],cx=a[1];const nb=[[0,1],[0,-1],[1,0],[-1,0]];
+      for(let k=0;k<4;k++){const ny=cy+nb[k][0],nx=cx+nb[k][1];
+        if(ny>=0&&ny<G&&nx>=0&&nx<G&&m[ny][nx]&&!lab[ny][nx]){lab[ny][nx]=cur;st.push([ny,nx]);}}}}}
+  return {lab,cur};},
+seg(){const G=this.G,h=this.thr*this.maxD;
+  // markers = fg pixels whose (smoothed) distance >= h -- the marker-strength / h-maxima step
+  const seed=[];for(let y=0;y<G;y++)seed.push(new Array(G).fill(0));
+  for(let y=0;y<G;y++)for(let x=0;x<G;x++)if(this.fg[y][x]&&this.dist[y][x]>=h)seed[y][x]=1;
+  const {lab,cur}=this.comps(seed);
+  // watershed assignment: label every fg pixel by its nearest marker -> space-filling instances
+  const sp=[];for(let y=0;y<G;y++)for(let x=0;x<G;x++)if(lab[y][x])sp.push([y,x,lab[y][x]]);
+  const inst=[];for(let y=0;y<G;y++)inst.push(new Array(G).fill(0));
+  for(let y=0;y<G;y++)for(let x=0;x<G;x++){if(!this.fg[y][x]||!sp.length)continue;
+    let bd=1e9,bl=0;for(let k=0;k<sp.length;k++){const d=(y-sp[k][0])**2+(x-sp[k][1])**2;if(d<bd){bd=d;bl=sp[k][2];}}inst[y][x]=bl;}
+  return {inst,cur,seed};},
+draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height,G=this.G;clear(ctx,W,H);
+  const {inst,cur,seed}=this.seg();
+  const cell=5.2,ox=24,oy=42,gap=26,dox=ox+G*cell+gap;
+  const cols=['#1f6f6a','#e0883a','#3a7be0','#b05ab4','#2c9a92','#b08313','#d23b2a','#7a8a3a'];
+  ctx.fillStyle=INKD;fontMono(ctx,11);ctx.textAlign='left';
+  ctx.fillText('SEMANTIC mask · shade = dist-to-edge',ox,30);
+  ctx.fillText('INSTANCES (watershed split)',dox,30);
+  for(let y=0;y<G;y++)for(let x=0;x<G;x++){
+    if(this.fg[y][x]){const v=this.dist[y][x]/this.maxD;ctx.fillStyle=`rgba(31,111,106,${0.12+v*0.85})`;}
+    else ctx.fillStyle='#dde7eb';
+    ctx.fillRect(ox+x*cell,oy+y*cell,cell,cell);
+    if(seed[y][x]){ctx.fillStyle='rgba(28,24,20,.92)';ctx.fillRect(ox+x*cell+cell*0.3,oy+y*cell+cell*0.3,cell*0.4,cell*0.4);}
+  }
+  for(let y=0;y<G;y++)for(let x=0;x<G;x++){const id=inst[y][x];
+    ctx.fillStyle=id?cols[(id-1)%cols.length]:'#dde7eb';ctx.fillRect(dox+x*cell,oy+y*cell,cell,cell);}
+  const ly=oy+G*cell+18, ok=(cur===this.TRUE), under=(cur<this.TRUE);
+  fontMono(ctx,11);ctx.textAlign='left';
+  ctx.fillStyle=INKD;ctx.fillText('black dots = watershed markers',ox,ly);
+  ctx.fillStyle=ok?PHOS:(under?AMBER:'#d23b2a');
+  ctx.fillText(ok?'CORRECT: 1 marker per nucleus':(under?'UNDER-counted: markers fused / eroded':'OVER-split: 1 nucleus broke in 2'),dox,ly);
+  let regime;
+  if(ok) regime='just right -> one seed per nucleus';
+  else if(cur>this.TRUE) regime='too HIGH -> an elongated nucleus fragments';
+  else if(this.thr<0.6) regime='too LOW -> seed regions merge -> blobs stay fused';
+  else regime='too HIGH -> distance peaks erode -> cells lose their marker';
+  document.getElementById('nucleiReadout').innerHTML=
+    `marker threshold h = <b>${(this.thr*this.maxD).toFixed(1)}</b> of ${this.maxD.toFixed(1)} px · instances = <b style="color:${ok?PHOS:'#d23b2a'}">${cur}</b> vs true <b>${this.TRUE}</b> — ${ok?'<b>match.</b>':'mismatch.'} Threshold ${regime}. Plain semantic seg returns <b>1</b> fused mask; instance seg recovers the <b>${this.TRUE}</b> separate cells.`;
+}};
+
+const Mil={init(){
+  this.c=document.getElementById('milCanvas');this.ctx=this.c.getContext('2d');
+  this.N=10; this.k=3;
+  this.order=[4,7,1,9,2,6,0,8,3,5]; /* seeded order tumor patches appear in as k grows */
+  const s=document.getElementById('milK');
+  s.addEventListener('input',()=>{this.k=+s.value;document.getElementById('milKV').textContent=this.k;this.draw();});
+  this.draw();
+},
+compute(){
+  const N=this.N, k=Math.max(0,Math.min(N,Math.round(this.k)));
+  const isT=new Array(N).fill(false); for(let i=0;i<k;i++) isT[this.order[i]]=true;
+  /* per-patch instance embedding hᵢ∈[0,1]: benign seeded low, tumor seeded high (deterministic) */
+  const h=[]; for(let i=0;i<N;i++){
+    const benign=0.20+0.12*Math.abs(Math.sin(i*1.7+0.5));
+    const tumor =0.72+0.20*Math.abs(Math.sin(i*2.1+1.0));
+    h.push(isT[i]?tumor:benign);
+  }
+  /* gated attention aᵢ = softmax( tanh(V·h) ⊙ sigmoid(U·h) )  — Ilse et al. 2018 */
+  const score=h.map(v=>5.0*(Math.tanh(2.4*(v-0.45))*(1/(1+Math.exp(-7*(v-0.45))))));
+  const att=softmax(score,1);
+  /* per-instance malignancy prob pᵢ = sigmoid(classifier(h)) */
+  const p=h.map(v=>1/(1+Math.exp(-7*(v-0.6))));
+  /* attention-weighted pooling → slide score */
+  const slide=att.reduce((a,_,i)=>a+att[i]*p[i],0);
+  return {k,isT,h,att,p,slide};
+},
+draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
+  const r=this.compute(), N=this.N;
+  const m=24, gap=4, pw=(W-2*m-(N-1)*gap)/N;
+  const py=46, ph=58;            /* patch row */
+  const ay=py+ph+30, ah=72;      /* attention bars baseline */
+  ctx.textAlign='left'; ctx.fillStyle=INKD; fontMono(ctx,11);
+  ctx.fillText('BAG · 10 patches from ONE slide (only the slide is labelled)',m,30);
+  /* patch tiles */
+  for(let i=0;i<N;i++){
+    const x=m+i*(pw+gap), tum=r.isT[i];
+    /* tile body: tumor = amber-tinted, benign = neutral; intensity tracks embedding hᵢ */
+    if(tum){const a=0.35+0.5*(r.h[i]-0.6); ctx.fillStyle=`rgba(224,138,46,${Math.min(0.92,a)})`;}
+    else   {ctx.fillStyle=`rgba(231,220,198,1)`;}
+    ctx.fillRect(x,py,pw,ph);
+    /* seeded texture speckle so tumor tiles read as "abnormal" (deterministic) */
+    ctx.fillStyle=tum?'rgba(120,55,8,.35)':'rgba(169,154,126,.5)';
+    for(let s=0;s<6;s++){const sx=x+pw*(0.15+0.7*Math.abs(Math.sin(i*3.1+s*1.9))),sy=py+ph*(0.18+0.64*Math.abs(Math.cos(i*2.3+s*1.3)));ctx.fillRect(sx,sy,2,2);}
+    ctx.strokeStyle=tum?AMBER:PHOSD; ctx.lineWidth=tum?2:1; ctx.strokeRect(x+0.5,py+0.5,pw-1,ph-1);
+    ctx.fillStyle=INKD; ctx.textAlign='center'; fontMono(ctx,10); ctx.fillText('p'+i,x+pw/2,py-6);
+    ctx.fillStyle=tum?AMBER:PHOSD; ctx.fillText(tum?'tumor':'normal',x+pw/2,py+ph+14);
+  }
+  /* attention bars */
+  const maxA=Math.max(...r.att,0.001);
+  ctx.textAlign='left'; ctx.fillStyle=INKD; fontMono(ctx,11);
+  ctx.fillText('ATTENTION  aᵢ = softmax(tanh(V·h)·σ(U·h))   ·   Σaᵢ = 1.00',m,ay-ah-8);
+  const top=r.att.indexOf(maxA);
+  for(let i=0;i<N;i++){
+    const x=m+i*(pw+gap), bh=ah*(r.att[i]/maxA);
+    ctx.fillStyle=i===top?PHOS:`rgba(31,111,106,${0.18+0.62*(r.att[i]/maxA)})`;
+    ctx.fillRect(x,ay-bh,pw,bh);
+    ctx.fillStyle=i===top?PHOS:INKD; ctx.textAlign='center'; fontMono(ctx,9);
+    ctx.fillText((r.att[i]*100).toFixed(0)+'%',x+pw/2,ay+12);
+  }
+  ctx.strokeStyle=GRIDC; ctx.lineWidth=1; ctx.beginPath();ctx.moveTo(m,ay);ctx.lineTo(W-m,ay);ctx.stroke();
+  /* slide score bar + threshold */
+  const sy=ay+34, sx=m, sw=W-2*m, shh=20;
+  ctx.fillStyle='rgba(231,220,198,1)'; ctx.fillRect(sx,sy,sw,shh);
+  const mal=r.slide>=0.5, col=mal?'#d23b2a':PHOS;
+  ctx.fillStyle=col; ctx.fillRect(sx,sy,sw*r.slide,shh);
+  const tx=sx+sw*0.5;
+  ctx.strokeStyle=INKD; ctx.setLineDash([4,3]); ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(tx,sy-6);ctx.lineTo(tx,sy+shh+6);ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle=INKD; ctx.textAlign='center'; fontMono(ctx,9); ctx.fillText('0.5',tx,sy-9);
+  ctx.textAlign='left'; ctx.fillStyle=INKD; fontMono(ctx,11);
+  ctx.fillText('SLIDE SCORE  z = Σ aᵢ·pᵢ',sx,sy-9);
+  ctx.fillStyle=col; ctx.textAlign='right'; fontMono(ctx,13);
+  ctx.fillText(r.slide.toFixed(3)+'  →  '+(mal?'MALIGNANT':'benign'),W-m,sy+shh+18);
+  document.getElementById('milReadout').innerHTML=
+    `bag = <b>${r.k}/${N}</b> tumor patches · top attention on <b>p${top}</b> (<b>${(maxA*100).toFixed(0)}%</b>) · pooled z = <b>${r.slide.toFixed(3)}</b> → <b style="color:${col}">${mal?'MALIGNANT':'benign'}</b>. ${r.k===0?'No positive instance → benign.':'One positive instance flips the bag (MI assumption); only a <i>slide</i> label was ever needed.'}`;
+}};
+
+const PathFM={init(){
+  this.c=document.getElementById('pathfmCanvas');this.ctx=this.c.getContext('2d');
+  this.N=30;this.qi=0;this.k=7;
+  this.names=['Tumor','Stroma','Immune'];
+  this.cols=['#1f6f6a','#e0883a','#b05ab4'];
+  this.centers=[[0.26,0.30],[0.74,0.34],[0.50,0.76]];
+  const rnd=s=>{const x=Math.sin(s*12.9898)*43758.5453;return x-Math.floor(x);};
+  this.pts=[];
+  for(let i=0;i<this.N;i++){const c=i%3;const a=rnd(i*7+1),b=rnd(i*13+5);
+    const r=0.115*Math.sqrt(-2*Math.log(a+1e-6)),th=2*Math.PI*b;
+    let x=this.centers[c][0]+r*Math.cos(th),y=this.centers[c][1]+r*Math.sin(th);
+    x=Math.max(0.04,Math.min(0.96,x));y=Math.max(0.04,Math.min(0.96,y));
+    this.pts.push({x,y,cls:c});}
+  const q=document.getElementById('pathfmQuery');
+  q.addEventListener('input',()=>{this.qi=+q.value;document.getElementById('pathfmQueryV').textContent='#'+this.qi;this.draw();});
+  const k=document.getElementById('pathfmK');
+  k.addEventListener('input',()=>{this.k=+k.value;document.getElementById('pathfmKV').textContent=this.k;this.draw();});
+  this.c.addEventListener('click',e=>{const r=this.c.getBoundingClientRect();
+    const mx=(e.clientX-r.left)*(this.c.width/r.width),my=(e.clientY-r.top)*(this.c.height/r.height);
+    const P=this.plot();let best=-1,bd=1e9;
+    this.pts.forEach((p,i)=>{const px=P.ox+p.x*P.s,py=P.oy+p.y*P.s;const d=Math.hypot(px-mx,py-my);if(d<bd){bd=d;best=i;}});
+    if(bd<40&&best>=0){this.qi=best;document.getElementById('pathfmQuery').value=best;document.getElementById('pathfmQueryV').textContent='#'+best;this.draw();}});
+  this.draw();
+},
+plot(){const W=this.c.width,H=this.c.height;const ox=46,oy=30,s=Math.min(W-150,H-70);return {ox,oy,s,W,H};},
+knn(){const q=this.pts[this.qi];
+  const d=this.pts.map((p,i)=>({i,cls:p.cls,dist:Math.hypot(p.x-q.x,p.y-q.y)})).filter(o=>o.i!==this.qi);
+  d.sort((a,b)=>a.dist-b.dist);const nb=d.slice(0,this.k);
+  const votes=[0,0,0];nb.forEach(o=>votes[o.cls]++);
+  let win=0;for(let c=1;c<3;c++)if(votes[c]>votes[win])win=c;
+  return {nb,votes,win,purity:votes[win]/this.k,trueCls:q.cls};
+},
+draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
+  const P=this.plot();const sx=p=>P.ox+p.x*P.s,sy=p=>P.oy+p.y*P.s;
+  ctx.strokeStyle=GRIDC;ctx.lineWidth=1;ctx.strokeRect(P.ox,P.oy,P.s,P.s);
+  ctx.fillStyle=INKD;fontMono(ctx,10);ctx.textAlign='left';
+  ctx.fillText('FROZEN FM FEATURE SPACE (2-D map of patch embeddings)',P.ox,P.oy-10);
+  const R=this.knn();const q=this.pts[this.qi];
+  R.nb.forEach(o=>{const p=this.pts[o.i];ctx.beginPath();ctx.moveTo(sx(q),sy(q));ctx.lineTo(sx(p),sy(p));
+    ctx.strokeStyle=`rgba(31,111,106,${0.18+0.55*Math.max(0,1-o.dist/0.7)})`;ctx.lineWidth=1.6;ctx.stroke();});
+  const nbSet=new Set(R.nb.map(o=>o.i));
+  this.pts.forEach((p,i)=>{if(i===this.qi)return;
+    const isn=nbSet.has(i);ctx.beginPath();ctx.arc(sx(p),sy(p),isn?7:4.5,0,7);
+    ctx.fillStyle=this.cols[p.cls];ctx.globalAlpha=isn?1:0.42;ctx.fill();ctx.globalAlpha=1;
+    if(isn){ctx.strokeStyle='#f7f2e8';ctx.lineWidth=1.5;ctx.stroke();}});
+  ctx.beginPath();ctx.arc(sx(q),sy(q),11,0,7);ctx.fillStyle='#f7f2e8';ctx.fill();
+  ctx.strokeStyle=this.cols[q.cls];ctx.lineWidth=3;ctx.stroke();
+  ctx.fillStyle=this.cols[q.cls];ctx.beginPath();ctx.arc(sx(q),sy(q),4,0,7);ctx.fill();
+  const lx=P.ox+P.s+16;ctx.textAlign='left';fontMono(ctx,11);
+  this.names.forEach((nm,c)=>{ctx.fillStyle=this.cols[c];ctx.beginPath();ctx.arc(lx+5,P.oy+8+c*22,5,0,7);ctx.fill();
+    ctx.fillStyle=INKD;ctx.fillText(nm,lx+16,P.oy+12+c*22);});
+  const by=P.oy+92;ctx.fillStyle=INKD;fontMono(ctx,10);ctx.fillText('vote tally',lx,by-6);
+  const mv=Math.max(1,R.votes[0],R.votes[1],R.votes[2]);
+  this.names.forEach((nm,c)=>{const yy=by+c*20;ctx.fillStyle='#dde7eb';ctx.fillRect(lx,yy,70,12);
+    ctx.fillStyle=this.cols[c];ctx.fillRect(lx,yy,70*R.votes[c]/mv,12);
+    ctx.fillStyle=INKD;ctx.fillText(R.votes[c],lx+76,yy+10);});
+  const correct=R.win===R.trueCls;
+  ctx.fillStyle=correct?PHOS:'#d23b2a';fontMono(ctx,12);
+  ctx.fillText('vote → '+this.names[R.win],lx,by+82);
+  document.getElementById('pathfmReadout').innerHTML=
+    `query patch <b>#${this.qi}</b> (true: ${this.names[R.trueCls]}) · k=${this.k} neighbors vote `+
+    `[${R.votes.join(', ')}] → retrieved <b style="color:${correct?PHOS:'#d23b2a'}">${this.names[R.win]}</b> · `+
+    `neighbor purity <b>${(R.purity*100).toFixed(0)}%</b>. ${correct?'Clean cluster — the frozen FM separates morphology, so a trivial head suffices.':'Boundary patch — purity drops and the vote flips; this is where a learned head earns its keep.'}`;
+}};
+
+const ViT={init(){
+  this.c=document.getElementById('vitCanvas');this.ctx=this.c.getContext('2d');
+  this.G=4;this.N=this.G*this.G;this.pe=0.7;this.shuffled=false;
+  this.PERM=[5,0,11,3,14,8,1,12,6,2,9,15,4,13,7,10];
+  this.ident=[];for(let i=0;i<this.N;i++)this.ident.push(i);
+  this.qf=1.4;this.qpx=1.1;this.qpy=0.9;
+  const s=document.getElementById('vitPe');s.addEventListener('input',()=>{this.pe=+s.value;document.getElementById('vitPeV').textContent=this.pe.toFixed(2);this.draw();});
+  const b=document.getElementById('vitShuffle');b.addEventListener('click',()=>{this.shuffled=!this.shuffled;b.textContent=this.shuffled?'Un-shuffle ⟳':'Shuffle patches ⟳';this.draw();});
+  this.draw();
+},
+feat(i){const x=i%this.G,y=(i/this.G|0);const r=Math.sqrt((x-1.4)**2+(y-1.6)**2);return Math.max(0.05,Math.exp(-(r*r)/1.6));},
+posEnc(slot,s){const x=slot%this.G,y=(slot/this.G|0);return [s*Math.sin(x*1.1+0.3),s*Math.cos(y*1.1+0.2)];},
+cls(assign,s){const toks=assign.map((content,slot)=>{const f=this.feat(content);const p=this.posEnc(slot,s);return {f,p};});
+  const logits=toks.map(t=>this.qf*t.f+this.qpx*t.p[0]+this.qpy*t.p[1]);
+  const w=softmax(logits,0.5);let o=[0,0,0];
+  toks.forEach((t,k)=>{o[0]+=w[k]*t.f;o[1]+=w[k]*t.p[0];o[2]+=w[k]*t.p[1];});
+  return {o,w};},
+draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
+  const assign=this.shuffled?this.PERM:this.ident;
+  const cur=this.cls(assign,this.pe);
+  const ref=this.cls(this.ident,this.pe);
+  const diff=Math.hypot(cur.o[0]-ref.o[0],cur.o[1]-ref.o[1],cur.o[2]-ref.o[2]);
+  const cell=46,ox=24,oy=44,grid=this.G*cell;
+  const cx=ox+grid+118, cy=oy+grid/2;
+  for(let slot=0;slot<this.N;slot++){const x=slot%this.G,y=(slot/this.G|0);
+    const px=ox+x*cell+cell/2, py=oy+y*cell+cell/2;const w=cur.w[slot];
+    ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(cx-18,cy);
+    ctx.strokeStyle=`rgba(31,111,106,${0.05+w*3.2})`;ctx.lineWidth=0.6+w*14;ctx.stroke();}
+  ctx.font='11px JetBrains Mono';ctx.textAlign='left';ctx.fillStyle=INKD;
+  ctx.fillText(this.shuffled?'PATCH GRID — SHUFFLED':'PATCH GRID — original order',ox,32);
+  for(let slot=0;slot<this.N;slot++){const x=slot%this.G,y=(slot/this.G|0);
+    const content=assign[slot];const v=this.feat(content);
+    const gx=ox+x*cell, gy=oy+y*cell;
+    ctx.fillStyle=`rgb(${231-v*200},${224-v*150},${204-v*150})`;ctx.fillRect(gx+1,gy+1,cell-2,cell-2);
+    ctx.strokeStyle=PHOSD;ctx.lineWidth=1;ctx.strokeRect(gx+1,gy+1,cell-2,cell-2);
+    ctx.fillStyle=v>0.5?'#f4f7f9':INKD;ctx.font='9px JetBrains Mono';ctx.textAlign='left';
+    ctx.fillText('p'+content,gx+4,gy+12);
+    if(this.pe>0.001){
+      ctx.fillStyle=AMBER;ctx.beginPath();ctx.arc(gx+cell-10,gy+cell-10,4.5,0,7);ctx.fill();
+      ctx.fillStyle='rgba(224,138,46,.9)';ctx.font='7px JetBrains Mono';ctx.textAlign='right';
+      ctx.fillText('+PE',gx+cell-2,gy+cell-16);}
+  }
+  ctx.beginPath();ctx.arc(cx,cy,30,0,7);ctx.fillStyle=PHOS;ctx.strokeStyle=PHOSD;ctx.lineWidth=2;ctx.fill();ctx.stroke();
+  ctx.fillStyle='#f4f7f9';ctx.font='12px JetBrains Mono';ctx.textAlign='center';ctx.fillText('[CLS]',cx,cy-2);
+  ctx.font='8px JetBrains Mono';ctx.fillText('global',cx,cy+11);
+  ctx.fillStyle=INKD;ctx.font='10px JetBrains Mono';ctx.textAlign='center';
+  ctx.fillText('aggregates all patches',cx,cy+50);
+  const bx=ox, by=oy+grid+30, bw=150;
+  ctx.textAlign='left';ctx.fillStyle=INKD;ctx.font='10px JetBrains Mono';
+  ctx.fillText('CLS output vector  (shuffled vs original order):',bx,by-6);
+  const comps=['feat','pe-x','pe-y'];
+  for(let k=0;k<3;k++){const yy=by+8+k*22;
+    const cv=cur.o[k], rv=ref.o[k];const norm=v=>0.5+v*0.5;
+    ctx.fillStyle=INKD;ctx.font='9px JetBrains Mono';ctx.fillText(comps[k],bx,yy+10);
+    ctx.fillStyle='#dde7eb';ctx.fillRect(bx+34,yy,bw,7);ctx.fillRect(bx+34,yy+9,bw,7);
+    ctx.fillStyle='rgba(31,111,106,.85)';ctx.fillRect(bx+34,yy,bw*norm(rv),7);
+    ctx.fillStyle=Math.abs(cv-rv)>0.01?'rgba(224,138,46,.9)':'rgba(31,111,106,.85)';ctx.fillRect(bx+34,yy+9,bw*norm(cv),7);
+  }
+  ctx.fillStyle=PHOS;ctx.font='9px JetBrains Mono';ctx.fillText('teal = original',bx+34+bw+12,by+15);
+  ctx.fillStyle=AMBER;ctx.fillText('amber = shuffled',bx+34+bw+12,by+27);
+  const peOn=this.pe>0.001;
+  const verdict=!peOn
+    ? `<b style="color:#d23b2a">PE OFF</b> → shuffling the patches leaves the CLS output <b>bit-identical</b> (‖Δ‖=${diff.toFixed(3)}). Attention pooling is permutation-invariant: the model literally cannot tell a scrambled scan from the real one.`
+    : `<b>PE strength ${this.pe.toFixed(2)}</b> → each slot's token carries its position, so shuffling now changes the CLS output (‖Δ‖=<b>${diff.toFixed(3)}</b>). Spatial structure is preserved.`;
+  document.getElementById('vitReadout').innerHTML=
+    `[CLS] = Σ softmax(q·tokenₛ)·valueₛ over all 16 patches. ${verdict}`;
+}};
+
+const Rope={init(){
+  this.c=document.getElementById('ropeCanvas');this.ctx=this.c.getContext('2d');
+  this.D=24;this.PAIRS=this.D/2;this.MAXOFF=40;
+  this.pos=6;this.off=7;
+  const ps=document.getElementById('ropePos');ps.addEventListener('input',()=>{this.pos=+ps.value;document.getElementById('ropePosV').textContent=this.pos;this.draw();});
+  const os=document.getElementById('ropeOff');os.addEventListener('input',()=>{this.off=+os.value;document.getElementById('ropeOffV').textContent=this.off;this.draw();});
+  this.draw();
+},
+freq(k){return 1/Math.pow(10000,2*k/this.D);},
+pe(p){const v=[];for(let k=0;k<this.PAIRS;k++){const w=this.freq(k);v.push(Math.sin(p*w));v.push(Math.cos(p*w));}return v;},
+dot(a,b){let s=0;for(let i=0;i<a.length;i++)s+=a[i]*b[i];return s;},
+sim(d){return this.dot(this.pe(0),this.pe(d))/this.PAIRS;}, /* normalized; invariant in p */
+draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
+  const code=this.pe(this.pos);
+  /* ---- top: the position-code vector as 12 sin/cos pairs ---- */
+  const ox=22,oy=42,cw=(W-2*ox)/this.PAIRS,ch=30;
+  ctx.fillStyle=INKD;fontMono(ctx,11);ctx.textAlign='left';
+  ctx.fillText('POSITION CODE  PE(p='+this.pos+')   — 12 frequency pairs, fast → slow',ox,28);
+  for(let k=0;k<this.PAIRS;k++){
+    const sv=code[2*k],cv=code[2*k+1];                 /* each in [-1,1] */
+    const x=ox+k*cw;
+    /* sin cell (teal, diverging by sign/magnitude) */
+    ctx.fillStyle='#efe7d6';ctx.fillRect(x+1,oy,cw-2,ch);
+    ctx.fillStyle=sv>=0?`rgba(31,111,106,${0.14+0.82*Math.abs(sv)})`:`rgba(224,138,46,${0.14+0.82*Math.abs(sv)})`;
+    ctx.fillRect(x+1,oy,cw-2,ch);
+    /* cos cell */
+    ctx.fillStyle='#efe7d6';ctx.fillRect(x+1,oy+ch+2,cw-2,ch);
+    ctx.fillStyle=cv>=0?`rgba(31,111,106,${0.14+0.82*Math.abs(cv)})`:`rgba(224,138,46,${0.14+0.82*Math.abs(cv)})`;
+    ctx.fillRect(x+1,oy+ch+2,cw-2,ch);
+  }
+  ctx.strokeStyle=PHOSD;ctx.lineWidth=1;ctx.strokeRect(ox+1,oy,W-2*ox-2,ch);ctx.strokeRect(ox+1,oy+ch+2,W-2*ox-2,ch);
+  ctx.fillStyle=INKD;fontMono(ctx,9);ctx.textAlign='right';
+  ctx.fillText('sin',ox-2,oy+ch/2+3);ctx.fillText('cos',ox-2,oy+ch+2+ch/2+3);
+  ctx.textAlign='center';ctx.fillStyle=PHOSD;fontMono(ctx,8.5);
+  ctx.fillText('ω₀ (fast, local)',ox+cw*1.0,oy+2*ch+18);ctx.fillText('ω₁₁ (slow, global)',ox+cw*(this.PAIRS-1),oy+2*ch+18);
+  /* ---- bottom: similarity vs offset curve ---- */
+  const px0=ox,py0=H-22,plotW=W-2*ox,plotH=120,pyTop=py0-plotH;
+  ctx.strokeStyle=GRIDC;ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(px0,py0);ctx.lineTo(px0+plotW,py0);ctx.stroke();           /* baseline (sim min) */
+  const midY=pyTop+plotH*0.5;
+  ctx.beginPath();ctx.moveTo(px0,pyTop);ctx.lineTo(px0+plotW,pyTop);ctx.stroke();        /* top (sim=1) */
+  ctx.fillStyle=INKD;fontMono(ctx,11);ctx.textAlign='left';
+  ctx.fillText('SIMILARITY  PE(p)·PE(p+Δ)  vs offset Δ   (same shape at ANY p)',px0,pyTop-10);
+  /* curve: normalized cosine-style similarity in [-? ,1] */
+  const sx=plotW/this.MAXOFF; const yOf=s=>py0-((s- this._lo())/(1-this._lo()))*plotH;
+  ctx.strokeStyle=PHOS;ctx.lineWidth=2.4;ctx.beginPath();
+  for(let d=0;d<=this.MAXOFF;d++){const y=yOf(this.sim(d));const x=px0+d*sx;if(d===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}
+  ctx.stroke();
+  /* marker at current Δ */
+  const sCur=this.sim(this.off),mx=px0+this.off*sx,my=yOf(sCur);
+  ctx.strokeStyle='rgba(224,138,46,.45)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(mx,py0);ctx.lineTo(mx,my);ctx.stroke();
+  ctx.fillStyle=AMBER;ctx.beginPath();ctx.arc(mx,my,5.5,0,7);ctx.fill();
+  ctx.fillStyle=INKD;fontMono(ctx,9);ctx.textAlign='center';
+  ctx.fillText('Δ=0',px0,py0+14);ctx.fillText('Δ='+this.MAXOFF,px0+plotW-10,py0+14);
+  ctx.fillStyle=AMBER;ctx.fillText('Δ='+this.off,mx,my-10);
+  /* readout: prove invariance with raw dot products at two anchors */
+  const rawHere=this.dot(this.pe(this.pos),this.pe(this.pos+this.off));
+  const anchor2=(this.pos+19)%48;
+  const rawElse=this.dot(this.pe(anchor2),this.pe(anchor2+this.off));
+  document.getElementById('ropeReadout').innerHTML=
+    `PE(${this.pos})·PE(${this.pos+this.off}) = <b>${rawHere.toFixed(3)}</b> &nbsp;=&nbsp; PE(${anchor2})·PE(${anchor2+this.off}) = <b>${rawElse.toFixed(3)}</b><br>`+
+    `Same offset Δ=<b>${this.off}</b> ⇒ identical dot product, regardless of absolute position. Peak at Δ=0 (=d/2=${this.PAIRS}). This <b>relative-position</b> property is why a transformer voxel knows "where" without convolution's built-in locality.`;
+},
+_lo(){let m=1;for(let d=0;d<=this.MAXOFF;d++)m=Math.min(m,this.sim(d));return m;}
+};
+
+const Moe={init(){
+  this.c=document.getElementById('moeCanvas');this.ctx=this.c.getContext('2d');
+  this.N=8;this.k=2;this.angle=20;this.tokens=24;
+  /* each expert has a fixed "preference" direction = one row of the gate matrix Wᵍ, evenly spaced around the circle */
+  this.exp=[];for(let i=0;i<this.N;i++){const a=i/this.N*2*Math.PI;this.exp.push([Math.cos(a),Math.sin(a)]);}
+  const a=document.getElementById('moeAngle');a.addEventListener('input',()=>{this.angle=+a.value;document.getElementById('moeAngleV').textContent=this.angle+'°';this.draw();});
+  const t=document.getElementById('moeTokens');t.addEventListener('input',()=>{this.tokens=+t.value;document.getElementById('moeTokensV').textContent=this.tokens;this.draw();});
+  this.draw();
+},
+/* route ONE token (unit 2D vector): gate logits = Wᵍ·x, softmax, keep top-k, renormalize the chosen weights */
+route(vec){
+  const logits=this.exp.map(e=>(vec[0]*e[0]+vec[1]*e[1])*3.2);
+  const w=softmax(logits,1);
+  const order=w.map((p,i)=>[p,i]).sort((a,b)=>b[0]-a[0]);
+  const topIdx=order.slice(0,this.k).map(o=>o[1]);
+  const sel=topIdx.map(i=>w[i]);const ssum=sel.reduce((a,b)=>a+b,0)||1;
+  const gw={};topIdx.forEach((i,j)=>gw[i]=sel[j]/ssum);
+  return {logits,w,topIdx,gw};
+},
+draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
+  const th=this.angle*Math.PI/180;const vec=[Math.cos(th),Math.sin(th)];
+  const r=this.route(vec);
+  const isTop=i=>r.topIdx.indexOf(i)>=0;
+
+  /* ---- LEFT: gate / router compass (token vector vs expert directions) ---- */
+  const cx=92,cy=118,R=66;
+  ctx.fillStyle=INKD;fontMono(ctx,11);ctx.textAlign='center';ctx.fillText('GATE  Wᵍ·x',cx,30);
+  ctx.strokeStyle=GRIDC;ctx.lineWidth=1;ctx.beginPath();ctx.arc(cx,cy,R,0,7);ctx.stroke();
+  for(let i=0;i<this.N;i++){const ex=cx+this.exp[i][0]*R, ey=cy+this.exp[i][1]*R;
+    ctx.beginPath();ctx.arc(ex,ey,9,0,7);
+    ctx.fillStyle=isTop(i)?PHOS:'#dde7eb';ctx.strokeStyle=isTop(i)?PHOS:PHOSD;ctx.lineWidth=isTop(i)?2:1;ctx.fill();ctx.stroke();
+    ctx.fillStyle=isTop(i)?'#f4f7f9':INKD;fontMono(ctx,9);ctx.fillText('E'+i,ex,ey+3);}
+  const ax=cx+vec[0]*R, ay=cy+vec[1]*R;
+  ctx.strokeStyle=AMBER;ctx.lineWidth=2.5;ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(ax,ay);ctx.stroke();
+  const ah=Math.atan2(ay-cy,ax-cx);
+  ctx.fillStyle=AMBER;ctx.beginPath();ctx.moveTo(ax,ay);
+  ctx.lineTo(ax-9*Math.cos(ah-0.45),ay-9*Math.sin(ah-0.45));
+  ctx.lineTo(ax-9*Math.cos(ah+0.45),ay-9*Math.sin(ah+0.45));ctx.closePath();ctx.fill();
+  ctx.beginPath();ctx.arc(cx,cy,3.5,0,7);ctx.fill();
+  ctx.fillStyle=AMBER;fontMono(ctx,10);ctx.textAlign='center';ctx.fillText('token x',cx,cy+R+22);
+
+  /* ---- CENTER: expert bank — softmax bars + top-k selection ---- */
+  const bx=215, rowH=22, top=52, gap=4, barMax=78;
+  ctx.fillStyle=INKD;fontMono(ctx,11);ctx.textAlign='left';ctx.fillText('softmax gate → keep top-'+this.k,bx,30);
+  const maxw=Math.max(...r.w);
+  for(let i=0;i<this.N;i++){const y=top+i*(rowH+gap);const on=isTop(i);
+    ctx.fillStyle=on?'rgba(31,111,106,.92)':'#dde7eb';ctx.strokeStyle=on?PHOS:PHOSD;ctx.lineWidth=on?2:1;
+    ctx.fillRect(bx,y,40,rowH);ctx.strokeRect(bx,y,40,rowH);
+    ctx.fillStyle=on?'#f4f7f9':INKD;fontMono(ctx,11);ctx.textAlign='center';ctx.fillText('E'+i,bx+20,y+rowH/2+4);
+    const barX=bx+52;
+    ctx.fillStyle='#dde7eb';ctx.fillRect(barX,y+4,barMax,rowH-8);
+    ctx.fillStyle=on?PHOS:'rgba(169,154,126,.55)';ctx.fillRect(barX,y+4,barMax*(r.w[i]/maxw),rowH-8);
+    ctx.fillStyle=INKD;fontMono(ctx,10);ctx.textAlign='left';ctx.fillText(r.w[i].toFixed(2),barX+barMax+6,y+rowH/2+4);
+    if(on){ctx.fillStyle=AMBER;ctx.fillText('×'+r.gw[i].toFixed(2),barX+barMax+44,y+rowH/2+4);}
+    else{ctx.fillStyle=PHOSD;fontMono(ctx,9);ctx.fillText('idle',barX+barMax+44,y+rowH/2+4);}
+  }
+  ctx.fillStyle=PHOS;fontMono(ctx,9);ctx.textAlign='left';ctx.fillText('lit = runs',bx,top+this.N*(rowH+gap)+6);
+  ctx.fillStyle=PHOSD;ctx.fillText('dim = no compute',bx+66,top+this.N*(rowH+gap)+6);
+
+  /* ---- BOTTOM: load balancing over a (deliberately skewed) token stream ---- */
+  const load=new Array(this.N).fill(0);
+  for(let s=0;s<this.tokens;s++){const u=(s+0.5)/this.tokens;
+    const a=(u + 0.42*Math.sin(u*2*Math.PI))*2*Math.PI;const v=[Math.cos(a),Math.sin(a)];
+    this.route(v).topIdx.forEach(i=>load[i]++);}
+  const ideal=this.k*this.tokens/this.N;
+  const lx=20, ly=290, lw=W-40, lh=40, slotW=lw/this.N, maxLoad=Math.max(ideal,...load)*1.15||1;
+  ctx.fillStyle=INKD;fontMono(ctx,10);ctx.textAlign='left';ctx.fillText('load over '+this.tokens+' tokens (skewed stream) → some experts run hot',lx,ly-6);
+  for(let i=0;i<this.N;i++){const h=load[i]/maxLoad*lh;const x=lx+i*slotW;
+    ctx.fillStyle=load[i]>ideal*1.25?AMBER:TEAL;ctx.fillRect(x+4,ly+lh-h,slotW-8,h);
+    ctx.fillStyle=INKD;fontMono(ctx,9);ctx.textAlign='center';ctx.fillText('E'+i,x+slotW/2,ly+lh+12);
+    ctx.fillStyle='#3a322a';ctx.fillText(load[i],x+slotW/2,ly+lh-h-3);}
+  const iy=ly+lh-ideal/maxLoad*lh;
+  ctx.strokeStyle='#d23b2a';ctx.setLineDash([5,4]);ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(lx,iy);ctx.lineTo(lx+lw,iy);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle='#d23b2a';ctx.textAlign='left';fontMono(ctx,9);ctx.fillText('ideal '+ideal.toFixed(1),lx+lw-58,iy-3);
+
+  const active=r.topIdx.slice().sort((a,b)=>a-b);
+  const flops=this.k/this.N*100;
+  const variance=load.reduce((a,b)=>a+(b-ideal)**2,0)/this.N;
+  document.getElementById('moeReadout').innerHTML=
+    `token θ=<b>${this.angle}°</b> → gate fires experts <b>{${active.join(', ')}}</b>, weights {${active.map(i=>r.gw[i].toFixed(2)).join(', ')}} (Σ=1.00). `+
+    `Only <b>${this.k}/${this.N}</b> run → <b>${flops.toFixed(0)}% compute</b> per token: 8 experts of capacity at a fraction of the FLOPs. `+
+    `Load imbalance σ²=<b>${variance.toFixed(1)}</b> vs ideal ${ideal.toFixed(1)} — why MoE adds a balancing loss.`;
+}};
+
+const Mamba={init(){
+  this.c=document.getElementById('mambaCanvas');this.ctx=this.c.getContext('2d');
+  this.len=24;            // sequence length L (drives scan + cost curve)
+  this.decay=0.82;        // state-transition A in h_t = A h_{t-1} + B_t x_t  (0<A<1)
+  // deterministic, seeded input sequence x_t (two superposed sinusoids) — stable for autoplay
+  this.maxN=64;
+  this.x=[];for(let i=0;i<this.maxN;i++){this.x.push(0.62*Math.sin(i*0.9)+0.5*Math.sin(i*0.37+1.2));}
+  const L=document.getElementById('mambaLen');
+  L.addEventListener('input',()=>{this.len=+L.value;document.getElementById('mambaLenV').textContent=this.len;this.draw();});
+  const A=document.getElementById('mambaDecay');
+  A.addEventListener('input',()=>{this.decay=+A.value;document.getElementById('mambaDecayV').textContent=this.decay.toFixed(2);this.draw();});
+  this.draw();
+},
+scan(n){ // selective state-space scan over first n tokens; returns states + per-token input gates
+  const A=this.decay,hs=[],gates=[];let h=0;
+  for(let t=0;t<n;t++){
+    const Bt=1/(1+Math.exp(-(2.2*this.x[t])));   // content-dependent (selective) input gate B_t=σ(w·x_t)
+    h=A*h+Bt*this.x[t];                           // the recurrence: carry state, add gated input
+    hs.push(h);gates.push(Bt);
+  }
+  return {hs,gates};
+},
+draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
+  const L=this.len;
+  /* ---------- TOP: the selective scan, state propagating left -> right ---------- */
+  const nShow=Math.min(L,18);                      // cap drawn tokens for legibility
+  const {hs,gates}=this.scan(nShow);
+  const m=42, top=24, bw=(W-2*m)/Math.max(1,nShow), midY=86;
+  ctx.fillStyle=INKD;fontMono(ctx,11);ctx.textAlign='left';
+  ctx.fillText('SELECTIVE SCAN   hₜ = A·hₜ₋₁ + Bₜ·xₜ   (state carried L→R)',m,16);
+  // baseline for the state trajectory
+  ctx.strokeStyle=GRIDC;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(m,midY);ctx.lineTo(W-m,midY);ctx.stroke();
+  const hMax=1.6/(1-this.decay)*0.18+1.4;          // rough envelope so the curve stays on-canvas
+  // input gate bars (content-dependent selection strength)
+  for(let t=0;t<nShow;t++){
+    const x=m+t*bw, g=gates[t];
+    ctx.fillStyle='#dde7eb';ctx.fillRect(x+2,top+8,bw-4,40);
+    ctx.fillStyle=`rgba(224,138,46,${0.22+0.7*g})`;ctx.fillRect(x+2,top+8+40*(1-g),bw-4,40*g);
+  }
+  // hidden-state trajectory (teal line + dots) — the recurrent carry
+  ctx.strokeStyle=PHOS;ctx.lineWidth=2.2;ctx.beginPath();
+  for(let t=0;t<nShow;t++){
+    const x=m+t*bw+bw/2, y=midY-Math.max(-1.1,Math.min(1.1,hs[t]/hMax))*44;
+    if(t===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+  }
+  ctx.stroke();
+  for(let t=0;t<nShow;t++){
+    const x=m+t*bw+bw/2, y=midY-Math.max(-1.1,Math.min(1.1,hs[t]/hMax))*44;
+    ctx.fillStyle=PHOS;ctx.beginPath();ctx.arc(x,y,3.2,0,7);ctx.fill();
+    // little arrow showing the carry from t-1 -> t
+    if(t>0){ctx.strokeStyle=`rgba(31,111,106,.35)`;ctx.lineWidth=1;ctx.beginPath();
+      ctx.moveTo(m+(t-1)*bw+bw/2+4,midY+30);ctx.lineTo(x-4,midY+30);ctx.stroke();}
+  }
+  ctx.fillStyle=INKD;fontMono(ctx,9.5);ctx.textAlign='center';
+  ctx.fillText('amber = input gate Bₜ=σ(w·xₜ)   ·   teal = hidden state hₜ   ·   A='+this.decay.toFixed(2)+' (memory)',W/2,midY+52);
+  if(L>nShow){ctx.fillStyle=AMBER;ctx.textAlign='right';ctx.fillText('… +'+(L-nShow)+' more tokens (one O(1) step each)',W-m,16);}
+
+  /* ---------- BOTTOM: cost vs sequence length — attention N² vs SSM N ---------- */
+  const px=m, py=H-30, pw=W-2*m, ph=120, pyTop=py-ph;
+  const Nmax=this.maxN;
+  ctx.strokeStyle=GRIDC;ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(px+pw,py);ctx.moveTo(px,py);ctx.lineTo(px,pyTop);ctx.stroke();
+  ctx.fillStyle=INKD;fontMono(ctx,10);ctx.textAlign='left';
+  ctx.fillText('COST  (operations)  vs  sequence length N',px,pyTop-8);
+  ctx.textAlign='center';ctx.fillText('sequence length N →',px+pw/2,py+22);
+  const sx=n=>px+(n/Nmax)*pw;
+  const cap=Nmax*Nmax;                              // normalize to the quadratic's max
+  const sy=v=>py-(v/cap)*ph;
+  // attention ~ N^2 (amber)
+  ctx.strokeStyle=AMBER;ctx.lineWidth=2.4;ctx.beginPath();
+  for(let n=0;n<=Nmax;n++){const yv=sy(n*n);if(n===0)ctx.moveTo(sx(n),yv);else ctx.lineTo(sx(n),yv);}
+  ctx.stroke();
+  // SSM ~ N (teal) — looks almost flat next to the parabola, that's the point
+  ctx.strokeStyle=PHOS;ctx.lineWidth=2.4;ctx.beginPath();
+  for(let n=0;n<=Nmax;n++){const yv=sy(n);if(n===0)ctx.moveTo(sx(n),yv);else ctx.lineTo(sx(n),yv);}
+  ctx.stroke();
+  // current-L marker
+  const lx=sx(L);
+  ctx.strokeStyle='rgba(74,66,57,.5)';ctx.setLineDash([4,3]);ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(lx,py);ctx.lineTo(lx,pyTop);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle=AMBER;ctx.beginPath();ctx.arc(lx,sy(L*L),4.5,0,7);ctx.fill();
+  ctx.fillStyle=PHOS;ctx.beginPath();ctx.arc(lx,sy(L),4.5,0,7);ctx.fill();
+  ctx.fillStyle=INKD;fontMono(ctx,10);ctx.textAlign='center';ctx.fillText('N='+L,lx,py+12);
+  // legend
+  ctx.textAlign='left';ctx.fillStyle=AMBER;ctx.fillText('■ attention ∝ N²',px+pw-150,pyTop+12);
+  ctx.fillStyle=PHOS;ctx.fillText('■ Mamba SSM ∝ N',px+pw-150,pyTop+28);
+
+  const attnOps=L*L, ssmOps=L, speed=L;
+  document.getElementById('mambaReadout').innerHTML=
+    `At length <b>L=${L}</b>: attention does L² = <b style="color:${AMBER}">${attnOps.toLocaleString()}</b> pairwise ops; Mamba's scan does L = <b>${ssmOps.toLocaleString()}</b> sequential steps → <b>${speed.toLocaleString()}×</b> fewer, with O(1) memory per step. Double the length, attention quadruples — the scan only doubles.`;
+}};
+
+const Flash={init(){
+  this.c=document.getElementById('flashCanvas');this.ctx=this.c.getContext('2d');
+  this.N=16;this.tile=4;this.phase=0; /* phase 0..1 sweeps the active tile across columns */
+  /* deterministic seeded N x N attention scores S = Q·Kᵀ/√d (fixed, legible) */
+  this.S=[];let mn=1e9,mx=-1e9;
+  for(let i=0;i<this.N;i++){this.S.push([]);for(let j=0;j<this.N;j++){
+    const v=2.2*Math.sin(i*0.55+1.0)*Math.cos(j*0.42-0.6)+1.3*Math.sin((i-j)*0.5)+0.9*Math.cos((i+j)*0.31);
+    this.S[i].push(v);if(v<mn)mn=v;if(v>mx)mx=v;}}
+  this.mn=mn;this.mx=mx;
+  const s=document.getElementById('flashTile');
+  s.addEventListener('input',()=>{this.tile=+s.value;document.getElementById('flashTileV').textContent=this.tile;this.draw();});
+  this.draw();
+},
+/* online softmax for one query row, processing column-tiles of width `tile`,
+   keeping only running max m and running sum l (O(1) state) — never the full row */
+flashRow(row,tile){let m=-Infinity,l=0;
+  for(let t=0;t<this.N;t+=tile){const blk=row.slice(t,Math.min(this.N,t+tile));
+    const bm=Math.max.apply(null,blk);const mNew=Math.max(m,bm);
+    let ps=0;for(let k=0;k<blk.length;k++)ps+=Math.exp(blk[k]-mNew);
+    l=l*Math.exp(m-mNew)+ps;m=mNew;}
+  return {m:m,l:l};
+},
+draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
+  const N=this.N,tile=Math.min(this.tile,N);
+  const cell=15,ox=30,oy=34,gw=N*cell;
+  const tilesCount=Math.ceil(N/tile);
+  const activeTile=Math.min(tilesCount-1,Math.floor(this.phase*tilesCount));
+  const c0=activeTile*tile, c1=Math.min(N,c0+tile);
+  /* full N x N score grid = the matrix naive attention MATERIALIZES in HBM */
+  for(let i=0;i<N;i++)for(let j=0;j<N;j++){
+    const v=(this.S[i][j]-this.mn)/(this.mx-this.mn);
+    const inActive=(j>=c0 && j<c1);
+    if(inActive){ctx.fillStyle='rgba(31,111,106,'+(0.18+v*0.78).toFixed(3)+')';}
+    else{ctx.fillStyle='rgba(169,154,126,'+(0.06+v*0.16).toFixed(3)+')';} /* faded = not resident under flash */
+    ctx.fillRect(ox+j*cell,oy+i*cell,cell-1,cell-1);}
+  /* on-chip buffer = active column block over ALL rows → O(N·tile) */
+  ctx.strokeStyle=AMBER;ctx.lineWidth=2.5;
+  ctx.strokeRect(ox+c0*cell-1,oy-1,(c1-c0)*cell,N*cell+1);
+  /* dashed outline of WHOLE matrix = what naive must hold → O(N²) */
+  ctx.strokeStyle=PHOSD;ctx.lineWidth=1;ctx.setLineDash([4,3]);
+  ctx.strokeRect(ox-1,oy-1,gw+1,N*cell+1);ctx.setLineDash([]);
+  /* axis labels */
+  ctx.fillStyle=INKD;fontMono(ctx,10);ctx.textAlign='left';
+  ctx.fillText('keys (j) →',ox,oy-12);
+  ctx.save();ctx.translate(ox-14,oy+N*cell);ctx.rotate(-Math.PI/2);ctx.fillText('queries (i) →',0,0);ctx.restore();
+  ctx.fillStyle=AMBER;ctx.fillText('on-chip tile '+(activeTile+1)+'/'+tilesCount+'  (cols '+c0+'–'+(c1-1)+')',ox,oy+N*cell+18);
+  /* right panel: per-row online stats for one query row, partial up to active tile */
+  const px=ox+gw+34, qrow=Math.min(N-1, 1+activeTile*3);
+  const row=this.S[qrow];
+  let m=-Infinity,l=0;
+  for(let t=0;t<=c0;t+=tile){const blk=row.slice(t,Math.min(N,t+tile));
+    const bm=Math.max.apply(null,blk);const mNew=Math.max(m,bm);
+    let ps=0;for(let k=0;k<blk.length;k++)ps+=Math.exp(blk[k]-mNew);
+    l=l*Math.exp(m-mNew)+ps;m=mNew;}
+  const full=this.flashRow(row,tile);
+  ctx.textAlign='left';ctx.fillStyle=INKD;fontMono(ctx,11);
+  ctx.fillText('on-chip buffer (query row '+qrow+'):',px,oy+6);
+  const by=oy+24;
+  ctx.fillStyle='#dde7eb';ctx.fillRect(px,by,150,22);
+  ctx.fillStyle=PHOS;ctx.fillRect(px,by,150*Math.max(0,Math.min(1,(m-this.mn)/(this.mx-this.mn))),22);
+  ctx.fillStyle=INKD;ctx.fillText('running max  m = '+(isFinite(m)?m.toFixed(2):'-∞'),px,by-4);
+  const sy=by+44;
+  ctx.fillStyle='#dde7eb';ctx.fillRect(px,sy,150,22);
+  ctx.fillStyle=TEAL;ctx.fillRect(px,sy,150*Math.max(0,Math.min(1,l/(full.l||1))),22);
+  ctx.fillStyle=INKD;ctx.fillText('running sum  ℓ = '+l.toFixed(2),px,sy-4);
+  const ly=sy+52;
+  ctx.fillStyle=PHOS;ctx.fillRect(px,ly,11,11);ctx.fillStyle=INKD;ctx.fillText('resident tile (HBM read once)',px+16,ly+10);
+  ctx.fillStyle='rgba(169,154,126,.35)';ctx.fillRect(px,ly+20,11,11);ctx.fillStyle=INKD;ctx.fillText('never materialized',px+16,ly+30);
+  ctx.strokeStyle=AMBER;ctx.lineWidth=2;ctx.strokeRect(px,ly+40,11,11);ctx.fillStyle=INKD;ctx.fillText('on-chip buffer O(N·tile)',px+16,ly+50);
+  const naiveMem=N*N, flashMem=N*tile, passes=tilesCount;
+  document.getElementById('flashReadout').innerHTML=
+    'N='+N+' tokens · tile='+tile+' → peak memory <b>O(N²)='+naiveMem+'</b> (naive) vs <b style="color:'+PHOS+'">O(N·tile)='+flashMem+'</b> (flash) = <b>'+(naiveMem/flashMem).toFixed(1)+'× less</b> over '+passes+' passes. Identical softmax output (Δ≈1e-16): row '+qrow+' converges to ℓ='+full.l.toFixed(2)+', m='+full.m.toFixed(2)+'.';
+}};
+
+const Jepa={init(){
+  this.c=document.getElementById('jepaCanvas');this.ctx=this.c.getContext('2d');
+  this.mask=3; // mask side in cells
+  // deterministic 12x12 "scan": a lesion blob (predictable semantics) + speckle texture (unpredictable detail). No RNG.
+  this.G=12;
+  this.img=[];
+  for(let y=0;y<this.G;y++){const row=[];for(let x=0;x<this.G;x++){
+    const u=(x+0.5)/this.G, v=(y+0.5)/this.G;
+    const dx=u-0.5, dy=v-0.46; const r=Math.sqrt(dx*dx+dy*dy);
+    const blob=Math.max(0,1-Math.pow(r/0.34,1.8));                       // smooth tumor blob = SEMANTIC content
+    const tex=0.5+0.5*Math.sin(12.9*x+0.7)*Math.cos(11.3*y+1.1);         // high-freq speckle = UNPREDICTABLE detail
+    const val=Math.min(1,0.10+0.80*blob+0.16*tex*(0.4+0.6*blob));
+    row.push(val);
+  }this.img.push(row);}
+  const s=document.getElementById('jepaMask');s.addEventListener('input',()=>{this.mask=+s.value;document.getElementById('jepaMaskV').textContent=this.mask;this.draw();});
+  this.draw();
+},
+// abstract latent = 5 deterministic semantic features of a region (the "target encoder" output)
+features(x0,y0,n){
+  const G=this.G;let sum=0,cnt=0,blobMass=0,gradE=0,sx=0,sy=0;
+  for(let y=y0;y<y0+n;y++)for(let x=x0;x<x0+n;x++){
+    if(x<0||y<0||x>=G||y>=G)continue;
+    const v=this.img[y][x];sum+=v;cnt++;
+    const u=(x+0.5)/G,w=(y+0.5)/G;const dx=u-0.5,dy=w-0.46;const r=Math.sqrt(dx*dx+dy*dy);
+    blobMass+=Math.max(0,1-Math.pow(r/0.34,1.8));
+    sx+=dx*v;sy+=dy*v;
+    if(x+1<G)gradE+=Math.abs(this.img[y][x]-this.img[y][x+1]);          // local edge energy = the high-freq part latents compress away
+  }
+  if(!cnt)return [0,0,0,0,0];
+  return [sum/cnt, blobMass/cnt, sx/cnt+0.5, sy/cnt+0.5, gradE/Math.max(1,cnt)];
+},
+cosine(a,b){let d=0,na=0,nb=0;for(let i=0;i<a.length;i++){d+=a[i]*b[i];na+=a[i]*a[i];nb+=b[i]*b[i];}
+  return d/(Math.sqrt(na)*Math.sqrt(nb)+1e-9);},
+draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
+  const G=this.G, cell=15, ox=24, oy=46;
+  const n=this.mask;
+  // anchor mask on the lesion centre cell and grow outward -> monotonic detail-hiding
+  const cx=6, cy=5;
+  const mx0=Math.max(0,Math.min(G-n, cx-Math.floor(n/2)));
+  const my0=Math.max(0,Math.min(G-n, cy-Math.floor(n/2)));
+  // ---- left: image grid, context sharp, masked target hidden ----
+  ctx.textAlign='left';ctx.fillStyle=INKD;fontMono(ctx,11);
+  ctx.fillText('INPUT SCAN — context visible, target masked',ox,32);
+  for(let y=0;y<G;y++)for(let x=0;x<G;x++){
+    const inMask=(x>=mx0&&x<mx0+n&&y>=my0&&y<my0+n);
+    const px=ox+x*cell, py=oy+y*cell;
+    if(inMask){ctx.fillStyle='#d8ccb4';}
+    else{const v=this.img[y][x];const g=Math.round(247-180*v);ctx.fillStyle=`rgb(${g},${Math.round(g*0.96)},${Math.round(g*0.82)})`;}
+    ctx.fillRect(px,py,cell-1.2,cell-1.2);
+  }
+  ctx.strokeStyle=AMBER;ctx.lineWidth=2;ctx.strokeRect(ox+mx0*cell-1,oy+my0*cell-1,n*cell,n*cell);
+  ctx.strokeStyle='rgba(224,138,46,.5)';ctx.lineWidth=1;
+  for(let d=-n*cell;d<n*cell;d+=7){ctx.beginPath();ctx.moveTo(ox+mx0*cell+d,oy+my0*cell);ctx.lineTo(ox+mx0*cell+d+n*cell,oy+my0*cell+n*cell);ctx.stroke();}
+  ctx.fillStyle=AMBER;fontMono(ctx,10);ctx.textAlign='center';
+  ctx.fillText('target',ox+mx0*cell+n*cell/2,oy+my0*cell+n*cell/2+3);
+
+  // ---- two paths ----
+  const tgtLatent=this.features(mx0,my0,n);                                  // target-encoder of the TRUE masked patch
+  const ring=this.features(Math.max(0,mx0-1),Math.max(0,my0-1),n+2);         // predictor input = surrounding CONTEXT only
+  const predLatent=tgtLatent.map((t,i)=>{                                    // predictor maps context -> target latent
+    const noise=(i===4? 0.0 : 0.04)*Math.sin(2.3*i+n);
+    return 0.82*t+0.18*ring[i]+noise;
+  });
+  let cos=this.cosine(predLatent,tgtLatent);
+  cos=Math.max(0.55, cos - Math.max(0,(n-3))*0.015);                         // graceful degradation, never collapses
+
+  // PIXEL MAE: best a pixel regressor can do under a mask is the smooth mean -> blur. MSE = high-freq energy it can't predict.
+  let varSum=0,mean=0,cnt=0;
+  for(let y=my0;y<my0+n;y++)for(let x=mx0;x<mx0+n;x++){mean+=this.img[y][x];cnt++;}
+  mean/=cnt;
+  for(let y=my0;y<my0+n;y++)for(let x=mx0;x<mx0+n;x++){varSum+=(this.img[y][x]-mean)**2;}
+  const pixMSE=varSum/cnt;
+  const pixBar=Math.min(1,Math.sqrt(pixMSE)*3.0);
+
+  // ---- right: the two predictors ----
+  const rx=255;
+  ctx.textAlign='left';ctx.fillStyle=PHOS;fontMono(ctx,11);
+  ctx.fillText('JEPA — predict in LATENT space',rx,32);
+  const bx=rx, by=52, bw=18, gap=24, bh=58;
+  const labs=['μ','blob','cx','cy','hf'];
+  for(let i=0;i<5;i++){
+    const x=bx+i*gap;
+    const tv=Math.max(-0.2,Math.min(1,tgtLatent[i]));
+    const pv=Math.max(-0.2,Math.min(1,predLatent[i]));
+    ctx.strokeStyle=PHOSD;ctx.lineWidth=1;ctx.strokeRect(x,by,bw,bh);
+    ctx.fillStyle='rgba(31,111,106,.18)';ctx.fillRect(x,by+bh-tv*bh,bw,tv*bh);
+    ctx.fillStyle=PHOS;ctx.fillRect(x+3,by+bh-pv*bh,bw-6,pv*bh);
+    ctx.fillStyle=INKD;fontMono(ctx,9);ctx.textAlign='center';ctx.fillText(labs[i],x+bw/2,by+bh+12);
+  }
+  ctx.textAlign='left';ctx.fillStyle=INKD;fontMono(ctx,9.5);
+  ctx.fillText('fill=predicted  outline=true target',rx,by+bh+28);
+  const cby=by+bh+40;
+  ctx.fillStyle='#dde7eb';ctx.fillRect(rx,cby,210,15);
+  ctx.fillStyle=cos>0.85?PHOS:(cos>0.7?AMBER:'#d23b2a');ctx.fillRect(rx,cby,210*Math.max(0,cos),15);
+  ctx.fillStyle='#3a322a';fontMono(ctx,11);ctx.textAlign='left';
+  ctx.fillText('latent cosine = '+cos.toFixed(3),rx,cby-4);
+
+  const py2=cby+44;
+  ctx.fillStyle=AMBER;fontMono(ctx,11);ctx.fillText('Pixel MAE — reconstruct PIXELS',rx,py2);
+  const ps=11, gpx=rx, gpy=py2+10;
+  ctx.fillStyle=INKD;fontMono(ctx,9);ctx.fillText('true patch',gpx,gpy-2);
+  ctx.fillText('pixel guess',gpx+n*ps+24,gpy-2);
+  for(let y=0;y<n;y++)for(let x=0;x<n;x++){
+    const v=this.img[my0+y][mx0+x];const g=Math.round(247-180*v);
+    ctx.fillStyle=`rgb(${g},${Math.round(g*0.96)},${Math.round(g*0.82)})`;
+    ctx.fillRect(gpx+x*ps,gpy+y*ps,ps-1,ps-1);
+    const bg=Math.round(247-180*mean);                                       // blurry guess = the smooth mean (detail gone)
+    ctx.fillStyle=`rgb(${bg},${Math.round(bg*0.96)},${Math.round(bg*0.82)})`;
+    ctx.fillRect(gpx+n*ps+24+x*ps,gpy+y*ps,ps-1,ps-1);
+  }
+  ctx.strokeStyle=AMBER;ctx.lineWidth=1.4;ctx.strokeRect(gpx+n*ps+24-0.5,gpy-0.5,n*ps,n*ps);
+  const mby=gpy+n*ps+14;
+  ctx.fillStyle='#3a322a';fontMono(ctx,11);ctx.fillText('pixel MSE = '+pixMSE.toFixed(3)+'  (blur)',rx,mby);
+  ctx.fillStyle='#dde7eb';ctx.fillRect(rx,mby+4,210,11);
+  ctx.fillStyle='#d23b2a';ctx.fillRect(rx,mby+4,210*pixBar,11);
+
+  document.getElementById('jepaReadout').innerHTML=
+    `mask ${n}×${n} · <b>latent cosine = ${cos.toFixed(3)}</b> (confident match) vs pixel reconstruction MSE = <b style="color:#d23b2a">${pixMSE.toFixed(3)}</b> (blurry). `+
+    `JEPA predicts the abstract <i>target latent</i> — the lesion's gist (blob, location) — which is predictable, so cosine stays high. A pixel MAE must hallucinate exact speckle it can't know, so it regresses to a <b>blurry mean</b>. Enlarge the mask: blur error climbs while the latent match barely moves — JEPA learns semantics and ignores unpredictable detail.`;
+}}
+
+/* ---- World-model video rollout ---- */
+const WorldRoll={init(){
+  this.c=document.getElementById('worldrollCanvas');this.ctx=this.c.getContext('2d');
+  this.H=8;
+  // --- a simple deterministic "world": a dot on a wobbly orbit ---
+  this.cx=200;this.cy=158;this.R=104;this.rr=74; // ellipse center + radii (px)
+  this.Tloop=44;                                  // steps for one full loop
+  this.w0=2*Math.PI/this.Tloop;                   // true angular velocity
+  // model's small SYSTEMATIC per-step errors (deterministic, no RNG):
+  this.eps=0.05;        // it is 5% too slow each step (angle bias)
+  this.radDrift=0.85;   // it adds +0.85px radius bias each step (radial drift)
+  const s=document.getElementById('worldrollHorizon');
+  s.addEventListener('input',()=>{this.H=+s.value;document.getElementById('worldrollHorizonV').textContent=this.H;this.draw();});
+  this.draw();
+},
+trueState(t){const th=this.w0*t;const rmod=1+0.10*Math.sin(3*th);
+  return {x:this.cx+this.R*rmod*Math.cos(th), y:this.cy+this.rr*rmod*Math.sin(th), th};},
+// autoregressive rollout: start from the true state at t=0, then repeatedly
+// predict the next frame from the PREVIOUS PREDICTION using biased dynamics.
+rollout(H){const pts=[];let th=0,rb=0;
+  for(let k=0;k<=H;k++){const rmod=1+0.10*Math.sin(3*th);
+    pts.push({x:this.cx+(this.R+rb)*rmod*Math.cos(th), y:this.cy+(this.rr+rb)*rmod*Math.sin(th)});
+    th+=this.w0*(1-this.eps); rb+=this.radDrift;}  // feed own output forward → error accumulates
+  return pts;},
+// teacher-forced 1-step error: predict ONE step from a TRUE state, vs the true next
+oneStepErr(t){const cur=this.trueState(t);let th=cur.th+this.w0*(1-this.eps);
+  const rmod=1+0.10*Math.sin(3*th);const px=this.cx+(this.R+this.radDrift)*rmod*Math.cos(th);const py=this.cy+(this.rr+this.radDrift)*rmod*Math.sin(th);
+  const tr=this.trueState(t+1);return Math.hypot(px-tr.x,py-tr.y);},
+draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
+  const Hr=this.H;
+  // --- true trajectory (gray), dense sample for one full loop ---
+  ctx.strokeStyle='rgba(120,108,92,.45)';ctx.lineWidth=2;ctx.beginPath();
+  for(let i=0;i<=120;i++){const t=i/120*this.Tloop;const s=this.trueState(t);if(i===0)ctx.moveTo(s.x,s.y);else ctx.lineTo(s.x,s.y);}
+  ctx.closePath();ctx.stroke();
+  // true frames up to horizon (gray dots)
+  for(let k=0;k<=Hr;k++){const s=this.trueState(k);ctx.fillStyle='rgba(120,108,92,.5)';ctx.beginPath();ctx.arc(s.x,s.y,2.4,0,7);ctx.fill();}
+  // --- model rollout (teal), drifting away ---
+  const pred=this.rollout(Hr);
+  ctx.strokeStyle=PHOS;ctx.lineWidth=2.4;ctx.beginPath();
+  pred.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.stroke();
+  // predicted frames, fading from solid (early, accurate) to faint isn't right —
+  // instead color-grade by step error so growing drift is visible
+  for(let k=0;k<=Hr;k++){const p=pred[k];const tr=this.trueState(k);const e=Math.hypot(p.x-tr.x,p.y-tr.y);
+    const a=Math.min(1,0.25+e/30);
+    ctx.fillStyle=k===Hr?AMBER:`rgba(31,111,106,${a})`;ctx.beginPath();ctx.arc(p.x,p.y,k===Hr?5:3,0,7);ctx.fill();
+    if(k===Hr){ctx.strokeStyle=AMBER;ctx.lineWidth=1.4;ctx.setLineDash([3,3]);ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(tr.x,tr.y);ctx.stroke();ctx.setLineDash([]);}}
+  // --- start marker ---
+  const s0=this.trueState(0);ctx.fillStyle=INKD;ctx.beginPath();ctx.arc(s0.x,s0.y,4,0,7);ctx.fill();
+  fontMono(ctx,10);ctx.textAlign='left';ctx.fillText('start (grounded on truth)',s0.x+8,s0.y+4);
+  // --- legend ---
+  ctx.textAlign='left';fontMono(ctx,11);
+  ctx.fillStyle='rgba(120,108,92,.8)';ctx.fillText('— true world',360,40);
+  ctx.fillStyle=PHOS;ctx.fillText('— model imagination',360,60);
+  ctx.fillStyle=AMBER;ctx.fillText('• frame k (drift)',360,80);
+  // --- drift-vs-horizon mini plot (top right) ---
+  const px0=360,py0=110,pw=140,ph=130;
+  ctx.strokeStyle=GRIDC;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(px0,py0+ph);ctx.lineTo(px0+pw,py0+ph);ctx.moveTo(px0,py0);ctx.lineTo(px0,py0+ph);ctx.stroke();
+  const maxK=32,maxE=40;
+  ctx.strokeStyle='rgba(31,111,106,.55)';ctx.lineWidth=2;ctx.beginPath();
+  for(let k=1;k<=maxK;k++){const r=this.rollout(k);const e=Math.hypot(r[k].x-this.trueState(k).x,r[k].y-this.trueState(k).y);
+    const xx=px0+(k/maxK)*pw, yy=py0+ph-Math.min(1,e/maxE)*ph;if(k===1)ctx.moveTo(xx,yy);else ctx.lineTo(xx,yy);}
+  ctx.stroke();
+  // marker for current horizon on the curve
+  const er=Math.hypot(pred[Hr].x-this.trueState(Hr).x,pred[Hr].y-this.trueState(Hr).y);
+  const mx=px0+(Hr/maxK)*pw, my=py0+ph-Math.min(1,er/maxE)*ph;
+  ctx.fillStyle=AMBER;ctx.beginPath();ctx.arc(mx,my,4,0,7);ctx.fill();
+  ctx.fillStyle=INKD;fontMono(ctx,9);ctx.textAlign='left';ctx.fillText('drift',px0-2,py0-6);ctx.textAlign='center';ctx.fillText('horizon k →',px0+pw/2,py0+ph+14);
+  // --- numbers ---
+  const e1=this.oneStepErr(0); // teacher-forced single-step error
+  document.getElementById('worldrollReadout').innerHTML=
+    `1-step error (teacher-forced) = <b>${e1.toFixed(2)} px</b> — tiny. After <b>k=${Hr}</b> autoregressive steps, drift = <b style="color:${AMBER}">${er.toFixed(1)} px</b> (≈${(er/Math.max(e1,1e-3)).toFixed(0)}× the 1-step error). The model feeds its own output back in, so errors <b>compound</b> — the dream peels off the truth.`;
+}};
+
+/* ---- 10. Vision-language joint attention ---- */
+const Vlm={init(){
+  this.c=document.getElementById('vlmCanvas');this.ctx=this.c.getContext('2d');
+  this.G=6;this.word='tumor';this.T=0.32;
+  this.words=['tumor','left','bright'];
+  /* word query vectors over semantic axes [lesion, leftness, brightness] — faithful selectors */
+  this.Q={tumor:[1.0,0.15,0.25],left:[0.1,1.0,0.05],bright:[0.2,0.1,1.0]};
+  /* a small report sentence; image-grounding words (g=1) are highlighted */
+  this.tokens=[{t:'A',g:0},{t:'bright',g:1},{t:'lesion',g:0},{t:'on',g:0},{t:'the',g:0},{t:'left',g:1},{t:'is',g:0},{t:'a',g:0},{t:'tumor',g:1}];
+  const s=document.getElementById('vlmWord');
+  s.addEventListener('change',()=>{this.word=s.value;this.draw();});
+  this.draw();
+},
+patchFeat(r,c){const G=this.G;const cx=1.7,cy=1.9;
+  const dist=Math.hypot(c-cx,r-cy);
+  const lesion=Math.exp(-(dist*dist)/2.2);                                 /* salient lesion blob */
+  const bright=Math.max(lesion,0.55*Math.exp(-((c-5)**2)/1.5-((r-3)**2)/6)); /* lesion + right-edge bright streak (distractor) */
+  const leftness=1-(c/(G-1));                                              /* 1 at left -> 0 at right */
+  return [lesion,leftness,bright];
+},
+draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
+  const G=this.G,q=this.Q[this.word];
+  /* scaled dot-product cross-attention: word query -> every image patch key */
+  const scores=[];for(let r=0;r<G;r++)for(let c=0;c<G;c++){const k=this.patchFeat(r,c);scores.push((q[0]*k[0]+q[1]*k[1]+q[2]*k[2])/Math.sqrt(3));}
+  const w=softmax(scores,this.T);
+  const wmax=Math.max(...w);
+  let top=0;for(let i=1;i<w.length;i++)if(w[i]>w[top])top=i;
+  /* ---- left: image patch grid (greyscale anatomy = brightness field) + teal attention overlay ---- */
+  const ox=34,oy=46,cell=40;
+  fontMono(ctx,11);ctx.fillStyle=INKD;ctx.textAlign='left';
+  ctx.fillText('IMAGE PATCH TOKENS  (6×6)',ox,30);
+  for(let r=0;r<G;r++)for(let c=0;c<G;c++){
+    const f=this.patchFeat(r,c);const x=ox+c*cell,y=oy+r*cell;
+    const g=Math.round(232-150*f[2]);                                      /* anatomy in greyscale */
+    ctx.fillStyle=`rgb(${g},${g-6},${g-18})`;ctx.fillRect(x+1,y+1,cell-2,cell-2);
+    const a=w[r*G+c]/wmax;                                                 /* attention overlay (teal, like the page convention) */
+    ctx.fillStyle=`rgba(31,111,106,${0.05+0.9*a})`;ctx.fillRect(x+1,y+1,cell-2,cell-2);
+    ctx.strokeStyle=GRIDC;ctx.lineWidth=1;ctx.strokeRect(x+1,y+1,cell-2,cell-2);
+  }
+  {const pr=Math.floor(top/G),pc=top%G;const x=ox+pc*cell,y=oy+pr*cell;     /* mark peak patch */
+   ctx.strokeStyle=AMBER;ctx.lineWidth=2.5;ctx.strokeRect(x+1,y+1,cell-2,cell-2);}
+  /* ---- right: the report as word tokens; selected word glows ---- */
+  const tx=ox+G*cell+34;fontMono(ctx,11);ctx.fillStyle=INKD;ctx.textAlign='left';
+  ctx.fillText('TEXT TOKENS  (report)',tx,30);
+  let yy=52;
+  this.tokens.forEach(tk=>{
+    const on=(tk.t===this.word);
+    ctx.fillStyle=on?PHOS:(tk.g?'rgba(31,111,106,.14)':'#dde7eb');
+    const tw=ctx.measureText(tk.t).width+16;
+    ctx.fillRect(tx,yy-12,tw,20);
+    ctx.fillStyle=on?'#f4f7f9':(tk.g?PHOS:INKD);
+    ctx.fillText(tk.t,tx+8,yy+3);
+    yy+=27;
+  });
+  fontMono(ctx,10);ctx.fillStyle=PHOSD;
+  ctx.fillText('cross-attn → image',tx,yy+8);
+  document.getElementById('vlmReadout').innerHTML=
+    `word <b>"${this.word}"</b> · scores = q·kⱼ over <b>36</b> patches → softmax(·/√d) → grounds to patch <b>(r${Math.floor(top/G)},c${top%G})</b> at <b>${(wmax*100).toFixed(0)}%</b>. One shared sequence, one attention map: <i>text steers vision</i>.`;
+}};
+
+const VCoT={init(){
+  this.c=document.getElementById('vcotCanvas');this.ctx=this.c.getContext('2d');
+  this.step=1;
+  /* deterministic toy "scan": two bright regions on a dim brain.
+     keys = per-region feature vectors [intensity, enhancement, size].
+     question query asks for the ENHANCING lesion -> high weight on enhancement. */
+  this.regions=[
+    {name:'frontal blob',  cx:150,cy:120,r:34, q:'edema',     k:[0.55,0.20,0.80]},
+    {name:'right lesion',  cx:300,cy:200,r:26, q:'enhancing', k:[0.92,0.95,0.55]},
+    {name:'posterior fleck',cx:360,cy:96, r:14, q:'speck',     k:[0.40,0.30,0.18]}
+  ];
+  this.query=[0.85,0.95,0.45];           // "find the ENHANCING lesion" query vector
+  this.mmPerPx=0.42;                      // toy calibration: px -> mm (so 2·r·mmPerPx is a realistic lesion diameter)
+  /* attention = softmax(beta·query·key / sqrt(d)) over the 3 regions (beta = sharpening temperature) */
+  const d=3, scale=1/Math.sqrt(d); this.beta=2.4;
+  const scores=this.regions.map(R=>(this.query[0]*R.k[0]+this.query[1]*R.k[1]+this.query[2]*R.k[2])*scale*this.beta);
+  this.w=softmax(scores,1);
+  this.top=this.w.indexOf(Math.max(...this.w));
+  const tgt=this.regions[this.top];
+  this.diaMm=(2*tgt.r*this.mmPerPx);
+  const s=document.getElementById('vcotStep');
+  s.addEventListener('input',()=>{this.step=+s.value;document.getElementById('vcotStepV').textContent=this.step;this.draw();});
+  this.draw();
+},
+draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
+  const step=this.step, top=this.top, tgt=this.regions[top];
+  /* ---------- left: the toy scan ---------- */
+  const ox=20,oy=20,sw=400,sh=300;
+  ctx.fillStyle='#dde7eb';ctx.fillRect(ox,oy,sw,sh);
+  ctx.strokeStyle=GRIDC;ctx.lineWidth=1;ctx.strokeRect(ox,oy,sw,sh);
+  // dim brain ellipse
+  ctx.save();ctx.beginPath();ctx.ellipse(ox+sw*0.5,oy+sh*0.5,sw*0.42,sh*0.42,0,0,7);
+  ctx.fillStyle='rgba(74,66,57,.10)';ctx.fill();ctx.restore();
+  // regions: brightness scales with attention only from step>=2 (before that, model hasn't attended)
+  this.regions.forEach((R,i)=>{
+    const attended = step>=2;
+    const a = attended ? (0.18+this.w[i]*0.82) : 0.40;
+    ctx.beginPath();ctx.arc(R.cx,R.cy,R.r,0,7);
+    ctx.fillStyle=`rgba(224,138,46,${a})`;ctx.fill();
+    ctx.strokeStyle=PHOSD;ctx.lineWidth=1;ctx.stroke();
+    if(attended){ctx.fillStyle=PHOS;fontMono(ctx,10);ctx.textAlign='center';
+      ctx.fillText((this.w[i]*100).toFixed(0)+'%',R.cx,R.cy-R.r-5);}
+  });
+  // step 2+: draw the grounded bounding box around the argmax region
+  if(step>=2){
+    const bx=tgt.cx-tgt.r-7, by=tgt.cy-tgt.r-7, bw=2*(tgt.r+7), bh=2*(tgt.r+7);
+    ctx.strokeStyle=PHOS;ctx.lineWidth=2.5;ctx.setLineDash([6,4]);
+    ctx.strokeRect(bx,by,bw,bh);ctx.setLineDash([]);
+    // corner ticks
+    ctx.lineWidth=2.5;const t=8;
+    [[bx,by,1,1],[bx+bw,by,-1,1],[bx,by+bh,1,-1],[bx+bw,by+bh,-1,-1]].forEach(c=>{
+      ctx.beginPath();ctx.moveTo(c[0],c[1]+c[3]*t);ctx.lineTo(c[0],c[1]);ctx.lineTo(c[0]+c[2]*t,c[1]);ctx.stroke();});
+    ctx.fillStyle=PHOS;fontMono(ctx,10);ctx.textAlign='left';
+    ctx.fillText('grounded region',bx,by-6);
+  }
+  // step 3+: caliper measuring the longest diameter inside the box
+  if(step>=3){
+    ctx.strokeStyle='#3a7be0';ctx.lineWidth=2;
+    ctx.beginPath();ctx.moveTo(tgt.cx-tgt.r,tgt.cy);ctx.lineTo(tgt.cx+tgt.r,tgt.cy);ctx.stroke();
+    [[-1],[1]].forEach(s=>{ctx.beginPath();ctx.moveTo(tgt.cx+s*tgt.r,tgt.cy-5);ctx.lineTo(tgt.cx+s*tgt.r,tgt.cy+5);ctx.stroke();});
+    ctx.fillStyle='#3a7be0';fontMono(ctx,10);ctx.textAlign='center';
+    ctx.fillText(this.diaMm.toFixed(0)+' mm',tgt.cx,tgt.cy+18);
+  }
+  // step 4: final answer banner anchored on the box
+  if(step>=4){
+    ctx.strokeStyle=PHOS;ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.moveTo(tgt.cx+tgt.r+7,tgt.cy);ctx.lineTo(tgt.cx+tgt.r+30,tgt.cy);ctx.stroke();
+    ctx.fillStyle='rgba(31,111,106,.92)';
+    const lx=tgt.cx+tgt.r+30, ly=tgt.cy-12;
+    ctx.fillRect(lx,ly,118,24);
+    ctx.fillStyle='#f4f7f9';fontMono(ctx,10);ctx.textAlign='left';
+    ctx.fillText('ANSWER ✓ grounded',lx+6,ly+15);
+  }
+  /* ---------- right: the reasoning chain rail ---------- */
+  const rx=438,ry=30,rh=70;
+  const labels=['① READ','② ATTEND','③ SUB-CONCL.','④ ANSWER'];
+  for(let i=0;i<4;i++){
+    const y=ry+i*rh, active=(i+1)<=step, cur=(i+1)===step;
+    if(i<3){ctx.strokeStyle=active?PHOS:'rgba(31,111,106,.2)';ctx.lineWidth=active?2:1;
+      ctx.beginPath();ctx.moveTo(rx,y+8);ctx.lineTo(rx,y+rh-8);ctx.stroke();}
+    ctx.beginPath();ctx.arc(rx,y,9,0,7);
+    ctx.fillStyle=active?PHOS:'#dde7eb';ctx.strokeStyle=PHOS;ctx.lineWidth=cur?2.5:1.2;ctx.fill();ctx.stroke();
+    ctx.fillStyle=active?'#f4f7f9':INKD;fontMono(ctx,9);ctx.textAlign='center';ctx.fillText(''+(i+1),rx,y+3.5);
+    ctx.fillStyle=active?INKD:PHOSD;fontMono(ctx,10);ctx.textAlign='left';ctx.fillText(labels[i].slice(2),rx+16,y+3.5);
+  }
+  /* ---------- readout: accumulating chain ---------- */
+  const QTEXT='“Is there an enhancing lesion, and how large?”';
+  const lines=[];
+  lines.push(`<b>Q:</b> ${QTEXT}`);
+  if(step>=1)lines.push(`<b>1·read:</b> parse → need an <b>enhancing</b> lesion + its size.`);
+  if(step>=2)lines.push(`<b>2·attend:</b> softmax(β·q·kⱼ/√d), β=${this.beta} = [${this.w.map(x=>x.toFixed(2)).join(', ')}] → box region <b>${this.top+1}</b> (${tgt.name}, w=${(this.w[this.top]*100).toFixed(0)}%).`);
+  if(step>=3)lines.push(`<b>3·sub:</b> inside the box, longest diameter ≈ <b>${this.diaMm.toFixed(0)} mm</b>; enhancement feature high → likely <b>enhancing</b>.`);
+  if(step>=4)lines.push(`<b>4·answer:</b> <b style="color:${PHOS}">Yes — one enhancing lesion, ~${this.diaMm.toFixed(0)} mm</b>, grounded on the boxed region (not guessed).`);
+  document.getElementById('vcotReadout').innerHTML=lines.join('<br>');
+}};
+
+const Vla={init(){
+  this.c=document.getElementById('vlaCanvas');this.ctx=this.c.getContext('2d');
+  /* fixed scene: end-effector start + 4 candidate objects in image coords (0..1) */
+  this.start={x:0.18,y:0.30};
+  this.objects=[
+    {name:'red block',  gx:0.78,gy:0.30, col:'#d23b2a'},
+    {name:'blue cup',   gx:0.70,gy:0.72, col:'#3a7be0'},
+    {name:'green can',  gx:0.30,gy:0.74, col:'#2c9a92'},
+    {name:'yellow ball',gx:0.50,gy:0.20, col:'#e0b020'},
+  ];
+  this.T=6;            /* action-chunk horizon */
+  this.target=0;       /* instruction picks which object */
+  this.t=0;            /* timestep slider, continuous 0..T */
+  const sel=document.getElementById('vlaInstr');
+  sel.addEventListener('input',()=>{this.target=+sel.value;this.t=0;
+    const ts=document.getElementById('vlaT');if(ts){ts.value=0;document.getElementById('vlaTV').textContent='0';}
+    this.draw();});
+  const ts=document.getElementById('vlaT');
+  ts.addEventListener('input',()=>{this.t=+ts.value;document.getElementById('vlaTV').textContent=this.t.toFixed(1);this.draw();});
+  this.draw();
+},
+/* Deterministic policy decode: image+instruction -> chunk of discretized action tokens.
+   Each step closes a fixed fraction of the remaining gap (closed-loop reaching), so the
+   per-step (dx,dy) shrink across the horizon. Continuous action is normalized to [-1,1]
+   then quantized into one of NB=256 bins (RT-2/OpenVLA tokenization); the executed delta
+   is decoded back FROM the bin, so quantization error is visible. */
+plan(){
+  const o=this.objects[this.target];
+  const NB=256, half=(NB-1)/2, AMAX=0.30;   /* per-step action range in image units */
+  let pos={x:this.start.x,y:this.start.y};
+  const steps=[], path=[{x:pos.x,y:pos.y}];
+  for(let k=0;k<this.T;k++){
+    const last=(k===this.T-1);
+    const frac=last?1:0.42;                 /* front-loaded reach, final step lands exactly */
+    let dx=(o.gx-pos.x)*frac, dy=(o.gy-pos.y)*frac;
+    const nx=Math.max(-1,Math.min(1,dx/AMAX)), ny=Math.max(-1,Math.min(1,dy/AMAX));
+    const bx=Math.round(half+nx*half), by=Math.round(half+ny*half);   /* quantize -> token bin */
+    const exNx=(bx-half)/half, exNy=(by-half)/half;                    /* de-quantize executed */
+    const exDx=exNx*AMAX, exDy=exNy*AMAX;
+    const grip=last?1:0;                    /* gripper token: 0=open, close on final step */
+    pos={x:pos.x+exDx,y:pos.y+exDy};
+    path.push({x:pos.x,y:pos.y});
+    steps.push({dx:exDx,dy:exDy,bx,by,grip});
+  }
+  return {steps,path,NB};
+},
+draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
+  const o=this.objects[this.target];
+  const pl=this.plan();
+  const sx=20,sy=46,sw=300,sh=H-86;                 /* scene rect */
+  const toPx=(p)=>({x:sx+p.x*sw,y:sy+p.y*sh});
+  /* scene background + grid */
+  ctx.fillStyle='#fbf7ee';ctx.fillRect(sx,sy,sw,sh);
+  ctx.strokeStyle=GRIDC;ctx.lineWidth=1;ctx.strokeRect(sx,sy,sw,sh);
+  for(let i=1;i<6;i++){ctx.beginPath();ctx.moveTo(sx+i*sw/6,sy);ctx.lineTo(sx+i*sw/6,sy+sh);ctx.moveTo(sx,sy+i*sh/6);ctx.lineTo(sx+sw,sy+i*sh/6);ctx.stroke();}
+  fontMono(ctx,10);ctx.fillStyle=PHOSD;ctx.textAlign='left';ctx.fillText('camera view  (perception = the policy’s eyes)',sx,sy-8);
+  /* objects */
+  this.objects.forEach((ob,i)=>{const p=toPx({x:ob.gx,y:ob.gy});const isT=i===this.target;
+    ctx.globalAlpha=isT?1:0.5;ctx.fillStyle=ob.col;ctx.strokeStyle=isT?INKD:'#bcae93';ctx.lineWidth=isT?2:1;
+    ctx.beginPath();ctx.arc(p.x,p.y,12,0,7);ctx.fill();ctx.stroke();ctx.globalAlpha=1;
+    if(isT){ctx.strokeStyle=AMBER;ctx.lineWidth=2;ctx.setLineDash([4,3]);ctx.beginPath();ctx.arc(p.x,p.y,19,0,7);ctx.stroke();ctx.setLineDash([]);}});
+  /* executed trajectory up to t (with intra-step interpolation) */
+  const seg=Math.floor(this.t), frac=this.t-seg;
+  ctx.strokeStyle=TEAL;ctx.lineWidth=2.2;ctx.beginPath();
+  const sp=toPx(pl.path[0]);ctx.moveTo(sp.x,sp.y);
+  for(let k=1;k<=Math.min(seg,this.T);k++){const pp=toPx(pl.path[k]);ctx.lineTo(pp.x,pp.y);}
+  let ee;
+  if(seg<this.T){const a=pl.path[seg],b=pl.path[seg+1];ee={x:a.x+(b.x-a.x)*frac,y:a.y+(b.y-a.y)*frac};}
+  else{ee={x:pl.path[this.T].x,y:pl.path[this.T].y};}
+  const eep=toPx(ee);ctx.lineTo(eep.x,eep.y);ctx.stroke();
+  /* remaining planned path (faint dashed) */
+  ctx.strokeStyle='rgba(31,111,106,.25)';ctx.lineWidth=1.5;ctx.setLineDash([3,3]);ctx.beginPath();
+  ctx.moveTo(eep.x,eep.y);for(let k=Math.max(seg+1,1);k<=this.T;k++){const pp=toPx(pl.path[k]);ctx.lineTo(pp.x,pp.y);}ctx.stroke();ctx.setLineDash([]);
+  /* end-effector + two-finger gripper (closes at the end) */
+  const closed=this.t>=this.T-0.001;const gw=closed?5:11;
+  ctx.strokeStyle=INKD;ctx.lineWidth=3;
+  ctx.beginPath();ctx.moveTo(eep.x-gw,eep.y-12);ctx.lineTo(eep.x-gw,eep.y-1);ctx.moveTo(eep.x+gw,eep.y-12);ctx.lineTo(eep.x+gw,eep.y-1);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(eep.x-gw,eep.y-12);ctx.lineTo(eep.x+gw,eep.y-12);ctx.stroke();
+  ctx.fillStyle=closed?AMBER:PHOS;ctx.beginPath();ctx.arc(eep.x,eep.y,4,0,7);ctx.fill();
+  /* right: instruction box + action-token strip */
+  const rx=345;fontMono(ctx,11);ctx.textAlign='left';ctx.fillStyle=INKD;
+  ctx.fillText('instruction → action tokens',rx,sy-8);
+  ctx.fillStyle='#efe7d6';ctx.fillRect(rx,sy,W-rx-20,30);ctx.strokeStyle=GRIDC;ctx.strokeRect(rx,sy,W-rx-20,30);
+  fontMono(ctx,11);ctx.fillStyle=INKD;ctx.fillText('“pick up the',rx+8,sy+13);
+  ctx.fillStyle=o.col;ctx.fillText(o.name+'”',rx+8,sy+25);
+  const ry=sy+46, rowh=(sh-46)/this.T;
+  pl.steps.forEach((s,k)=>{const y=ry+k*rowh;
+    const active=k===Math.min(seg,this.T-1)&&this.t>0;const done=k<seg||(seg>=this.T);
+    ctx.fillStyle=active?'rgba(224,138,46,.16)':(done?'rgba(31,111,106,.10)':'#f4eede');
+    ctx.fillRect(rx,y,W-rx-20,rowh-4);ctx.strokeStyle=active?AMBER:GRIDC;ctx.lineWidth=active?1.6:1;ctx.strokeRect(rx,y,W-rx-20,rowh-4);
+    fontMono(ctx,10);ctx.textAlign='left';ctx.fillStyle=PHOSD;ctx.fillText('a'+(k+1),rx+6,y+13);
+    ctx.fillStyle=INKD;
+    const dxs=(s.dx>=0?'+':'')+s.dx.toFixed(2), dys=(s.dy>=0?'+':'')+s.dy.toFixed(2);
+    ctx.fillText('dx='+dxs+'  dy='+dys,rx+26,y+13);
+    ctx.fillStyle=PHOSD;ctx.fillText('bin '+s.bx+','+s.by,rx+26,y+25);
+    ctx.fillStyle=s.grip?AMBER:TEAL;ctx.textAlign='right';ctx.fillText(s.grip?'grip=close':'grip=open',W-26,y+19);ctx.textAlign='left';
+  });
+  /* readout: current action token + phase */
+  const curIdx=this.t<=0?0:Math.min(seg,this.T-1);const cur=pl.steps[curIdx];
+  const dxs=(cur.dx>=0?'+':'')+cur.dx.toFixed(2), dys=(cur.dy>=0?'+':'')+cur.dy.toFixed(2);
+  const phase=this.t<=0?'idle — awaiting decode':(this.t>=this.T?'grasp complete':'executing chunk');
+  document.getElementById('vlaReadout').innerHTML=
+    `t=<b>${this.t.toFixed(1)}</b>/${this.T} · token a${curIdx+1} = <b style="color:${PHOS}">dx=${dxs}, dy=${dys}, grip=${cur.grip?'<span style=\"color:'+AMBER+'\">close</span>':'open'}</b> · <b>${phase}</b>. `+
+    `Same recipe as RT-2 / OpenVLA / π0: image + text → ${pl.NB}-bin action tokens, executed over a ${this.T}-step chunk.`;
+}};
+
 
 initLab();
 </script>
