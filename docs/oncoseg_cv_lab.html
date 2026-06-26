@@ -9,106 +9,95 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,900&family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --film:#0d0c0f;
-  --phos:#7CF6C8; --phos-dim:#2f7d68; --grid:#16241f;
-  --amber:#e08a2e; --teal:#2c9a92;
+  --paper:#f2ece0; --paper-2:#e9e1d2; --ink:#1c1814; --ink-soft:#4a4239;
+  --line:#cdbfa6; --line-soft:#ddd2bd;
+  --teal:#1f6f6a; --teal-2:#2c9a92; --amber:#c0691f; --amber-2:#e08a2e;
+  --shadow:0 1px 0 rgba(255,255,255,.5), 0 18px 40px -22px rgba(20,16,10,.55);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{
-  margin:0; background:var(--film); color:#d4e6df; overflow-x:hidden;
-  font-family:"Hanken Grotesk",system-ui,sans-serif; font-size:16.5px; line-height:1.6;
-  -webkit-font-smoothing:antialiased;
+body{margin:0;background:var(--paper);color:var(--ink);overflow-x:hidden;
+  font-family:"Hanken Grotesk",system-ui,sans-serif;font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased;
   background-image:
-    linear-gradient(rgba(124,246,200,.025) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(124,246,200,.025) 1px,transparent 1px);
-  background-size:42px 42px;
-}
-a{color:var(--phos);text-decoration:none}
+    radial-gradient(circle at 12% 8%, rgba(192,105,31,.05), transparent 40%),
+    radial-gradient(circle at 88% 92%, rgba(31,111,106,.05), transparent 45%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");}
+a{color:var(--amber);text-decoration:none}
 .wrap{max-width:1120px;margin:0 auto;padding:0 26px}
+.wrap>section{max-width:100%}
 
-/* ---------- Top bar ---------- */
-header.top{position:sticky;top:0;z-index:50;background:rgba(8,12,11,.86);backdrop-filter:blur(10px) saturate(1.2);border-bottom:1px solid var(--grid)}
+header.top{position:sticky;top:0;z-index:50;background:rgba(242,236,224,.86);backdrop-filter:blur(10px) saturate(1.2);border-bottom:1px solid var(--line)}
 .top-inner{display:flex;align-items:center;gap:14px;padding:13px 26px;max-width:1120px;margin:0 auto}
-.brand{font-family:"Fraunces",serif;font-weight:900;font-size:21px;letter-spacing:-.01em;line-height:1;display:flex;align-items:center;gap:11px;color:#eafff6}
-.brand .glyph{width:30px;height:30px;border-radius:50%;flex:0 0 auto;position:relative;
-  background:radial-gradient(circle at 38% 35%, #2c9a92 0 18%, #14534f 19% 40%, #0d0c0f 41% 100%);
-  box-shadow:inset 0 0 0 2px rgba(255,255,255,.12), 0 0 0 3px rgba(31,111,106,.25)}
-.brand .glyph::after{content:"";position:absolute;inset:0;border-radius:50%;
-  background:radial-gradient(circle at 62% 64%, rgba(224,138,46,.9) 0 8%, transparent 9%)}
-.brand small{display:block;font-family:"JetBrains Mono",monospace;font-weight:500;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:#7da093;margin-top:3px}
-.backlink{margin-left:auto;font-family:"JetBrains Mono",monospace;font-weight:600;font-size:12px;letter-spacing:.04em;
-  color:#bfe9d9;background:rgba(124,246,200,.06);border:1px solid var(--grid);border-radius:10px;padding:9px 14px;white-space:nowrap;transition:.15s}
-.backlink:hover{border-color:var(--phos-dim);color:var(--phos)}
+.brand{font-family:"Fraunces",serif;font-weight:900;font-size:21px;letter-spacing:-.01em;line-height:1;display:flex;align-items:center;gap:11px;color:var(--ink)}
+.brand .glyph{width:30px;height:30px;border-radius:50%;flex:0 0 auto;position:relative;background:radial-gradient(circle at 38% 35%, #2c9a92 0 18%, #14534f 19% 40%, #0d0c0f 41% 100%);box-shadow:inset 0 0 0 2px rgba(255,255,255,.12), 0 0 0 3px rgba(31,111,106,.18)}
+.brand .glyph::after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 62% 64%, rgba(224,138,46,.9) 0 8%, transparent 9%)}
+.brand small{display:block;font-family:"JetBrains Mono",monospace;font-weight:500;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);margin-top:3px}
+.backlink{margin-left:auto;font-family:"JetBrains Mono",monospace;font-weight:600;font-size:12px;letter-spacing:.04em;color:var(--ink-soft);background:var(--paper-2);border:1px solid var(--line-soft);border-radius:10px;padding:9px 14px;white-space:nowrap;transition:.15s}
+.backlink:hover{border-color:var(--teal);color:var(--teal)}
 
-.kicker{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--phos);font-weight:700}
-h1.disp{font-family:"Fraunces",serif;font-weight:900;font-size:clamp(38px,6.6vw,72px);line-height:.96;letter-spacing:-.025em;margin:.28em 0 .2em;color:#eafff6}
-.lead{font-size:clamp(17px,2vw,20px);color:#9fc4b7;max-width:64ch}
-.rule{height:1px;background:linear-gradient(90deg,var(--phos-dim),transparent);opacity:.5;margin:46px 0}
+.kicker{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--amber);font-weight:700}
+h1.disp{font-family:"Fraunces",serif;font-weight:900;font-size:clamp(38px,6.6vw,72px);line-height:.96;letter-spacing:-.025em;margin:.28em 0 .2em;color:var(--ink)}
+.lead{font-size:clamp(17px,2vw,20px);color:var(--ink-soft);max-width:64ch}
+.rule{height:1px;background:linear-gradient(90deg,var(--line),transparent);margin:46px 0}
 .lab-pad{padding:46px 0 90px}
 
-.console{border:1px solid var(--grid);border-radius:14px;background:rgba(8,14,12,.65);position:relative;
-  box-shadow:inset 0 0 60px rgba(0,0,0,.5), 0 20px 50px -30px rgba(0,0,0,.8);overflow:hidden}
-.console::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:var(--dp,0);
-  background:var(--phos);box-shadow:0 0 10px var(--phos);transition:width .18s linear;pointer-events:none;opacity:.95}
-.console .bar{display:flex;align-items:center;gap:9px;padding:10px 14px;border-bottom:1px solid var(--grid);background:rgba(124,246,200,.04)}
-.console .bar .dotr{width:9px;height:9px;border-radius:50%;background:#e0883a}.console .bar .dotr.g{background:var(--phos)}.console .bar .dotr.b{background:#3a7be0}
-.console .bar .name{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;color:#8faea3;margin-left:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.bar-play{margin-left:auto;flex:0 0 auto;font-family:"JetBrains Mono",monospace;font-size:10.5px;font-weight:700;letter-spacing:.05em;
-  color:var(--phos);background:rgba(124,246,200,.08);border:1px solid var(--phos-dim);border-radius:8px;padding:5px 12px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:.15s}
-.bar-play:hover{background:rgba(124,246,200,.2)}
-.bar-play.playing{background:var(--phos);color:var(--film);border-color:var(--phos);box-shadow:0 0 16px rgba(124,246,200,.45)}
+.console{border:1px solid var(--line-soft);border-radius:14px;background:var(--paper-2);position:relative;box-shadow:var(--shadow);overflow:hidden}
+.console::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:var(--dp,0);background:var(--teal);box-shadow:0 0 10px rgba(31,111,106,.6);transition:width .18s linear;pointer-events:none}
+.console .bar{display:flex;align-items:center;gap:9px;padding:10px 14px;border-bottom:1px solid var(--line-soft);background:rgba(255,255,255,.35)}
+.console .bar .dotr{width:9px;height:9px;border-radius:50%;background:#e0883a}.console .bar .dotr.g{background:#2c9a92}.console .bar .dotr.b{background:#3a7be0}
+.console .bar .name{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;color:var(--ink-soft);margin-left:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar-play{margin-left:auto;flex:0 0 auto;font-family:"JetBrains Mono",monospace;font-size:10.5px;font-weight:700;letter-spacing:.05em;color:var(--teal);background:rgba(31,111,106,.08);border:1px solid var(--line);border-radius:8px;padding:5px 12px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:.15s}
+.bar-play:hover{background:rgba(31,111,106,.16)}
+.bar-play.playing{background:var(--teal);color:var(--paper);border-color:var(--teal);box-shadow:0 4px 14px -4px rgba(31,111,106,.6)}
 .bar-play .tri{width:0;height:0;border-left:8px solid currentColor;border-top:5px solid transparent;border-bottom:5px solid transparent}
 .bar-play.playing .tri{border:0;width:8px;height:10px;border-left:3px solid currentColor;border-right:3px solid currentColor}
 .console .bd{padding:20px 22px}
-.lab-mono{font-family:"JetBrains Mono",monospace;color:#bfe9d9}
+.lab-mono{font-family:"JetBrains Mono",monospace;color:var(--ink-soft)}
 
-.playbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;border:1px solid var(--grid);border-radius:14px;
-  padding:14px 18px;margin:14px 0 8px;background:linear-gradient(100deg,rgba(124,246,200,.07),rgba(8,14,12,.4));position:relative;overflow:hidden}
-.playbar::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:var(--prog,0%);background:var(--phos);box-shadow:0 0 12px var(--phos);transition:width .25s linear}
-.play-btn{font-family:"JetBrains Mono",monospace;font-weight:700;font-size:14px;letter-spacing:.04em;
-  color:var(--film);background:var(--phos);border:0;border-radius:11px;padding:12px 22px;cursor:pointer;display:flex;align-items:center;gap:10px;box-shadow:0 0 26px rgba(124,246,200,.4);transition:.15s}
-.play-btn:hover{transform:translatey(-1px);box-shadow:0 0 36px rgba(124,246,200,.6)}
-.play-btn.playing{background:transparent;color:var(--phos);border:1px solid var(--phos)}
+.playbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;border:1px solid var(--line);border-radius:14px;padding:14px 18px;margin:14px 0 8px;background:linear-gradient(100deg,rgba(31,111,106,.08),rgba(255,255,255,.35));position:relative;overflow:hidden}
+.playbar::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:var(--prog,0%);background:var(--teal);box-shadow:0 0 12px rgba(31,111,106,.6);transition:width .25s linear}
+.play-btn{font-family:"JetBrains Mono",monospace;font-weight:700;font-size:14px;letter-spacing:.04em;color:var(--paper);background:var(--teal);border:0;border-radius:11px;padding:12px 22px;cursor:pointer;display:flex;align-items:center;gap:10px;box-shadow:0 8px 22px -10px rgba(31,111,106,.85);transition:.15s}
+.play-btn:hover{transform:translatey(-1px);box-shadow:0 12px 28px -10px rgba(31,111,106,.9)}
+.play-btn.playing{background:transparent;color:var(--teal);border:1px solid var(--teal);box-shadow:none}
 .play-btn .tri{width:0;height:0;border-left:11px solid currentColor;border-top:7px solid transparent;border-bottom:7px solid transparent}
 .play-btn.playing .tri{border:0;width:11px;height:13px;border-left:4px solid currentColor;border-right:4px solid currentColor}
-.play-meta{font-family:"JetBrains Mono",monospace;font-size:12px;color:#9fc4b7;line-height:1.5}
-.play-meta b{color:var(--phos)}
-.play-now{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--phos);letter-spacing:.04em}
-.play-toggle{margin-left:auto;display:flex;align-items:center;gap:8px;font-family:"JetBrains Mono",monospace;font-size:11.5px;color:#9fc4b7;cursor:pointer;user-select:none}
-.play-toggle input{accent-color:var(--phos)}
-.autonote{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--phos-dim);letter-spacing:.04em;margin:-2px 2px 16px}
+.play-meta{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--ink-soft);line-height:1.5}
+.play-meta b{color:var(--teal)}
+.play-now{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--teal);letter-spacing:.04em}
+.play-toggle{margin-left:auto;display:flex;align-items:center;gap:8px;font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--ink-soft);cursor:pointer;user-select:none}
+.play-toggle input{accent-color:var(--teal)}
+.autonote{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--ink-soft);letter-spacing:.04em;margin:-2px 2px 16px}
 
 .module-tabs{display:flex;gap:7px;flex-wrap:wrap;margin:6px 0 6px;align-items:center}
-.module-tabs .cat{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--phos-dim);width:100%;margin:14px 0 -2px;display:flex;align-items:center;gap:9px}
-.module-tabs .cat::after{content:"";flex:1;height:1px;background:var(--grid)}
-.module-tabs button{font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--phos-dim);background:transparent;border:1px solid var(--grid);border-radius:9px;padding:8px 12px;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:7px}
-.module-tabs button:hover{color:var(--phos);border-color:var(--phos-dim)}
-.module-tabs button.on{color:var(--film);background:var(--phos);border-color:var(--phos);font-weight:700;box-shadow:0 0 22px rgba(124,246,200,.35)}
-.module-tabs button .num{opacity:.6;font-weight:700}
+.module-tabs .cat{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);width:100%;margin:14px 0 -2px;display:flex;align-items:center;gap:9px;font-weight:700}
+.module-tabs .cat::after{content:"";flex:1;height:1px;background:var(--line)}
+.module-tabs button{font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--ink-soft);background:var(--paper-2);border:1px solid var(--line-soft);border-radius:9px;padding:8px 12px;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:7px}
+.module-tabs button:hover{color:var(--ink);border-color:var(--line)}
+.module-tabs button.on{color:var(--paper);background:var(--ink);border-color:var(--ink);font-weight:700;box-shadow:var(--shadow)}
+.module-tabs button .num{opacity:.55;font-weight:700}
 .demo{display:none}.demo.show{display:block;animation:fade .4s both}
 @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .lab-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:start}
 @media(max-width:900px){.lab-grid{grid-template-columns:1fr}}
-.explain h3{font-family:"Fraunces",serif;color:#eafff6;font-size:23px;margin:0 0 8px;letter-spacing:-.01em}
-.explain p{color:#a9cabe;font-size:15px;line-height:1.62}
-.explain .why{border-left:2px solid var(--phos-dim);padding:6px 0 6px 15px;margin:14px 0;color:#cfeee2;font-size:14.5px}
-.explain code{font-family:"JetBrains Mono",monospace;background:rgba(124,246,200,.1);color:var(--phos);padding:1px 6px;border-radius:5px;font-size:13px}
-.ctrl{display:flex;align-items:center;gap:12px;margin:11px 0;font-family:"JetBrains Mono",monospace;font-size:12.5px;color:#9fc4b7}
+.explain h3{font-family:"Fraunces",serif;color:var(--ink);font-size:23px;margin:0 0 8px;letter-spacing:-.01em}
+.explain p{color:var(--ink-soft);font-size:15px;line-height:1.62}
+.explain .why{border-left:2px solid var(--teal);padding:6px 0 6px 15px;margin:14px 0;color:var(--ink-soft);font-size:14.5px}
+.explain code{font-family:"JetBrains Mono",monospace;background:rgba(31,111,106,.1);color:var(--teal);padding:1px 6px;border-radius:5px;font-size:13px}
+.ctrl{display:flex;align-items:center;gap:12px;margin:11px 0;font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--ink-soft)}
 .ctrl label{min-width:118px}
-.ctrl input[type=range]{flex:1;accent-color:var(--phos);height:3px}
-.ctrl .val{min-width:54px;text-align:right;color:var(--phos);font-weight:700}
+.ctrl input[type=range]{flex:1;accent-color:var(--teal);height:3px}
+.ctrl .val{min-width:54px;text-align:right;color:var(--teal);font-weight:700}
 canvas{display:block;max-width:100%;border-radius:10px}
-.canvas-wrap{background:rgba(4,8,7,.6);border:1px solid var(--grid);border-radius:12px;padding:16px;text-align:center}
-.canvas-cap{font-family:"JetBrains Mono",monospace;font-size:11px;color:#7da093;margin-top:10px;letter-spacing:.04em}
-.readout{font-family:"JetBrains Mono",monospace;font-size:12px;color:#bfe9d9;background:rgba(124,246,200,.05);border:1px solid var(--grid);border-radius:9px;padding:11px 13px;margin-top:14px;line-height:1.7}
-.readout b{color:var(--phos)}
+.canvas-wrap{background:#f7f2e8;border:1px solid var(--line-soft);border-radius:12px;padding:16px;text-align:center}
+.canvas-cap{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--ink-soft);margin-top:10px;letter-spacing:.04em}
+.readout{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--ink);background:rgba(31,111,106,.06);border:1px solid var(--line-soft);border-radius:9px;padding:11px 13px;margin-top:14px;line-height:1.7}
+.readout b{color:var(--teal)}
 .pill-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
-.minipill{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--phos);border:1px solid var(--phos-dim);border-radius:999px;padding:3px 9px}
-.btn-ghost{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--phos);background:transparent;border:1px solid var(--phos-dim);border-radius:9px;padding:8px 14px;cursor:pointer;transition:.15s}
-.btn-ghost:hover{background:rgba(124,246,200,.1)}
-footer{padding:42px 0 60px;color:#7da093;font-size:13px;border-top:1px solid var(--grid);margin-top:40px}
-.disc{background:rgba(124,246,200,.05);border:1px solid var(--phos-dim);border-radius:12px;padding:14px 18px;font-size:13.5px;color:#9fc4b7}
+.minipill{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--teal);border:1px solid var(--line);border-radius:999px;padding:3px 9px;background:rgba(31,111,106,.05)}
+.btn-ghost{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--teal);background:var(--paper-2);border:1px solid var(--line);border-radius:9px;padding:8px 14px;cursor:pointer;transition:.15s}
+.btn-ghost:hover{background:rgba(31,111,106,.1)}
+footer{padding:42px 0 60px;color:var(--ink-soft);font-size:13px;border-top:1px solid var(--line);margin-top:40px}
+.disc{background:linear-gradient(180deg,rgba(192,105,31,.07),transparent);border:1px solid var(--line);border-radius:12px;padding:14px 18px;font-size:13.5px;color:var(--ink-soft)}
 </style>
 </head>
 <body>
@@ -192,7 +181,7 @@ footer{padding:42px 0 60px;color:#7da093;font-size:13px;border-top:1px solid var
             <p>A tiny learnable <b>kernel</b> slides over the image, computing a weighted sum at each position. It is the core operation of every CNN and excels at <b>local structure</b> — edges, gradients, texture — exactly what places a crisp tumor boundary.</p>
             <div class="why">OncoSeg's decoder is CNN, not transformer, on purpose: after the Swin encoder decides <i>what</i> and roughly <i>where</i>, convolutions reconstruct the <i>exact</i> voxel edges. Training learns these kernel weights.</div>
             <div class="ctrl"><label>Kernel preset</label>
-              <select id="convKernel" style="flex:1;background:rgba(124,246,200,.06);color:var(--phos);border:1px solid var(--grid);border-radius:7px;padding:7px;font-family:'JetBrains Mono',monospace">
+              <select id="convKernel" style="flex:1;background:rgba(31,111,106,.06);color:var(--phos);border:1px solid var(--grid);border-radius:7px;padding:7px;font-family:'JetBrains Mono',monospace">
                 <option value="edge">Edge detect (Laplacian)</option>
                 <option value="sobelx">Vertical edges (Sobel-x)</option>
                 <option value="blur">Blur (smoothing)</option>
@@ -220,7 +209,7 @@ footer{padding:42px 0 60px;color:#7da093;font-size:13px;border-top:1px solid var
             <p>Between linear layers sits a nonlinearity. <b>ReLU</b> = max(0,x) is cheap but can "die". <b>LeakyReLU</b> keeps a small negative slope (used in OncoSeg's decoder convs). <b>GELU</b> is the smooth gate inside the transformer FFN. <b>Sigmoid</b> squashes logits to (0,1) probabilities at the output head.</p>
             <div class="why">Each maps to a real spot in the code: LeakyReLU in <code>cnn_decoder</code>, GELU in the cross-attention FFN, sigmoid on the 3-channel output. Stack linear layers with no activation and you can only ever learn a straight line.</div>
             <div class="ctrl"><label>Function</label>
-              <select id="actFn" style="flex:1;background:rgba(124,246,200,.06);color:var(--phos);border:1px solid var(--grid);border-radius:7px;padding:7px;font-family:'JetBrains Mono',monospace">
+              <select id="actFn" style="flex:1;background:rgba(31,111,106,.06);color:var(--phos);border:1px solid var(--grid);border-radius:7px;padding:7px;font-family:'JetBrains Mono',monospace">
                 <option value="relu">ReLU</option><option value="leaky">LeakyReLU (0.1)</option>
                 <option value="gelu">GELU</option><option value="sigmoid">Sigmoid</option><option value="tanh">Tanh</option>
               </select>
@@ -791,7 +780,7 @@ function setupPlay(){
     bar.appendChild(btn);
   });
 }
-const PHOS='#7CF6C8', PHOSD='#2f7d68', AMBER='#e08a2e', TEAL='#2c9a92', GRIDC='#16241f', INKD='#9fc4b7';
+const PHOS='#1f6f6a', PHOSD='#a99a7e', AMBER='#e08a2e', TEAL='#2c9a92', GRIDC='#d8ccb4', INKD='#4a4239';
 function clear(ctx,w,h){ctx.clearRect(0,0,w,h);}
 function softmax(arr,t=1){const m=Math.max(...arr);const e=arr.map(v=>Math.exp((v-m)/t));const s=e.reduce((a,b)=>a+b,0);return e.map(v=>v/s);}
 function fontMono(ctx,s=11){ctx.font=s+'px JetBrains Mono';}
@@ -818,12 +807,12 @@ draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
   const scores=this.K.map(k=>this.Q[this.sel][0]*k[0]+this.Q[this.sel][1]*k[1]);
   const w=softmax(scores,this.temp);
   this.kpos.forEach((kp,j)=>{ctx.beginPath();ctx.moveTo(this.pos[this.sel].x+16,this.pos[this.sel].y);ctx.lineTo(kp.x-16,kp.y);
-    ctx.strokeStyle=`rgba(124,246,200,${0.08+w[j]*0.92})`;ctx.lineWidth=1+w[j]*9;ctx.stroke();});
+    ctx.strokeStyle=`rgba(31,111,106,${0.08+w[j]*0.92})`;ctx.lineWidth=1+w[j]*9;ctx.stroke();});
   this.pos.forEach((p,i)=>{ctx.beginPath();ctx.arc(p.x,p.y,15,0,7);
-    ctx.fillStyle=i===this.sel?PHOS:'#13241d';ctx.strokeStyle=PHOSD;ctx.lineWidth=1.5;ctx.fill();ctx.stroke();
-    ctx.fillStyle=i===this.sel?'#0d0c0f':INKD;ctx.fillText('q'+i,p.x,p.y+4);});
+    ctx.fillStyle=i===this.sel?PHOS:'#e7dcc6';ctx.strokeStyle=PHOSD;ctx.lineWidth=1.5;ctx.fill();ctx.stroke();
+    ctx.fillStyle=i===this.sel?'#f2ece0':INKD;ctx.fillText('q'+i,p.x,p.y+4);});
   this.kpos.forEach((p,j)=>{ctx.beginPath();ctx.arc(p.x,p.y,15,0,7);
-    ctx.fillStyle='#13241d';ctx.strokeStyle=AMBER;ctx.lineWidth=1.5;ctx.fill();ctx.stroke();
+    ctx.fillStyle='#e7dcc6';ctx.strokeStyle=AMBER;ctx.lineWidth=1.5;ctx.fill();ctx.stroke();
     ctx.fillStyle=AMBER;ctx.fillText('k'+j,p.x,p.y+4);
     ctx.fillStyle=PHOS;ctx.textAlign='left';ctx.fillText((w[j]*100).toFixed(0)+'%',p.x+22,p.y+4);ctx.textAlign='center';});
   document.getElementById('attnReadout').innerHTML=
@@ -846,10 +835,10 @@ draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
   ctx.fillStyle=INKD;ctx.font='11px JetBrains Mono';ctx.textAlign='left';
   ctx.fillText('ENCODER  (Keys / Values)  — feature strength',m,30);
   for(let i=0;i<this.N;i++){const h=this.enc[i]*70;const x=m+i*bw;
-    ctx.fillStyle='#13241d';ctx.fillRect(x+2,60,bw-4,80);
+    ctx.fillStyle='#e7dcc6';ctx.fillRect(x+2,60,bw-4,80);
     ctx.fillStyle=`rgba(224,138,46,${0.25+0.6*this.enc[i]/1.05})`;ctx.fillRect(x+2,140-h,bw-4,h);}
   for(let i=0;i<this.N;i++){const x=m+i*bw;
-    ctx.fillStyle=`rgba(124,246,200,${0.06+w[i]*0.94})`;ctx.fillRect(x+2,150,bw-4,90);}
+    ctx.fillStyle=`rgba(31,111,106,${0.06+w[i]*0.94})`;ctx.fillRect(x+2,150,bw-4,90);}
   ctx.fillStyle=PHOS;ctx.fillText('attention weight wᵢ (decoder query → encoder)',m,260);
   const qx=m+this.pos*(W-2*m);
   ctx.beginPath();ctx.moveTo(qx,300);ctx.lineTo(qx-10,330);ctx.lineTo(qx+10,330);ctx.closePath();
@@ -870,8 +859,8 @@ const Win={init(){
 },
 draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
   const G=this.grid,cell=300/G,ox=30,oy=30,off=this.shift?Math.floor(this.win/2):0;
-  for(let i=0;i<G;i++)for(let j=0;j<G;j++){ctx.fillStyle='#101d18';ctx.fillRect(ox+i*cell,oy+j*cell,cell-1,cell-1);}
-  const cols=['rgba(124,246,200,.18)','rgba(224,138,46,.18)','rgba(58,123,224,.16)','rgba(170,90,180,.16)'];
+  for(let i=0;i<G;i++)for(let j=0;j<G;j++){ctx.fillStyle='#e7dcc6';ctx.fillRect(ox+i*cell,oy+j*cell,cell-1,cell-1);}
+  const cols=['rgba(31,111,106,.18)','rgba(224,138,46,.18)','rgba(58,123,224,.16)','rgba(170,90,180,.16)'];
   let cidx=0;
   for(let wi=-off;wi<G;wi+=this.win){for(let wj=-off;wj<G;wj+=this.win){
     const c=cols[cidx%cols.length];cidx++;
@@ -911,9 +900,9 @@ draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
   ctx.fillStyle=INKD;ctx.font='11px JetBrains Mono';ctx.textAlign='left';
   ctx.fillText('INPUT',ox,40);ctx.fillText('FEATURE MAP',ox+gap+40,40);
   for(let y=0;y<this.G;y++)for(let x=0;x<this.G;x++){
-    const v=this.img[y][x];ctx.fillStyle=`rgb(${20+v*150},${30+v*210},${25+v*170})`;ctx.fillRect(ox+x*cell,oy+y*cell,cell-1,cell-1);
+    const v=this.img[y][x];ctx.fillStyle=`rgb(${231-v*200},${224-v*113},${204-v*98})`;ctx.fillRect(ox+x*cell,oy+y*cell,cell-1,cell-1);
     let o=out[y][x];o=Math.max(-1,Math.min(1,o));const mag=Math.abs(o);
-    ctx.fillStyle=o>=0?`rgba(124,246,200,${0.12+mag*0.88})`:`rgba(224,138,46,${0.12+mag*0.88})`;
+    ctx.fillStyle=o>=0?`rgba(31,111,106,${0.12+mag*0.88})`:`rgba(224,138,46,${0.12+mag*0.88})`;
     ctx.fillRect(ox+gap+40+x*cell,oy+y*cell,cell-1,cell-1);}
   const ky=Math.floor(this.t/this.G)%this.G,kx=this.t%this.G;
   ctx.strokeStyle=PHOS;ctx.lineWidth=2;ctx.strokeRect(ox+(kx-1)*cell,oy+(ky-1)*cell,cell*3,cell*3);
@@ -946,7 +935,7 @@ rnd(s){let x=Math.sin(s*12.9898)*43758.5453;return x-Math.floor(x);}
   for(let y=0;y<G;y++)for(let x=0;x<G;x++){
     const pr=acc[y][x]/this.N; const u=4*pr*(1-pr);
     totU+=u;
-    ctx.fillStyle=`rgba(124,246,200,${pr*0.92+0.04})`;ctx.fillRect(ox+x*cell,oy+y*cell,cell-1,cell-1);
+    ctx.fillStyle=`rgba(31,111,106,${pr*0.92+0.04})`;ctx.fillRect(ox+x*cell,oy+y*cell,cell-1,cell-1);
     if(u>0.25){ctx.strokeStyle=`rgba(224,138,46,${u})`;ctx.lineWidth=1.4;ctx.strokeRect(ox+x*cell+0.5,oy+y*cell+0.5,cell-2,cell-2);}
     const cx=11,cy=11,rr=Math.sqrt((x-cx)**2+(y-cy)**2);if(Math.abs(rr-7)<1.6){bU+=u;bN++;}
   }
@@ -976,8 +965,8 @@ draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
   ctx.fillStyle=INKD;ctx.font='12px JetBrains Mono';ctx.textAlign='left';
   ctx.fillText('● ground truth',330,60);ctx.fillStyle=TEAL;ctx.fillRect(330,52,9,9);
   ctx.fillStyle=INKD;ctx.fillText('● prediction',330,84);ctx.fillStyle=AMBER;ctx.fillRect(330,76,9,9);
-  ctx.fillStyle='#13241d';ctx.fillRect(330,120,150,16);ctx.fillStyle=dice>0.7?PHOS:(dice>0.4?AMBER:'#d23b2a');ctx.fillRect(330,120,150*dice,16);
-  ctx.fillStyle='#eafff6';ctx.font='13px JetBrains Mono';ctx.fillText('Dice = '+dice.toFixed(3),330,112);
+  ctx.fillStyle='#e7dcc6';ctx.fillRect(330,120,150,16);ctx.fillStyle=dice>0.7?PHOS:(dice>0.4?AMBER:'#d23b2a');ctx.fillRect(330,120,150*dice,16);
+  ctx.fillStyle='#3a322a';ctx.font='13px JetBrains Mono';ctx.fillText('Dice = '+dice.toFixed(3),330,112);
   document.getElementById('diceReadout').innerHTML=
     `Dice = 2·|A∩B| / (|A|+|B|) = <b>${dice.toFixed(3)}</b> · overlap ${(inter).toFixed(0)} px² · pred ${(B).toFixed(0)} · GT ${(A).toFixed(0)}. Shrink/offset the prediction → Dice falls fast, steeper for small masks.`;
 }};
@@ -1037,7 +1026,7 @@ classify(pct){if(pct<=-100)return['CR',PHOS];if(pct<=-30)return['PR',TEAL];if(pc
   const zones=[['CR',PHOS,'-100%'],['PR',TEAL,'≤-30%'],['SD',AMBER,'-30..+20%'],['PD','#d23b2a','≥+20%']];
   ctx.font='12px JetBrains Mono';
   zones.forEach((z,i)=>{ctx.fillStyle=z[1];ctx.fillRect(zx,oy+i*34,14,14);ctx.fillStyle=INKD;ctx.textAlign='left';ctx.fillText(`${z[0]}  ${z[2]}`,zx+22,oy+i*34+12);});
-  ctx.fillStyle='#13241d';ctx.fillRect(ox,oy+maxh-base*scale,bw,base*scale);
+  ctx.fillStyle='#e7dcc6';ctx.fillRect(ox,oy+maxh-base*scale,bw,base*scale);
   ctx.fillStyle=TEAL;ctx.fillRect(ox,oy+maxh-base*scale,bw,base*scale);
   const [cls,col]=this.classify(this.delta);
   ctx.fillStyle=col;ctx.fillRect(ox+110,oy+maxh-Math.max(2,fu*scale),bw,Math.max(2,fu*scale));
@@ -1087,7 +1076,7 @@ draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
     arr.forEach((v,i)=>{const hh=Math.max(-plotH/2,Math.min(plotH/2,v*plotH/6));ctx.fillStyle=col;ctx.fillRect(ox+i*bw,y0-hh,bw-1.5,hh);});
     ctx.fillStyle=INKD;fontMono(ctx,11);ctx.textAlign='left';ctx.fillText(lbl,ox,y0-plotH/2-10);};
   drawSeries(raw,topY+plotH/2,'rgba(224,138,46,.7)',`RAW  μ=${mu.toFixed(2)}  σ=${sd.toFixed(2)}`);
-  drawSeries(norm,botY+plotH/2,'rgba(124,246,200,.7)','NORMALIZED  μ≈0  σ≈1  (then learnable γ,β rescale)');
+  drawSeries(norm,botY+plotH/2,'rgba(31,111,106,.7)','NORMALIZED  μ≈0  σ≈1  (then learnable γ,β rescale)');
   document.getElementById('normReadout').innerHTML=`Input drifted to μ=${mu.toFixed(2)}, σ=${sd.toFixed(2)} → normalized to μ≈0, σ≈1. OncoSeg: <b>InstanceNorm3d</b> in decoder (batch-size-robust), <b>LayerNorm</b> in transformer.`;
 }};
 
@@ -1106,7 +1095,7 @@ draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
   const out=[];for(let y=0;y<outN;y++){out.push(new Array(outN).fill(0));}
   for(let y=0;y<N;y++)for(let x=0;x<N;x++){const v=this.in[y][x];for(let dy=0;dy<st;dy++)for(let dx=0;dx<st;dx++){out[y*st+dy][x*st+dx]+=v*(1-0.12*(dx+dy));}}
   let mx=0;out.forEach(r=>r.forEach(v=>mx=Math.max(mx,v)));
-  for(let y=0;y<outN;y++)for(let x=0;x<outN;x++){const v=out[y][x]/(mx||1);ctx.fillStyle=`rgba(124,246,200,${0.12+v*0.85})`;ctx.fillRect(oox+x*ocell,ooy+y*ocell,ocell-1,ocell-1);}
+  for(let y=0;y<outN;y++)for(let x=0;x<outN;x++){const v=out[y][x]/(mx||1);ctx.fillStyle=`rgba(31,111,106,${0.12+v*0.85})`;ctx.fillRect(oox+x*ocell,ooy+y*ocell,ocell-1,ocell-1);}
   document.getElementById('upReadout').innerHTML=`Each of ${N*N} input cells stamps a learnable ${st}×${st} kernel → a ${outN}×${outN} map. Decoder stages use stride-2; a final 4× head undoes the patch-embed downsample.`;
 }};
 
@@ -1119,13 +1108,13 @@ draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
   ctx.fillStyle=INKD;fontMono(ctx,11);ctx.textAlign='left';ctx.fillText('IMAGE 32×32 (a brain slice)',ox,30);
   for(let y=0;y<img;y++)for(let x=0;x<img;x++){const r=Math.sqrt((x-16)**2+(y-15)**2);const t=Math.sqrt((x-19)**2+(y-13)**2);
     let v=r<13?0.25:0.05; if(t<5)v=0.85; if(t<2.4)v=0.6;
-    ctx.fillStyle=`rgb(${20+v*150},${30+v*200},${25+v*160})`;ctx.fillRect(ox+x*cell,oy+y*cell,cell,cell);}
-  ctx.strokeStyle='rgba(124,246,200,.55)';ctx.lineWidth=1;
+    ctx.fillStyle=`rgb(${231-v*200},${224-v*113},${204-v*98})`;ctx.fillRect(ox+x*cell,oy+y*cell,cell,cell);}
+  ctx.strokeStyle='rgba(31,111,106,.55)';ctx.lineWidth=1;
   for(let i=0;i<=img;i+=p){ctx.beginPath();ctx.moveTo(ox+i*cell,oy);ctx.lineTo(ox+i*cell,oy+img*cell);ctx.stroke();
     ctx.beginPath();ctx.moveTo(ox,oy+i*cell);ctx.lineTo(ox+img*cell,oy+i*cell);ctx.stroke();}
   const ntok=Math.ceil(img/p);const tx=ox+img*cell+34;
   ctx.fillStyle=PHOS;ctx.fillText(`${ntok}×${ntok} tokens`,tx,30);
-  for(let i=0;i<Math.min(ntok*ntok,40);i++){const yy=oy+i*6;if(yy>oy+img*cell)break;ctx.fillStyle='rgba(124,246,200,.5)';ctx.fillRect(tx,yy,90*(0.3+0.7*((i*53%100)/100)),4);}
+  for(let i=0;i<Math.min(ntok*ntok,40);i++){const yy=oy+i*6;if(yy>oy+img*cell)break;ctx.fillStyle='rgba(31,111,106,.5)';ctx.fillRect(tx,yy,90*(0.3+0.7*((i*53%100)/100)),4);}
   document.getElementById('patchReadout').innerHTML=`patch=${p} → a 32×32 image becomes <b>${ntok}×${ntok}=${ntok*ntok}</b> tokens, each a learned vector. OncoSeg uses patch (4,4,4): a 128³ volume → 32³ tokens at embed_dim 48.`;
 }};
 
@@ -1134,7 +1123,7 @@ const MHA={init(){this.c=document.getElementById('mhaCanvas');this.ctx=this.c.ge
   const s=document.getElementById('mhaH');s.addEventListener('input',()=>{this.H=+s.value;document.getElementById('mhaHV').textContent=this.H;this.draw();});
   this.draw();},
 draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
-  const N=6,heads=this.H;const cols=['#7CF6C8','#e0883a','#3a7be0','#b05ab4','#2c9a92','#e0c66a','#d23b2a','#9fc4b7'];
+  const N=6,heads=this.H;const cols=['#1f6f6a','#e0883a','#3a7be0','#b05ab4','#2c9a92','#b08313','#d23b2a','#4a4239'];
   const gw=(W-60)/heads, gh=150, ox=30, oy=50;
   ctx.fillStyle=INKD;fontMono(ctx,11);ctx.textAlign='left';ctx.fillText(`embed_dim split into ${heads} heads · each head = its own ${N}×${N} attention map`,ox,30);
   for(let h=0;h<heads;h++){const bx=ox+h*gw;const cell=Math.min(gh/N,(gw-14)/N);
@@ -1152,12 +1141,12 @@ draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
   const G=18,cell=11,gap=20;const r0=5,r1=r0*Math.sqrt(1+this.delta/100);
   const drawDisk=(ox,r,col,lbl)=>{const oy=70;ctx.fillStyle=INKD;fontMono(ctx,11);ctx.textAlign='left';ctx.fillText(lbl,ox,oy-16);
     for(let y=0;y<G;y++)for(let x=0;x<G;x++){const d=Math.sqrt((x-9)**2+(y-9)**2);const on=d<r;
-      ctx.fillStyle=on?col:'#101d18';ctx.fillRect(ox+x*cell,oy+y*cell,cell-1,cell-1);}};
+      ctx.fillStyle=on?col:'#e7dcc6';ctx.fillRect(ox+x*cell,oy+y*cell,cell-1,cell-1);}};
   drawDisk(20,r0,'rgba(44,154,146,.85)','t0 baseline');
   drawDisk(20+G*cell+gap,r1,'rgba(224,138,46,.8)','t1 follow-up');
   const dox=20+2*(G*cell+gap), oy=70;ctx.fillStyle=PHOS;ctx.fillText('|t1 − t0| change',dox,oy-16);
   for(let y=0;y<G;y++)for(let x=0;x<G;x++){const d=Math.sqrt((x-9)**2+(y-9)**2);const a=d<r0,b=d<r1;
-    const diff=(a!==b);ctx.fillStyle=diff?'rgba(124,246,200,.95)':'#101d18';ctx.fillRect(dox+x*cell,oy+y*cell,cell-1,cell-1);}
+    const diff=(a!==b);ctx.fillStyle=diff?'rgba(31,111,106,.95)':'#e7dcc6';ctx.fillRect(dox+x*cell,oy+y*cell,cell-1,cell-1);}
   const cls=this.delta>=20?'growth (→PD)':this.delta<=-30?'shrink (→PR)':'stable (→SD)';
   document.getElementById('tempReadout').innerHTML=`tumor change <b>${this.delta>0?'+':''}${this.delta}%</b> → difference ring lights up where it ${this.delta>=0?'grew':'shrank'}. The classifier reads this as <b>${cls}</b>. Cross-attention + (t1−t0) is the temporal module.`;
 }};
@@ -1172,12 +1161,12 @@ draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
   const boxes=[];
   for(let i=0;i<4;i++){const y=midY+i*stepY;const ww=wbase-i*22;
     boxes.push({ex:encX-ww/2,dx:decX-ww/2,y,ww,i});}
-  for(let i=0;i<3;i++){const b=boxes[i];ctx.strokeStyle=i===this.stage?PHOS:'rgba(124,246,200,.2)';ctx.lineWidth=i===this.stage?2.5:1;ctx.setLineDash(i===this.stage?[]:[4,4]);
+  for(let i=0;i<3;i++){const b=boxes[i];ctx.strokeStyle=i===this.stage?PHOS:'rgba(31,111,106,.2)';ctx.lineWidth=i===this.stage?2.5:1;ctx.setLineDash(i===this.stage?[]:[4,4]);
     ctx.beginPath();ctx.moveTo(encX+b.ww/2,b.y);ctx.lineTo(decX-b.ww/2,b.y);ctx.stroke();ctx.setLineDash([]);
     if(i===this.stage){ctx.fillStyle=PHOS;fontMono(ctx,10);ctx.textAlign='center';ctx.fillText('cross-attn skip',W/2,b.y-6);}}
   const bb=boxes[3];ctx.strokeStyle=AMBER;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(encX,bb.y+18);ctx.lineTo(decX,bb.y+18);ctx.stroke();
-  const drawBox=(x,y,ww,lbl,sel,col)=>{ctx.fillStyle=sel?col:'#13241d';ctx.strokeStyle=col;ctx.lineWidth=sel?2.5:1.2;
-    ctx.fillRect(x,y-15,ww,30);ctx.strokeRect(x,y-15,ww,30);ctx.fillStyle=sel?'#0d0c0f':INKD;fontMono(ctx,10);ctx.textAlign='center';ctx.fillText(lbl,x+ww/2,y+4);};
+  const drawBox=(x,y,ww,lbl,sel,col)=>{ctx.fillStyle=sel?col:'#e7dcc6';ctx.strokeStyle=col;ctx.lineWidth=sel?2.5:1.2;
+    ctx.fillRect(x,y-15,ww,30);ctx.strokeRect(x,y-15,ww,30);ctx.fillStyle=sel?'#f2ece0':INKD;fontMono(ctx,10);ctx.textAlign='center';ctx.fillText(lbl,x+ww/2,y+4);};
   boxes.forEach(b=>{drawBox(b.ex,b.y,b.ww,dims[b.i]+'·'+res[b.i],b.i===this.stage,TEAL);
     drawBox(b.dx,b.y,b.ww,dims[b.i]+'·'+res[b.i],b.i===this.stage,'#c9863a');});
   ctx.fillStyle=TEAL;fontMono(ctx,11);ctx.textAlign='center';ctx.fillText('Swin encoder ↓',encX,midY-26);
@@ -1194,12 +1183,12 @@ draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
   const res=['H/16 (coarse)','H/8','H/4 (fine)'];const oy=60,bx=40,bw=220,gap=78;
   ctx.fillStyle=INKD;fontMono(ctx,11);ctx.textAlign='left';ctx.fillText('decoder stage → its own head → weighted loss',bx,30);
   for(let i=0;i<n;i++){const y=oy+i*gap;
-    ctx.fillStyle='#13241d';ctx.strokeStyle='#c9863a';ctx.lineWidth=1.4;ctx.fillRect(bx,y,90,40);ctx.strokeRect(bx,y,90,40);
+    ctx.fillStyle='#e7dcc6';ctx.strokeStyle='#c9863a';ctx.lineWidth=1.4;ctx.fillRect(bx,y,90,40);ctx.strokeRect(bx,y,90,40);
     ctx.fillStyle=INKD;fontMono(ctx,10);ctx.textAlign='center';ctx.fillText(res[i],bx+45,y+24);
     ctx.strokeStyle=PHOSD;ctx.beginPath();ctx.moveTo(bx+90,y+20);ctx.lineTo(bx+150,y+20);ctx.stroke();
     ctx.fillStyle=PHOS;ctx.fillText('1×1 head',bx+120,y+12);
-    ctx.fillStyle='#13241d';ctx.fillRect(bx+160,y+8,bw,24);ctx.fillStyle=`rgba(124,246,200,${0.4+w[i]*0.6})`;ctx.fillRect(bx+160,y+8,bw*w[i],24);
-    ctx.fillStyle='#eafff6';ctx.textAlign='left';ctx.fillText('w='+w[i].toFixed(3),bx+166,y+24);}
+    ctx.fillStyle='#e7dcc6';ctx.fillRect(bx+160,y+8,bw,24);ctx.fillStyle=`rgba(31,111,106,${0.4+w[i]*0.6})`;ctx.fillRect(bx+160,y+8,bw*w[i],24);
+    ctx.fillStyle='#3a322a';ctx.textAlign='left';ctx.fillText('w='+w[i].toFixed(3),bx+166,y+24);}
   document.getElementById('dsReadout').innerHTML=`decay ${this.decay.toFixed(2)} → weights [${w.map(v=>v.toFixed(2)).join(', ')}] (Σ=1). Finest scale dominates; coarse heads still get gradient. Caveat: src DS loss skips interpolation → shape error.`;
 }};
 
@@ -1217,7 +1206,7 @@ draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
     const x0=Math.min(x,vw-roi),y0=Math.min(y,vh-roi);
     for(let j=0;j<gy;j++)for(let i=0;i<gx;i++){const px=i*cw,py=j*ch;if(px>=x0&&px<x0+roi&&py>=y0&&py<y0+roi)acc[j][i]++;}}}
   let mx=0;acc.forEach(r=>r.forEach(v=>mx=Math.max(mx,v)));
-  for(let j=0;j<gy;j++)for(let i=0;i<gx;i++){const v=acc[j][i]/(mx||1);ctx.fillStyle=`rgba(124,246,200,${0.07+v*0.6})`;ctx.fillRect(ox+i*cw,oy+j*ch,cw,ch);}
+  for(let j=0;j<gy;j++)for(let i=0;i<gx;i++){const v=acc[j][i]/(mx||1);ctx.fillStyle=`rgba(31,111,106,${0.07+v*0.6})`;ctx.fillRect(ox+i*cw,oy+j*ch,cw,ch);}
   ctx.strokeStyle=AMBER;ctx.lineWidth=2;ctx.strokeRect(ox,oy,roi,roi);ctx.fillStyle=AMBER;ctx.fillText('one ROI',ox+4,oy+14);
   ctx.strokeStyle=GRIDC;ctx.strokeRect(ox,oy,vw,vh);
   document.getElementById('swReadout').innerHTML=`overlap ${(this.over*100).toFixed(0)}% → step ${step}px → <b>${nx}</b> windows. Brighter = more overlap (Gaussian-blended). Higher overlap removes tile seams but costs more passes.`;
@@ -1234,10 +1223,10 @@ draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
   const chans=[['TC  (core = 2,3)',inTC,TEAL],['WT  (whole = 1,2,3)',inWT,'#3a7be0'],['ET  (enhancing = 3)',inET,'#e0883a']];
   chans.forEach((c,i)=>{const y=70+i*78;
     ctx.fillStyle=INKD;fontMono(ctx,12);ctx.fillText(c[0],40,y-12);
-    ctx.fillStyle=c[1]?c[2]:'#13241d';ctx.strokeStyle=c[2];ctx.lineWidth=2;ctx.beginPath();ctx.arc(70,y+18,20,0,7);ctx.fill();ctx.stroke();
-    ctx.fillStyle=c[1]?'#0d0c0f':INKD;ctx.textAlign='center';fontMono(ctx,12);ctx.fillText(c[1]?'1':'0',70,y+22);
-    const pv=c[1]?0.93:0.06;ctx.fillStyle='#13241d';ctx.fillRect(120,y+8,300,22);ctx.fillStyle=`rgba(124,246,200,${0.3+pv*0.6})`;ctx.fillRect(120,y+8,300*pv,22);
-    ctx.fillStyle='#eafff6';ctx.textAlign='left';ctx.fillText('σ(logit) ≈ '+pv.toFixed(2),126,y+24);});
+    ctx.fillStyle=c[1]?c[2]:'#e7dcc6';ctx.strokeStyle=c[2];ctx.lineWidth=2;ctx.beginPath();ctx.arc(70,y+18,20,0,7);ctx.fill();ctx.stroke();
+    ctx.fillStyle=c[1]?'#f2ece0':INKD;ctx.textAlign='center';fontMono(ctx,12);ctx.fillText(c[1]?'1':'0',70,y+22);
+    const pv=c[1]?0.93:0.06;ctx.fillStyle='#e7dcc6';ctx.fillRect(120,y+8,300,22);ctx.fillStyle=`rgba(31,111,106,${0.3+pv*0.6})`;ctx.fillRect(120,y+8,300*pv,22);
+    ctx.fillStyle='#3a322a';ctx.textAlign='left';ctx.fillText('σ(logit) ≈ '+pv.toFixed(2),126,y+24);});
   const sum=(inTC?0.93:0.06)+(inWT?0.93:0.06)+(inET?0.93:0.06);
   document.getElementById('headReadout').innerHTML=`3 <b>independent</b> sigmoids — channels overlap (ET⊂TC⊂WT) and sum to <b>${sum.toFixed(2)}</b> ≠ 1. That's why it's multi-label, not 4-way softmax — and why uncertainty must use binary entropy.`;
 }};
@@ -1251,10 +1240,10 @@ draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
   ctx.strokeStyle=GRIDC;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(ox,oy+h);ctx.lineTo(ox+w,oy+h);ctx.moveTo(ox,oy);ctx.lineTo(ox,oy+h);ctx.stroke();
   const curve=(fn,col,lw)=>{ctx.strokeStyle=col;ctx.lineWidth=lw;ctx.beginPath();
     for(let i=1;i<=200;i++){const p=i/201;const L=Math.min(maxL,fn(p));const px=ox+p*w;const py=oy+h-(L/maxL)*h;if(i===1)ctx.moveTo(px,py);else ctx.lineTo(px,py);}ctx.stroke();};
-  curve(p=>-Math.log(p),'rgba(159,196,182,.7)',1.6);
+  curve(p=>-Math.log(p),'rgba(120,108,92,.7)',1.6);
   curve(p=>Math.pow(1-p,this.gamma)*(-Math.log(p)),PHOS,2.6);
   ctx.fillStyle=INKD;fontMono(ctx,10);ctx.textAlign='left';ctx.fillText('loss',ox-2,oy+8);ctx.fillText('p (pred prob for a TRUE tumor voxel) →',ox,oy+h+22);
-  ctx.fillStyle='#9fc4b7';ctx.fillText('— BCE  (−log p)',ox+w-150,oy+14);ctx.fillStyle=PHOS;ctx.fillText(`— Focal  γ=${this.gamma.toFixed(1)}`,ox+w-150,oy+30);
+  ctx.fillStyle='#4a4239';ctx.fillText('— BCE  (−log p)',ox+w-150,oy+14);ctx.fillStyle=PHOS;ctx.fillText(`— Focal  γ=${this.gamma.toFixed(1)}`,ox+w-150,oy+30);
   const easy=Math.pow(1-0.9,this.gamma)*(-Math.log(0.9)), bce09=-Math.log(0.9);
   document.getElementById('lossReadout').innerHTML=`At p=0.9 (easy voxel): BCE=${bce09.toFixed(3)} vs Focal=<b>${easy.toFixed(3)}</b> (×${(easy/bce09).toFixed(2)}). γ shrinks easy-voxel loss so gradient flows to the hard tumor rim. OncoSeg trains Dice+BCE.`;
 }};
@@ -1273,8 +1262,8 @@ draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
     for(let i=1;i<200;i++){const p=i/200;const py=oy+h-(Math.min(maxY,fn(p))/maxY)*h;const px=ox+p*w;if(i===1)ctx.moveTo(px,py);else ctx.lineTo(px,py);}ctx.stroke();};
   curve(bin,PHOS,2.6); curve(cat,'rgba(224,138,46,.8)',1.8);
   const px=ox+this.p*w, py=oy+h-(Math.min(maxY,bin(this.p))/maxY)*h;
-  ctx.fillStyle='#eafff6';ctx.beginPath();ctx.arc(px,py,5,0,7);ctx.fill();
-  ctx.strokeStyle='rgba(124,246,200,.3)';ctx.beginPath();ctx.moveTo(px,oy);ctx.lineTo(px,oy+h);ctx.stroke();
+  ctx.fillStyle='#3a322a';ctx.beginPath();ctx.arc(px,py,5,0,7);ctx.fill();
+  ctx.strokeStyle='rgba(31,111,106,.3)';ctx.beginPath();ctx.moveTo(px,oy);ctx.lineTo(px,oy+h);ctx.stroke();
   ctx.fillStyle=INKD;fontMono(ctx,10);ctx.textAlign='left';ctx.fillText('entropy',ox-4,oy+8);ctx.fillText('p →',ox+w-24,oy+h+20);
   ctx.fillStyle=PHOS;ctx.fillText('— binary (correct)',ox+w-160,oy+14);ctx.fillStyle='#e0883a';ctx.fillText('— categorical (inference.py)',ox+w-200,oy+30);
   document.getElementById('entReadout').innerHTML=`p=${this.p.toFixed(2)} → binary H=<b>${bin(this.p).toFixed(3)}</b> nats (max ${ln2.toFixed(3)} at 0.5) vs categorical ${cat(this.p).toFixed(3)}. For sigmoid outputs only the binary form is valid — the shipped inference path uses the wrong one.`;
@@ -1313,10 +1302,10 @@ label(){const G=this.G,lab=[];for(let y=0;y<G;y++)lab.push(new Array(G).fill(0))
   return {lab,sizes,cur};},
 draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
   const {lab,sizes,cur}=this.label();const cell=10,ox=30,oy=40;
-  const cols=['#7CF6C8','#e0883a','#3a7be0','#b05ab4','#2c9a92','#e0c66a'];
+  const cols=['#1f6f6a','#e0883a','#3a7be0','#b05ab4','#2c9a92','#b08313'];
   let kept=0;
   for(let y=0;y<this.G;y++)for(let x=0;x<this.G;x++){const id=lab[y][x];
-    if(!id){ctx.fillStyle='#101d18';}else if(sizes[id]<this.min){ctx.fillStyle='#3a2a20';}else{ctx.fillStyle=cols[(id-1)%cols.length];}
+    if(!id){ctx.fillStyle='#e7dcc6';}else if(sizes[id]<this.min){ctx.fillStyle='#cdbda0';}else{ctx.fillStyle=cols[(id-1)%cols.length];}
     ctx.fillRect(ox+x*cell,oy+y*cell,cell-1,cell-1);}
   for(const k in sizes)if(sizes[k]>=this.min)kept++;
   ctx.fillStyle=INKD;fontMono(ctx,11);ctx.textAlign='left';ctx.fillText('colored = kept lesion · brown = pruned speck',ox,30);
