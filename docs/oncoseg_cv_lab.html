@@ -98,6 +98,29 @@ canvas{display:block;max-width:100%;border-radius:10px}
 .btn-ghost:hover{background:rgba(31,111,106,.1)}
 footer{padding:42px 0 60px;color:var(--ink-soft);font-size:13px;border-top:1px solid var(--line);margin-top:40px}
 .disc{background:linear-gradient(180deg,rgba(192,105,31,.07),transparent);border:1px solid var(--line);border-radius:12px;padding:14px 18px;font-size:13.5px;color:var(--ink-soft)}
+
+/* ===== left category rail layout ===== */
+.lab-layout{display:grid;grid-template-columns:236px minmax(0,1fr);gap:30px;align-items:start;margin-top:6px}
+.lab-rail{position:sticky;top:72px;align-self:start;max-height:calc(100vh - 92px);overflow-y:auto;padding:2px 8px 12px 0}
+.lab-rail .railsec{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);font-weight:700;margin:18px 0 8px;padding-bottom:5px;border-bottom:1px solid var(--line-soft)}
+.lab-rail .railsec:first-child{margin-top:0}
+.rail-item{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;text-align:left;
+  font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--ink-soft);background:transparent;
+  border:1px solid transparent;border-radius:9px;padding:9px 11px;cursor:pointer;transition:.14s;margin-bottom:3px}
+.rail-item:hover{background:var(--paper-2);color:var(--ink)}
+.rail-item.on{background:var(--ink);color:var(--paper);font-weight:700;box-shadow:var(--shadow)}
+.rail-item .cnt{font-size:10px;opacity:.55;font-weight:700;background:rgba(0,0,0,.06);border-radius:999px;padding:1px 7px}
+.rail-item.on .cnt{opacity:.85;background:rgba(255,255,255,.18)}
+.lab-main{min-width:0}
+.cat-head{font-family:"Fraunces",serif;font-weight:600;font-size:21px;letter-spacing:-.01em;color:var(--ink);margin:0 0 12px}
+#moduletabs{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 22px;align-items:center}
+@media(max-width:900px){
+  .lab-layout{grid-template-columns:1fr;gap:14px}
+  .lab-rail{position:static;max-height:none;overflow:visible;display:flex;flex-wrap:wrap;gap:6px;padding:0}
+  .lab-rail .railsec{width:100%;margin:8px 0 2px}
+  .rail-item{width:auto}
+  .rail-item .cnt{display:none}
+}
 </style>
 </head>
 <body>
@@ -130,73 +153,68 @@ footer{padding:42px 0 60px;color:var(--ink-soft);font-size:13px;border-top:1px s
     </div>
     <div class="autonote">Play drives each widget's own controls automatically. Click any chip to jump — or hit the <b>▶ Play</b> in any panel's title bar to loop just that one demo.</div>
 
-    <div class="module-tabs" id="moduletabs">
-      <span class="cat">Foundations · CV building blocks</span>
-      <button data-m="conv" class="on"><span class="num">01</span> Convolution</button>
-      <button data-m="act"><span class="num">02</span> Activations</button>
-      <button data-m="norm"><span class="num">03</span> Normalization</button>
-      <button data-m="upconv"><span class="num">04</span> Transposed Conv ↑</button>
-
-      <span class="cat">Transformer core</span>
-      <button data-m="patch"><span class="num">05</span> Patch Embedding</button>
-      <button data-m="attention"><span class="num">06</span> Self-Attention</button>
-      <button data-m="mha"><span class="num">07</span> Multi-Head</button>
-      <button data-m="window"><span class="num">08</span> Swin Windows</button>
-      <button data-m="xattn"><span class="num">09</span> Cross-Attention Skip</button>
-      <button data-m="temporal"><span class="num">10</span> Temporal Attention</button>
-
-      <span class="cat">Segmentation architecture</span>
-      <button data-m="unet"><span class="num">11</span> U-Net Pyramid</button>
-      <button data-m="ds"><span class="num">12</span> Deep Supervision</button>
-      <button data-m="sw"><span class="num">13</span> Sliding-Window Infer</button>
-      <button data-m="head"><span class="num">14</span> Output Head · TC/WT/ET</button>
-
-      <span class="cat">Training objectives</span>
-      <button data-m="loss"><span class="num">15</span> Dice · BCE · Focal</button>
-      <button data-m="dice"><span class="num">16</span> Dice Overlap</button>
-
-      <span class="cat">Uncertainty &amp; evaluation</span>
-      <button data-m="dropout"><span class="num">17</span> MC-Dropout</button>
-      <button data-m="entropy"><span class="num">18</span> Predictive Entropy</button>
-      <button data-m="calib"><span class="num">19</span> Calibration / ECE</button>
-      <button data-m="hd95"><span class="num">20</span> Hausdorff HD95</button>
-      <button data-m="cc"><span class="num">21</span> Connected Components</button>
-
-      <span class="cat">Clinical endpoint</span>
-      <button data-m="recist"><span class="num">22</span> RECIST 1.1</button>
-
-      <span class="cat">Foundation &amp; self-supervised vision</span>
-      <button data-m="dino"><span class="num">23</span> DINO attention</button>
-      <button data-m="mae"><span class="num">24</span> Masked Autoencoder</button>
-      <button data-m="clip"><span class="num">25</span> CLIP Alignment</button>
-      <button data-m="diffusion"><span class="num">26</span> Diffusion denoising</button>
-
-      <span class="cat">Digital pathology / histology</span>
-      <button data-m="wsi"><span class="num">27</span> WSI Pyramid &amp; Tiling</button>
-      <button data-m="stain"><span class="num">28</span> H&E Stain Deconvolution</button>
-      <button data-m="nuclei"><span class="num">29</span> Nuclei Instances</button>
-      <button data-m="mil"><span class="num">30</span> Attention-MIL</button>
-      <button data-m="pathfm"><span class="num">31</span> Pathology FM (UNI/Virchow)</button>
-
-      <span class="cat">Modern architectures (SOTA)</span>
-      <button data-m="vit"><span class="num">32</span> ViT [CLS] + Position</button>
-      <button data-m="rope"><span class="num">33</span> Positional Encoding</button>
-      <button data-m="moe"><span class="num">34</span> Mixture-of-Experts</button>
-      <button data-m="mamba"><span class="num">35</span> State-Space (Mamba)</button>
-      <button data-m="flash"><span class="num">36</span> FlashAttention</button>
-
-      <span class="cat">World models</span>
-      <button data-m="jepa"><span class="num">37</span> JEPA latent prediction</button>
-      <button data-m="worldroll"><span class="num">38</span> World-Model Rollout</button>
-
-      <span class="cat">Visual reasoning &amp; VLMs</span>
-      <button data-m="vlm"><span class="num">39</span> VLM joint attention</button>
-      <button data-m="vcot"><span class="num">40</span> Visual CoT + grounding</button>
-
-      <span class="cat">Vision-Language-Action (VLA)</span>
-      <button data-m="vla"><span class="num">41</span> VLA policy</button>
-
-    </div>
+    <div class="lab-layout">
+      <nav class="lab-rail" id="labrail">
+        <div class="railsec">OncoSeg pipeline</div>
+        <button class="rail-item" data-cat="foundcv"><span>Foundations · CV</span><span class="cnt">4</span></button>
+        <button class="rail-item" data-cat="tcore"><span>Transformer core</span><span class="cnt">6</span></button>
+        <button class="rail-item" data-cat="segarch"><span>Segmentation arch</span><span class="cnt">4</span></button>
+        <button class="rail-item" data-cat="train"><span>Training objectives</span><span class="cnt">2</span></button>
+        <button class="rail-item" data-cat="uncert"><span>Uncertainty & eval</span><span class="cnt">5</span></button>
+        <button class="rail-item" data-cat="clinical"><span>Clinical endpoint</span><span class="cnt">1</span></button>
+        <div class="railsec">Visual-AI frontier</div>
+        <button class="rail-item" data-cat="foundssl"><span>Foundation / self-sup</span><span class="cnt">4</span></button>
+        <button class="rail-item" data-cat="path"><span>Digital pathology</span><span class="cnt">5</span></button>
+        <button class="rail-item" data-cat="arch"><span>Modern architectures</span><span class="cnt">5</span></button>
+        <button class="rail-item" data-cat="world"><span>World models</span><span class="cnt">2</span></button>
+        <button class="rail-item" data-cat="vlmcat"><span>Visual reasoning / VLM</span><span class="cnt">2</span></button>
+        <button class="rail-item" data-cat="vlacat"><span>Vision-Language-Action</span><span class="cnt">1</span></button>
+      </nav>
+      <div class="lab-main">
+        <div class="cat-head" id="catHead">Foundations · CV</div>
+        <div class="module-tabs" id="moduletabs">
+        <button data-m="conv" data-cat="foundcv" class="on"><span class="num">01</span> Convolution</button>
+        <button data-m="act" data-cat="foundcv"><span class="num">02</span> Activations</button>
+        <button data-m="norm" data-cat="foundcv"><span class="num">03</span> Normalization</button>
+        <button data-m="upconv" data-cat="foundcv"><span class="num">04</span> Transposed Conv ↑</button>
+        <button data-m="patch" data-cat="tcore"><span class="num">05</span> Patch Embedding</button>
+        <button data-m="attention" data-cat="tcore"><span class="num">06</span> Self-Attention</button>
+        <button data-m="mha" data-cat="tcore"><span class="num">07</span> Multi-Head</button>
+        <button data-m="window" data-cat="tcore"><span class="num">08</span> Swin Windows</button>
+        <button data-m="xattn" data-cat="tcore"><span class="num">09</span> Cross-Attention Skip</button>
+        <button data-m="temporal" data-cat="tcore"><span class="num">10</span> Temporal Attention</button>
+        <button data-m="unet" data-cat="segarch"><span class="num">11</span> U-Net Pyramid</button>
+        <button data-m="ds" data-cat="segarch"><span class="num">12</span> Deep Supervision</button>
+        <button data-m="sw" data-cat="segarch"><span class="num">13</span> Sliding-Window Infer</button>
+        <button data-m="head" data-cat="segarch"><span class="num">14</span> Output Head · TC/WT/ET</button>
+        <button data-m="loss" data-cat="train"><span class="num">15</span> Dice · BCE · Focal</button>
+        <button data-m="dice" data-cat="train"><span class="num">16</span> Dice Overlap</button>
+        <button data-m="dropout" data-cat="uncert"><span class="num">17</span> MC-Dropout</button>
+        <button data-m="entropy" data-cat="uncert"><span class="num">18</span> Predictive Entropy</button>
+        <button data-m="calib" data-cat="uncert"><span class="num">19</span> Calibration / ECE</button>
+        <button data-m="hd95" data-cat="uncert"><span class="num">20</span> Hausdorff HD95</button>
+        <button data-m="cc" data-cat="uncert"><span class="num">21</span> Connected Components</button>
+        <button data-m="recist" data-cat="clinical"><span class="num">22</span> RECIST 1.1</button>
+        <button data-m="dino" data-cat="foundssl"><span class="num">23</span> DINO attention</button>
+        <button data-m="mae" data-cat="foundssl"><span class="num">24</span> Masked Autoencoder</button>
+        <button data-m="clip" data-cat="foundssl"><span class="num">25</span> CLIP Alignment</button>
+        <button data-m="diffusion" data-cat="foundssl"><span class="num">26</span> Diffusion denoising</button>
+        <button data-m="wsi" data-cat="path"><span class="num">27</span> WSI Pyramid &amp; Tiling</button>
+        <button data-m="stain" data-cat="path"><span class="num">28</span> H&E Stain Deconvolution</button>
+        <button data-m="nuclei" data-cat="path"><span class="num">29</span> Nuclei Instances</button>
+        <button data-m="mil" data-cat="path"><span class="num">30</span> Attention-MIL</button>
+        <button data-m="pathfm" data-cat="path"><span class="num">31</span> Pathology FM (UNI/Virchow)</button>
+        <button data-m="vit" data-cat="arch"><span class="num">32</span> ViT [CLS] + Position</button>
+        <button data-m="rope" data-cat="arch"><span class="num">33</span> Positional Encoding</button>
+        <button data-m="moe" data-cat="arch"><span class="num">34</span> Mixture-of-Experts</button>
+        <button data-m="mamba" data-cat="arch"><span class="num">35</span> State-Space (Mamba)</button>
+        <button data-m="flash" data-cat="arch"><span class="num">36</span> FlashAttention</button>
+        <button data-m="jepa" data-cat="world"><span class="num">37</span> JEPA latent prediction</button>
+        <button data-m="worldroll" data-cat="world"><span class="num">38</span> World-Model Rollout</button>
+        <button data-m="vlm" data-cat="vlmcat"><span class="num">39</span> VLM joint attention</button>
+        <button data-m="vcot" data-cat="vlmcat"><span class="num">40</span> Visual CoT + grounding</button>
+        <button data-m="vla" data-cat="vlacat"><span class="num">41</span> VLA policy</button>
+      </div>
 
     <!-- 01. CONVOLUTION -->
     <section class="demo show" data-demo="conv">
@@ -1077,6 +1095,9 @@ footer{padding:42px 0 60px;color:var(--ink-soft);font-size:13px;border-top:1px s
     </section>
 
 
+      </div><!-- /lab-main -->
+    </div><!-- /lab-layout -->
+
     <div class="rule"></div>
     <div class="disc"><b>About these widgets:</b> they compute the real operations (softmax, scaled dot-product attention, convolution, Dice, predictive entropy, ECE, RECIST thresholds) on small toy tensors for clarity. The intuition is identical to the 128³ volumes in the actual model; only the scale differs.</div>
  </div>
@@ -1099,6 +1120,7 @@ function initLab(){ if(labInit)return; labInit=true;
 }
 let curMod='conv';
 function showModule(key,fromPlay){
+  if(typeof ensureCat==='function') ensureCat(key);
   document.querySelectorAll('#moduletabs button').forEach(x=>x.classList.toggle('on',x.dataset.m===key));
   document.querySelectorAll('.demo').forEach(d=>d.classList.toggle('show',d.dataset.demo===key));
   curMod=key;
@@ -1106,10 +1128,27 @@ function showModule(key,fromPlay){
   if(typeof DemoPlay!=='undefined' && DemoPlay.on && DemoPlay.key!==key) DemoPlay.stop();
   if(!fromPlay) Play.stop();
 }
+/* ----- category rail ----- */
+const CAT_LABELS={"foundcv":"Foundations · CV","tcore":"Transformer core","segarch":"Segmentation arch","train":"Training objectives","uncert":"Uncertainty & eval","clinical":"Clinical endpoint","foundssl":"Foundation / self-sup","path":"Digital pathology","arch":"Modern architectures","world":"World models","vlmcat":"Visual reasoning / VLM","vlacat":"Vision-Language-Action"};
+const KEYCAT={"conv":"foundcv","act":"foundcv","norm":"foundcv","upconv":"foundcv","patch":"tcore","attention":"tcore","mha":"tcore","window":"tcore","xattn":"tcore","temporal":"tcore","unet":"segarch","ds":"segarch","sw":"segarch","head":"segarch","loss":"train","dice":"train","dropout":"uncert","entropy":"uncert","calib":"uncert","hd95":"uncert","cc":"uncert","recist":"clinical","dino":"foundssl","mae":"foundssl","clip":"foundssl","diffusion":"foundssl","wsi":"path","stain":"path","nuclei":"path","mil":"path","pathfm":"path","vit":"arch","rope":"arch","moe":"arch","mamba":"arch","flash":"arch","jepa":"world","worldroll":"world","vlm":"vlmcat","vcot":"vlmcat","vla":"vlacat"};
+let curCat=null;
+function setCat(catId){
+  if(!catId)return; curCat=catId;
+  document.querySelectorAll('#labrail .rail-item').forEach(b=>b.classList.toggle('on',b.dataset.cat===catId));
+  document.querySelectorAll('#moduletabs button[data-m]').forEach(b=>{ b.style.display = (b.dataset.cat===catId)?'':'none'; });
+  const h=document.getElementById('catHead'); if(h&&CAT_LABELS[catId]) h.textContent=CAT_LABELS[catId];
+}
+function ensureCat(key){ const c=KEYCAT[key]; if(c&&c!==curCat) setCat(c); }
+function firstKeyOfCat(catId){ const b=document.querySelector('#moduletabs button[data-cat="'+catId+'"]'); return b?b.dataset.m:null; }
+function selectCat(catId){ setCat(catId); const k=firstKeyOfCat(catId); if(k) showModule(k,false); }
 function setupModuleTabs(){
   document.querySelectorAll('#moduletabs button').forEach(b=>{
     b.addEventListener('click',()=>showModule(b.dataset.m,false));
   });
+  document.querySelectorAll('#labrail .rail-item').forEach(b=>{
+    b.addEventListener('click',()=>selectCat(b.dataset.cat));
+  });
+  setCat(KEYCAT['conv']);   /* initial: show first category only */
 }
 
 /* ---------- PLAY ENGINE: auto-drives each widget's own controls ---------- */
