@@ -7,6 +7,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,900&family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<!-- KaTeX: professional LaTeX math rendering (graceful fallback to unicode <code> if it fails to load) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
 <style>
 :root{
   --paper:#f4f7f9; --paper-2:#e8eef1; --ink:#0e1c21; --ink-soft:#42535a;
@@ -124,6 +127,14 @@ footer{padding:42px 0 60px;color:var(--ink-soft);font-size:13px;border-top:1px s
   .rail-item{width:auto}
   .rail-item .cnt{display:none}
 }
+/* ---- KaTeX math: tint to the ink/teal palette, size to flow with body/why text ---- */
+.explain .katex{font-size:1.02em;color:var(--ink)}
+.explain .why .katex{color:var(--ink-soft)}
+.katex-block{display:block;margin:10px 0;text-align:center}
+.katex-block .katex{font-size:1.12em}
+/* a math <code> that has been upgraded loses its mono "chip" look */
+code.mathfx{background:none;border:0;padding:0;color:inherit;font-family:inherit}
+.explain code:not(.mathfx){background:rgba(12,138,141,.08);border-radius:5px;padding:1px 5px}
 </style>
 </head>
 <body>
@@ -10277,6 +10288,69 @@ draw(){const ctx=this.ctx,W=this.c.width,H=this.c.height;clear(ctx,W,H);
     `At distance <b>t=${L}</b>: vanilla RNN retains <b style="color:${AMBER}">${pct(rR)}</b> of the cue's gradient (≈Wₕᵗ with Wₕ=${this.w.toFixed(2)}, ×tanh′≤1) — it <b>vanishes</b>; the LSTM cell retains <b>${pct(rL)}</b> (fᵗ, f=${this.f.toFixed(2)}). The gate multiplies by ${this.f.toFixed(2)} per step instead of shrinking through a saturating tanh → memory half-life ≈ ${tcL} steps vs ≈ ${tcR}. That gap is why gating beat plain recurrence.`;
 }};
 
+
+/* =====================================================================
+   PROFESSIONAL MATH RENDERING — upgrade unicode <code> math to LaTeX (KaTeX)
+   Each <code> in the explain text is converted unicode→TeX and rendered by
+   KaTeX. If KaTeX fails to load (offline), the original unicode is kept.
+   ===================================================================== */
+const MATHFX = (function(){
+  // unicode → TeX token maps
+  const GREEK={'α':'\\alpha','β':'\\beta','γ':'\\gamma','δ':'\\delta','ε':'\\varepsilon','η':'\\eta','θ':'\\theta','κ':'\\kappa','λ':'\\lambda','μ':'\\mu','π':'\\pi','σ':'\\sigma','τ':'\\tau','ω':'\\omega','Δ':'\\Delta','Π':'\\Pi','Σ':'\\Sigma','Γ':'\\Gamma','ζ':'\\zeta','ρ':'\\rho','φ':'\\varphi','Φ':'\\Phi'};
+  const OPS={'·':'\\cdot ','×':'\\times ','−':'-','∂':'\\partial ','∇':'\\nabla ','√':'\\surd ','∑':'\\sum','Σ':'\\sum','∏':'\\prod','Π':'\\prod','∫':'\\int','∈':'\\in ','∉':'\\notin ','∩':'\\cap ','∪':'\\cup ','⊆':'\\subseteq ','⊂':'\\subset ','⊕':'\\oplus ','⊖':'\\ominus ','⊗':'\\otimes ','⊘':'\\oslash ','⊙':'\\odot ','⋆':'\\star ','∘':'\\circ ','≈':'\\approx ','≠':'\\neq ','≤':'\\le ','≥':'\\ge ','≪':'\\ll ','∼':'\\sim ','±':'\\pm ','∅':'\\varnothing ','ℓ':'\\ell ','∞':'\\infty ','→':'\\to ','←':'\\leftarrow ','↑':'\\uparrow ','↓':'\\downarrow ','‖':'\\|','…':'\\dots ','′':"'",'⌈':'\\lceil ','⌉':'\\rceil ','𝔼':'\\mathbb{E}','ℛ':'\\mathcal{R}','½':'\\tfrac12 ','¼':'\\tfrac14 ','⊤':'\\top '};
+  const SUP={'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁺':'+','⁻':'-','ⁱ':'i','ᵀ':'T','ᴸ':'L','ᵍ':'g','ᵗ':'t','ᶜ':'c'};
+  const SUB={'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4','₅':'5','₆':'6','₇':'7','₈':'8','₉':'9','₊':'+','₋':'-','₌':'=','ₐ':'a','ₑ':'e','ₒ':'o','ₓ':'x','ₕ':'h','ₖ':'k','ₗ':'l','ₙ':'n','ₛ':'s','ₜ':'t','ᵢ':'i','ⱼ':'j','ᵣ':'r','ᵦ':'\\beta'};
+  const COMB={'̂':'\\hat','̃':'\\tilde','̄':'\\bar'}; // combining ̂ ̃ ̄ (apply to preceding char)
+  const PRESUP={'ᾱ':'\\bar\\alpha','ỹ':'\\tilde y'}; // precomposed
+  function tex(src){
+    let s=src;
+    // precomposed accented letters first
+    for(const k in PRESUP) s=s.split(k).join('§'+PRESUP[k]+'§');
+    // combining accents: X + combining -> \acc{X}
+    s=s.replace(/(.)([̂̃̄])/g,(m,base,c)=>'§'+COMB[c]+'{'+base+'}§');
+    // collapse runs of superscripts/subscripts into ^{...}/_{...}
+    s=s.replace(/([⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻ⁱᵀᴸᵍᵗᶜ]+)/g,(m)=>'^{'+[...m].map(c=>SUP[c]||c).join('')+'}');
+    s=s.replace(/([₀₁₂₃₄₅₆₇₈₉₊₋₌ₐₑₒₓₕₖₗₙₛₜᵢⱼᵣᵦ]+)/g,(m)=>'_{'+[...m].map(c=>SUB[c]||c).join('')+'}');
+    // greek + operators
+    let out='';
+    for(const ch of s){
+      if(ch==='§'){ out+='§'; continue; }
+      out += GREEK[ch] || OPS[ch] || ch;
+    }
+    // restore protected tex islands (§...§)
+    out=out.replace(/§/g,'');
+    // sqrt heuristic: "\surd(EXPR)" -> \sqrt{EXPR}; otherwise take ONE atom
+    // (a brace group, an accented token like \bar\alpha, or a single var/number — NOT trailing \cdot)
+    out=out.replace(/\\surd\s*\(([^()]*)\)/g,'\\sqrt{$1}');
+    out=out.replace(/\\surd\s*(\\[A-Za-z]+\{[^{}]*\}|\\bar\\?[A-Za-z]+|\\tilde\s*[A-Za-z]|\\[A-Za-z]+|[A-Za-z0-9](?:_\{[^}]*\})?)/g,'\\sqrt{$1}');
+    out=out.replace(/\\surd/g,'\\sqrt{\\;}');
+    // upright operator/function names (otherwise rendered as italic variable products)
+    out=out.replace(/\b(softmax|sigmoid|argmax|argmin|max|min|log|exp|sin|cos|tan|tanh|relu|det|diag|Var|Cov|KL|MSE|ReLU|GELU)\b/g,'\\operatorname{$1}');
+    return out;
+  }
+  function looksLikeMath(t){
+    if(!t) return false;
+    // has a math glyph, an operator, or sub/superscript, or a known pattern
+    return /[α-ωΑ-Ω∂∇√∑∏Σ∫·×−⊙⊕⊗⊖⊘≈≠≤≥‖₀-₉⁰-⁹ᵢⱼₜₛₖ∈∩∪⊆←→↑↓𝔼ℓ⌈⌉]/.test(t)
+        || /[=^_]/.test(t) && /[A-Za-z]/.test(t) && t.length<=60 && !/\s{2,}/.test(t);
+  }
+  function render(){
+    if(typeof katex==='undefined') return; // offline → keep unicode
+    document.querySelectorAll('.explain code, .canvas-cap code').forEach(el=>{
+      if(el.dataset.mfx) return;            // already done
+      const raw=el.textContent;
+      if(!looksLikeMath(raw)) return;       // leave prose-y inline code (filenames etc) alone
+      try{
+        katex.render(tex(raw), el, {throwOnError:false, displayMode:false, output:'html', strict:'ignore'});
+        el.classList.add('mathfx'); el.dataset.mfx='1';
+      }catch(e){ /* keep unicode fallback */ }
+    });
+  }
+  // run after KaTeX (deferred) is ready
+  function boot(){ if(typeof katex!=='undefined'){ render(); } else { let n=0; const id=setInterval(()=>{ if(typeof katex!=='undefined'||n++>40){clearInterval(id); render();} },100); } }
+  if(document.readyState!=='loading') boot(); else document.addEventListener('DOMContentLoaded', boot);
+  return { render, tex };
+})();
 
 initLab();
 </script>
