@@ -180,7 +180,8 @@ canvas{display:block;max-width:100%;border-radius:10px}
 .btn-ghost{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--teal);background:var(--paper-2);border:1px solid var(--line);border-radius:9px;padding:8px 14px;cursor:pointer;transition:.15s}
 .btn-ghost:hover{background:rgba(31,111,106,.1)}
 /* ---- code implementation panel ---- */
-.codepanel{margin-top:16px;border:1px solid var(--line);border-radius:11px;overflow:hidden;background:#0f1c21}
+.codepanel{margin-top:16px;border:1px solid var(--line);border-radius:11px;overflow:hidden;background:#0f1c21;
+  width:100%;flex:1 0 100%;box-sizing:border-box}  /* always full width, even when nested in a flex .ctrl/.pill-row */
 .codepanel>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:9px;padding:9px 13px;
   font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.04em;color:#bfe9d9;background:#13242b;border-bottom:1px solid transparent;user-select:none}
 .codepanel>summary::-webkit-details-marker{display:none}
@@ -190,8 +191,9 @@ canvas{display:block;max-width:100%;border-radius:10px}
 .codepanel>summary .lbl{color:#7fdcc0;font-weight:700}
 .codepanel>summary .fname{color:#6f928e}
 .codepanel .codewrap{position:relative}
-.codepanel pre{margin:0;padding:14px 15px;overflow-x:auto;background:#0f1c21}
-.codepanel code{font-family:"JetBrains Mono",monospace;font-size:12px;line-height:1.62;color:#d6e9e2;white-space:pre;display:block;background:none;padding:0;border:0}
+.codepanel pre{margin:0;padding:14px 16px;overflow-x:hidden;background:#0f1c21;max-width:100%}
+.codepanel code{font-family:"JetBrains Mono",monospace;font-size:12px;line-height:1.62;color:#d6e9e2;display:block;background:none;padding:0;border:0;max-width:100%;
+  white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word}  /* wrap long lines fully — no horizontal scroll */
 /* lightweight python syntax tint */
 .codepanel .k{color:#7cc7f6}   /* keywords */
 .codepanel .s{color:#e3a06a}   /* strings */
