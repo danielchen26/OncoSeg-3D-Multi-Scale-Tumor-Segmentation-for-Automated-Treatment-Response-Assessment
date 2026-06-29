@@ -43,7 +43,7 @@ class TestDeepSupervisionHead:
     def test_output_count_and_shape(self):
         from src.models.modules.deep_supervision import DeepSupervisionHead
 
-        head = DeepSupervisionHead(encoder_dims=[192, 96, 48], num_classes=4)
+        head = DeepSupervisionHead(encoder_dims=[192, 96, 48], num_classes=3)
         intermediates = [
             torch.randn(1, 192, 4, 4, 4),
             torch.randn(1, 96, 8, 8, 8),
@@ -53,7 +53,7 @@ class TestDeepSupervisionHead:
         assert len(outputs) == 3
         # All outputs should be upsampled to finest resolution
         for out in outputs:
-            assert out.shape[1] == 4  # num_classes
+            assert out.shape[1] == 3  # num_classes (3-channel sigmoid [TC, WT, ET])
             assert out.shape[2:] == (16, 16, 16)  # finest resolution
 
 
@@ -88,9 +88,9 @@ class TestUNETRBaseline:
     def test_forward_shape(self):
         from src.models.baselines.unetr import UNETR
 
-        model = UNETR(in_channels=4, num_classes=4, img_size=(64, 64, 64))
+        model = UNETR(in_channels=4, num_classes=3, img_size=(64, 64, 64))
         x = torch.randn(1, 4, 64, 64, 64)
         model.eval()
         with torch.no_grad():
             out = model(x)
-        assert out["pred"].shape == (1, 4, 64, 64, 64)
+        assert out["pred"].shape == (1, 3, 64, 64, 64)

@@ -13,7 +13,7 @@ class TestOncoSeg:
 
         return OncoSeg(
             in_channels=4,
-            num_classes=4,
+            num_classes=3,
             embed_dim=48,
             depths=(2, 2, 2, 2),
             num_heads=(3, 6, 12, 24),
@@ -26,7 +26,8 @@ class TestOncoSeg:
         model.eval()
         with torch.no_grad():
             out = model(x)
-        assert out["pred"].shape == (1, 4, 64, 64, 64)
+        # 3-channel sigmoid head [TC, WT, ET] (4 input MRI modalities -> 3 regions)
+        assert out["pred"].shape == (1, 3, 64, 64, 64)
 
     def test_deep_supervision_training(self, model):
         """Verify deep supervision outputs during training."""
@@ -44,18 +45,18 @@ class TestBaselines:
     def test_unet3d(self):
         from src.models.baselines.unet3d import UNet3D
 
-        model = UNet3D(in_channels=4, num_classes=4)
+        model = UNet3D(in_channels=4, num_classes=3)
         x = torch.randn(1, 4, 64, 64, 64)
         out = model(x)
-        assert out["pred"].shape == (1, 4, 64, 64, 64)
+        assert out["pred"].shape == (1, 3, 64, 64, 64)
 
     def test_swin_unetr(self):
         from src.models.baselines.swin_unetr import SwinUNETRBaseline
 
-        model = SwinUNETRBaseline(in_channels=4, num_classes=4)
+        model = SwinUNETRBaseline(in_channels=4, num_classes=3)
         x = torch.randn(1, 4, 64, 64, 64)
         out = model(x)
-        assert out["pred"].shape == (1, 4, 64, 64, 64)
+        assert out["pred"].shape == (1, 3, 64, 64, 64)
 
 
 class TestRECIST:
