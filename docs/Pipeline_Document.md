@@ -192,9 +192,9 @@ Channel 2 (ET): label==3                  → Enhancing Tumor
 - Severe class imbalance confirmed → justifies Dice loss
 
 **Split:**
-- Training: 387 subjects (80%)
-- Validation: 97 subjects (20%)
-- Deterministic split with `seed=42` for reproducibility
+- Training: 388 subjects (80%)
+- Validation: 96 subjects (20%)
+- Deterministic split with `seed=42` for reproducibility (the committed per-subject Dice arrays have 96 rows)
 - No test set used (MSD test labels are not public)
 
 ---
@@ -210,7 +210,7 @@ Channel 2 (ET): label==3                  → Enhancing Tumor
 | Disk | 20 GB free | 50 GB free |
 | Platform | Google Colab / Kaggle | Local workstation |
 
-**Why GPU is required:** A single forward pass of OncoSeg on a 128^3 volume takes ~0.3s on GPU vs ~60s on CPU. Training 100 epochs on 387 subjects is infeasible on CPU.
+**Why GPU is required:** A single forward pass of OncoSeg on a 128^3 volume takes ~0.3s on GPU vs ~60s on CPU. Training many epochs on 388 subjects is infeasible on CPU.
 
 **GPU memory breakdown (T4, batch_size=2):**
 - Input tensors: ~134 MB
@@ -919,8 +919,8 @@ checkpoint = {
 
 | Set | Subjects | Percentage | Usage |
 |-----|---------|-----------|-------|
-| Training | 387 | 80% | Model weight updates |
-| Validation | 97 | 20% | Checkpoint selection, early stopping decisions |
+| Training | 388 | 80% | Model weight updates |
+| Validation | 96 | 20% | Checkpoint selection, early stopping decisions |
 | Test | 0 | 0% | MSD test labels are not public |
 
 **Split method:** Deterministic shuffle with seed=42, then first 20% = validation, rest = training.

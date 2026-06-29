@@ -124,7 +124,7 @@ This captures tumor evolution patterns for response-aware segmentation.
 
 ### 3.1 Dataset
 
-**MSD Task01 Brain Tumour** [8]: 484 subjects with 4-channel MRI (FLAIR, T1w, T1gd, T2w) and voxel-wise annotations for three tumor subregions: edema (label 1), non-enhancing tumor (label 2), and enhancing tumor (label 3). Data was split 80/20 into training (387) and validation (97) sets using a fixed random seed (42).
+**MSD Task01 Brain Tumour** [8]: 484 subjects with 4-channel MRI (FLAIR, T1w, T1gd, T2w) and voxel-wise annotations for three tumor subregions: edema (label 1), non-enhancing tumor (label 2), and enhancing tumor (label 3). Data was split 80/20 into training (388) and validation (96) sets using a fixed random seed (42). (The committed per-subject Dice arrays have 96 rows, confirming a 96-subject validation set.)
 
 ### 3.2 Preprocessing
 
