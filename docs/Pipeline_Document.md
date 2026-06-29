@@ -610,7 +610,7 @@ HausdorffDistanceMetric(include_background=False, percentile=95, reduction="mean
 
 **Evaluation protocol:**
 1. Load best checkpoint for each model (highest validation mean Dice during training)
-2. Run sliding window inference on all 97 validation volumes (roi=128³, overlap=50%)
+2. Run sliding window inference on all 96 validation volumes (roi=128³, overlap=50%)
 3. Threshold predictions at 0.5 after sigmoid: `preds_binary = (sigmoid(preds) > 0.5)`
 4. Compute Dice and HD95 per subject per region
 5. Report mean ± std across subjects
@@ -925,7 +925,7 @@ checkpoint = {
 
 **Split method:** Deterministic shuffle with seed=42, then first 20% = validation, rest = training.
 
-**Why no test set?** The MSD test set has no ground truth labels. We could split validation further into val/test, but 97 subjects is already a robust validation set. For publication, k-fold cross-validation would be preferred.
+**Why no test set?** The MSD test set has no ground truth labels. We could split validation further into val/test, but 96 subjects is already a robust validation set. For publication, k-fold cross-validation would be preferred.
 
 ### 8.6 Early Stopping
 
