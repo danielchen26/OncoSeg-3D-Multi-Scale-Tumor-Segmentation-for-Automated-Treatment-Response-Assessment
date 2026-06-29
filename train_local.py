@@ -17,6 +17,7 @@ Usage:
 import argparse
 import json
 import logging
+import math
 import subprocess
 from pathlib import Path
 
@@ -162,9 +163,12 @@ def validate(
         dice_metric(y_pred=preds_binary, y=labels)
 
     dice_scores = dice_metric.aggregate()
+    # Channels are stacked as [TC, WT, ET] (torch.stack([tc, wt, et])), so
+    # dice_scores[0]=TC, [1]=WT, [2]=ET. The previous mapping labelled index 0
+    # as WT, a third distinct permutation of the per-region labels.
     return {
-        "dice_wt": dice_scores[0].item(),
-        "dice_tc": dice_scores[1].item(),
+        "dice_tc": dice_scores[0].item(),
+        "dice_wt": dice_scores[1].item(),
         "dice_et": dice_scores[2].item(),
         "dice_mean": dice_scores.mean().item(),
     }
