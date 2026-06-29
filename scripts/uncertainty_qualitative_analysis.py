@@ -380,7 +380,7 @@ def main():
     # === Failure analysis (no inference needed) ===
     log.info("Running failure analysis on per-subject Dice arrays")
     fa = failure_analysis(onc_dice, unet_dice, subject_names)
-    (RESULTS_DIR / "failure_analysis.json").write_text(json.dumps(fa, indent=2))
+    (RESULTS_DIR / "failure_analysis.json").write_text(json.dumps(fa, indent=2, allow_nan=False))
     log.info(f"  bottom-5 cases: {[c['subject'] for c in fa['bottom_5_cases']]}")
     log.info(f"  dominant failure region: {fa['dominant_failure_region']}")
 
@@ -482,7 +482,7 @@ def main():
         "calibration_bins": bin_data,
         "cases_used": {k: v["subject"] for k, v in cases_data.items()},
     }
-    (RESULTS_DIR / "uncertainty_metrics.json").write_text(json.dumps(metrics, indent=2))
+    (RESULTS_DIR / "uncertainty_metrics.json").write_text(json.dumps(metrics, indent=2, allow_nan=False))
     log.info(f"Saved uncertainty metrics → {RESULTS_DIR / 'uncertainty_metrics.json'}")
     log.info("Done.")
 

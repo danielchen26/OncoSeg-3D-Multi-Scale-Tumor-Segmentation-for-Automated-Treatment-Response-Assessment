@@ -168,9 +168,12 @@ def main():
     dice_mean = scores.mean().item()
 
     all_subject_scores = np.array(all_subject_scores)
-    std_tc = np.std(all_subject_scores[:, 0])
-    std_wt = np.std(all_subject_scores[:, 1])
-    std_et = np.std(all_subject_scores[:, 2])
+    # nanstd: an empty ground-truth region (ET is commonly empty) gives a NaN
+    # per-subject Dice; np.std would propagate NaN and json.dump would then emit
+    # a bare `NaN` token (invalid JSON).
+    std_tc = np.nanstd(all_subject_scores[:, 0])
+    std_wt = np.nanstd(all_subject_scores[:, 1])
+    std_et = np.nanstd(all_subject_scores[:, 2])
 
     # HD95
     try:
@@ -220,7 +223,9 @@ def main():
 
     out_path = PROJECT_ROOT / "experiments" / "local_results" / "oncoseg_eval.json"
     with open(out_path, "w") as f:
-        json.dump(results, f, indent=2)
+        # allow_nan=False so a stray NaN raises instead of emitting an invalid
+        # bare `NaN` token that breaks strict JSON parsers (incl. the Pages JS).
+        json.dump(results, f, indent=2, allow_nan=False)
     logger.info(f"Results saved to {out_path}")
 
 
