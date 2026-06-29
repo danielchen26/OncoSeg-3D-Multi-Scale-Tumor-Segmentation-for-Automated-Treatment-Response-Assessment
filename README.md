@@ -136,12 +136,10 @@ Or use section 10 of the Colab notebook for GPU training of all 4 variants.
 
 | Model | Dice TC | Dice WT | Dice ET | Dice Mean | HD95 Mean (mm) | Params |
 |-------|---------|---------|---------|-----------|----------------|--------|
-| **OncoSeg** | **0.7898** | **0.8529*** | **0.7481** | **0.7969** | **15.35** | **3.7M** |
+| **OncoSeg** | **0.7898** | **0.8529** | **0.7481** | **0.7969** | **15.35** | **3.7M** |
 | UNet3D | 0.7849 | 0.8522 | 0.7462 | 0.7944 | 21.03 | 19.2M |
 
-*\* p < 0.01 (Wilcoxon signed-rank test)*
-
-OncoSeg outperforms UNet3D on **all metrics** (Dice and HD95) across all 3 tumor regions while using **5x fewer parameters** (3.7M vs 19.2M). HD95 boundary error is 27% lower (15.35mm vs 21.03mm).
+> **No statistically significant Dice difference.** A one-sided Wilcoxon signed-rank test on the per-subject Dice arrays finds **no region significant** (TC p=0.46, WT p=0.995, ET p=0.57; mean p=0.41) — and on WT, UNet3D actually wins on 67/96 subjects. The mean-Dice gap (+0.0025) is within run-to-run noise. The honest summary is **parameter efficiency**: OncoSeg matches UNet3D's accuracy with ~5× fewer parameters (3.7M vs 19.2M), with a notably lower mean HD95 boundary error (15.35 mm vs 21.03 mm, −27%; reported as an aggregate, not significance-tested).
 
 > Trained for 50 epochs on MSD Brain Tumor (388 train / 96 val subjects, embed_dim=24, roi_size=96, Apple Silicon MPS). SwinUNETR and UNETR benchmarks require a CUDA GPU — use the Colab notebook for full benchmarking.
 

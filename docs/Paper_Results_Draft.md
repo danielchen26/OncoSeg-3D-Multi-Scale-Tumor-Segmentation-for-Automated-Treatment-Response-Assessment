@@ -8,12 +8,12 @@ Table 1 compares OncoSeg against the UNet3D baseline on the 96-subject validatio
 
 | Model          | Dice TC    | Dice WT     | Dice ET    | Dice Mean  | HD95 Mean (mm) | Params |
 |----------------|------------|-------------|------------|------------|----------------|--------|
-| **OncoSeg**    | **0.7898** | **0.8529**\*| **0.7481** | **0.7969** | **15.35**      | **3.7 M** |
+| **OncoSeg**    | **0.7898** | **0.8529**  | **0.7481** | **0.7969** | **15.35**      | **3.7 M** |
 | UNet3D         | 0.7849     | 0.8522      | 0.7462     | 0.7944     | 21.03          | 19.2 M |
 
-\* *Wilcoxon signed-rank test on per-subject Dice, p < 0.01.*
+A one-sided Wilcoxon signed-rank test on the per-subject Dice arrays finds **no region with a statistically significant OncoSeg advantage** (TC p = 0.46, WT p = 0.995, ET p = 0.57; mean p = 0.41). On WT, UNet3D in fact wins on 67 of 96 subjects. The mean-Dice difference (+0.0025) is within run-to-run noise.
 
-OncoSeg matches or exceeds UNet3D on every region and every metric while using **5.2× fewer parameters**. The HD95 (95-percentile Hausdorff distance) improvement is the more clinically meaningful gap: mean boundary error drops from 21.03 mm to 15.35 mm — a **27 % reduction** — suggesting the Swin/cross-attention skip path captures boundary structure that a pure CNN decoder does not.
+The honest framing is therefore **parameter efficiency, not accuracy superiority**: OncoSeg matches UNet3D's Dice using **5.2× fewer parameters**, while showing a lower mean HD95 (95-percentile Hausdorff distance): 15.35 mm vs 21.03 mm, a **27 % reduction**. Note that HD95 is stored only as an aggregate mean — no per-subject HD95 array was retained — so this boundary-error gap is **not** significance-tested and should be read as descriptive.
 
 Training curves and the per-region Dice comparison figure are included as Figures 1 and 2 (`experiments/local_results/training_curves.png`, `dice_comparison.png`).
 
@@ -79,7 +79,7 @@ All three scenarios cross the correct RECIST thresholds and the classifier retur
 
 ## 6. Summary
 
-- OncoSeg outperforms UNet3D on every region (Dice, HD95) with 5× fewer parameters; HD95 improvement is statistically significant on WT.
+- OncoSeg matches UNet3D's Dice across all regions with ~5× fewer parameters; no per-region Dice difference is statistically significant (Wilcoxon), and on WT UNet3D wins 67/96 subjects. The mean HD95 is lower (15.35 vs 21.03 mm) but is reported as an aggregate only and was not significance-tested.
 - The model is well-calibrated (ECE = 0.0101), and MC Dropout uncertainty correlates monotonically with prediction error — suitable as a radiologist review aid.
 - Failures are concentrated on small, fragmented, low-contrast tumors. The dominant failure region is Tumor Core, with a −79.7 % relative Dice drop on the bottom-5 cases — a clinically interpretable and addressable limitation.
 - The full segmentation → RECIST response-classification pipeline runs end-to-end and produces correct CR / PR / SD / PD verdicts on synthetic follow-up data.
