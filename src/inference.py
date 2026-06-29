@@ -151,16 +151,32 @@ class Predictor:
 
         return result
 
+    def _mc_forward(self, image: torch.Tensor) -> torch.Tensor:
+        """One stochastic (dropout-active) forward pass, returning logits.
+
+        Supports both OncoSeg architectures without reconstructing the decoder:
+          * the inline ``train_all.OncoSeg`` applies ``self.mc_dropout`` inside
+            its own ``forward`` and exposes the decoder as ``self.decoders``
+            (plural) -- we simply call the model;
+          * ``src.models.oncoseg.OncoSeg`` exposes ``self.decoder`` (singular)
+            and does not drop out in its main ``forward``, so we run the
+            explicit encoder -> mc_dropout -> decoder path it supports.
+        """
+        if hasattr(self.model, "decoder"):
+            # src.models.oncoseg.OncoSeg
+            enc_features = self.model.encoder(image)
+            enc_features[-1] = self.model.mc_dropout(enc_features[-1])
+            return self.model.decoder(enc_features, self.model.cross_attn_skips)["pred"]
+        # inline train_all.OncoSeg: forward() already applies self.mc_dropout
+        return self.model(image)["pred"]
+
     def _estimate_uncertainty(self, image: torch.Tensor) -> np.ndarray:
         """Estimate uncertainty via MC Dropout."""
         self.model.mc_dropout.train()
         predictions = []
 
         for _ in range(self.mc_samples):
-            enc_features = self.model.encoder(image)
-            enc_features[-1] = self.model.mc_dropout(enc_features[-1])
-            dec_out = self.model.decoder(enc_features, self.model.cross_attn_skips)
-            prob = torch.sigmoid(dec_out["pred"])
+            prob = torch.sigmoid(self._mc_forward(image))
             predictions.append(prob)
 
         self.model.mc_dropout.eval()
