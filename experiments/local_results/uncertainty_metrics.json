@@ -2,6 +2,7 @@
   "mc_samples": 5,
   "median_case": "BRATS_425",
   "ece_median_case": 0.010069747262091732,
+  "ece_median_case_foreground": 0.4942,
   "mean_entropy_median_case": 0.003325982019305229,
   "max_entropy_median_case": 0.6884172558784485,
   "mc_variance_mean": 2.742847527770209e-06,

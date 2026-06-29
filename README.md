@@ -167,7 +167,9 @@ See `docs/Paper_Results_Draft.md` for the full Results section (accuracy, calibr
 
 ![Uncertainty](figures/uncertainty_map.png)
 
-Uncertainty concentrates along tumor boundaries, matching the regions of highest prediction error. The model is **well-calibrated** (ECE = 0.0101, 15-bin reliability):
+Uncertainty concentrates along tumor boundaries, matching the regions of highest prediction error.
+
+> **Calibration caveat.** The often-quoted ECE = 0.0101 is computed over *all* voxels, but ~98.4% of those are trivially-easy background. On **foreground (tumor) voxels only**, ECE ≈ **0.49** — roughly 49× worse — and the highest-confidence bin is correct only ~40% of the time. The model is in fact **over-confident on tumor voxels**, the clinically important regime. The reliability diagram below is the all-voxel version; treat the headline ECE as a background artifact, not a calibration guarantee. (Single subject, 5 MC samples.)
 
 ![Calibration](figures/uncertainty_calibration.png)
 ![Uncertainty vs Error](figures/uncertainty_vs_error.png)

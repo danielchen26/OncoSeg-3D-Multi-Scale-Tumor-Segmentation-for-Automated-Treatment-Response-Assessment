@@ -120,13 +120,38 @@ def predict_mc(model: OncoSeg, image: torch.Tensor, device, n_samples: int) -> n
     return np.stack(samples, axis=0)
 
 
-def expected_calibration_error(probs: np.ndarray, labels: np.ndarray, n_bins: int = 15):
-    """ECE over flattened binary probs/labels."""
+def expected_calibration_error(
+    probs: np.ndarray,
+    labels: np.ndarray,
+    n_bins: int = 15,
+    foreground_mask: np.ndarray | None = None,
+):
+    """ECE over flattened binary probs/labels.
+
+    Args:
+        probs: Predicted probabilities, any shape.
+        labels: Binary ground-truth labels (0/1), same shape as ``probs``.
+        n_bins: Number of equal-width confidence bins.
+        foreground_mask: Optional boolean mask (same shape) selecting the voxels
+            to score. Pooling over all voxels is dominated by the ~98% trivially
+            easy background, which makes the model look far better calibrated
+            than it is on tumor voxels; pass a foreground mask to get the
+            clinically meaningful, foreground-only ECE.
+
+    Returns:
+        (ece, bin_data) where ece is a float and bin_data a list of per-bin dicts.
+    """
     probs = probs.flatten()
     labels = labels.flatten().astype(np.float32)
+    if foreground_mask is not None:
+        m = foreground_mask.flatten().astype(bool)
+        probs = probs[m]
+        labels = labels[m]
     bin_edges = np.linspace(0.0, 1.0, n_bins + 1)
     ece = 0.0
     n = probs.size
+    if n == 0:
+        return 0.0, []
     bin_data = []
     for i in range(n_bins):
         lo, hi = bin_edges[i], bin_edges[i + 1]
@@ -461,10 +486,20 @@ def main():
     ent_map = median["uncertainty"]
     build_uncertainty_figure(median, ent_map, FIG_DIR / "uncertainty_map.png")
 
-    # ECE on median case (use mean MC probs vs binary label)
-    ece, bin_data = expected_calibration_error(median["mc_mean_probs"], median_label, n_bins=15)
-    log.info(f"  ECE (median case) = {ece:.4f}")
-    build_calibration_figure(bin_data, ece, FIG_DIR / "uncertainty_calibration.png")
+    # ECE on median case (mean MC probs vs binary label). Report BOTH the
+    # all-voxel ECE (dominated by ~98% trivial background) and the foreground-only
+    # ECE (tumor voxels), which is the clinically meaningful number -- the pooled
+    # value badly understates miscalibration on tumor voxels.
+    ece_all, bin_data = expected_calibration_error(
+        median["mc_mean_probs"], median_label, n_bins=15
+    )
+    fg_mask = median_label > 0  # any tumor region present
+    ece_fg, _ = expected_calibration_error(
+        median["mc_mean_probs"], median_label, n_bins=15, foreground_mask=fg_mask
+    )
+    ece = ece_all  # keep the historical field meaning (all-voxel) for the figure
+    log.info(f"  ECE (median case) all-voxel = {ece_all:.4f} | foreground-only = {ece_fg:.4f}")
+    build_calibration_figure(bin_data, ece_all, FIG_DIR / "uncertainty_calibration.png")
 
     # Uncertainty vs error
     pred = median["oncoseg_seg"]
@@ -475,7 +510,8 @@ def main():
     metrics = {
         "mc_samples": MC_SAMPLES,
         "median_case": median["subject"],
-        "ece_median_case": ece,
+        "ece_median_case": ece_all,
+        "ece_median_case_foreground": ece_fg,
         "mean_entropy_median_case": float(ent_map.mean()),
         "max_entropy_median_case": float(ent_map.max()),
         "mc_variance_mean": float(median_probs_mc.var(axis=0).mean()),
