@@ -12,6 +12,7 @@ import argparse
 import gc
 import json
 import logging
+import math
 import time
 from pathlib import Path
 
@@ -460,7 +461,9 @@ def train_model(name, train_loader, val_loader, device, roi_size,
 
             scores = dice_metric.aggregate()
             dice_tc, dice_wt, dice_et = scores[0].item(), scores[1].item(), scores[2].item()
-            dice_mean = scores.mean().item()
+            # nanmean: a region with empty ground truth yields NaN Dice; a plain
+            # mean would make dice_mean NaN and disable best-checkpoint saving.
+            dice_mean = torch.nanmean(scores).item()
 
             history["val_dice_tc"].append(dice_tc)
             history["val_dice_wt"].append(dice_wt)
@@ -470,7 +473,7 @@ def train_model(name, train_loader, val_loader, device, roi_size,
             logger.info(f"Epoch {epoch} | Loss: {avg_loss:.4f} | "
                         f"Dice TC: {dice_tc:.4f} WT: {dice_wt:.4f} ET: {dice_et:.4f} Mean: {dice_mean:.4f}")
 
-            if dice_mean > best_dice:
+            if not math.isnan(dice_mean) and dice_mean > best_dice:
                 best_dice = dice_mean
                 history["best_dice"] = best_dice
                 history["best_epoch"] = epoch

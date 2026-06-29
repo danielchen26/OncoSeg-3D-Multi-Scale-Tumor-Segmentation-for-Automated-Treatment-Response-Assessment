@@ -170,7 +170,9 @@ def validate(
         "dice_tc": dice_scores[0].item(),
         "dice_wt": dice_scores[1].item(),
         "dice_et": dice_scores[2].item(),
-        "dice_mean": dice_scores.mean().item(),
+        # nanmean: empty-GT regions yield NaN Dice; a plain mean would make
+        # dice_mean NaN and disable best-checkpoint saving for the whole run.
+        "dice_mean": torch.nanmean(dice_scores).item(),
     }
 
 
@@ -291,7 +293,7 @@ def main():
                 f"Mean: {metrics['dice_mean']:.4f}"
             )
 
-            if metrics["dice_mean"] > best_dice:
+            if not math.isnan(metrics["dice_mean"]) and metrics["dice_mean"] > best_dice:
                 best_dice = metrics["dice_mean"]
                 torch.save(
                     {

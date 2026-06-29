@@ -1,6 +1,7 @@
 """Training loop for OncoSeg and baseline models."""
 
 import logging
+import math
 from pathlib import Path
 
 import hydra
@@ -162,14 +163,19 @@ class Trainer:
             "val/dice_tc": dice_scores[0].item(),
             "val/dice_wt": dice_scores[1].item(),
             "val/dice_et": dice_scores[2].item(),
-            "val/dice_mean": dice_scores.mean().item(),
+            # nanmean: DiceMetric(ignore_empty=True by default) returns NaN for a
+            # region with empty ground truth (ET is commonly empty). A plain mean
+            # would make dice_mean NaN, and `NaN > best_dice` is always False, so
+            # no best checkpoint would ever be saved.
+            "val/dice_mean": torch.nanmean(dice_scores).item(),
         }
 
         if WANDB_AVAILABLE and self.cfg.training.get("use_wandb", False):
             wandb.log(metrics)
 
-        # Save best model
-        if metrics["val/dice_mean"] > self.best_dice:
+        # Save best model (guard against NaN, which would never beat best_dice
+        # and would silently disable checkpoint saving for the whole run).
+        if not math.isnan(metrics["val/dice_mean"]) and metrics["val/dice_mean"] > self.best_dice:
             self.best_dice = metrics["val/dice_mean"]
             torch.save(
                 {
