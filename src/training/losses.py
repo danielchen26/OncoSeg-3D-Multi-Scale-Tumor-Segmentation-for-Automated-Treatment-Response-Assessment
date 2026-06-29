@@ -86,6 +86,19 @@ class DeepSupervisionLoss(nn.Module):
         total_loss = torch.tensor(0.0, device=predictions[0].device)
 
         for pred, weight in zip(predictions, weights):
-            total_loss = total_loss + weight * self.base_loss(pred, target)
+            # Interpolate target to match the prediction's spatial size. Deep
+            # supervision logits at coarser scales (e.g. H/4) must be compared
+            # against a label volume downsampled to the same size, otherwise the
+            # base loss raises a shape error. Nearest-neighbour keeps the
+            # one-hot/binary class boundaries intact.
+            pred_size = pred.shape[2:]
+            if target.shape[2:] != pred_size:
+                target_resized = torch.nn.functional.interpolate(
+                    target.float(), size=pred_size, mode="nearest"
+                )
+            else:
+                target_resized = target
+
+            total_loss = total_loss + weight * self.base_loss(pred, target_resized)
 
         return total_loss
