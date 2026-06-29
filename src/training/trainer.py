@@ -155,10 +155,13 @@ class Trainer:
             self.dice_metric(y_pred=preds_binary, y=labels)
 
         dice_scores = self.dice_metric.aggregate()
+        # Channels are stacked as [TC, WT, ET] (torch.stack([tc, wt, et])), so
+        # dice_scores[0]=TC, [1]=WT, [2]=ET. The previous mapping labelled
+        # index 0 as ET, mislabelling every per-region score.
         metrics = {
-            "val/dice_et": dice_scores[0].item(),
-            "val/dice_tc": dice_scores[1].item(),
-            "val/dice_wt": dice_scores[2].item(),
+            "val/dice_tc": dice_scores[0].item(),
+            "val/dice_wt": dice_scores[1].item(),
+            "val/dice_et": dice_scores[2].item(),
             "val/dice_mean": dice_scores.mean().item(),
         }
 

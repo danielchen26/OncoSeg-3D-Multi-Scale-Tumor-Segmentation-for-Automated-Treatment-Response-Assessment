@@ -38,12 +38,14 @@ class TestResultAnalyzer:
         rng = np.random.RandomState(42)
         for name, base_dice in [("oncoseg", 0.85), ("unet3d", 0.78), ("swin_unetr", 0.82)]:
             per_subject = rng.normal(base_dice, 0.05, size=(n_subjects, 3)).clip(0, 1)
+            # Columns are [TC, WT, ET] to match the data channel order
+            # (torch.stack([tc, wt, et])) used throughout the pipeline.
             analyzer.load_eval(
                 name,
                 {
-                    "dice_ET": float(per_subject[:, 0].mean()),
-                    "dice_TC": float(per_subject[:, 1].mean()),
-                    "dice_WT": float(per_subject[:, 2].mean()),
+                    "dice_TC": float(per_subject[:, 0].mean()),
+                    "dice_WT": float(per_subject[:, 1].mean()),
+                    "dice_ET": float(per_subject[:, 2].mean()),
                     "dice_mean": float(per_subject.mean()),
                     "hd95_ET": 5.0 - base_dice * 3,
                     "hd95_TC": 4.0 - base_dice * 2,

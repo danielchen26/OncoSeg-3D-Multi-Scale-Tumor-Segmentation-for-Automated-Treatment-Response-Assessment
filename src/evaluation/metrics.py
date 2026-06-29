@@ -12,10 +12,10 @@ from monai.metrics import (
 class SegmentationMetrics:
     """Comprehensive segmentation metrics for BraTS evaluation.
 
-    Computes per-region metrics for:
-        - Enhancing Tumor (ET)
+    Computes per-region metrics for, in the data channel order [TC, WT, ET]:
         - Tumor Core (TC)
         - Whole Tumor (WT)
+        - Enhancing Tumor (ET)
 
     Metrics:
         - Dice Score
@@ -25,7 +25,9 @@ class SegmentationMetrics:
         - Specificity
     """
 
-    REGION_NAMES = ["ET", "TC", "WT"]
+    # Channels are stacked as torch.stack([tc, wt, et]) in the data pipeline
+    # (see train_all.py / evaluate_checkpoint.py), so index 0=TC, 1=WT, 2=ET.
+    REGION_NAMES = ["TC", "WT", "ET"]
 
     def __init__(self):
         self.dice = DiceMetric(include_background=True, reduction="mean_batch")

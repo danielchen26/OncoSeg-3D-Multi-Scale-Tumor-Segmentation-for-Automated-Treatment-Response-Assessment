@@ -20,7 +20,9 @@ class ResultAnalyzer:
         print(analyzer.significance_tests("oncoseg"))
     """
 
-    REGIONS = ["ET", "TC", "WT"]
+    # Data channel order is [TC, WT, ET] (torch.stack([tc, wt, et])); keep this
+    # consistent so per_subject_dice[:, i] aligns with REGIONS[i].
+    REGIONS = ["TC", "WT", "ET"]
 
     def __init__(self):
         self.histories: dict[str, dict] = {}
