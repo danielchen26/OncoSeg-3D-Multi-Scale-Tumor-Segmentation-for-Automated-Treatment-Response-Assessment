@@ -28,8 +28,11 @@ class RECISTMeasurer:
     ) -> float:
         """Compute longest axial diameter of a lesion from its 3D mask.
 
-        Finds the axial slice with the largest cross-section, then computes
-        the maximum Feret diameter on that slice.
+        Per RECIST 1.1 the longest diameter is the longest *in-plane* extent of
+        the lesion. We therefore measure the maximum Feret diameter on every
+        axial slice and return the global maximum, rather than only the
+        largest-area slice: a lesion whose longest extent lies on a smaller-area
+        slice would otherwise be silently under-measured.
 
         Args:
             mask: Binary 3D mask [H, W, D]
@@ -41,30 +44,27 @@ class RECISTMeasurer:
         if mask.sum() == 0:
             return 0.0
 
-        # Find axial slice with largest tumor area
-        slice_areas = mask.sum(axis=(0, 1))  # Sum over H, W for each D slice
-        best_slice = int(np.argmax(slice_areas))
+        max_diameter = 0.0
+        scale = np.array([pixdim[0], pixdim[1]])
 
-        axial_mask = mask[:, :, best_slice]
+        # Scan every axial slice; the longest in-plane diameter is not
+        # necessarily on the largest-area slice.
+        for d in range(mask.shape[2]):
+            axial_mask = mask[:, :, d]
+            if axial_mask.sum() == 0:
+                continue
 
-        if axial_mask.sum() == 0:
-            return 0.0
+            coords = np.argwhere(axial_mask > 0)
+            if len(coords) < 2:
+                continue
 
-        # Get boundary coordinates
-        coords = np.argwhere(axial_mask > 0)
+            # Max pairwise (Feret) distance on this slice, scaled by spacing.
+            scaled_coords = coords.astype(float) * scale
+            for i in range(len(scaled_coords)):
+                dists = np.sqrt(np.sum((scaled_coords[i:] - scaled_coords[i]) ** 2, axis=1))
+                max_diameter = max(max_diameter, dists.max())
 
-        if len(coords) < 2:
-            return 0.0
-
-        # Compute pairwise distances (scaled by pixel spacing)
-        max_dist = 0.0
-        scaled_coords = coords.astype(float) * np.array([pixdim[0], pixdim[1]])
-
-        for i in range(len(scaled_coords)):
-            dists = np.sqrt(np.sum((scaled_coords[i:] - scaled_coords[i]) ** 2, axis=1))
-            max_dist = max(max_dist, dists.max())
-
-        return float(max_dist)
+        return float(max_diameter)
 
     def volume_mm3(
         self, mask: np.ndarray, pixdim: tuple[float, float, float] = (1.0, 1.0, 1.0)
