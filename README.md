@@ -172,25 +172,20 @@ Uncertainty concentrates along tumor boundaries, matching the regions of highest
 ![Calibration](figures/uncertainty_calibration.png)
 ![Uncertainty vs Error](figures/uncertainty_vs_error.png)
 
-### End-to-End RECIST Longitudinal Response Assessment
+### End-to-End RECIST Response Assessment (synthetic sanity check)
 
 ![RECIST demo](figures/recist_demo.png)
 
-Realistic longitudinal simulation using biologically-motivated tumor evolution models applied to OncoSeg predictions:
+> **This is a synthetic pipeline check, not longitudinal validation on real patients.** Every "follow-up" is a *programmatically perturbed copy of a single baseline mask* (BRATS_407, fixed seed), shaped to cross the RECIST thresholds the classifier itself implements. It demonstrates that the segmentation → measurement → CR/PR/SD/PD code path is wired correctly end-to-end; it does **not** validate accuracy on real disease trajectories. For that, see the LUMIERE validator below (code provided, not yet run).
 
-| Scenario | Tumor Model | Expected | Verified |
-|----------|------------|----------|----------|
+| Scenario | Synthetic operation on baseline mask | Expected | Classifier output |
+|----------|--------------------------------------|----------|-------------------|
 | Complete Response | Total elimination | CR | CR |
-| Partial Response | Exponential peripheral decay (chemo model) | PR | PR |
-| Stable Disease | Heterogeneous subclonal response | SD | SD |
+| Partial Response | Exponential peripheral decay | PR | PR |
+| Stable Disease | Heterogeneous subclonal perturbation | SD | SD |
 | Progressive Disease | Gompertz anisotropic growth | PD | PD |
 
-Unlike simple morphological erosion/dilation, each model reflects real clinical biology:
-- **Exponential decay**: drug penetration gradient — tumor shrinks from periphery inward
-- **Gompertz growth**: saturation-limited expansion preferentially along white matter tracts
-- **Heterogeneous response**: sensitive subclone regresses while resistant clone persists
-
-Multi-timepoint monitoring (4 treatment cycles) demonstrates crossing the PR threshold as cumulative treatment effect increases. See `notebooks/recist_response_demo.ipynb`.
+The perturbation models are biologically *motivated* (peripheral drug-penetration decay, saturation-limited growth, subclonal heterogeneity), but they are applied to one mask rather than measured from real scans — so the outputs are correct by construction and only exercise the code path. See `notebooks/recist_response_demo.ipynb`.
 
 ### Longitudinal Validation on LUMIERE (real patient scans)
 
