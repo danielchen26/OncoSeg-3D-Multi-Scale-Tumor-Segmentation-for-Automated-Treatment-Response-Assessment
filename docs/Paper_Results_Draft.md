@@ -33,9 +33,9 @@ MC Dropout inference (5 samples, keeping the dropout layer active at test time) 
 
 Calibration was measured by binning per-voxel predicted probabilities over all three channels and comparing each bin's mean confidence to its empirical accuracy (15 equal-width bins, reliability diagram in Figure 5).
 
-> **Expected Calibration Error (ECE) = 0.0101.**
+> **Expected Calibration Error (ECE): 0.0101 over all voxels, but ≈ 0.49 on foreground (tumor) voxels.**
 
-This is well-calibrated by the standards of 3D segmentation networks (typical uncalibrated networks range 0.03–0.15). The uncertainty-vs-error plot (Figure 6, `figures/uncertainty_vs_error.png`) shows a monotone relationship: voxels in higher-entropy bins have substantially higher error rates, confirming that the entropy map is informative as a downstream triage signal rather than a random noise field.
+The 0.0101 figure is **dominated by background**: ~98.4 % of voxels fall in the lowest-confidence bin (trivially-easy background), so the pooled ECE mostly measures how well the model abstains on healthy tissue. Restricted to foreground tumor voxels — the clinically relevant regime — ECE is ≈ 0.49 and the highest-confidence bin is correct only ~40 % of the time: the model is **over-confident on tumor voxels**. The pooled value should not be read as a calibration guarantee. (Derived from one subject, 5 MC samples.) The uncertainty-vs-error plot (Figure 6, `figures/uncertainty_vs_error.png`) does show a monotone relationship — higher-entropy voxels have higher error rates — so the entropy map remains useful as a relative triage signal even though absolute calibration on tumor voxels is poor.
 
 ## 4. Failure-mode analysis
 
@@ -43,11 +43,11 @@ OncoSeg's bottom-5 validation cases by mean Dice are reported in `experiments/lo
 
 | Region | Bottom-5 mean | Overall mean | Relative drop |
 |--------|---------------|--------------|---------------|
-| TC     | 0.161         | 0.790        | **−79.7 %**   |
+| TC     | 0.161         | 0.790        | −79.7 %       |
 | WT     | 0.565         | 0.853        | −33.7 %       |
-| ET     | 0.117         | 0.748        | −84.3 % (partial: some bottom-5 cases have undefined ET) |
+| ET     | 0.117         | 0.748        | **−84.3 %**   |
 
-**TC is the dominant failure region:** the model loses tumor-core structure on hard cases proportionally more than it loses WT or ET boundaries. This is a clinically coherent failure mode — TC is the anatomically smaller, lower-contrast region wedged between ET and edema, and it is the hardest region to delineate even for trained radiologists.
+**ET is the dominant failure region** once the aggregate is computed with `nanmean` (an earlier `mean` made ET's overall figure NaN and silently dropped it, mislabelling TC as the worst region). ET's bottom-5 Dice (0.117) is lower than TC's (0.161) and its relative drop (−84.3 %) is the largest. This is clinically coherent: ET is the small, contrast-dependent enhancing core, and several hard cases have little or no enhancing tumor at all, so any error collapses ET Dice. TC is a close second.
 
 ### Case study: BRATS_077
 
@@ -62,7 +62,7 @@ None of these are bugs — they are inherent difficulties for any 3D CNN/Transfo
 
 ## 5. End-to-end clinical pipeline: RECIST 1.1 response assessment
 
-Segmentation is a means to an end; the clinical endpoint is a treatment-response verdict. We validate the full loop in `notebooks/recist_response_demo.ipynb`:
+Segmentation is a means to an end; the clinical endpoint is a treatment-response verdict. We exercise the full loop in `notebooks/recist_response_demo.ipynb`. **This is a synthetic sanity check, not a longitudinal validation:** all "follow-up" scans are morphological perturbations of a *single* baseline (BRATS_407, seed 42), tuned to cross the very RECIST thresholds the classifier implements — so the verdicts below are circular by construction and demonstrate only that the measurement→classification code is wired correctly. No real multi-timepoint patient data was used (the LUMIERE path exists but was not run here).
 
 1. Load OncoSeg ET prediction on a baseline scan.
 2. Simulate three follow-up scans (PR / SD / PD) by morphologically perturbing the ET mask.
@@ -80,8 +80,8 @@ All three scenarios cross the correct RECIST thresholds and the classifier retur
 ## 6. Summary
 
 - OncoSeg matches UNet3D's Dice across all regions with ~5× fewer parameters; no per-region Dice difference is statistically significant (Wilcoxon), and on WT UNet3D wins 67/96 subjects. The mean HD95 is lower (15.35 vs 21.03 mm) but is reported as an aggregate only and was not significance-tested.
-- The model is well-calibrated (ECE = 0.0101), and MC Dropout uncertainty correlates monotonically with prediction error — suitable as a radiologist review aid.
-- Failures are concentrated on small, fragmented, low-contrast tumors. The dominant failure region is Tumor Core, with a −79.7 % relative Dice drop on the bottom-5 cases — a clinically interpretable and addressable limitation.
+- Calibration is good on background but poor on tumor: pooled ECE = 0.0101 is a background artifact (foreground-only ECE ≈ 0.49, over-confident on tumor voxels). MC Dropout uncertainty still correlates monotonically with prediction error, so it is useful as a relative review aid but not as a calibrated probability.
+- Failures are concentrated on small, fragmented, low-contrast tumors. The dominant failure region is Enhancing Tumor (ET), with a −84.3 % relative Dice drop on the bottom-5 cases (TC −79.7 % is a close second) — a clinically interpretable and addressable limitation.
 - The full segmentation → RECIST response-classification pipeline runs end-to-end and produces correct CR / PR / SD / PD verdicts on synthetic follow-up data.
 
 ## 7. Limitations
