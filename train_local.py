@@ -28,6 +28,8 @@ from monai.inferers import sliding_window_inference
 from monai.metrics import DiceMetric
 from tqdm import tqdm
 
+from src.utils.seed import set_seed
+
 from src.data.msd_dataset import MSDBrainTumorDataset
 from src.data.msd_transforms import get_msd_train_transforms, get_msd_val_transforms
 from src.models.oncoseg import OncoSeg
@@ -198,7 +200,11 @@ def main():
     parser.add_argument("--lr", type=float, default=1e-4, help="Learning rate")
     parser.add_argument("--num-workers", type=int, default=2, help="DataLoader workers")
     parser.add_argument("--val-split", type=float, default=0.2, help="Validation split ratio")
+    parser.add_argument("--seed", type=int, default=42, help="Random seed for reproducibility")
     args = parser.parse_args()
+
+    # Seed all RNGs up front so the run is reproducible.
+    set_seed(args.seed)
 
     # Step 1: Download data
     download_msd_dataset()

@@ -48,6 +48,8 @@ from monai.transforms import (
 )
 from tqdm import tqdm
 
+from src.utils.seed import set_seed
+
 logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(levelname)s | %(message)s")
 logger = logging.getLogger(__name__)
 
@@ -571,9 +573,8 @@ def main():
         device = torch.device(args.device)
     logger.info(f"Device: {device}")
 
-    # Seed
-    torch.manual_seed(42)
-    np.random.seed(42)
+    # Seed every RNG (python/numpy/torch + deterministic cuDNN) for reproducibility.
+    set_seed(args.seed if hasattr(args, "seed") else 42)
 
     roi_size = (args.roi_size, args.roi_size, args.roi_size)
     SAVE_DIR.mkdir(parents=True, exist_ok=True)

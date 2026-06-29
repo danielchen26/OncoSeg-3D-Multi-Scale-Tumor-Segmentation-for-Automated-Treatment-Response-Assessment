@@ -23,6 +23,7 @@ except ImportError:
     WANDB_AVAILABLE = False
 
 from src.training.losses import DeepSupervisionLoss, DiceCELoss
+from src.utils.seed import set_seed
 
 logger = logging.getLogger(__name__)
 
@@ -41,6 +42,10 @@ class Trainer:
         self.train_loader = train_loader
         self.val_loader = val_loader
         self.cfg = cfg
+
+        # Seed every RNG up front so a run is reproducible (and so two runs can
+        # be compared). Previously no seed was set on this path at all.
+        set_seed(int(cfg.training.get("seed", 42)))
 
         # Device — CUDA > MPS (Apple Silicon) > CPU
         if torch.cuda.is_available():
