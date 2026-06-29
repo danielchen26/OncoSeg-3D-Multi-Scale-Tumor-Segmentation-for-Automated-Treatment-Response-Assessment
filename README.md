@@ -5,7 +5,7 @@
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch 2.1+](https://img.shields.io/badge/PyTorch-2.1+-ee4c2c.svg)](https://pytorch.org/)
 [![MONAI 1.3+](https://img.shields.io/badge/MONAI-1.3+-green.svg)](https://monai.io/)
-[![Tests](https://img.shields.io/badge/tests-46%20passed-brightgreen.svg)]()
+[![Tests](https://img.shields.io/badge/tests-75%20collected-brightgreen.svg)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 <div align="center">
@@ -311,8 +311,13 @@ A FastAPI service wraps the trained model so predictions can be served over HTTP
 
 ### Run locally
 
+> **No checkpoint ships with the repo.** `.pth` files are gitignored and not stored via LFS, so `experiments/local_results/oncoseg_best.pth` does not exist until you train one (`python train_all.py`). Every serve/eval command below assumes a locally-produced checkpoint at that path.
+
 ```bash
 pip install -e '.[serve]'
+
+# Train first to produce the checkpoint (or point --checkpoint at your own):
+# python train_all.py --models oncoseg
 
 oncoseg-serve \
   --checkpoint experiments/local_results/oncoseg_best.pth \
@@ -364,7 +369,7 @@ curl -X POST http://localhost:8000/predict/measure/dicom \
 
 - Checkpoints saved by `train_all.py` use the inline `OncoSeg` class, so the service defaults to `--model-source train_all`. Use `--model-source src` for checkpoints trained via `src.models.oncoseg.OncoSeg`.
 - `embed_dim` is auto-detected from the checkpoint's `patch_embed` weight shape — the local M1 checkpoint uses 24, Colab/Kaggle runs use 48. Override with `--embed-dim N` if needed.
-- The service is tested end-to-end with a deterministic fake predictor (`tests/test_api.py`, 16 tests) so CI doesn't need a GPU or checkpoint. DICOM loader coverage in `tests/test_dicom.py` (9 tests) synthesizes minimal series with pydicom.
+- The service is tested end-to-end with a deterministic fake predictor (`tests/test_api.py`) so CI doesn't need a GPU or checkpoint, and DICOM loader coverage in `tests/test_dicom.py` synthesizes minimal series with pydicom. Both require their optional extras (`serve`, `dicom`) installed — CI installs `.[dev,serve]`; otherwise they skip.
 
 ## Project Structure
 
@@ -395,7 +400,7 @@ OncoSeg/
 ├── notebooks/
 │   └── OncoSeg_Full_Pipeline.ipynb  # All-in-one Colab notebook
 ├── train_local.py              # Local training script (MPS/CPU)
-├── tests/                      # 46 unit tests (models, losses, modules, RECIST, analysis)
+├── tests/                      # 75 tests (models, losses, modules, RECIST, analysis, API, DICOM)
 ├── pyproject.toml              # Dependencies & project config
 └── README.md
 ```
@@ -409,17 +414,20 @@ OncoSeg/
 | Medical Imaging | MONAI 1.3+ |
 | Configuration | Hydra + OmegaConf |
 | Experiment Tracking | Weights & Biases |
-| Testing | pytest (46 tests) |
+| Testing | pytest (75 tests) |
 | Code Quality | Ruff, mypy |
 
 ## Testing
 
 ```bash
+# Install the test + serve extras so optional-dep tests actually run:
+$ pip install -e ".[dev,serve]"
 $ pytest tests/ -v
-======================== 46 passed in 24.16s ========================
+# 75 tests collected; tests for modules needing an absent optional dependency
+# (monai / fastapi / nibabel / pydicom / highdicom) skip rather than error.
 ```
 
-Tests cover: OncoSeg forward pass, deep supervision, all 3 baselines, DiceCE loss, deep supervision loss, cross-attention skip, Swin encoder, UNETR baseline, RECIST measurement (7 edge cases), response classification (5 scenarios), result analysis, failure analysis, figure generation.
+Tests cover: OncoSeg forward pass, deep supervision (weights + interpolation), all 3 baselines, DiceCE loss, cross-attention skip, Swin encoder, UNETR baseline, RECIST measurement (incl. longest-diameter-across-slices), response classification, result analysis, region-order/NaN metric guards, checkpoint NaN guard, foreground ECE, seeding, and the FastAPI/DICOM surfaces.
 
 ## License
 

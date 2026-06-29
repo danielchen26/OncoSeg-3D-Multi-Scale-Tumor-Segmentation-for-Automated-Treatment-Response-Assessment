@@ -3,8 +3,8 @@
 **Last updated:** 2026-04-24
 **Repo:** https://github.com/youseihuayu-wonderful/OncoSeg-3D-Multi-Scale-Tumor-Segmentation-for-Automated-Treatment-Response-Assessment
 **Branch:** `main` (67 commits)
-**Test suite:** 142 tests across 12 files
-**Trained artefacts on disk:** `experiments/local_results/oncoseg_best.pth`, `unet3d_best.pth`
+**Test suite:** 75 tests collected across the `tests/` suite (160 test functions)
+**Trained artefacts:** checkpoints (`oncoseg_best.pth`, `unet3d_best.pth`) are **not committed** to the repo (`.pth` is gitignored and there is no Git-LFS). Only eval JSON / per-subject `.npy` / figures are versioned under `experiments/local_results/`. Reproduce the checkpoints by running `python train_all.py` (see below); serving/eval commands that reference a `.pth` require a locally-trained one.
 
 This file is a single-source map of everything that has been built, what works, what is still open, and where the risks are. It complements (does not replace) `README.md`, `docs/Pipeline_Document.md`, and the paper drafts.
 
@@ -172,15 +172,16 @@ Untracked:  notebooks/Ablation_Study.ipynb
 ```
 These are post-`3f54309` API polish + a new DICOM loader + new Ablation notebook, not yet committed. Needs review before the next push.
 
-### Trained artefacts (on disk, under `experiments/local_results/`)
-- `oncoseg_best.pth` — 50 epochs, mean Dice **0.7969**, HD95 mean 15.35
-- `unet3d_best.pth` — mean Dice **0.7944**, HD95 mean 21.03
-- `oncoseg_eval.json`, `unet3d_eval.json`, per-subject Dice `.npy`
+### Artefacts under `experiments/local_results/` (versioned)
+- `oncoseg_eval.json`, `unet3d_eval.json` — aggregate Dice/HD95 (OncoSeg mean Dice **0.7969**, UNet3D **0.7944**)
+- per-subject Dice `.npy` (96×3, region order [TC, WT, ET])
 - `training_curves.png`, `dice_comparison.png`
-- `uncertainty_metrics.json` (ECE 0.0101), `failure_analysis.json`, `worst_case_diagnosis.json`
+- `uncertainty_metrics.json` (pooled ECE 0.0101 / foreground ECE ≈ 0.49), `failure_analysis.json`, `worst_case_diagnosis.json`
+
+**Not versioned:** the `.pth` checkpoints (`oncoseg_best.pth`, `unet3d_best.pth`) are gitignored and not stored via LFS — regenerate with `python train_all.py`.
 
 ### Tests
-142 tests across 12 files: `test_analysis`, `test_api`, `test_build_model`, `test_dicom`, `test_evaluate_lumiere`, `test_integrate_kaggle_results`, `test_losses`, `test_lumiere`, `test_models`, `test_modules`, `test_response`, `test_verify_msd_dataset`.
+75 tests collected (160 test functions) across `tests/`: `test_analysis`, `test_api`, `test_build_model`, `test_checkpoint_nan_guard`, `test_dicom`, `test_ece_foreground`, `test_evaluate_lumiere`, `test_inference_uncertainty`, `test_integrate_kaggle_results`, `test_losses`, `test_lumiere`, `test_metrics`, `test_models`, `test_modules`, `test_recist_diameter`, `test_response`, `test_seed`, `test_seg_writer`, `test_verify_msd_dataset`. Tests for optional-dependency modules skip cleanly when monai/fastapi/nibabel/pydicom/highdicom are absent.
 
 ---
 
