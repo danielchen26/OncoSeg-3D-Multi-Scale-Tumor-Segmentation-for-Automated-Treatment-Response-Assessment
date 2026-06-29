@@ -167,7 +167,13 @@ class Predictor:
 
         stacked = torch.stack(predictions, dim=0)
         mean_pred = stacked.mean(dim=0)
-        entropy = -torch.sum(mean_pred * torch.log(mean_pred + 1e-8), dim=1).squeeze(0)
+        # The head is multi-label sigmoid (TC/WT/ET overlap and do NOT sum to 1),
+        # so categorical entropy -sum(p*log p) is ill-defined here. Use per-channel
+        # binary entropy -(p*log p + (1-p)*log(1-p)) and average over channels.
+        eps = 1e-8
+        p = torch.clamp(mean_pred, eps, 1.0 - eps)
+        binary_ent = -(p * torch.log(p) + (1.0 - p) * torch.log(1.0 - p))
+        entropy = binary_ent.mean(dim=1).squeeze(0)
 
         return entropy.cpu().numpy()
 

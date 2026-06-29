@@ -196,6 +196,12 @@ class OncoSeg(nn.Module):
 
         stacked = torch.stack(predictions, dim=0)  # [N, B, C, H, W, D]
         mean_pred = stacked.mean(dim=0)
-        uncertainty = -torch.sum(mean_pred * torch.log(mean_pred + 1e-8), dim=1, keepdim=True)
+        # Multi-label sigmoid head (TC/WT/ET overlap, do NOT sum to 1): use
+        # per-channel binary entropy averaged over channels, not categorical
+        # entropy -sum(p*log p).
+        eps = 1e-8
+        p = torch.clamp(mean_pred, eps, 1.0 - eps)
+        binary_ent = -(p * torch.log(p) + (1.0 - p) * torch.log(1.0 - p))
+        uncertainty = binary_ent.mean(dim=1, keepdim=True)
 
         return uncertainty
