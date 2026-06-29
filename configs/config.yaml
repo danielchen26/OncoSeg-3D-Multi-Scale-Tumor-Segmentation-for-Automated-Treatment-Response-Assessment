@@ -4,6 +4,9 @@ defaults:
   - _self_
 
 training:
+  # max_epochs is an upper ceiling for the Hydra entrypoint; the reported
+  # benchmark run actually trained for 50 epochs (see docs/Paper_Methods_Draft.md
+  # §3.4 and PROJECT_OVERVIEW.md). 300 here != the 50 used for the results.
   max_epochs: 300
   batch_size: 2
   lr: 1.0e-4

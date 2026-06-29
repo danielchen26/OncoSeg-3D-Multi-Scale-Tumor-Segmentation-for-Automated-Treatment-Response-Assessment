@@ -88,9 +88,13 @@ Notebook corrupted by a prior `sed` edit — restored from git and re-applied th
 **Best mean Dice 0.7969 at epoch 50** — TC 0.7898, WT 0.8529, ET 0.7481.
 
 ### Step 33 — UNet3D baseline (2026-04-06)
-~30 epochs before Colab OOM, best checkpoint saved.
+~30 epochs before Colab OOM (best checkpoint saved), vs OncoSeg's 50 epochs.
 TC 0.7849, WT 0.8522, ET 0.7462, Mean 0.7944.
-**OncoSeg beats UNet3D on all 3 regions with 5× fewer params** — key comparison for paper.
+**Caveat — unequal training budget:** the baseline ran ~30 epochs to OncoSeg's
+50, so this is not an apples-to-apples comparison. With that caveat, OncoSeg
+matches UNet3D's mean Dice (+0.0025, not statistically significant; on WT
+UNet3D wins 67/96) at ~5.2× fewer parameters. The honest headline is
+**parameter efficiency**, not an accuracy win.
 
 ### Step 34 — Training figures (`7061d20`, 2026-04-06)
 `training_curves.png` (loss + Dice vs epoch), `dice_comparison.png` (per-region bar chart).

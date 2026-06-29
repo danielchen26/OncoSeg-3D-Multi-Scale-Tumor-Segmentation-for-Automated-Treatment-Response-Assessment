@@ -146,7 +146,8 @@ Training augmentations (applied online):
 ### 3.4 Training Protocol
 
 - Optimizer: AdamW (lr=1e-4, weight_decay=1e-5)
-- Scheduler: Cosine annealing (lr: 1e-4 → 1e-6 over 100 epochs)
+- Scheduler: Cosine annealing (lr: 1e-4 → 1e-6)
+- Epochs: **the reported run trained for 50 epochs** (best mean Dice at epoch 50). Note `configs/config.yaml` sets a `max_epochs: 300` ceiling and earlier drafts of this section described a 100-epoch cosine horizon; the numbers in this paper are from the 50-epoch run.
 - Batch size: 2
 - Gradient clipping: max_norm=1.0
 - Validation: Every 5 epochs with sliding window inference (overlap=0.5)
