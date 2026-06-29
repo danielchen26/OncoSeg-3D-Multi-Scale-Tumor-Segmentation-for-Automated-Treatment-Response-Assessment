@@ -1,6 +1,13 @@
 name: oncoseg
 _target_: src.models.oncoseg.OncoSeg
 
+# NOTE: the benchmarked checkpoints were produced by the INLINE OncoSeg class in
+# train_all.py (embed_dim=24 on the local M1 run, depths=(2,2,2,2), a single fused
+# decoder head). The defaults below describe the larger src/models.oncoseg variant
+# (embed_dim=48, depths=[2,2,6,2], 3 cross-attention skips), which was NOT trained
+# for the reported numbers -- re-running from this config builds a DIFFERENT network
+# than the one in the results tables. See PROJECT_OVERVIEW.md ("Two OncoSeg
+# architectures share one name").
 in_channels: 4
 num_classes: 3
 embed_dim: 48

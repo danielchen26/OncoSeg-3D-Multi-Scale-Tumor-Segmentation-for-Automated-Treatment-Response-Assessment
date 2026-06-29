@@ -16,6 +16,8 @@ A 3D multi-scale tumor segmentation system for automated treatment-response asse
 
 **Architecture.** Hybrid CNN-Transformer: Swin Transformer encoder + CNN decoder, cross-attention skip connections, Monte Carlo Dropout for uncertainty, deep supervision.
 
+> **Two OncoSeg architectures share one name — read this before citing numbers.** The reported results come from an **inline `OncoSeg` class in `train_all.py`**: `embed_dim=24` (local M1 run), `depths=(2,2,2,2)`, two cross-attention skips, a single fused decoder head, and per-forward MC dropout. The `src/models/oncoseg.py` module + `configs/model/oncoseg.yaml` describe a **larger, never-trained** variant (`embed_dim=48`, `depths=(2,2,6,2)`, three skips, a separate 4× upsampling head). The README architecture diagram depicts the latter. So the diagram/config are *aspirational*; the benchmarked model is the inline one. Parameter counts and the MC-dropout/inference code paths differ between the two (see F03/F04/F29).
+
 **Downstream.** Segmentation → per-lesion RECIST 1.1 measurements → response class (CR / PR / SD / PD).
 
 **Scope.** Deep-learning only (no classical-ML baselines). Research-grade, not an introductory-ML survey.
