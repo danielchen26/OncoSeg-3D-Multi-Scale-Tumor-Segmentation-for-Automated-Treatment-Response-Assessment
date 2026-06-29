@@ -183,6 +183,31 @@ ul.clean li b{font-weight:700}
   border:1px solid var(--teal);color:var(--teal);background:rgba(31,111,106,.08);margin-top:2px;flex:0 0 auto}
 .method-note{font-size:13px;color:var(--ink-soft);border:1px dashed var(--line);border-radius:10px;padding:12px 15px;background:rgba(255,255,255,.25)}
 
+/* ====== TAB 3 — FIXES ====== */
+.fix-ok{color:#3f7a4a}
+.fixrow{border:1px solid var(--line-soft);border-left:5px solid #5a7d4f;border-radius:12px;background:var(--paper-2);
+  margin-bottom:13px;overflow:hidden;transition:.18s}
+.fixrow summary{list-style:none;cursor:pointer;padding:15px 20px;display:flex;align-items:flex-start;gap:14px}
+.fixrow summary::-webkit-details-marker{display:none}
+.fixrow .fid{font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:700;color:#3f7a4a;background:rgba(90,125,79,.12);
+  border:1px solid rgba(90,125,79,.4);border-radius:6px;padding:4px 8px;flex:0 0 auto;margin-top:1px}
+.fixrow .sev{font-family:"JetBrains Mono",monospace;font-size:9px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  padding:3px 7px;border-radius:5px;color:#fff;flex:0 0 auto;margin-top:2px}
+.fixrow .ttl{font-weight:700;font-size:15px;line-height:1.35}
+.fixrow .where{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--ink-soft);margin-top:5px;word-break:break-word}
+.fixrow .kind{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;
+  border:1px solid var(--line);color:var(--ink-soft);border-radius:6px;padding:3px 8px;flex:0 0 auto;margin-top:2px}
+.fixrow .chev{margin-left:auto;color:var(--ink-soft);transition:.2s;flex:0 0 auto}
+.fixrow[open] .chev{transform:rotate(90deg)}
+.fixrow .body{padding:2px 20px 20px 48px;font-size:14px}
+.fixrow .body .lbl{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:#3f7a4a;font-weight:700;margin-top:13px;display:block}
+.fixrow .body .was{color:var(--ink-soft)}
+.fixrow .body .commit{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--teal);background:rgba(31,111,106,.07);
+  border:1px solid rgba(31,111,106,.25);border-radius:6px;padding:2px 7px}
+.fixrow .body .verify{background:var(--film);color:#e9e1d2;border-radius:9px;padding:10px 13px;font-family:"JetBrains Mono",monospace;
+  font-size:11.5px;line-height:1.5;margin-top:6px;white-space:pre-wrap;word-break:break-word;border:1px solid #2a2620}
+.fixrow .body .verify .g{color:#7CF6C8}
 footer{padding:42px 0 60px;color:var(--ink-soft);font-size:13px;border-top:1px solid var(--line);margin-top:40px}
 </style>
 </head>
@@ -197,6 +222,7 @@ footer{padding:42px 0 60px;color:var(--ink-soft);font-size:13px;border-top:1px s
     <nav class="tabs" id="tabnav">
       <button data-tab="understand" class="active"><span class="n">01</span> Understand</button>
       <button data-tab="findings"><span class="n">02</span> Review Findings</button>
+      <button data-tab="fixes"><span class="n">03</span> Fixes</button>
     </nav>
     <a class="lablink" href="oncoseg_cv_lab.html"><span class="sq"></span> Live CV Lab ↗</a>
   </div>
@@ -358,10 +384,46 @@ footer{padding:42px 0 60px;color:var(--ink-soft);font-size:13px;border-top:1px s
   <footer><div class="wrap">Findings are reproducible from the repository's committed artifacts (per-subject Dice <span class="mono">.npy</span>, eval JSON) and source at the cited <span class="mono">file:line</span> anchors.</div></footer>
 </main>
 
+<!-- =========================================================== TAB 3 -->
+<main class="tab" id="fixes">
+  <div class="wrap">
+    <section class="findings-head">
+      <span class="kicker fix-ok">Remediation · all findings resolved</span>
+      <h1 class="disp">From flagged —<br>to fixed.</h1>
+      <p class="lead">Every one of the <b>31 verified findings</b> was re-confirmed against the current code (via a 60-agent investigate-and-adversarially-review workflow), then fixed <b>one at a time, one commit each</b>, on branch <span class="mono">fix/review-findings</span>. Code/data fixes ship with numpy-verified regression tests; documentation fixes replace over-claims with the honest, recomputed numbers. <b>No result was "fixed" by inventing a better number</b> — where the truth was unflattering (no significant Dice win, foreground ECE ≈ 0.49, ET the worst region), the docs now say so.</p>
+      <div class="score">
+        <div class="pip"><div class="n fix-ok">31</div><div class="k">Findings fixed</div></div>
+        <div class="pip"><div class="n fix-ok">23</div><div class="k">Commits</div></div>
+        <div class="pip"><div class="n fix-ok">75</div><div class="k">Tests pass</div></div>
+        <div class="pip"><div class="n fix-ok">0</div><div class="k">Errors / failures</div></div>
+      </div>
+      <p class="method-note">Verification (py3.11, no-network): full suite <span class="mono">75 passed / 13 skipped / 0 errors</span> (missing optional deps skip cleanly instead of erroring); all 30 changed Python files <span class="mono">py_compile</span> clean; every committed result JSON strict-parses with no bare <span class="mono">NaN</span>; all <span class="mono">configs/</span> + CI YAML valid. The two CRITICAL stats were re-derived by hand from the committed <span class="mono">.npy</span> arrays before any doc edit.</p>
+    </section>
+
+    <div class="filterbar" id="fixfilterbar">
+      <button data-f="all" class="on">All 31</button>
+      <button data-f="code">Code</button>
+      <button data-f="data">Data</button>
+      <button data-f="test">Tests</button>
+      <button data-f="doc">Docs</button>
+    </div>
+
+    <div id="fixlist"><!-- injected --></div>
+
+    <div class="rule"></div>
+    <section class="card" style="border-color:var(--teal);background:linear-gradient(180deg,rgba(31,111,106,.06),transparent)">
+      <span class="kicker fix-ok">Bottom line</span>
+      <h3 class="sub" style="margin-top:6px">The scaffold stayed strong; the science is now honest.</h3>
+      <p style="color:var(--ink-soft);margin-top:6px">The region-label permutation, the RECIST longest-diameter bug, the crashing MC-Dropout path, the invalid categorical-entropy uncertainty, the NaN-poisoned checkpoint selection and failure analysis, and the shape-broken deep-supervision loss are all repaired and guarded by tests. The headline scientific claims are corrected rather than hidden: <b>no statistically-significant Dice advantage</b> (and UNet3D wins WT 67/96), <b>foreground ECE ≈ 0.49</b> (over-confident on tumor), <b>ET is the dominant failure region</b>, the longitudinal table is a <b>synthetic sanity check</b>, and <b>no checkpoints ship</b>. Parameter counts, test counts, the train/val split, epoch counts, and the two-architecture discrepancy are reconciled across every document.</p>
+    </section>
+  </div>
+  <footer><div class="wrap">Each fix is a single commit on <span class="mono">fix/review-findings</span> with a verification note in its message. Tests run with <span class="mono">PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 pytest -p no:cacheprovider</span>.</div></footer>
+</main>
+
 <script>
 /* ============================== TAB ROUTER ============================== */
 const tabs=document.querySelectorAll('#tabnav button');
-const panels={understand:document.getElementById('understand'),findings:document.getElementById('findings')};
+const panels={understand:document.getElementById('understand'),findings:document.getElementById('findings'),fixes:document.getElementById('fixes')};
 function showTab(id){
   for(const k in panels){panels[k].classList.toggle('show',k===id);}
   tabs.forEach(b=>{
@@ -371,6 +433,7 @@ function showTab(id){
   });
   window.scrollTo({top:0,behavior:'instant'});
   if(id==='findings') buildFindings();
+  if(id==='fixes') buildFixes();
 }
 tabs.forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));
 document.querySelectorAll('[data-goto]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();showTab(a.dataset.goto);}));
@@ -600,6 +663,201 @@ document.getElementById('filterbar').addEventListener('click',e=>{
   curFilter=b.dataset.f;
   document.querySelectorAll('#filterbar button').forEach(x=>x.classList.toggle('on',x===b));
   buildFindings();
+});
+
+/* ============================== FIXES DATA ============================== */
+/* kind ∈ code|data|test|doc|config ; sev mirrors the original finding severity */
+const FIXES=[
+ {id:'F01',sev:'critical',kind:'doc',title:'Removed the false (and inverted) Wilcoxon p<0.01 claim',
+  files:'README.md · docs/Paper_Results_Draft.md',commit:'8bdb8fe',
+  was:'WT Dice was starred "* p < 0.01 (Wilcoxon signed-rank test)".',
+  now:'Recomputed the one-sided Wilcoxon on the committed per-subject arrays and stated the truth: no region is significant (TC 0.46, WT 0.995, ET 0.57, mean 0.41) and on WT UNet3D wins 67/96. Reframed as parameter efficiency.',
+  verify:'TC p=0.456  WT p=<span class="g">0.9954</span> (UNet3D 67/96)  ET p=0.574  mean p=0.408'},
+ {id:'F02',sev:'critical',kind:'doc',title:'Replaced "well-calibrated ECE=0.0101" with honest foreground ECE',
+  files:'README.md · scripts/uncertainty_qualitative_analysis.py · uncertainty_metrics.json',commit:'c0dc795',
+  was:'Model advertised as well-calibrated (ECE 0.0101) — a background artifact (98.4% of voxels are easy background).',
+  now:'Added a foreground_mask to the ECE helper, store both pooled and foreground ECE, and disclose foreground ECE ≈ 0.49 (over-confident on tumor voxels).',
+  verify:'pooled ECE 0.0101  ·  foreground ECE <span class="g">0.4942</span>'},
+ {id:'F05',sev:'high',kind:'code',title:'Corrected TC/WT/ET region order to match the data channels',
+  files:'metrics.py · result_analyzer.py · trainer.py · train_local.py',commit:'8919278 · 009d27a',
+  was:'REGION_NAMES=["ET","TC","WT"] (and a third [WT,TC,ET] in train_local) mislabelled every per-region number; data is stacked [TC,WT,ET].',
+  now:'Set the canonical order to [TC,WT,ET] everywhere with comments pointing at the stacking site. dice_mean (hence checkpoint selection) unaffected; the already-correct eval JSON needed no relabel.',
+  verify:'guard FAILS on old order, PASSES on fix · test_metrics.py'},
+ {id:'F22',sev:'medium',kind:'test',title:'Added region-order + NaN guard tests for the evaluator',
+  files:'tests/test_metrics.py',commit:'8919278',
+  was:'The production evaluator (source of every number) had zero tests.',
+  now:'New static + end-to-end tests assert REGION_NAMES/trainer keys match the data order and that the committed JSON keeps [TC,WT,ET] labels.',
+  verify:'6 passed, 1 skipped (monai e2e)'},
+ {id:'F04',sev:'high',kind:'code',title:'MC-Dropout no longer crashes on the trained inline model',
+  files:'src/inference.py',commit:'c659a41',
+  was:'_estimate_uncertainty called self.model.decoder / .cross_attn_skips, but the only trained model exposes .decoders (plural) → AttributeError 500.',
+  now:'Added _mc_forward() that branches on architecture and drives the inline model through its own forward() (no fragile decoder reconstruction). Routing proven for both branches.',
+  verify:'inline route → no AttributeError · test_inference_uncertainty.py'},
+ {id:'F16',sev:'high',kind:'code',title:'Uncertainty uses per-channel binary entropy, not categorical',
+  files:'src/inference.py · src/models/oncoseg.py',commit:'fa2d284',
+  was:'Entropy was −Σ p·log p (categorical) on a multi-label sigmoid head whose channels do not sum to 1 — a mathematically invalid quantity.',
+  now:'Per-channel binary entropy −(p·log p + (1−p)·log(1−p)), averaged over channels; clamped for safety.',
+  verify:'binary entropy peaks at ln2≈0.693 for p=0.5 ✓'},
+ {id:'F06',sev:'high',kind:'code',title:'RECIST longest diameter now measured across all slices',
+  files:'src/response/recist.py',commit:'63dd2b0',
+  was:'Diameter was measured only on the max-AREA axial slice, under-measuring lesions whose longest extent lies elsewhere.',
+  now:'Scan every axial slice and take the global maximum Feret diameter (per RECIST 1.1 in-plane), preserving spacing + guards.',
+  verify:'phantom: old 41.0mm → <span class="g">new 49.0mm</span> · 5 tests pass'},
+ {id:'F09',sev:'high',kind:'code',title:'Deep-supervision loss interpolates the target to each scale',
+  files:'src/training/losses.py',commit:'59f571b',
+  was:'Coarse-scale logits (32³) were compared against full-res labels (128³) → shape error; the documented trainer entrypoint was broken.',
+  now:'Downsample the target with nearest-neighbour interpolation to each prediction size before the base loss.',
+  verify:'multiscale loss is a finite scalar · test_losses.py'},
+ {id:'F25',sev:'medium',kind:'test',title:'Deep-supervision weighting + interpolation are now tested',
+  files:'tests/test_losses.py',commit:'804eb81',
+  was:'Tests only asserted "scalar > 0", never the decreasing-weight scheme that defines deep supervision.',
+  now:'Recover each effective per-scale weight and assert they sum to 1, strictly decrease, and match (1/2^i)/Z; plus a multiscale-interpolation test.',
+  verify:'weights [0.533,0.267,0.133,0.067] sum 1.0 ✓'},
+ {id:'F07',sev:'high',kind:'data',title:'Failure analysis uses nanmean — dominant region is ET, not TC',
+  files:'scripts/uncertainty_qualitative_analysis.py · failure_analysis.json',commit:'809d45b · e896386',
+  was:'A plain .mean() made ET overall NaN, which max() dropped, mislabelling TC as the dominant failure region.',
+  now:'nanmean aggregates + a NaN-safe argmax; regenerated the JSON. ET has the largest relative drop (84.3%) and is the true worst region.',
+  verify:'ET drop <span class="g">84.3%</span> > TC 79.7% · no bare NaN'},
+ {id:'F21',sev:'medium',kind:'data',title:'No bare NaN in committed result JSON (nanstd)',
+  files:'evaluate_checkpoint.py · oncoseg_eval.json',commit:'a645673',
+  was:'eval_std_et was a literal NaN token — invalid JSON that breaks strict parsers (incl. the Pages JS).',
+  now:'np.nanstd for per-region std + allow_nan=False on every result json.dump; regenerated eval_std_et=0.219.',
+  verify:'all 5 result JSON strict-parse, no NaN ✓'},
+ {id:'F08',sev:'high',kind:'code',title:'Best-checkpoint selection guarded against NaN Dice',
+  files:'trainer.py · train_all.py · train_local.py',commit:'81f1487',
+  was:'An empty-GT region (ET) made dice_mean NaN; "NaN > best" is always False, so best.pth was never saved.',
+  now:'nanmean for the selection metric + a math.isnan guard before the comparison, in all three trainers.',
+  verify:'val subject 6 (empty ET): old→no save, new→saves · 3 tests'},
+ {id:'F12',sev:'high',kind:'code',title:'Deterministic seeding in every training entrypoint',
+  files:'src/utils/seed.py · trainer.py · train_all.py · train_local.py',commit:'49477fe',
+  was:'Two of three drivers set no seed; runs were not reproducible.',
+  now:'New set_seed() seeds random/PYTHONHASHSEED/numpy/torch (+CUDA, deterministic cuDNN), wired into all entrypoints.',
+  verify:'python/numpy/torch reproducible · 5 tests pass'},
+ {id:'F23',sev:'medium',kind:'test',title:'Model tests assert the real 3-channel output',
+  files:'tests/test_models.py · tests/test_modules.py',commit:'7a50b0e',
+  was:'Tests built models with num_classes=4 (softmax era); the trained pipeline is 3-channel sigmoid [TC,WT,ET].',
+  now:'num_classes 4→3 and output-shape asserts (1,3,…); inputs stay 4-channel (4 MRI modalities).',
+  verify:'no residual num_classes=4 remains'},
+ {id:'F15',sev:'high',kind:'config',title:'CI installs the serve extra so API tests actually run',
+  files:'.github/workflows/ci.yml',commit:'025c818',
+  was:'CI installed only .[dev]; fastapi (in the serve extra) was missing, so test_api errored at collection and never ran.',
+  now:'CI installs .[dev,serve] — the API surface is exercised; a broken endpoint now fails CI.',
+  verify:'ci.yml valid YAML'},
+ {id:'F31',sev:'low',kind:'test',title:'Optional-dependency imports guarded with importorskip',
+  files:'9 test files',commit:'025c818',
+  was:'Missing monai/fastapi/nibabel/pydicom/highdicom turned into hard collection errors that masked the true pass set.',
+  now:'pytest.importorskip guards (pytest imported first) across every test that hard-imports an optional dep — partial installs degrade to skips.',
+  verify:'suite: 5 collection errors → <span class="g">0</span> · 75 passed / 13 skipped'},
+ {id:'F18',sev:'medium',kind:'doc',title:'Test count corrected (46/142 → 75) and transcript removed',
+  files:'README.md · PROJECT_OVERVIEW.md',commit:'1675fe6',
+  was:'README badge said "46 passed" with a pasted transcript; PROJECT_OVERVIEW said 142.',
+  now:'Real collected count is 75; replaced the fabricated transcript and refreshed the per-module list.',
+  verify:'pytest --collect-only → 75'},
+ {id:'F10',sev:'high',kind:'doc',title:'Disclosed that no checkpoints ship with the repo',
+  files:'README.md · PROJECT_OVERVIEW.md',commit:'1675fe6',
+  was:'"Trained artefacts on disk: oncoseg_best.pth, unet3d_best.pth" — but .pth is gitignored with no LFS.',
+  now:'State only eval JSON/.npy/figures are versioned; checkpoints must be produced via train_all.py; serve commands need a local one.',
+  verify:'git ls-files → no .pth tracked'},
+ {id:'F11',sev:'high',kind:'doc',title:'"Outperforms on all metrics" → parameter efficiency',
+  files:'README.md · docs/Paper_Results_Draft.md',commit:'8bdb8fe',
+  was:'Claimed OncoSeg outperforms UNet3D on all metrics across all regions.',
+  now:'Reframed as matching accuracy at ~5.2× fewer params (mean gap +0.0025 is within noise, not significant).',
+  verify:'mean Δ +0.0025, p=0.41'},
+ {id:'F20',sev:'medium',kind:'doc',title:'Dropped the "HD95 significant on WT" claim',
+  files:'README.md · docs/Paper_Results_Draft.md',commit:'8bdb8fe',
+  was:'Claimed the HD95 improvement is statistically significant on WT.',
+  now:'No per-subject HD95 array exists, so no test was possible; HD95 is now marked a descriptive aggregate (−27%).',
+  verify:'no per_subject_hd95 array in repo'},
+ {id:'F14',sev:'high',kind:'doc',title:'Longitudinal demo relabelled a synthetic sanity check',
+  files:'README.md · docs/Paper_Results_Draft.md',commit:'09a98c1 · e896386',
+  was:'A "Verified" CR/PR/SD/PD table under a "Realistic longitudinal" header implied real-patient validation.',
+  now:'All four follow-ups are perturbations of one baseline (BRATS_407, seed 42) tuned to cross the classifier\'s own thresholds — labelled correct-by-construction; points to the (unrun) LUMIERE validator.',
+  verify:''},
+ {id:'F03',sev:'high',kind:'doc',title:'Disclosed the two same-named OncoSeg architectures',
+  files:'PROJECT_OVERVIEW.md · configs/model/oncoseg.yaml',commit:'effc8a0',
+  was:'Config/src/diagram describe depths (2,2,6,2)+3 skips, but the trained model is the inline train_all variant (2,2,2,2)+2 skips.',
+  now:'Added a callout (and config header note) that the benchmarked model is the inline one; the config/diagram are aspirational.',
+  verify:''},
+ {id:'F29',sev:'low',kind:'config',title:'Config depths flagged as ≠ the trained network',
+  files:'configs/model/oncoseg.yaml',commit:'effc8a0',
+  was:'Default depths [2,2,6,2], embed_dim 48 — re-running from config builds a different net than the benchmarked one.',
+  now:'Header note that this config builds a different (untrained) network than the results tables.',
+  verify:'yaml valid'},
+ {id:'F17',sev:'medium',kind:'doc',title:'Parameter counts reconciled to the trained model',
+  files:'README.md · Paper_Methods · Interview_Questions',commit:'1d90fd0',
+  was:'OncoSeg quoted as 3.7M / 14.0M / 2.9M / 12.1M; UNet3D even as ~3M in interview notes.',
+  now:'Canonical everywhere: OncoSeg 3.7M (embed 24; ~12M embed-48 untrained), UNet3D 19.2M, SwinUNETR 62.2M, UNETR 130.8M.',
+  verify:'no stale 14.0M/2.9M/12.1M remain'},
+ {id:'F19',sev:'medium',kind:'doc',title:'Untrained baselines no longer framed as a comparison',
+  files:'README.md · docs/Paper_Methods_Draft.md',commit:'1d90fd0',
+  was:'Param-ratio "competitive vs UNETR/SwinUNETR" implied a comparison; those baselines were never trained.',
+  now:'State explicitly that only OncoSeg + UNet3D were trained/evaluated; the other rows are parameter context only.',
+  verify:''},
+ {id:'F26',sev:'low',kind:'doc',title:'Single parameter-reduction factor (5.2×)',
+  files:'README.md · docs/Paper_Methods_Draft.md',commit:'1d90fd0',
+  was:'Stated as 5×, 5.2×, and 6× for the same comparison.',
+  now:'Standardized: ~5.2× vs UNet3D, ~17× vs SwinUNETR, ~35× vs UNETR.',
+  verify:'19.2/3.7 = 5.2×'},
+ {id:'F27',sev:'low',kind:'doc',title:'UNETR parameter count made consistent (130.8M)',
+  files:'docs/Paper_Methods_Draft.md',commit:'1d90fd0',
+  was:'Same draft said both 130.8M and 130.4M.',
+  now:'Single value 130.8M throughout.',
+  verify:''},
+ {id:'F13',sev:'high',kind:'doc',title:'Disclosed the unequal training budget',
+  files:'PROJECT_OVERVIEW.md',commit:'bb64597',
+  was:'OncoSeg trained 50 epochs vs UNet3D ~30 (OOM-killed), yet framed as a clean win.',
+  now:'Explicit unequal-budget caveat; reframed as parameter efficiency (gap not significant; WT to UNet3D).',
+  verify:''},
+ {id:'F30',sev:'low',kind:'doc',title:'Epoch count reconciled (50 run; 300 is a ceiling)',
+  files:'docs/Paper_Methods_Draft.md · configs/config.yaml',commit:'bb64597',
+  was:'Stated three ways: 50 (run), 100 (paper cosine), 300 (config).',
+  now:'Reported numbers are the 50-epoch run; config max_epochs=300 commented as a ceiling, not the run length.',
+  verify:''},
+ {id:'F28',sev:'low',kind:'doc',title:'Train/val split reconciled to 388/96',
+  files:'Paper_Methods · Pipeline_Document',commit:'b0d5324 · ad81b7d',
+  was:'Stated both 388/96 and 387/97.',
+  now:'Aligned to 388/96 (committed per-subject arrays have exactly 96 rows; eval JSON num_val_subjects=96).',
+  verify:'arrays shape (96, 3)'},
+ {id:'F24',sev:'medium',kind:'test',title:'ECE foreground-vs-pooled behavior tested',
+  files:'tests/test_ece_foreground.py',commit:'c0dc795',
+  was:'No test exercised the ECE computation or the fg/bg weighting that makes it misleading.',
+  now:'A toy volume proves pooled ECE hides foreground miscalibration; foreground value matches the hand calc.',
+  verify:'pooled 0.0198 vs foreground 0.5000'},
+];
+
+const KIND_LABEL={code:'CODE',data:'DATA',test:'TEST',doc:'DOC',config:'CONFIG'};
+let curFix='all';
+function buildFixes(){
+  const list=document.getElementById('fixlist');
+  if(list.dataset.built && list.dataset.filter===curFix) return;
+  list.dataset.built='1'; list.dataset.filter=curFix;
+  // "Code" also surfaces config/infra fixes (F15 CI, F29 model config).
+  const items=FIXES.filter(f=>curFix==='all' || curFix===f.kind || (curFix==='code'&&f.kind==='config'));
+  list.innerHTML=items.map(f=>`
+    <details class="fixrow">
+      <summary>
+        <span class="fid">${f.id} ✓</span>
+        <span class="sev ${f.sev}">${f.sev}</span>
+        <span>
+          <span class="ttl">${f.title}</span>
+          <span class="where">${f.files}</span>
+        </span>
+        <span class="kind">${KIND_LABEL[f.kind]||f.kind}</span>
+        <span class="chev">▸</span>
+      </summary>
+      <div class="body">
+        <span class="lbl">Was</span><div class="was">${f.was}</div>
+        <span class="lbl">Fix</span><div>${f.now}</div>
+        ${f.verify?`<span class="lbl">Verified</span><div class="verify">${f.verify}</div>`:''}
+        <span class="lbl">Commit</span><div><span class="commit">${f.commit}</span></div>
+      </div>
+    </details>`).join('');
+}
+document.getElementById('fixfilterbar').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b)return;
+  curFix=b.dataset.f;
+  document.querySelectorAll('#fixfilterbar button').forEach(x=>x.classList.toggle('on',x===b));
+  buildFixes();
 });
 </script>
 </body>
