@@ -195,8 +195,14 @@ def pick_cases(per_subject: np.ndarray) -> dict[str, int]:
 def failure_analysis(per_subject_oncoseg: np.ndarray,
                      per_subject_unet: np.ndarray,
                      subject_names: list[str]) -> dict:
-    """Bottom-5 by OncoSeg mean Dice with per-region breakdown."""
-    means = per_subject_oncoseg.mean(axis=1)
+    """Bottom-5 by OncoSeg mean Dice with per-region breakdown.
+
+    All region aggregates use nanmean: an empty ground-truth region (ET is
+    commonly empty) yields a NaN Dice. A plain .mean() would propagate NaN to
+    ET's overall_mean, and max() silently drops the NaN key -- which previously
+    mislabelled the dominant failure region as TC when ET is in fact worse.
+    """
+    means = np.nanmean(per_subject_oncoseg, axis=1)
     bottom = np.argsort(means)[:5]
     cases = []
     for idx in bottom:
@@ -205,11 +211,11 @@ def failure_analysis(per_subject_oncoseg: np.ndarray,
             "oncoseg": {r: float(per_subject_oncoseg[idx, i]) for i, r in enumerate(REGION_NAMES)},
             "oncoseg_mean": float(means[idx]),
             "unet3d": {r: float(per_subject_unet[idx, i]) for i, r in enumerate(REGION_NAMES)},
-            "unet3d_mean": float(per_subject_unet[idx].mean()),
+            "unet3d_mean": float(np.nanmean(per_subject_unet[idx])),
         })
-    # Aggregate failure modes
-    bottom_per_region = per_subject_oncoseg[bottom].mean(axis=0)
-    overall_per_region = per_subject_oncoseg.mean(axis=0)
+    # Aggregate failure modes (nanmean so empty-GT regions don't poison the stat)
+    bottom_per_region = np.nanmean(per_subject_oncoseg[bottom], axis=0)
+    overall_per_region = np.nanmean(per_subject_oncoseg, axis=0)
     region_drop = {
         REGION_NAMES[i]: {
             "bottom5_mean": float(bottom_per_region[i]),
@@ -218,10 +224,11 @@ def failure_analysis(per_subject_oncoseg: np.ndarray,
         }
         for i in range(3)
     }
-    # Classify dominant failure: which region drops most relative to its overall mean
+    # Classify dominant failure: which region drops most relative to its overall
+    # mean. Guard against NaN (a NaN comparison would silently never win).
     rel_drops = {r: region_drop[r]["drop"] / max(region_drop[r]["overall_mean"], 1e-6)
                  for r in REGION_NAMES}
-    dominant = max(rel_drops, key=rel_drops.get)
+    dominant = max(rel_drops, key=lambda r: rel_drops[r] if np.isfinite(rel_drops[r]) else -np.inf)
     return {
         "bottom_5_cases": cases,
         "region_breakdown": region_drop,

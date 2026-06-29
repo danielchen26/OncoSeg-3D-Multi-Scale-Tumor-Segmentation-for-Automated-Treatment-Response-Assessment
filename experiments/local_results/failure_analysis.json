@@ -89,10 +89,10 @@
     },
     "ET": {
       "bottom5_mean": 0.11718849092721939,
-      "overall_mean": NaN,
-      "drop": NaN
+      "overall_mean": 0.7480838894844055,
+      "drop": 0.6308953762054443
     }
   },
-  "dominant_failure_region": "TC",
-  "interpretation": "Bottom-5 OncoSeg cases drop most heavily on TC (relative drop 79.7%), suggesting the model struggles primarily with this region in hard cases."
+  "dominant_failure_region": "ET",
+  "interpretation": "Bottom-5 OncoSeg cases drop most heavily on ET (relative drop 84.3%), suggesting the model struggles primarily with this region in hard cases."
 }
