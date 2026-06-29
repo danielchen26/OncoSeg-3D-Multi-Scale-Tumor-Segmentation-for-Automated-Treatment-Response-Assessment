@@ -83,12 +83,12 @@ Input: 4-channel 3D MRI [B, 4, 128, 128, 128]
 
 | Model | Type | Parameters | Architecture |
 |-------|------|-----------|-------------|
-| **OncoSeg (Ours)** | **Swin + CNN** | **3.7M / 14.0M** | **Cross-attention skips + deep supervision + MC Dropout + temporal attention** |
+| **OncoSeg (Ours)** | **Swin + CNN** | **3.7M** (trained; embed_dim=24) | **Cross-attention skips + deep supervision + MC Dropout + temporal attention** |
 | UNet3D | Pure CNN | 19.2M | 5-level encoder-decoder, channels [32,64,128,256,512] |
 | Swin UNETR | Swin + CNN | 62.2M | MONAI's Swin Transformer U-Net (standard concatenation skips) |
 | UNETR | ViT + CNN | 130.8M | Vision Transformer encoder (12 layers, 768-dim) + CNN decoder |
 
-OncoSeg achieves competitive performance with **6x fewer parameters** than UNETR and **5x fewer** than Swin UNETR.
+The benchmarked OncoSeg checkpoint has **3.7M** parameters (embed_dim=24); a larger embed_dim=48 configuration (~12M) exists in `configs/` but was not trained. By parameter count alone OncoSeg is **~5.2× smaller than UNet3D**, **~17× smaller than Swin UNETR**, and **~35× smaller than UNETR**. **Only UNet3D was actually trained and evaluated** here — the Swin UNETR / UNETR rows are parameter counts for context, not benchmarked results (those runs need a CUDA GPU; see the Colab notebook).
 
 ## Dataset
 

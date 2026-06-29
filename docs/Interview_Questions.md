@@ -80,11 +80,11 @@ Comprehensive list of questions a hiring manager may ask about this project, org
 - Based on Gal & Ghahramani (2016) — dropout as Bayesian approximation
 
 ### Q13: How many parameters does OncoSeg have vs the baselines?
-- OncoSeg: 2.9M (with embed_dim=24) / ~12M (with embed_dim=48)
-- UNet3D: ~3M
-- UNETR: ~130M (ViT is parameter-heavy)
-- SwinUNETR: ~12M
-- OncoSeg is competitive in size while adding cross-attention and uncertainty
+- OncoSeg: **3.7M** (trained, embed_dim=24); ~12M for the embed_dim=48 config (defined but not trained)
+- UNet3D: **19.2M**
+- Swin UNETR: **62.2M**
+- UNETR: **130.8M** (ViT is parameter-heavy)
+- OncoSeg matches UNet3D accuracy at ~5.2× fewer parameters while adding cross-attention and uncertainty (use these canonical numbers consistently — README and Paper drafts agree)
 
 ### Q14: Why embed_dim=24 instead of 48 for local training?
 - Memory constraint on Apple M1 8GB
