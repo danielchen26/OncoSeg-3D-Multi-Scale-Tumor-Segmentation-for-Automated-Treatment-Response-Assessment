@@ -8,7 +8,9 @@ must instantiate and forward-pass a small CPU tensor to (B, 3, *ROI).
 import pytest
 import torch
 
-from train_all import NUM_CLASSES, build_model
+# train_all imports monai at module load; skip cleanly if it's not installed.
+pytest.importorskip("monai")
+from train_all import NUM_CLASSES, build_model  # noqa: E402
 
 ROI = (64, 64, 64)
 BATCH = 1

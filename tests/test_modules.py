@@ -1,6 +1,10 @@
 """Unit tests for model sub-modules."""
 
+import pytest
 import torch
+
+# Sub-modules import monai; skip cleanly rather than error/fail when it's absent.
+pytest.importorskip("monai")
 
 
 class TestCrossAttentionSkip:

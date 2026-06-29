@@ -1,10 +1,13 @@
 """Unit tests for the LUMIERE dataset loader."""
 
-import nibabel as nib
 import numpy as np
 import pytest
 
-from src.data.lumiere import (
+# nibabel lives only in the "dicom" extra; skip cleanly when absent.
+pytest.importorskip("nibabel")
+import nibabel as nib  # noqa: E402
+
+from src.data.lumiere import (  # noqa: E402
     ONCOSEG_MODALITIES,
     discover_lumiere,
     flatten_timepoints,

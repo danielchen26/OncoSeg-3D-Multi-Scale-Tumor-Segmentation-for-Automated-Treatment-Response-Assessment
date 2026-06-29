@@ -32,7 +32,10 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip setuptools
-          pip install -e ".[dev]"
+          # Install the serve extra too, otherwise fastapi is missing and the
+          # API tests (tests/test_api.py) skip silently, so a broken endpoint
+          # would never fail CI.
+          pip install -e ".[dev,serve]"
 
       - name: Run tests
         run: pytest tests/ -v --tb=short

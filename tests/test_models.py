@@ -3,6 +3,9 @@
 import pytest
 import torch
 
+# Models import monai; skip cleanly rather than error/fail when it's absent.
+pytest.importorskip("monai")
+
 
 class TestOncoSeg:
     """Test OncoSeg model forward pass and output shapes."""

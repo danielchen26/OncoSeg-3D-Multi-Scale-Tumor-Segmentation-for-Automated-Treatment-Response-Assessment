@@ -7,9 +7,15 @@ pydicom so the writer exercises the full highdicom path on every run.
 import sys
 from pathlib import Path
 
-import highdicom as hd
 import numpy as np
 import pytest
+
+# highdicom/pydicom live only in the "dicom" extra; skip cleanly when absent
+# (pytest must be imported before importorskip is called).
+pytest.importorskip("highdicom")
+pytest.importorskip("pydicom")
+
+import highdicom as hd
 from pydicom import Dataset
 from pydicom.dataset import FileMetaDataset
 from pydicom.uid import ExplicitVRLittleEndian, MRImageStorage, generate_uid

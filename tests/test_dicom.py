@@ -11,10 +11,13 @@ import zipfile
 from pathlib import Path
 
 import numpy as np
-import pydicom
 import pytest
-from pydicom.dataset import Dataset, FileMetaDataset
-from pydicom.uid import ExplicitVRLittleEndian, generate_uid
+
+# pydicom lives only in the "dicom" extra; skip cleanly when absent.
+pytest.importorskip("pydicom")
+import pydicom  # noqa: E402
+from pydicom.dataset import Dataset, FileMetaDataset  # noqa: E402
+from pydicom.uid import ExplicitVRLittleEndian, generate_uid  # noqa: E402
 
 from src.data.dicom import DICOMLoadError, load_dicom_series, load_dicom_zip
 

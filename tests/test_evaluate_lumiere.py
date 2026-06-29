@@ -20,11 +20,16 @@ import json
 import sys
 from pathlib import Path
 
-import nibabel as nib
 import numpy as np
 import pytest
 import torch
 from torch import nn
+
+# nibabel ("dicom" extra) and monai (pulled in by scripts.evaluate_lumiere) are
+# optional; skip the module cleanly rather than error at collection if absent.
+pytest.importorskip("nibabel")
+pytest.importorskip("monai")
+import nibabel as nib  # noqa: E402
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 if str(PROJECT_ROOT) not in sys.path:

@@ -10,13 +10,19 @@ from __future__ import annotations
 import tempfile
 from pathlib import Path
 
-import nibabel as nib
 import numpy as np
 import pytest
 import torch
-from fastapi.testclient import TestClient
 
-from src.api.app import create_app
+# These deps live only in optional extras (nibabel in "dicom", fastapi in
+# "serve"); skip the whole module rather than error at collection when a partial
+# install is missing them, so the true pass set is never masked.
+pytest.importorskip("nibabel")
+pytest.importorskip("fastapi")
+import nibabel as nib  # noqa: E402
+from fastapi.testclient import TestClient  # noqa: E402
+
+from src.api.app import create_app  # noqa: E402
 from src.api.service import MODALITIES, OncoSegService, ServiceMeta
 
 

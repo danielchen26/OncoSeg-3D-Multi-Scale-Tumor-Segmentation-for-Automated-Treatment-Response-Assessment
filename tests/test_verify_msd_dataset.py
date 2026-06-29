@@ -9,11 +9,14 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-import nibabel as nib
 import numpy as np
 import pytest
 
-from scripts.verify_msd_dataset import (
+# nibabel lives only in the "dicom" extra; skip cleanly when absent.
+pytest.importorskip("nibabel")
+import nibabel as nib  # noqa: E402
+
+from scripts.verify_msd_dataset import (  # noqa: E402
     EXPECTED_MODALITIES,
     MIN_TRAINING_IMAGES,
     main,
