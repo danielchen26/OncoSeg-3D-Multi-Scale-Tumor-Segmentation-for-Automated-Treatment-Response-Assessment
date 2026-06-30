@@ -301,14 +301,18 @@ class TestEndToEnd:
             rano_per_week={0: "baseline", 13: "SD"},
         )
 
-        # Per-timepoint ET fractions chosen to trip the RECIST thresholds:
-        #   PR requires >= 30% decrease in sum-LD.
-        #   SD requires < 20% increase and no PR-level shrinkage.
+        # Per-timepoint ET fractions chosen to trip the RECIST thresholds.
+        # NOTE: lesions must be >= RECISTMeasurer.MIN_TARGET_DIAMETER_MM (10mm,
+        # RECIST 1.1 §3.1.1) to count as target lesions, so the cubes must be
+        # large enough. With roi_size=(32,32,32) below and longest diameter
+        # = (side-1)*sqrt(2) mm, the eligible diameters are:
+        #   PR  baseline 0.60 -> side 19 -> 25.46mm ; followup 0.30 -> side 10 -> 12.73mm  (-50% -> PR)
+        #   SD  baseline 0.40 -> side 13 -> 16.97mm ; followup 0.42 -> side 13 -> 16.97mm  (  0% -> SD)
         fractions = {
-            ("Patient-01", "week-000"): 0.60,  # baseline large
-            ("Patient-01", "week-013"): 0.30,  # half the side → shrinkage well past 30%
-            ("Patient-02", "week-000"): 0.40,
-            ("Patient-02", "week-013"): 0.42,  # barely larger → SD
+            ("Patient-01", "week-000"): 0.60,  # baseline large (25.46mm)
+            ("Patient-01", "week-013"): 0.30,  # half the side → −50% SoD → PR
+            ("Patient-02", "week-000"): 0.40,  # baseline (16.97mm)
+            ("Patient-02", "week-013"): 0.42,  # ≈same diameter → SD
         }
 
         # Patch load_oncoseg so no real checkpoint is needed; stand up a fresh
@@ -346,7 +350,7 @@ class TestEndToEnd:
             checkpoint=tmp_path / "dummy.pth",  # never read
             output_dir=output_dir,
             max_patients=None,
-            roi_size=(16, 16, 16),
+            roi_size=(32, 32, 32),  # large enough that lesions clear the 10mm RECIST target threshold
             pixdim=(1.0, 1.0, 1.0),
             mc_samples=0,
         )
