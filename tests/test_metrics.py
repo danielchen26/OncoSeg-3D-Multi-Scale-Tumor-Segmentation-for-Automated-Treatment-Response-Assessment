@@ -9,7 +9,6 @@ The pure-ordering checks below need no torch/monai. The SegmentationMetrics
 end-to-end check is monai-gated and skips when monai is unavailable.
 """
 
-import numpy as np
 import pytest
 
 # Canonical data channel order, fixed by the dataset pipeline.
