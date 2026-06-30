@@ -170,8 +170,14 @@ class Predictor:
         # inline train_all.OncoSeg: forward() already applies self.mc_dropout
         return self.model(image)["pred"]
 
+    @torch.no_grad()
     def _estimate_uncertainty(self, image: torch.Tensor) -> np.ndarray:
-        """Estimate uncertainty via MC Dropout."""
+        """Estimate uncertainty via MC Dropout.
+
+        Wrapped in ``torch.no_grad()`` so it is correct whether or not the caller
+        already disabled autograd (MC-dropout inference never needs gradients;
+        otherwise the final ``.numpy()`` would raise on a grad-requiring tensor).
+        """
         self.model.mc_dropout.train()
         predictions = []
 
@@ -191,7 +197,7 @@ class Predictor:
         binary_ent = -(p * torch.log(p) + (1.0 - p) * torch.log(1.0 - p))
         entropy = binary_ent.mean(dim=1).squeeze(0)
 
-        return entropy.cpu().numpy()
+        return entropy.detach().cpu().numpy()
 
     def predict_and_save(
         self,
