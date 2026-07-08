@@ -115,6 +115,7 @@
     <div class="cta">
       <a class="btn primary" href="#results">See the results ↓</a>
       <a class="btn" href="architecture_3d.html">Interactive 3D model →</a>
+      <a class="btn" href="#explore">Explore everything →</a>
       <a class="btn" href="https://github.com/youseihuayu-wonderful/OncoSeg-3D-Multi-Scale-Tumor-Segmentation-for-Automated-Treatment-Response-Assessment">GitHub repo</a>
     </div>
   </div>
@@ -126,20 +127,23 @@
     <div class="eyebrow">Validated results</div>
     <h2>What it achieves</h2>
     <p class="lead">Trained and evaluated on the <b>MSD Brain Tumour</b> task (388 train / 96 validation subjects,
-      50 epochs, multi-label TC/WT/ET). Every number below is measured on held-out validation — nothing is simulated.</p>
+      a single 50-epoch run, multi-label TC/WT/ET). Every number below is measured on held-out validation — nothing
+      is simulated — but it comes from one run with no seeds or confidence intervals, so small differences should be
+      read as ties, not wins.</p>
 
     <div class="stats">
-      <div class="stat glass"><div class="v" style="color:#a5b4fc">0.797</div><div class="k">Mean Dice</div><div class="s">across TC · WT · ET</div></div>
+      <div class="stat glass"><div class="v" style="color:#a5b4fc">0.797</div><div class="k">Mean Dice (TC · WT · ET)</div><div class="s">tied with UNet3D (0.794); difference not significant</div></div>
       <div class="stat glass"><div class="v" style="color:#5eead4">5.2×</div><div class="k">Fewer parameters</div><div class="s">3.7M vs UNet3D 19.2M</div></div>
-      <div class="stat glass"><div class="v" style="color:#fcd34d">15.4<span style="font-size:16px"> mm</span></div><div class="k">HD95 boundary error</div><div class="s">vs 21.0 mm for UNet3D</div></div>
-      <div class="stat glass"><div class="v" style="color:#fda4af">0.010</div><div class="k">Calibration (ECE)</div><div class="s">MC-Dropout uncertainty</div></div>
+      <div class="stat glass"><div class="v" style="color:#fcd34d">15.4<span style="font-size:16px"> mm</span></div><div class="k">Mean HD95 boundary error</div><div class="s">vs 21.0 mm — set-level aggregate, not significance-tested</div></div>
+      <div class="stat glass"><div class="v" style="color:#fda4af">≈0.49</div><div class="k">Foreground ECE (tumour voxels)</div><div class="s">over-confident on tumour; pooled ECE 0.010 is a background artifact (98.4% bg voxels)</div></div>
     </div>
 
     <div class="figs">
       <figure class="figcard glass">
         <img src="assets/dice_comparison.png" alt="Per-region Dice score: OncoSeg vs UNet3D on 96 validation subjects" />
-        <figcaption><b>Per-region Dice.</b> OncoSeg matches or beats UNet3D on Tumour Core, Whole Tumour
-          and Enhancing Tumour — with <b>~5× fewer parameters</b>.</figcaption>
+        <figcaption><b>Per-region Dice</b> on 96 validation subjects. OncoSeg and UNet3D are within noise on Tumour Core,
+          Whole Tumour and Enhancing Tumour (every difference ≤ 0.005; Wilcoxon signed-rank test non-significant),
+          and OncoSeg reaches this parity with <b>~5× fewer parameters</b>.</figcaption>
       </figure>
       <figure class="figcard glass">
         <img src="assets/training_curves.png" alt="OncoSeg training and validation curves over 50 epochs" />
@@ -155,8 +159,7 @@
       <tbody>
         <tr>
           <td class="model">OncoSeg <span class="pill">3.7M params</span></td>
-          <td class="win">0.7898</td><td class="win">0.8529</td><td class="win">0.7481</td>
-          <td class="win">0.7969</td><td class="win">15.35 mm</td>
+          <td>0.7898</td><td>0.8529</td><td>0.7481</td><td>0.7969</td><td>15.35 mm</td>
         </tr>
         <tr>
           <td class="model">UNet3D <span class="pill">19.2M params</span></td>
@@ -164,10 +167,17 @@
         </tr>
       </tbody>
     </table>
-    <p class="note">Higher Dice is better; lower HD95 (95th-percentile Hausdorff distance) is better. OncoSeg edges
-      UNet3D on every region while cutting boundary error by <b>~27%</b> at a fraction of the parameters.
-      Additional SwinUNETR / UNETR baselines and the cross-attention ablation run via the Kaggle notebook and
-      will be added when complete.</p>
+    <p class="note">Higher Dice is better; lower HD95 (95th-percentile Hausdorff distance) is better.
+      Mean Dice differs by only 0.0025 (0.7969 vs 0.7944) — a <b>statistical tie</b>. A one-sided Wilcoxon signed-rank
+      test (OncoSeg &gt; UNet3D) is <b>non-significant for every region</b>: TC <b>p=0.46</b>, WT <b>p=0.995</b>
+      (UNet3D is actually favoured, winning 67/96 subjects), ET <b>p=0.57</b>, mean <b>p=0.41</b>; the per-subject
+      mean-Dice split is 49/96 vs 47/96. HD95 is reported as a set-level aggregate and was <b>not</b> significance-tested
+      (no per-subject HD95 values were stored). Parameter counts follow the README / eval-JSON figure (OncoSeg 3.7M);
+      a rebuilt embed-24 variant measures ~2.88M, so the documentation is internally inconsistent on this point.
+      <b>The honest takeaway:</b> OncoSeg <b>matches</b> UNet3D accuracy at roughly <b>5× fewer parameters</b> —
+      an efficiency result, not a demonstrated accuracy win. The UNet3D baseline was OOM-killed near epoch 30, so the
+      two models did not train on equal compute budgets. Additional SwinUNETR / UNETR baselines and the
+      cross-attention ablation are pending.</p>
   </div>
 </section>
 
@@ -200,6 +210,74 @@
       <a class="btn primary" href="architecture_3d.html">Open interactive 3D model →</a>
       <a class="btn" href="architecture_3d.html#intuition">Why each module</a>
       <a class="btn" href="architecture_3d.html#deep">Deep dive: cross-attention</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== EXPLORE THE PROJECT (HUB) ===================== -->
+<section id="explore">
+  <div class="wrap">
+    <div class="eyebrow">Explore the project</div>
+    <h2>Go deeper</h2>
+    <p class="lead">Every artifact below is self-contained and opens in the browser. The two Colab notebooks run
+      end-to-end on a free GPU; the review findings and their fixes are the project's own, verified against the
+      committed per-subject arrays.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:24px">
+
+      <!-- 1. Explainer -->
+      <div class="glass" style="padding:22px 20px;display:flex;flex-direction:column">
+        <div class="eyebrow" style="color:#a5b4fc">Explainer</div>
+        <h3 style="font-size:19px;font-weight:800;letter-spacing:-.01em;color:#eef1fb;margin:6px 0 6px">OncoSeg, explained</h3>
+        <p style="font-size:13.5px;color:#aab2cc;margin:0;flex:1">Three tabs — <b>Understand</b> the hybrid model,
+          the <b>31 verified review findings</b>, and the <b>fix</b> applied to each. An honest account of what
+          holds up and what did not.</p>
+        <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn primary" href="oncoseg_explained.html">Open the explainer →</a>
+        </div>
+      </div>
+
+      <!-- 2. Interactive 3D architecture -->
+      <div class="glass" style="padding:22px 20px;display:flex;flex-direction:column">
+        <div class="eyebrow" style="color:#e9d5ff">Interactive 3D</div>
+        <h3 style="font-size:19px;font-weight:800;letter-spacing:-.01em;color:#eef1fb;margin:6px 0 6px">Architecture, in 3D</h3>
+        <p style="font-size:13.5px;color:#aab2cc;margin:0;flex:1">Rotate the Swin encoder / CNN decoder / cross-attention
+          skips, read <b>why each module exists</b>, and step through the cross-attention deep dive. Three.js,
+          runs in the browser.</p>
+        <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn primary" href="architecture_3d.html">Open the 3D model →</a>
+          <a class="btn" href="architecture_3d.html#intuition">Why each module</a>
+        </div>
+      </div>
+
+      <!-- 3. Live CV Lab -->
+      <div class="glass" style="padding:22px 20px;display:flex;flex-direction:column">
+        <div class="eyebrow" style="color:#5eead4">Live CV Lab</div>
+        <h3 style="font-size:19px;font-weight:800;letter-spacing:-.01em;color:#eef1fb;margin:6px 0 6px">Try the concepts yourself</h3>
+        <p style="font-size:13.5px;color:#aab2cc;margin:0;flex:1"><b>112 interactive widgets</b> covering the computer-vision
+          building blocks behind OncoSeg — convolutions, attention, Dice/HD95, calibration and more. Available in
+          English and Simplified Chinese.</p>
+        <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn primary" href="oncoseg_cv_lab.html">Open the CV Lab →</a>
+          <a class="btn" href="oncoseg_cv_lab_zh.html">中文版 →</a>
+        </div>
+      </div>
+
+      <!-- 4. Colab notebooks -->
+      <div class="glass" style="padding:22px 20px;display:flex;flex-direction:column">
+        <div class="eyebrow" style="color:#fcd34d">Run it on GPU</div>
+        <h3 style="font-size:19px;font-weight:800;letter-spacing:-.01em;color:#eef1fb;margin:6px 0 6px">Verify the fixes in Colab</h3>
+        <p style="font-size:13.5px;color:#aab2cc;margin:0;flex:1">A guided tour that re-runs the corrected pipeline on a
+          free GPU and reproduces the numbers on this page — including the non-significant Wilcoxon result and the
+          foreground-vs-pooled ECE gap. English and Simplified Chinese.</p>
+        <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn" href="https://colab.research.google.com/github/danielchen26/OncoSeg-3D-Multi-Scale-Tumor-Segmentation-for-Automated-Treatment-Response-Assessment/blob/fix/review-findings/notebooks/Colab_Verify_Fixes.ipynb"
+             style="background:linear-gradient(100deg,#f9ab00,#f57c00);border-color:transparent;color:#20160a">▶ Open in Colab (EN)</a>
+          <a class="btn" href="https://colab.research.google.com/github/danielchen26/OncoSeg-3D-Multi-Scale-Tumor-Segmentation-for-Automated-Treatment-Response-Assessment/blob/fix/review-findings/notebooks/Colab_Verify_Fixes_zh.ipynb"
+             style="background:linear-gradient(100deg,#f9ab00,#f57c00);border-color:transparent;color:#20160a">▶ Open in Colab (中文)</a>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
