@@ -57,20 +57,29 @@ def verify_dataset(dataset_dir: Path):
     print(f"Training subjects: {meta['numTraining']}")
     print(f"Test subjects: {meta['numTest']}")
 
-    # Count actual files
-    images_tr = list((dataset_dir / "imagesTr").glob("*.nii.gz"))
-    labels_tr = list((dataset_dir / "labelsTr").glob("*.nii.gz"))
-    images_ts = list((dataset_dir / "imagesTs").glob("*.nii.gz"))
+    # Count actual case files. The MSD tar ships macOS AppleDouble sidecars
+    # ("._BRATS_xxx.nii.gz") inside imagesTr/labelsTr; globbing "*.nii.gz" counts
+    # those too and inflates the total (e.g. 495 vs the real 484), which used to
+    # make a perfectly good download report FAILED. Filter hidden dot-files out.
+    def real_niis(subdir):
+        return [p for p in (dataset_dir / subdir).glob("*.nii.gz")
+                if not p.name.startswith((".", "._"))]
 
-    print("\nFiles found:")
+    images_tr = real_niis("imagesTr")
+    labels_tr = real_niis("labelsTr")
+    images_ts = real_niis("imagesTs")
+
+    print("\nFiles found (excluding hidden sidecar files):")
     print(f"  Training images: {len(images_tr)}")
     print(f"  Training labels: {len(labels_tr)}")
     print(f"  Test images:     {len(images_ts)}")
 
-    if len(images_tr) == len(labels_tr) == meta["numTraining"]:
-        print("\nVerification: PASSED")
+    n_expected = meta["numTraining"]
+    if len(images_tr) == len(labels_tr) == n_expected:
+        print(f"\nVerification: PASSED ({n_expected} training image/label pairs)")
     else:
-        print("\nVerification: FAILED — file count mismatch")
+        print(f"\nVerification: FAILED — expected {n_expected} training image/label "
+              f"pairs, found {len(images_tr)} images / {len(labels_tr)} labels")
 
 
 def main():

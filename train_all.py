@@ -381,7 +381,7 @@ def train_model(name, train_loader, val_loader, device, roi_size,
     dice_metric = DiceMetric(include_background=True, reduction="mean_batch")
 
     history = {"train_loss": [], "val_dice_tc": [], "val_dice_wt": [], "val_dice_et": [],
-               "val_dice_mean": [], "best_dice": 0.0, "best_epoch": 0}
+               "val_dice_mean": [], "val_epochs": [], "best_dice": 0.0, "best_epoch": 0}
 
     save_path = SAVE_DIR / f"{name}_best.pth"
     checkpoint_path = SAVE_DIR / f"{name}_checkpoint.pth"
@@ -471,6 +471,7 @@ def train_model(name, train_loader, val_loader, device, roi_size,
             history["val_dice_wt"].append(dice_wt)
             history["val_dice_et"].append(dice_et)
             history["val_dice_mean"].append(dice_mean)
+            history["val_epochs"].append(epoch)  # record the ACTUAL validated epoch (may include max_epochs off-cadence)
 
             logger.info(f"Epoch {epoch} | Loss: {avg_loss:.4f} | "
                         f"Dice TC: {dice_tc:.4f} WT: {dice_wt:.4f} ET: {dice_et:.4f} Mean: {dice_mean:.4f}")
@@ -525,13 +526,23 @@ def generate_figures(all_histories, max_epochs, val_interval):
     axes[0].legend()
     axes[0].grid(True, alpha=0.3)
 
-    val_epochs = list(range(val_interval, max_epochs + 1, val_interval))
     for name, hist in all_histories.items():
-        if hist["val_dice_mean"]:
-            c = colors.get(name, "#333")
-            axes[1].plot(val_epochs[:len(hist["val_dice_mean"])], hist["val_dice_mean"],
-                         label=f"{name} (best: {hist['best_dice']:.4f})",
-                         color=c, linewidth=2, marker="o", markersize=3)
+        ys = hist.get("val_dice_mean") or []
+        if not ys:
+            continue
+        # Prefer the ACTUAL validated epochs recorded during training; fall back to
+        # reconstructing them for older histories. Validation also runs at the final
+        # epoch even when it is off the val_interval cadence, so a reconstructed list
+        # must include max_epochs — otherwise x and y lengths mismatch (e.g. epochs=2,
+        # val_interval=5 gave an empty x against a length-1 y and crashed the plot).
+        xs = hist.get("val_epochs") or []
+        if len(xs) != len(ys):
+            xs = sorted(set(range(val_interval, max_epochs + 1, val_interval)) | {max_epochs})
+        n = min(len(xs), len(ys))
+        c = colors.get(name, "#333")
+        axes[1].plot(xs[:n], ys[:n],
+                     label=f"{name} (best: {hist['best_dice']:.4f})",
+                     color=c, linewidth=2, marker="o", markersize=3)
 
     axes[1].set_xlabel("Epoch")
     axes[1].set_ylabel("Mean Dice Score")
