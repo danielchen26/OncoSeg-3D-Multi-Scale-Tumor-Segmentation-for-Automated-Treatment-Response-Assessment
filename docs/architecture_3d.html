@@ -386,9 +386,9 @@ x = self.conv(x)</pre>
 </div>
 
 <div id="stats">
-  <div class="stat glass"><div class="v" style="color:#a5b4fc">0.797</div><div class="k">Best Dice</div><div class="s">MSD Brain · 50 ep</div></div>
-  <div class="stat glass"><div class="v" style="color:#5eead4">5×</div><div class="k">Fewer params</div><div class="s">beats UNet3D</div></div>
-  <div class="stat glass"><div class="v" style="color:#fcd34d">0.010</div><div class="k">ECE</div><div class="s">MC-Dropout</div></div>
+  <div class="stat glass"><div class="v" style="color:#a5b4fc">0.797</div><div class="k">Mean Dice</div><div class="s">MSD Brain · 50 ep · tie w/ U-Net</div></div>
+  <div class="stat glass"><div class="v" style="color:#5eead4">~1.6×</div><div class="k">Fewer params</div><div class="s">~2.9M vs 4.75M U-Net (equal accuracy)</div></div>
+  <div class="stat glass"><div class="v" style="color:#fda4af">≈0.49</div><div class="k">Foreground ECE</div><div class="s">over-confident on tumour (pooled 0.010 is bg)</div></div>
   <div class="stat glass"><div class="v" style="color:#fda4af">0.85</div><div class="k">Whole-tumor</div><div class="s">TC .79 · ET .75</div></div>
 </div>
 
@@ -436,7 +436,7 @@ x = self.conv(x)</pre>
     </div>
     <div class="sec" data-blocks="out">
       <h4><span class="b" style="background:#f43f5e;color:#f43f5e"></span>Heads: deep-sup · MC-dropout · RECIST<span class="why-q">output</span></h4>
-      <p><b>Deep supervision</b> adds gradient signal to decoder stages during training; <b>MC-Dropout</b> turns one model into an uncertainty estimator (ECE 0.010); the mask drives <b>RECIST → CR/PR/SD/PD</b>.</p>
+      <p><b>Deep supervision</b> adds gradient signal to decoder stages during training; <b>MC-Dropout</b> turns one model into an uncertainty estimator (calibration is poor on tumour voxels — foreground ECE ≈ 0.49; the pooled 0.010 is a background artifact); the mask drives <b>RECIST → CR/PR/SD/PD</b>.</p>
     </div>
   </div>
 </div>
@@ -529,7 +529,7 @@ x = self.conv(x)</pre>
     <div class="mod"><div class="accent" style="background:#f43f5e"></div><div class="inner">
       <div class="top"><span class="name">MC Dropout</span><span class="kind">inference</span></div>
       <div class="pm"><span class="lbl">PHYSICAL</span>Make the model <b>"think it through N times"</b> with neurons randomly dropped each pass. The more the predictions <b>disagree, the less sure</b> it is — usually most uncertain at tumor margins.</div>
-      <div class="wy"><span class="lbl">WHY</span>Turns one model into one that <b>flags where it is unsure</b> for human review. Calibrated here to ECE 0.010 — the doubt is trustworthy.</div>
+      <div class="wy"><span class="lbl">WHY</span>Turns one model into one that <b>flags where it is unsure</b> for human review — useful for prioritising boundary regions. But calibration is only good on background: foreground (tumour-voxel) ECE ≈ 0.49, so a confident tumour voxel is <b>not</b> a guarantee — the pooled ECE 0.010 is a background artifact.</div>
       <div class="no"><span class="lbl">WITHOUT IT</span>A single point prediction with no confidence — the model fails silently at ambiguous margins, and nothing tells a clinician where to double-check.</div>
     </div></div>
 
@@ -569,9 +569,9 @@ x = self.conv(x)</pre>
     for 3D tumour segmentation &amp; automated treatment-response (RECIST) assessment.</p>
   <div class="pstats">
     <div class="pstat"><div class="v" style="color:#a5b4fc">0.797</div><div class="k">Mean Dice</div><div class="s">TC · WT · ET</div></div>
-    <div class="pstat"><div class="v" style="color:#5eead4">5.2×</div><div class="k">Fewer params</div><div class="s">vs UNet3D</div></div>
-    <div class="pstat"><div class="v" style="color:#fcd34d">15.4<span style="font-size:14px"> mm</span></div><div class="k">HD95 ↓</div><div class="s">vs 21.0 mm</div></div>
-    <div class="pstat"><div class="v" style="color:#fda4af">0.010</div><div class="k">ECE</div><div class="s">MC-Dropout</div></div>
+    <div class="pstat"><div class="v" style="color:#5eead4">~1.6×</div><div class="k">Fewer params</div><div class="s">~2.9M vs 4.75M U-Net trained</div></div>
+    <div class="pstat"><div class="v" style="color:#fcd34d">15.4<span style="font-size:14px"> mm</span></div><div class="k">HD95 (aggregate)</div><div class="s">vs 21.0 mm, not sig-tested</div></div>
+    <div class="pstat"><div class="v" style="color:#fda4af">≈0.49</div><div class="k">Foreground ECE</div><div class="s">over-confident on tumour</div></div>
   </div>
   <div class="pleg">
     <div class="row"><span class="dot" style="background:#6366f1;color:#6366f1"></span>Swin Transformer encoder (global, ↓)</div>
