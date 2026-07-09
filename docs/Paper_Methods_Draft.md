@@ -157,12 +157,12 @@ Training augmentations (applied online):
 
 | Model | Parameters | Architecture |
 |-------|-----------|-------------|
-| OncoSeg (ours) | 3.7M (trained, embed_dim=24) | Swin Transformer + CNN decoder + cross-attention skips |
-| UNet3D | 19.2M | 5-level CNN encoder-decoder, channels [32,64,128,256,512] |
+| OncoSeg (ours) | ~2.9M (measured, embed_dim=24) | Swin Transformer + CNN decoder + cross-attention skips |
+| UNet3D | 4.75M (trained, 4-level, channels [32,64,128,256]) | CNN encoder-decoder; the standard 5-level variant (channels [32,64,128,256,512]) is 19.2M but was not trained here |
 | Swin UNETR [5] | 62.2M | Swin Transformer + CNN decoder + concatenation skips |
 | UNETR [4] | 130.8M | Vision Transformer + CNN decoder |
 
-The benchmarked OncoSeg checkpoint has 3.7M parameters (embed_dim=24); a larger embed_dim=48 configuration (~12M) is defined in `configs/` but was not trained. **Only OncoSeg and UNet3D were actually trained and evaluated here**; the Swin UNETR and UNETR rows are parameter counts for context (those runs require a CUDA GPU and are pending — see Limitations).
+The benchmarked OncoSeg checkpoint has ~2.9M parameters (measured; embed_dim=24 — the older 3.7M doc figure was incorrect); a larger embed_dim=48 configuration (~12M) is defined in `configs/` but was not trained. **Only OncoSeg and UNet3D were actually trained and evaluated here** — the trained UNet3D baseline was the 4.75M 4-level model (channels [32,64,128,256]), not the 19.2M 5-level configuration; the Swin UNETR and UNETR rows are parameter counts for context (those runs require a CUDA GPU and are pending — see Limitations).
 
 ### 3.6 Ablation Study
 
@@ -194,10 +194,10 @@ Table 1 reports Dice scores and Hausdorff Distance (HD95) on the MSD Brain Tumor
 
 | Model | Dice TC | Dice WT | Dice ET | Dice Mean | Params |
 |-------|---------|---------|---------|-----------|--------|
-| OncoSeg | 0.7898 ± 0.1962 | 0.8529 ± 0.1263 | 0.7481 | 0.7969 | 3.7M |
-| UNet3D | 0.7849 | 0.8522 | 0.7462 | 0.7944 | 19.2M |
+| OncoSeg | 0.7898 ± 0.1962 | 0.8529 ± 0.1263 | 0.7481 | 0.7969 | ~2.9M (measured) |
+| UNet3D | 0.7849 | 0.8522 | 0.7462 | 0.7944 | 4.75M (measured) |
 
-OncoSeg's mean Dice is marginally higher than UNet3D's (TC +0.0049, WT +0.0007, ET +0.0019), but none of these per-region differences is statistically significant (Wilcoxon signed-rank; see Results draft §1), so the result is best read as **matching accuracy at 5.2× fewer parameters** (3.7M vs 19.2M) rather than as an accuracy win. Whether the hybrid Swin/cross-attention design is responsible for any real gain would require multiple seeds and an equally-trained baseline to establish.
+OncoSeg's mean Dice is marginally higher than UNet3D's (TC +0.0049, WT +0.0007, ET +0.0019), but none of these per-region differences is statistically significant (Wilcoxon signed-rank; see Results draft §1), so the result is best read as **matching accuracy at a smaller parameter count** rather than as an accuracy win. The trained comparison is ~2.9M (OncoSeg, measured) versus the 4.75M 4-level UNet3D actually trained here — roughly 1.6× fewer parameters. A standard 5-level U-Net would be 19.2M (OncoSeg ~6.7× smaller), but that model was not trained or evaluated here, so that ratio is architectural context, not a benchmarked result. Whether the hybrid Swin/cross-attention design is responsible for any real gain would require multiple seeds and an equally-trained baseline to establish.
 
 SwinUNETR (62.2M) and UNETR (130.8M) benchmarks require CUDA GPU resources beyond the scope of local Apple Silicon training. These comparisons are available via the provided Google Colab notebook.
 

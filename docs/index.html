@@ -133,7 +133,7 @@
 
     <div class="stats">
       <div class="stat glass"><div class="v" style="color:#a5b4fc">0.797</div><div class="k">Mean Dice (TC · WT · ET)</div><div class="s">tied with UNet3D (0.794); difference not significant</div></div>
-      <div class="stat glass"><div class="v" style="color:#5eead4">5.2×</div><div class="k">Fewer parameters</div><div class="s">3.7M vs UNet3D 19.2M</div></div>
+      <div class="stat glass"><div class="v" style="color:#5eead4">~1.6×</div><div class="k">Fewer parameters</div><div class="s">~2.9M (measured) vs the 4.75M U-Net actually trained; a 5-level 19.2M U-Net was not trained here</div></div>
       <div class="stat glass"><div class="v" style="color:#fcd34d">15.4<span style="font-size:16px"> mm</span></div><div class="k">Mean HD95 boundary error</div><div class="s">vs 21.0 mm — set-level aggregate, not significance-tested</div></div>
       <div class="stat glass"><div class="v" style="color:#fda4af">≈0.49</div><div class="k">Foreground ECE (tumour voxels)</div><div class="s">over-confident on tumour; pooled ECE 0.010 is a background artifact (98.4% bg voxels)</div></div>
     </div>
@@ -143,7 +143,7 @@
         <img src="assets/dice_comparison.png" alt="Per-region Dice score: OncoSeg vs UNet3D on 96 validation subjects" />
         <figcaption><b>Per-region Dice</b> on 96 validation subjects. OncoSeg and UNet3D are within noise on Tumour Core,
           Whole Tumour and Enhancing Tumour (every difference ≤ 0.005; Wilcoxon signed-rank test non-significant),
-          and OncoSeg reaches this parity with <b>~5× fewer parameters</b>.</figcaption>
+          and OncoSeg reaches this parity at a <b>smaller parameter count</b> (~2.9M measured vs the 4.75M U-Net actually trained here — ~1.6× fewer).</figcaption>
       </figure>
       <figure class="figcard glass">
         <img src="assets/training_curves.png" alt="OncoSeg training and validation curves over 50 epochs" />
@@ -158,11 +158,11 @@
       </thead>
       <tbody>
         <tr>
-          <td class="model">OncoSeg <span class="pill">3.7M params</span></td>
+          <td class="model">OncoSeg <span class="pill">~2.9M params</span></td>
           <td>0.7898</td><td>0.8529</td><td>0.7481</td><td>0.7969</td><td>15.35 mm</td>
         </tr>
         <tr>
-          <td class="model">UNet3D <span class="pill">19.2M params</span></td>
+          <td class="model">UNet3D <span class="pill">4.75M params</span></td>
           <td>0.7849</td><td>0.8522</td><td>0.7462</td><td>0.7944</td><td>21.03 mm</td>
         </tr>
       </tbody>
@@ -172,10 +172,9 @@
       test (OncoSeg &gt; UNet3D) is <b>non-significant for every region</b>: TC <b>p=0.46</b>, WT <b>p=0.995</b>
       (UNet3D is actually favoured, winning 67/96 subjects), ET <b>p=0.57</b>, mean <b>p=0.41</b>; the per-subject
       mean-Dice split is 49/96 vs 47/96. HD95 is reported as a set-level aggregate and was <b>not</b> significance-tested
-      (no per-subject HD95 values were stored). Parameter counts follow the README / eval-JSON figure (OncoSeg 3.7M);
-      a rebuilt embed-24 variant measures ~2.88M, so the documentation is internally inconsistent on this point.
-      <b>The honest takeaway:</b> OncoSeg <b>matches</b> UNet3D accuracy at roughly <b>5× fewer parameters</b> —
-      an efficiency result, not a demonstrated accuracy win. The UNet3D baseline was OOM-killed near epoch 30, so the
+      (no per-subject HD95 values were stored). A direct measurement of the embed-24 OncoSeg gives <b>~2.88M</b> parameters (the older docs' 3.7M figure was wrong). The UNet3D actually trained and evaluated here is a 4-level model (channels 32-256) at <b>4.75M</b>, so the honest trained comparison is ~2.88M vs 4.75M (~1.6× fewer). A standard 5-level U-Net (channels 32-512) would be ~19.2M (OncoSeg ~6.7× smaller), but that model was never trained here, so that larger ratio is architectural context, not a benchmarked result.
+      <b>The honest takeaway:</b> OncoSeg reaches <b>statistically-equivalent</b> accuracy to the trained UNet3D at a <b>smaller parameter count</b> (~2.9M vs 4.75M, ~1.6× fewer) —
+      an efficiency result, not a demonstrated accuracy win; the exact efficiency ratio awaits a fair, matched-budget retrain. The UNet3D baseline was OOM-killed near epoch 30, so the
       two models did not train on equal compute budgets. Additional SwinUNETR / UNETR baselines and the
       cross-attention ablation are pending.</p>
   </div>

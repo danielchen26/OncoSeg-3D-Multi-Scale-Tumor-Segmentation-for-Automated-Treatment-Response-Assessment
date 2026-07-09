@@ -93,8 +93,8 @@ TC 0.7849, WT 0.8522, ET 0.7462, Mean 0.7944.
 **Caveat — unequal training budget:** the baseline ran ~30 epochs to OncoSeg's
 50, so this is not an apples-to-apples comparison. With that caveat, OncoSeg
 matches UNet3D's mean Dice (+0.0025, not statistically significant; on WT
-UNet3D wins 67/96) at ~5.2× fewer parameters. The honest headline is
-**parameter efficiency**, not an accuracy win.
+UNet3D wins 67/96) at a smaller parameter count. OncoSeg measures **~2.9M** params (measured; the old docs' 3.7M figure is wrong) against the **4.75M** UNet3D actually trained here (channels 32–256), so the benchmarked comparison is **~1.6× fewer parameters**, not 5.2×. A standard 5-level UNet3D (channels 32–512) would be **19.2M** (~6.7× smaller), but that model was **never trained or evaluated here**, so that ratio is architectural context, not a benchmarked result. The honest headline is
+**parameter efficiency** — statistically-equivalent accuracy (TOST ±0.02, p=0.0009; Wilcoxon n.s.) at fewer params — not an accuracy win.
 
 ### Step 34 — Training figures (`7061d20`, 2026-04-06)
 `training_curves.png` (loss + Dice vs epoch), `dice_comparison.png` (per-region bar chart).

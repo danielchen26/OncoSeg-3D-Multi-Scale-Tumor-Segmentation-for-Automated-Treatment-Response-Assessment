@@ -8,12 +8,12 @@ Table 1 compares OncoSeg against the UNet3D baseline on the 96-subject validatio
 
 | Model          | Dice TC    | Dice WT     | Dice ET    | Dice Mean  | HD95 Mean (mm) | Params |
 |----------------|------------|-------------|------------|------------|----------------|--------|
-| **OncoSeg**    | **0.7898** | **0.8529**  | **0.7481** | **0.7969** | **15.35**      | **3.7 M** |
-| UNet3D         | 0.7849     | 0.8522      | 0.7462     | 0.7944     | 21.03          | 19.2 M |
+| **OncoSeg**    | **0.7898** | **0.8529**  | **0.7481** | **0.7969** | **15.35**      | **~2.9 M** (measured) |
+| UNet3D         | 0.7849     | 0.8522      | 0.7462     | 0.7944     | 21.03          | 4.75 M |
 
 A one-sided Wilcoxon signed-rank test on the per-subject Dice arrays finds **no region with a statistically significant OncoSeg advantage** (TC p = 0.46, WT p = 0.995, ET p = 0.57; mean p = 0.41). On WT, UNet3D in fact wins on 67 of 96 subjects. The mean-Dice difference (+0.0025) is within run-to-run noise.
 
-The honest framing is therefore **parameter efficiency, not accuracy superiority**: OncoSeg matches UNet3D's Dice using **5.2× fewer parameters**, while showing a lower mean HD95 (95-percentile Hausdorff distance): 15.35 mm vs 21.03 mm, a **27 % reduction**. Note that HD95 is stored only as an aggregate mean — no per-subject HD95 array was retained — so this boundary-error gap is **not** significance-tested and should be read as descriptive.
+The honest framing is therefore **parameter efficiency, not accuracy superiority**: OncoSeg (~2.9 M parameters, measured) reaches statistically-equivalent Dice to the trained UNet3D baseline (4.75 M — the 4-level, channels 32–256 model that actually produced these results) at a **smaller parameter count (~1.6× fewer)**, while showing a lower mean HD95 (95-percentile Hausdorff distance): 15.35 mm vs 21.03 mm, a **27 % reduction**. Note that HD95 is stored only as an aggregate mean — no per-subject HD95 array was retained — so this boundary-error gap is **not** significance-tested and should be read as descriptive. (A standard 5-level U-Net is ~19.2 M parameters — the earlier "5.2×" figure compared OncoSeg against that configuration — but that model was **not trained or evaluated here**, so the 19.2 M count is architectural context, not a benchmarked ratio.)
 
 Training curves and the per-region Dice comparison figure are included as Figures 1 and 2 (`experiments/local_results/training_curves.png`, `dice_comparison.png`).
 
@@ -79,7 +79,7 @@ All three scenarios cross the correct RECIST thresholds and the classifier retur
 
 ## 6. Summary
 
-- OncoSeg matches UNet3D's Dice across all regions with ~5× fewer parameters; no per-region Dice difference is statistically significant (Wilcoxon), and on WT UNet3D wins 67/96 subjects. The mean HD95 is lower (15.35 vs 21.03 mm) but is reported as an aggregate only and was not significance-tested.
+- OncoSeg matches UNet3D's Dice across all regions at a smaller parameter count (~2.9 M measured vs the 4.75 M U-Net actually trained here — ~1.6× fewer; a standard 5-level U-Net is ~19.2 M but was not trained here); no per-region Dice difference is statistically significant (Wilcoxon), and on WT UNet3D wins 67/96 subjects. The mean HD95 is lower (15.35 vs 21.03 mm) but is reported as an aggregate only and was not significance-tested.
 - Calibration is good on background but poor on tumor: pooled ECE = 0.0101 is a background artifact (foreground-only ECE ≈ 0.49, over-confident on tumor voxels). MC Dropout uncertainty still correlates monotonically with prediction error, so it is useful as a relative review aid but not as a calibrated probability.
 - Failures are concentrated on small, fragmented, low-contrast tumors. The dominant failure region is Enhancing Tumor (ET), with a −84.3 % relative Dice drop on the bottom-5 cases (TC −79.7 % is a close second) — a clinically interpretable and addressable limitation.
 - The full segmentation → RECIST response-classification pipeline runs end-to-end and produces correct CR / PR / SD / PD verdicts on synthetic follow-up data.

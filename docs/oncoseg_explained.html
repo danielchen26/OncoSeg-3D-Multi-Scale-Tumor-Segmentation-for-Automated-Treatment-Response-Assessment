@@ -264,7 +264,7 @@ footer{padding:42px 0 60px;color:var(--ink-soft);font-size:13px;border-top:1px s
         <div class="statband" style="margin-top:14px">
           <div><div class="v">4</div><div class="l">MRI modalities in</div></div>
           <div><div class="v">3</div><div class="l">tumor regions out (TC·WT·ET)</div></div>
-          <div><div class="v">~3.7M</div><div class="l">params (headline model)*</div></div>
+          <div><div class="v">~2.9M</div><div class="l">params (headline model, measured)*</div></div>
           <div><div class="v">CR·PR<br>SD·PD</div><div class="l">RECIST verdict</div></div>
         </div>
         <p style="font-size:12px;color:var(--ink-soft);margin:12px 2px 0">*Several documents disagree on this number — see <a href="#" data-goto="findings">Review Findings</a>. This page describes the system as <i>designed &amp; documented</i>; tab 2 separates that from what the artifacts actually support.</p>
@@ -341,6 +341,20 @@ footer{padding:42px 0 60px;color:var(--ink-soft);font-size:13px;border-top:1px s
         <p style="margin:6px 0 0;color:var(--ink-soft)">The <b>Live CV Lab</b> is now its own page: convolution, attention, Swin windows, MC-Dropout, Dice, calibration/ECE, RECIST and more — each runs the real math in your browser, with a per-widget ▶ Play and a global auto-tour.</p>
       </div>
       <a class="go" href="oncoseg_cv_lab.html">Open the Live CV Lab ↗</a>
+    </section>
+
+    <div class="rule"></div>
+    <section class="card" style="border-color:var(--teal);background:linear-gradient(180deg,rgba(31,111,106,.07),transparent)">
+      <span class="kicker" style="color:var(--teal)">The honest result — efficiency, not superiority</span>
+      <h3 class="sub" style="margin-top:6px">Equal accuracy to a standard 3D U-Net, at a smaller parameter count.</h3>
+      <p style="margin:8px 0 0;color:var(--ink-soft)">On the 96-subject MSD validation set, OncoSeg and UNet3D are a <b>statistical tie</b> on mean Dice (0.7969 vs 0.7944, difference +0.0025). This is stated precisely, three ways:</p>
+      <div class="statband" style="margin-top:14px">
+        <div><div class="v" style="color:var(--teal)">±0.02</div><div class="l">TOST equivalence <b>confirmed</b> (p=0.0009) — accuracy is provably equivalent within a 0.02 Dice margin</div></div>
+        <div><div class="v" style="color:var(--ink)">[−0.008,<br>+0.013]</div><div class="l">95% bootstrap CI on the Dice difference — straddles 0 (no accuracy gap)</div></div>
+        <div><div class="v" style="color:var(--teal)">~1.6×</div><div class="l">fewer params than the U-Net actually trained (~2.9M vs 4.75M, measured) → equal accuracy at a smaller model; a standard 5-level U-Net (19.2M) was <b>not trained here</b></div></div>
+        <div><div class="v" style="color:var(--ink)">n.s.</div><div class="l">Wilcoxon per region non-significant (TC .46, WT .995, ET .57, mean .41); WT actually favours UNet3D</div></div>
+      </div>
+      <p style="margin:12px 2px 0;font-size:13px;color:var(--ink-soft)">So the defensible claim is a <b>parameter-efficiency result at equal accuracy</b> — not that OncoSeg "beats" UNet3D. Caveat: these come from a <i>single</i> 50-epoch run with no seeds/CIs, and the UNet3D baseline was OOM-killed near epoch 30 (unequal budget). A fair, multi-seed re-run is the next step before any stronger claim. <a href="#" data-goto="findings"><b>See the full findings →</b></a></p>
     </section>
 
     <div class="rule"></div>
@@ -766,7 +780,7 @@ const FIXES=[
  {id:'F11',sev:'high',kind:'doc',title:'"Outperforms on all metrics" → parameter efficiency',
   files:'README.md · docs/Paper_Results_Draft.md',commit:'8bdb8fe',
   was:'Claimed OncoSeg outperforms UNet3D on all metrics across all regions.',
-  now:'Reframed as matching accuracy at ~5.2× fewer params (mean gap +0.0025 is within noise, not significant).',
+  now:'Reframed as matching accuracy at a smaller parameter count — the trained baseline was a 4.75M U-Net, so ~1.6× fewer params (OncoSeg ~2.9M, measured); mean gap +0.0025 is within noise, not significant.',
   verify:'mean Δ +0.0025, p=0.41'},
  {id:'F20',sev:'medium',kind:'doc',title:'Dropped the "HD95 significant on WT" claim',
   files:'README.md · docs/Paper_Results_Draft.md',commit:'8bdb8fe',
@@ -791,8 +805,8 @@ const FIXES=[
  {id:'F17',sev:'medium',kind:'doc',title:'Parameter counts reconciled to the trained model',
   files:'README.md · Paper_Methods · Interview_Questions',commit:'1d90fd0',
   was:'OncoSeg quoted as 3.7M / 14.0M / 2.9M / 12.1M; UNet3D even as ~3M in interview notes.',
-  now:'Canonical everywhere: OncoSeg 3.7M (embed 24; ~12M embed-48 untrained), UNet3D 19.2M, SwinUNETR 62.2M, UNETR 130.8M.',
-  verify:'no stale 14.0M/2.9M/12.1M remain'},
+  now:'Canonical: OncoSeg ~2.9M (embed 24, measured; the old 3.7M doc figure was wrong; ~12M embed-48 untrained), UNet3D 4.75M as actually trained (a standard 5-level 19.2M U-Net was never trained here), SwinUNETR 62.2M, UNETR 130.8M.',
+  verify:'no stale 3.7M/14.0M/12.1M remain'},
  {id:'F19',sev:'medium',kind:'doc',title:'Untrained baselines no longer framed as a comparison',
   files:'README.md · docs/Paper_Methods_Draft.md',commit:'1d90fd0',
   was:'Param-ratio "competitive vs UNETR/SwinUNETR" implied a comparison; those baselines were never trained.',
@@ -801,8 +815,8 @@ const FIXES=[
  {id:'F26',sev:'low',kind:'doc',title:'Single parameter-reduction factor (5.2×)',
   files:'README.md · docs/Paper_Methods_Draft.md',commit:'1d90fd0',
   was:'Stated as 5×, 5.2×, and 6× for the same comparison.',
-  now:'Standardized: ~5.2× vs UNet3D, ~17× vs SwinUNETR, ~35× vs UNETR.',
-  verify:'19.2/3.7 = 5.2×'},
+  now:'Reframed: equal accuracy at a smaller parameter count. Against the U-Net actually trained (4.75M) OncoSeg (~2.9M) is ~1.6× smaller; a standard 5-level 19.2M U-Net would be ~6.7× larger but was not trained here, so that ratio is architectural context, not a benchmarked result.',
+  verify:'4.75M/2.88M ≈ 1.65× (trained baseline); 19.2M 5-level U-Net was not trained'},
  {id:'F27',sev:'low',kind:'doc',title:'UNETR parameter count made consistent (130.8M)',
   files:'docs/Paper_Methods_Draft.md',commit:'1d90fd0',
   was:'Same draft said both 130.8M and 130.4M.',

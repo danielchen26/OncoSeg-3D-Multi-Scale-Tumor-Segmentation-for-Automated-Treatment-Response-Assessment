@@ -26,9 +26,27 @@ When treating cancer, doctors decide whether a treatment is working by **measuri
 
 **OncoSeg automates this end-to-end:** it segments the tumor in 3D, produces an **uncertainty map** that flags where the model is unsure, and automatically reports the standard treatment-response category (shrinking / stable / growing, per RECIST 1.1).
 
-Unlike heavier deep-learning models, OncoSeg **matches the accuracy of a standard 3D U-Net while using 5× fewer parameters** (3.7M vs 19.2M) and produces **27% more accurate tumor boundaries** (HD95 15.4 mm vs 21.0 mm), tested on 96 brain-MRI cases from the Medical Segmentation Decathlon.
+Unlike heavier deep-learning models, OncoSeg **matches the accuracy of a standard 3D U-Net at a smaller parameter count**: OncoSeg is ~2.9M parameters (measured), versus the 4.75M U-Net actually trained and benchmarked here (~1.6× fewer). A standard 5-level U-Net would be 19.2M (OncoSeg ~6.7× smaller), but that larger model was **not** trained here, so treat it as architectural context rather than a benchmarked ratio. OncoSeg also shows a lower mean HD95 tumor-boundary error (15.4 mm vs 21.0 mm; reported as an aggregate, not significance-tested), tested on 96 brain-MRI cases from the Medical Segmentation Decathlon.
 
 **Next steps:** extend beyond brain to multi-organ tumors, and integrate into hospital imaging systems (PACS) so it runs inside real radiology workflows.
+
+---
+
+## Aim & honest scope
+
+**Aim.** OncoSeg is an **end-to-end, reproducible, honestly-reported** 3D brain-tumour segmentation → RECIST 1.1 response pipeline: 4-channel MRI in → TC/WT/ET masks → MC-dropout uncertainty → CR/PR/SD/PD response, packaged with an HTTP API, Docker, DICOM I/O, tests and CI. It is engineered as a **defensible end-to-end artifact**, not a state-of-the-art accuracy result. Where accuracy is reported, the goal is to show a **compact segmenter can match a conventional 3D U-Net at a smaller parameter budget** — not beat it.
+
+**What we can claim (evidence-backed):**
+- A complete, runnable pipeline (segmentation → uncertainty → RECIST response) with serving/DICOM/tests/CI.
+- OncoSeg (embed_dim=24) is **~2.88M parameters, measured** (the older "3.7M" doc figure is wrong).
+- On the committed run it reached **mean Dice 0.7969 vs the trained UNet3D's 0.7944** — **statistically *equivalent*** (paired TOST at ±0.02 margin, p=0.0009).
+- That equivalent accuracy came at a **smaller model**: the baseline actually trained here was a **4.75M** 4-level U-Net (channels 32–256), so **~1.65× fewer parameters**. Aggregate HD95 was descriptively lower (15.35 vs 21.03 mm).
+
+**What we do *not* claim (honest refusals):**
+- **Not** "more accurate / better": Wilcoxon non-significant; WT Dice favours the U-Net (67/96); +0.0025 mean gap is within noise. The honest word is **equivalent**, not better.
+- **Not** "5.2× / ~6.7× fewer parameters" as a benchmarked result: the 19.2M 5-level U-Net was **never trained here** — that ratio is architectural context only.
+- **Not** "well-calibrated": foreground (tumour-voxel) ECE ≈ 0.49; the pooled 0.0101 is a background artifact.
+- **Not** an HD95 win (aggregate, not significance-tested), **not** SOTA/clinical-grade, **not** real longitudinal validation (the RECIST demo uses synthetic phantoms). A precise fair efficiency multiplier awaits a matched-budget, multi-seed retrain.
 
 ---
 
@@ -83,12 +101,12 @@ Input: 4-channel 3D MRI [B, 4, 128, 128, 128]
 
 | Model | Type | Parameters | Architecture |
 |-------|------|-----------|-------------|
-| **OncoSeg (Ours)** | **Swin + CNN** | **3.7M** (trained; embed_dim=24) | **Cross-attention skips + deep supervision + MC Dropout + temporal attention** |
-| UNet3D | Pure CNN | 19.2M | 5-level encoder-decoder, channels [32,64,128,256,512] |
+| **OncoSeg (Ours)** | **Swin + CNN** | **~2.9M** (measured; embed_dim=24) | **Cross-attention skips + deep supervision + MC Dropout + temporal attention** |
+| UNet3D | Pure CNN | 4.75M (trained; 4-level, channels [32,64,128,256]) | encoder-decoder — the 19.2M 5-level [32,64,128,256,512] variant was **not** trained here |
 | Swin UNETR | Swin + CNN | 62.2M | MONAI's Swin Transformer U-Net (standard concatenation skips) |
 | UNETR | ViT + CNN | 130.8M | Vision Transformer encoder (12 layers, 768-dim) + CNN decoder |
 
-The benchmarked OncoSeg checkpoint has **3.7M** parameters (embed_dim=24); a larger embed_dim=48 configuration (~12M) exists in `configs/` but was not trained. By parameter count alone OncoSeg is **~5.2× smaller than UNet3D**, **~17× smaller than Swin UNETR**, and **~35× smaller than UNETR**. **Only UNet3D was actually trained and evaluated** here — the Swin UNETR / UNETR rows are parameter counts for context, not benchmarked results (those runs need a CUDA GPU; see the Colab notebook).
+The benchmarked OncoSeg checkpoint has **~2.9M** parameters (measured; embed_dim=24 — the docs' older 3.7M figure is incorrect); a larger embed_dim=48 configuration (~12M) exists in `configs/` but was not trained. **The UNet3D actually trained and evaluated here was a 4.75M 4-level model (channels [32,64,128,256]), so the real benchmarked comparison is ~2.9M vs 4.75M — roughly 1.6× fewer parameters at statistically-equivalent accuracy.** A standard 5-level UNet3D would be 19.2M (OncoSeg ~6.7× smaller), but that larger model was **not** trained here, so that ratio is architectural context, not a benchmarked result. By parameter count alone OncoSeg is also ~21× smaller than Swin UNETR and ~45× smaller than UNETR. **Only UNet3D was actually trained and evaluated** here — the Swin UNETR / UNETR rows are parameter counts for context, not benchmarked results (those runs need a CUDA GPU; see the Colab notebook).
 
 ## Dataset
 
@@ -136,10 +154,10 @@ Or use section 10 of the Colab notebook for GPU training of all 4 variants.
 
 | Model | Dice TC | Dice WT | Dice ET | Dice Mean | HD95 Mean (mm) | Params |
 |-------|---------|---------|---------|-----------|----------------|--------|
-| **OncoSeg** | **0.7898** | **0.8529** | **0.7481** | **0.7969** | **15.35** | **3.7M** |
-| UNet3D | 0.7849 | 0.8522 | 0.7462 | 0.7944 | 21.03 | 19.2M |
+| **OncoSeg** | **0.7898** | **0.8529** | **0.7481** | **0.7969** | **15.35** | **~2.9M** |
+| UNet3D | 0.7849 | 0.8522 | 0.7462 | 0.7944 | 21.03 | 4.75M |
 
-> **No statistically significant Dice difference.** A one-sided Wilcoxon signed-rank test on the per-subject Dice arrays finds **no region significant** (TC p=0.46, WT p=0.995, ET p=0.57; mean p=0.41) — and on WT, UNet3D actually wins on 67/96 subjects. The mean-Dice gap (+0.0025) is within run-to-run noise. The honest summary is **parameter efficiency**: OncoSeg matches UNet3D's accuracy with ~5× fewer parameters (3.7M vs 19.2M), with a notably lower mean HD95 boundary error (15.35 mm vs 21.03 mm, −27%; reported as an aggregate, not significance-tested).
+> **No statistically significant Dice difference.** A one-sided Wilcoxon signed-rank test on the per-subject Dice arrays finds **no region significant** (TC p=0.46, WT p=0.995, ET p=0.57; mean p=0.41) — and on WT, UNet3D actually wins on 67/96 subjects. The mean-Dice gap (+0.0025) is within run-to-run noise (a TOST equivalence test confirms the two are statistically equivalent within ±0.02, p=0.0009). The honest summary is **parameter efficiency**: OncoSeg matches UNet3D's accuracy at a smaller parameter count — the trained comparison is ~2.9M (measured) vs the 4.75M UNet3D actually benchmarked here (~1.6× fewer parameters); a standard 5-level UNet3D would be 19.2M (~6.7× larger) but was not trained. It also shows a notably lower mean HD95 boundary error (15.35 mm vs 21.03 mm, −27%; reported as an aggregate, not significance-tested).
 
 > Trained for 50 epochs on MSD Brain Tumor (388 train / 96 val subjects, embed_dim=24, roi_size=96, Apple Silicon MPS). SwinUNETR and UNETR benchmarks require a CUDA GPU — use the Colab notebook for full benchmarking.
 
